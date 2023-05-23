@@ -38,7 +38,7 @@ class _OnboardingState extends State<Onboarding> {
         child: Column(
           children: [
             SizedBox(
-              height: 220,
+              height: MediaQuery.of(context).size.height * 0.29,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -74,17 +74,18 @@ class _OnboardingState extends State<Onboarding> {
               ),
             ),
             SizedBox(
-              height: 403,
+              height: MediaQuery.of(context).size.height * 0.52,
               child: Image(
                 image: img,
                 
               ),
             ),
-            const SizedBox(height: 30,),
+            SizedBox(height: 0.04 * MediaQuery.of(context).size.height,),
             SizedBox(
-              height: 56,
-              width: 272,
-              child: Row(
+              height: 0.07 * MediaQuery.of(context).size.height,
+              width: 0.75 * MediaQuery.of(context).size.width,
+              child: (activeIndex != 4)
+              ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
@@ -133,6 +134,33 @@ class _OnboardingState extends State<Onboarding> {
                     )
                   )
                 ],
+              )
+              : Center(
+                child: SizedBox(
+                  width: 0.5 * MediaQuery.of(context).size.width,
+                  height: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: (){},
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)
+                        )
+                      ),
+                      backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(118, 172, 255, 1)),
+                      foregroundColor: MaterialStateProperty.all(const Color.fromRGBO(0, 27, 62, 1)),
+                    ),
+                    child: const Text(
+                      "Start Booking",
+                      style: TextStyle(
+                        fontFamily: 'Raleway',
+                        fontSize: 16,
+                        package: 'irbs',
+                        fontWeight: FontWeight.bold
+                      ),
+                    )
+                  ),
+                ),
               ),
             )
           ],
