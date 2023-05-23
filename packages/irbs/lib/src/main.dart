@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/onboarding/onboarding_1.dart';
+import 'package:irbs/src/screens/onboarding/onboarding.dart';
 
 class IRBS extends StatefulWidget {
   const IRBS({Key? key}) : super(key: key);

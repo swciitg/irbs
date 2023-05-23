@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:irbs/src/globals/colors.dart';
+import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/widgets/nav_dots.dart';
 
 class Onboarding extends StatefulWidget {
@@ -33,7 +35,7 @@ class _OnboardingState extends State<Onboarding> {
     ImageProvider img = AssetImage('assets/onboarding_${activeIndex + 1}.png', package: 'irbs');
 
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
+      backgroundColor: Themes.backgroundColor,
       body: Center(
         child: Column(
           children: [
@@ -47,13 +49,7 @@ class _OnboardingState extends State<Onboarding> {
                     child: Text(
                       headingList[activeIndex],
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 28,
-                        fontFamily: 'Montserrat',
-                        package: 'irbs',
-                        fontWeight: FontWeight.bold
-                      ),
+                      style: headingStyle,
                     ),
                   ),
                   Padding(
@@ -61,12 +57,7 @@ class _OnboardingState extends State<Onboarding> {
                     child: Text(
                       textList[activeIndex],
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontFamily: 'Montserrat',
-                        package: 'irbs',
-                        color: Colors.white,
-                        fontSize: 14, 
-                      ),
+                      style: textStyle,
                     ),
                   ),
                 ],
@@ -95,13 +86,7 @@ class _OnboardingState extends State<Onboarding> {
                     },
                     child: const Text(
                       'Skip',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: 'Raleway',
-                        package: 'irbs',
-                        fontStyle: FontStyle.normal,
-                        color: Color.fromRGBO(110, 119, 138, 1),
-                      ),
+                      style: textButtonStyle2,
                     )
                   ),
                   SizedBox(
@@ -126,13 +111,7 @@ class _OnboardingState extends State<Onboarding> {
                     },
                     child: const Text(
                       'Next',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: 'Raleway',
-                        package: 'irbs',
-                        fontStyle: FontStyle.normal,
-                        color: Colors.white,
-                      ),
+                      style: textButtonStyle1,
                     )
                   )
                 ],
@@ -143,23 +122,10 @@ class _OnboardingState extends State<Onboarding> {
                   height: double.infinity,
                   child: ElevatedButton(
                     onPressed: (){},
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)
-                        )
-                      ),
-                      backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(118, 172, 255, 1)),
-                      foregroundColor: MaterialStateProperty.all(const Color.fromRGBO(0, 27, 62, 1)),
-                    ),
+                    style: elevatedButtonStyle,
                     child: const Text(
                       "Start Booking",
-                      style: TextStyle(
-                        fontFamily: 'Raleway',
-                        fontSize: 16,
-                        package: 'irbs',
-                        fontWeight: FontWeight.bold
-                      ),
+                      style: elevatedButtonTextStyle,
                     )
                   ),
                 ),

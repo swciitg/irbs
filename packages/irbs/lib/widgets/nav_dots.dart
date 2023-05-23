@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:irbs/src/globals/colors.dart';
 
 class NavDot extends StatefulWidget {
   final bool isActive;
@@ -19,7 +20,7 @@ class _NavDotState extends State<NavDot> {
       height: 6,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: widget.isActive ? Colors.white : const Color.fromRGBO(255, 255, 255, 0.2),
+        color: widget.isActive ? Themes.white : Themes.inactiveNavDotsColor,
       ),
     );
   }
