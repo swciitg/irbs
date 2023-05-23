@@ -65,8 +65,7 @@ class _OnboardingState extends State<Onboarding> {
                         fontFamily: 'Montserrat',
                         package: 'irbs',
                         color: Colors.white,
-                        fontSize: 14,
-                        
+                        fontSize: 14, 
                       ),
                     ),
                   ),
@@ -89,7 +88,11 @@ class _OnboardingState extends State<Onboarding> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      setState(() {
+                        activeIndex = 4;
+                      });
+                    },
                     child: const Text(
                       'Skip',
                       style: TextStyle(
@@ -117,7 +120,6 @@ class _OnboardingState extends State<Onboarding> {
                   ),
                   TextButton(
                     onPressed: (){
-
                       setState(() {
                         activeIndex++;
                       });
