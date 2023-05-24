@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:irbs/src/globals/my_colors.dart';
+import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/pages/room_list.dart';
 import 'package:irbs/src/screens/onboarding/onboarding.dart';
 import 'package:irbs/src/store/room_list_store.dart';
 import 'package:provider/provider.dart';
+
+import 'globals/colors.dart';
 
 class IRBS extends StatefulWidget {
   const IRBS({Key? key}) : super(key: key);
@@ -26,8 +29,20 @@ class _IRBSState extends State<IRBS> {
 
         ),
         home: Scaffold(
+          backgroundColor: Themes.backgroundColor,
           appBar: AppBar(
-            title: const Text('IRBS'),
+            title: const Center(
+              child: Text('IRBS',
+              style: appBarStyle,
+              ),
+            ),
+            actions: const [
+              Padding(
+                padding: EdgeInsets.only(right: 8),
+                child: Icon(Icons.help_outline),
+              ),
+            ],
+            backgroundColor: kBlueGrey,
           ),
           body: const RoomList()
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/widgets/nav_dots.dart';
+import 'package:irbs/src/widgets/nav_dots.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
