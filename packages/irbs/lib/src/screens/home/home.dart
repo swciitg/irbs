@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:irbs/widgets/home/common_rooms.dart';
 import 'package:irbs/widgets/home/pinned_rooms.dart';
 
+import '../../../widgets/home/current_bookings_widget.dart';
+import '../../../widgets/home/request_widget.dart';
+import '../../globals/styles.dart';
+import '../../globals/colors.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -15,12 +20,79 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(28, 28, 30, 1),
       appBar: AppBar(
-        title: Text('IRBS'),
+        centerTitle: true,
+        leading: GestureDetector(
+          onTap: () {},
+          child: const Icon(
+            Icons.arrow_back_sharp,
+            color: Colors.white,
+          ),
+        ),
+        title: Text(
+          "IRBS",
+          style: kAppBarTextStyle,
+        ),
+        actions: [
+          IconButton(onPressed: (){}, icon: Image.asset('assets/question_circle.png', package: 'irbs', height: 24, width: 24,))
+        ],
+        backgroundColor: Themes.kCommonBoxBackground,
       ),
       body: Stack(fit: StackFit.expand, children: [
         SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 18, left: 16, bottom: 10),
+                child: Text(
+                  'Requests',
+                  style: kSubHeadingStyle,
+                ),
+              ),
+              RequestWidget(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Container(
+                  height: 40,
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                      color: Themes.kCommonBoxBackground,
+                      borderRadius: BorderRadius.circular(4)
+                  ),
+                  child: Center(
+                    child: Text(
+                      'View all Requests',
+                      style: kRequestedRoomStyle,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, left: 16, bottom: 10),
+                child: Text(
+                  'Current Bookings',
+                  style: kSubHeadingStyle,
+                ),
+              ),
+              CurrentBookingsWidget(cancelled: true, startTime: '10:00 AM', endTime: '03:00 PM', date: '21st April', roomName: 'Coding Club Room',),
+              CurrentBookingsWidget(cancelled: false, startTime: '05:00 AM', endTime: '06:30 AM', date: '22nd April', roomName: 'Finesse Room',),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Container(
+                  height: 40,
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                      color: Themes.kCommonBoxBackground,
+                      borderRadius: BorderRadius.circular(4)
+                  ),
+                  child: Center(
+                    child: Text(
+                      'View Booking History',
+                      style: kRequestedRoomStyle,
+                    ),
+                  ),
+                ),
+              ),
               PinnedRooms(),
               CommonRooms(),
               SizedBox(
