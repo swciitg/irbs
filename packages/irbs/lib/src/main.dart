@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/globals/my_colors.dart';
 import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/pages/room_list.dart';
+import 'package:irbs/src/screens/room_list.dart';
 import 'package:irbs/src/screens/onboarding/onboarding.dart';
 import 'package:irbs/src/store/room_list_store.dart';
 import 'package:provider/provider.dart';
-
 import 'globals/colors.dart';
-
 class IRBS extends StatefulWidget {
   const IRBS({Key? key}) : super(key: key);
 
   @override
   State<IRBS> createState() => _IRBSState();
 }
-
 class _IRBSState extends State<IRBS> {
   @override
   Widget build(BuildContext context) {
@@ -29,7 +25,7 @@ class _IRBSState extends State<IRBS> {
 
         ),
         home: Scaffold(
-          backgroundColor: Themes.backgroundColor,
+          backgroundColor: Themes.darkGrey,
           appBar: AppBar(
             title: const Center(
               child: Text('IRBS',
@@ -42,7 +38,7 @@ class _IRBSState extends State<IRBS> {
                 child: Icon(Icons.help_outline),
               ),
             ],
-            backgroundColor: kBlueGrey,
+            backgroundColor: Themes.tileColor,
           ),
           body: const RoomList()
         ),
@@ -50,9 +46,3 @@ class _IRBSState extends State<IRBS> {
     );
   }
 }
-// ChangeNotifierProvider<RoomListProvider>(
-// create: (context)=>RoomListProvider(),
-// child: Consumer<RoomListProvider>(
-// builder: (context,roomListProvider,child){
-// return RoomList();
-// }))

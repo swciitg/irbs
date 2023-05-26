@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:irbs/src/globals/colors.dart';
 
-import 'my_colors.dart';
-
 const headingStyle = TextStyle(
   color: Themes.white,
   fontSize: 28,
@@ -51,11 +49,11 @@ const elevatedButtonTextStyle = TextStyle(
   fontWeight: FontWeight.bold
 );
 const roomTypeStyle= TextStyle(
-  package: 'irbs',
+    package: 'irbs',
 fontFamily: 'Montserrat',
 fontWeight: FontWeight.w400,
 fontSize: 14,
-color: kGrey11
+color: Themes.regentGrey
 );
 const appBarStyle = TextStyle(
     color: Themes.white,

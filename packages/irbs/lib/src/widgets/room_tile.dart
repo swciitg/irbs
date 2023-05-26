@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:irbs/src/store/room_list_store.dart';
-import '../globals/my_colors.dart';
+import '../globals/colors.dart';
+
 import 'package:provider/provider.dart';
 class RoomTile extends StatefulWidget {
   final String roomName;
@@ -19,7 +20,7 @@ class _RoomTileState extends State<RoomTile> {
         margin: const EdgeInsets.only(left: 7.68,right: 13.68,bottom: 6),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color: kBlueGrey,
+          color: Themes.tileColor,
           borderRadius: BorderRadius.circular(8), // Set the radius here
         ),
         child: ChangeNotifierProvider<RoomListProvider>(
@@ -36,7 +37,7 @@ class _RoomTileState extends State<RoomTile> {
                         height: 30,
                         width: 30,
                         decoration: BoxDecoration(
-                          color: kWhite,
+                          color: Themes.white,
                           borderRadius: BorderRadius.circular(4), // Set the radius here
                         ),
                       ),
@@ -67,7 +68,7 @@ class _RoomTileState extends State<RoomTile> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 20),
                         child: IconButton(
-                          icon: const Icon(Icons.more_vert,color: kWhite,),
+                          icon: const Icon(Icons.more_vert,color: Themes.white,),
                           onPressed: () {
                           },
                         ),

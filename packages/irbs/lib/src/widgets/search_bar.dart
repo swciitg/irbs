@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../globals/my_colors.dart';
+import '../globals/colors.dart';
 
 class RoomSearchBar extends StatelessWidget {
   const RoomSearchBar({Key? key}) : super(key: key);
@@ -7,9 +7,10 @@ class RoomSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+        margin: const EdgeInsets.fromLTRB(16,29,16,8,),
+
         decoration: BoxDecoration(
-          color: kBlueGrey,
+          color: Themes.darkSlateGrey,
           borderRadius: BorderRadius.circular(4), // Set the radius here
         ),
         width: MediaQuery.of(context).size.width,
@@ -32,7 +33,7 @@ class RoomSearchBar extends StatelessWidget {
                 ),
                 maxLines: 1,
                 scrollPhysics: ClampingScrollPhysics(),
-                cursorColor: kGrey2,
+                cursorColor: Themes.comet,
                 decoration: InputDecoration(
                     isDense: true,
                     contentPadding: EdgeInsets.zero,
@@ -47,7 +48,7 @@ class RoomSearchBar extends StatelessWidget {
                     ),
                     hintText: 'Search Keyword (name,position etc.)',
                     hintStyle: TextStyle(
-                      color: kGrey2,
+                      color: Themes.comet,
                       fontSize: 12,
                     )
                 ),

@@ -3,9 +3,7 @@ import 'package:irbs/src/store/room_list_store.dart';
 import 'package:irbs/src/widgets/search_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-
 import '../globals/colors.dart';
-import '../globals/my_colors.dart';
 import '../globals/styles.dart';
 class RoomList extends StatefulWidget {
   const RoomList({Key? key}) : super(key: key);
@@ -13,7 +11,6 @@ class RoomList extends StatefulWidget {
   @override
   State<RoomList> createState() => _RoomListState();
 }
-
 class _RoomListState extends State<RoomList> {
 
   @override
@@ -21,7 +18,7 @@ class _RoomListState extends State<RoomList> {
     return Scaffold(
 
       backgroundColor: Themes.backgroundColor,
-        body: SafeArea(
+      body: SafeArea(
         child: ChangeNotifierProvider<RoomListProvider>(
           create: (context)=>RoomListProvider(),
           child: Consumer<RoomListProvider>(
@@ -55,7 +52,7 @@ class _RoomListState extends State<RoomList> {
                               margin: const EdgeInsets.only(left: 16,right: 16,bottom: 6),
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
-                                color: kBlueGrey,
+                                color: Themes.tileColor,
                                 borderRadius: BorderRadius.circular(8), // Set the radius here
                               ),
                               child:   Row(
@@ -68,7 +65,7 @@ class _RoomListState extends State<RoomList> {
                                         height: 30,
                                         width: 30,
                                         decoration: BoxDecoration(
-                                          color: kWhite,
+                                          color: Colors.white,
                                           borderRadius: BorderRadius.circular(4), // Set the radius here
                                         ),
                                       ),
@@ -88,19 +85,17 @@ class _RoomListState extends State<RoomList> {
                                   Row(
                                     children:  [
                                       IconButton(
-                                        icon: const Icon(Icons.add),
-                                        // icon: Image.asset('assets/images/pinned.svg',
-                                        //   height: 20,
-                                        //   width: 20,
-                                        // ),
+                                        icon: SvgPicture.asset("packages/irbs/assets/images/pinned.svg",height: 24,width: 24,),
                                         onPressed: () {
                                           roomListProvider.modifyPinnedRooms(roomListProvider.pinnedRooms[index]);
                                         },
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 20),
+                                        padding: const EdgeInsets.only(right: 19,),
                                         child: IconButton(
-                                          icon: const Icon(Icons.more_vert,color: kWhite,),
+                                          icon: const Icon(Icons.more_vert,color: Colors.white,
+                                            size: 20,
+                                          ),
                                           onPressed: () {
                                           },
                                         ),
@@ -137,7 +132,7 @@ class _RoomListState extends State<RoomList> {
                               margin: const EdgeInsets.only(left: 16,right: 16,bottom: 6),
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
-                                color: kBlueGrey,
+                                color: Themes.tileColor,
                                 borderRadius: BorderRadius.circular(8), // Set the radius here
                               ),
                               child:   Row(
@@ -150,7 +145,7 @@ class _RoomListState extends State<RoomList> {
                                         height: 30,
                                         width: 30,
                                         decoration: BoxDecoration(
-                                          color: kWhite,
+                                          color: Colors.white,
                                           borderRadius: BorderRadius.circular(4), // Set the radius here
                                         ),
                                       ),
@@ -169,22 +164,18 @@ class _RoomListState extends State<RoomList> {
                                   ),
                                   Row(
                                     children:  [
-                                      //SvgPicture.asset('assets/images/pinned.svg',height: 20,width: 20,),
-
                                       IconButton(
-                                        icon: const Icon(Icons.add),
-                                        // icon: Image.asset('assets/images/pinned.svg',
-                                        //   height: 20,
-                                        //   width: 20,
-                                        // ),
+                                        icon: SvgPicture.asset("packages/irbs/assets/images/unpinned.svg",height: 20,width: 20,),
                                         onPressed: () {
                                           roomListProvider.modifyPinnedRooms(roomListProvider.commonRooms[index]);
                                         },
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 20),
+                                        padding: const EdgeInsets.only(right: 19,),
                                         child: IconButton(
-                                          icon: const Icon(Icons.more_vert,color: kWhite,),
+                                          icon: const Icon(Icons.more_vert,color: Colors.white,
+                                            size: 20,
+                                          ),
                                           onPressed: () {
                                           },
                                         ),
@@ -206,7 +197,7 @@ class _RoomListState extends State<RoomList> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text('Club Rooms',
-                              style: roomTypeStyle
+                                style: roomTypeStyle
                             ),
                           ],
                         ),
@@ -221,7 +212,7 @@ class _RoomListState extends State<RoomList> {
                               margin: const EdgeInsets.only(left: 16,right: 16,bottom: 6),
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
-                                color: kBlueGrey,
+                                color: Themes.tileColor,
                                 borderRadius: BorderRadius.circular(8), // Set the radius here
                               ),
                               child:   Row(
@@ -234,7 +225,7 @@ class _RoomListState extends State<RoomList> {
                                         height: 30,
                                         width: 30,
                                         decoration: BoxDecoration(
-                                          color: kWhite,
+                                          color: Colors.white,
                                           borderRadius: BorderRadius.circular(4), // Set the radius here
                                         ),
                                       ),
@@ -254,19 +245,17 @@ class _RoomListState extends State<RoomList> {
                                   Row(
                                     children:  [
                                       IconButton(
-                                        icon: const Icon(Icons.add),
-                                        // icon: Image.asset('assets/images/pinned.svg',
-                                        //   height: 20,
-                                        //   width: 20,
-                                        // ),
+                                        icon: SvgPicture.asset("packages/irbs/assets/images/unpinned.svg",height: 20,width: 20,),
                                         onPressed: () {
                                           roomListProvider.modifyPinnedRooms(roomListProvider.clubRooms[index]);
                                         },
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 20),
+                                        padding: const EdgeInsets.only(right: 14,),
                                         child: IconButton(
-                                          icon: const Icon(Icons.more_vert,color: kWhite,),
+                                          icon: const Icon(Icons.more_vert,color: Colors.white,
+                                            size: 20,
+                                          ),
                                           onPressed: () {
                                           },
                                         ),
