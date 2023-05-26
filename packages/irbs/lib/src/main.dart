@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:irbs/src/screens/home/home.dart';
 import 'package:irbs/src/screens/onboarding/onboarding.dart';
 
 class IRBS extends StatefulWidget {
@@ -11,14 +12,6 @@ class IRBS extends StatefulWidget {
 class _IRBSState extends State<IRBS> {
   @override
   Widget build(BuildContext context) {
-    return const Onboarding();
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: Text('IRBS'),
-    //   ),
-    //   body: Center(
-    //     child: Text("IRBS PORTAL"),
-    //   ),
-    // );
+    return Home();
   }
 }
