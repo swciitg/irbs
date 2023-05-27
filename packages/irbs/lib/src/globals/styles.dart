@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:irbs/src/globals/colors.dart';
 
 const headingStyle = TextStyle(
@@ -50,51 +49,77 @@ const elevatedButtonTextStyle = TextStyle(
     package: 'irbs',
     fontWeight: FontWeight.bold);
 
-final kAppBarTextStyle = GoogleFonts.montserrat(
+const kAppBarTextStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
   fontSize: 20.0,
   fontWeight: FontWeight.w500,
   fontStyle: FontStyle.normal,
   color: Colors.white,
 );
 
-final kRequestedRoomStyle = GoogleFonts.montserrat(
+const kRequestedRoomStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
   fontSize: 14.0,
   fontWeight: FontWeight.w500,
   letterSpacing: 0.5,
   color: Colors.white,
 );
 
-final kSubHeadingStyle = GoogleFonts.montserrat(
+const kSubHeadingStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
   fontSize: 14.0,
   // fontWeight: FontWeight.w500,
   letterSpacing: 0.5,
   color: Themes.kSubHeading,
 );
 
-final kHeading3Style = GoogleFonts.montserrat(
+final kHeading3Style = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
   fontSize: 10.0,
   // fontWeight: FontWeight.w500,
   letterSpacing: 0.5,
   color: Colors.white.withOpacity(0.6),
 );
 
-final kHeading3DescStyle = GoogleFonts.montserrat(
+const kHeading3DescStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
   fontSize: 10.0,
   fontWeight: FontWeight.w500,
   letterSpacing: 0.5,
   color: Colors.white,
 );
 
-final kRejectStyle = GoogleFonts.montserrat(
+const kRejectStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
   fontSize: 12.0,
   fontWeight: FontWeight.w500,
   letterSpacing: 0.5,
   color: Colors.white,
 );
 
-final kApproveStyle = GoogleFonts.montserrat(
+const kApproveStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
   fontSize: 12.0,
   fontWeight: FontWeight.w500,
   letterSpacing: 0.5,
   color: Color.fromRGBO(0, 27, 62, 1),
 );
+const roomTypeStyle = TextStyle(
+    package: 'irbs',
+    fontFamily: 'Montserrat',
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    color: Themes.regentGrey);
+const appBarStyle = TextStyle(
+    color: Themes.white,
+    fontSize: 20,
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    fontWeight: FontWeight.w500);

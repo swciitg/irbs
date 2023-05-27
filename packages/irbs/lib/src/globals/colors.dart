@@ -10,4 +10,9 @@ class Themes{
   static const kSubHeading = Color.fromRGBO(135, 145, 165, 1);
   static const kBackground = Color.fromRGBO(28, 28, 30, 1);
   static const kCommonBoxBackground = Color.fromRGBO(39, 49, 65, 1);
+  static const  regentGrey = Color.fromRGBO(135, 145, 165, 1);
+  static const  tileColor = Color.fromRGBO(39, 49, 65, 1);
+  static const  darkSlateGrey = Color.fromRGBO(39, 49, 65, 1);
+  static const  comet = Color.fromRGBO(85, 95, 113, 1);
+  static const darkGrey=Color.fromRGBO(55,55,55,1);
 }

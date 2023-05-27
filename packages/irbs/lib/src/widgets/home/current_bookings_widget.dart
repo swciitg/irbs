@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../src/globals/styles.dart';
+import '../../globals/styles.dart';
 
-import '../../src/globals/colors.dart';
+import '../../globals/colors.dart';
 
 class CurrentBookingsWidget extends StatefulWidget {
   final bool cancelled;

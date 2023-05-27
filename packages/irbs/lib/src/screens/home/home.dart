@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/widgets/home/common_rooms.dart';
-import 'package:irbs/widgets/home/pinned_rooms.dart';
+import 'package:irbs/src/widgets/home/common_rooms.dart';
+import 'package:irbs/src/widgets/home/pinned_rooms.dart';
 
-import '../../../widgets/home/current_bookings_widget.dart';
-import '../../../widgets/home/request_widget.dart';
+import '../../widgets/home/current_bookings_widget.dart';
+import '../../widgets/home/request_widget.dart';
 import '../../globals/styles.dart';
 import '../../globals/colors.dart';
 
@@ -33,7 +33,16 @@ class _HomeState extends State<Home> {
           style: kAppBarTextStyle,
         ),
         actions: [
-          IconButton(onPressed: (){}, icon: Image.asset('assets/question_circle.png', package: 'irbs', height: 24, width: 24,))
+          IconButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/gc/onboarding');
+              },
+              icon: Image.asset(
+                'assets/question_circle.png',
+                package: 'irbs',
+                height: 24,
+                width: 24,
+              ))
         ],
         backgroundColor: Themes.kCommonBoxBackground,
       ),
@@ -51,14 +60,14 @@ class _HomeState extends State<Home> {
               ),
               RequestWidget(),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Container(
                   height: 40,
                   width: double.maxFinite,
                   decoration: BoxDecoration(
                       color: Themes.kCommonBoxBackground,
-                      borderRadius: BorderRadius.circular(4)
-                  ),
+                      borderRadius: BorderRadius.circular(4)),
                   child: Center(
                     child: Text(
                       'View all Requests',
@@ -74,17 +83,29 @@ class _HomeState extends State<Home> {
                   style: kSubHeadingStyle,
                 ),
               ),
-              CurrentBookingsWidget(cancelled: true, startTime: '10:00 AM', endTime: '03:00 PM', date: '21st April', roomName: 'Coding Club Room',),
-              CurrentBookingsWidget(cancelled: false, startTime: '05:00 AM', endTime: '06:30 AM', date: '22nd April', roomName: 'Finesse Room',),
+              CurrentBookingsWidget(
+                cancelled: true,
+                startTime: '10:00 AM',
+                endTime: '03:00 PM',
+                date: '21st April',
+                roomName: 'Coding Club Room',
+              ),
+              CurrentBookingsWidget(
+                cancelled: false,
+                startTime: '05:00 AM',
+                endTime: '06:30 AM',
+                date: '22nd April',
+                roomName: 'Finesse Room',
+              ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Container(
                   height: 40,
                   width: double.maxFinite,
                   decoration: BoxDecoration(
                       color: Themes.kCommonBoxBackground,
-                      borderRadius: BorderRadius.circular(4)
-                  ),
+                      borderRadius: BorderRadius.circular(4)),
                   child: Center(
                     child: Text(
                       'View Booking History',
@@ -108,7 +129,7 @@ class _HomeState extends State<Home> {
             child: Column(children: [
               Container(
                 height: 24,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
@@ -121,12 +142,14 @@ class _HomeState extends State<Home> {
                 color: Color.fromRGBO(28, 28, 30, 1),
                 child: Container(
                   height: 52,
-                  margin: EdgeInsets.fromLTRB(17, 0, 16, 36),
-                  decoration: BoxDecoration(
+                  margin: const EdgeInsets.fromLTRB(17, 0, 16, 36),
+                  decoration: const BoxDecoration(
                       color: Color.fromRGBO(118, 172, 255, 1),
                       borderRadius: BorderRadius.all(Radius.circular(4))),
                   child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, '/gc/roomList');
+                      },
                       child: const Center(
                           child: Text(
                         'Book a Room',
