@@ -24,24 +24,8 @@ class _IRBSState extends State<IRBS> {
         theme: ThemeData(
 
         ),
-        home: Scaffold(
-          backgroundColor: Themes.darkGrey,
-          appBar: AppBar(
-            title: const Center(
-              child: Text('IRBS',
-              style: appBarStyle,
-              ),
-            ),
-            actions: const [
-              Padding(
-                padding: EdgeInsets.only(right: 8),
-                child: Icon(Icons.help_outline),
-              ),
-            ],
-            backgroundColor: Themes.tileColor,
-          ),
-          body: Onboarding()
-        ),
+        home: RoomList(),
+
       ),
     );
   }

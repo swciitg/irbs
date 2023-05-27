@@ -16,7 +16,20 @@ class _RoomListState extends State<RoomList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      appBar: AppBar(
+        title: const Center(
+          child: Text('IRBS',
+            style: appBarStyle,
+          ),
+        ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 8),
+            child: Icon(Icons.help_outline),
+          ),
+        ],
+        backgroundColor: Themes.tileColor,
+      ),
       backgroundColor: Themes.backgroundColor,
       body: SafeArea(
         child: ChangeNotifierProvider<RoomListProvider>(
