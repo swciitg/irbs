@@ -21,6 +21,7 @@ class _IRBSState extends State<IRBS> {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
 
         ),

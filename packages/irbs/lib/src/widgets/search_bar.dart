@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../globals/colors.dart';
+import '../store/room_list_store.dart';
 
 class RoomSearchBar extends StatelessWidget {
   const RoomSearchBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final roomListProvider = Provider.of<RoomListProvider>(context);
     return Container(
         margin: const EdgeInsets.fromLTRB(16,29,16,8,),
 
@@ -27,7 +30,10 @@ class RoomSearchBar extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(top: 2),
               width: MediaQuery.of(context).size.width-80,
-              child: const TextField(
+              child:  TextField(
+                onChanged: (value){
+                  roomListProvider.searchResult(value);
+                },
                 style: TextStyle(
                   color: Colors.white,
                 ),
