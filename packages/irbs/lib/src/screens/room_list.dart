@@ -36,6 +36,7 @@ class _RoomListState extends State<RoomList> {
           IconButton(
               onPressed: () {
                 Navigator.pushReplacementNamed(context, '/gc/onboarding');
+                
               },
               icon: Image.asset(
                 'assets/question_circle.png',
