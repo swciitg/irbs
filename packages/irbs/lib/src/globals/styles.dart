@@ -48,3 +48,17 @@ const elevatedButtonTextStyle = TextStyle(
   package: 'irbs',
   fontWeight: FontWeight.bold
 );
+const roomTypeStyle= TextStyle(
+    package: 'irbs',
+fontFamily: 'Montserrat',
+fontWeight: FontWeight.w400,
+fontSize: 14,
+color: Themes.regentGrey
+);
+const appBarStyle = TextStyle(
+    color: Themes.white,
+    fontSize: 20,
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    fontWeight: FontWeight.w500
+);
