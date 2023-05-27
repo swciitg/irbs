@@ -21,9 +21,9 @@ class _HomeState extends State<Home> {
       backgroundColor: Color.fromRGBO(28, 28, 30, 1),
       appBar: AppBar(
         centerTitle: true,
-        leading: GestureDetector(
-          onTap: () {},
-          child: const Icon(
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(
             Icons.arrow_back_sharp,
             color: Colors.white,
           ),

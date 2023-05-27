@@ -19,9 +19,11 @@ class _RoomListState extends State<RoomList> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        leading: GestureDetector(
-          onTap: () {},
-          child: const Icon(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(
             Icons.arrow_back_sharp,
             color: Colors.white,
           ),
@@ -33,7 +35,7 @@ class _RoomListState extends State<RoomList> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/gc/onboarding');
+                Navigator.pushReplacementNamed(context, '/gc/onboarding');
               },
               icon: Image.asset(
                 'assets/question_circle.png',
