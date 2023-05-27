@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:irbs/src/store/room_list_store.dart';
-import 'package:irbs/src/widgets/search_bar.dart';
+import 'package:irbs/src/widgets/room_list/search_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../globals/colors.dart';
@@ -103,11 +103,7 @@ class _RoomListState extends State<RoomList> {
                                     ],
                                   )
                                 ],
-
-
                               ),
-
-
                             );
                           }
                       ),
@@ -183,11 +179,7 @@ class _RoomListState extends State<RoomList> {
                                     ],
                                   )
                                 ],
-
-
                               ),
-
-
                             );
                           }
                       ),
@@ -263,11 +255,7 @@ class _RoomListState extends State<RoomList> {
                                     ],
                                   )
                                 ],
-
-
                               ),
-
-
                             );
                           }
                       ),

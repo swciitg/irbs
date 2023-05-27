@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/store/room_list_store.dart';
-import '../globals/colors.dart';
-
+import '../../globals/colors.dart';
 import 'package:provider/provider.dart';
+import '../../store/room_list_store.dart';
+
 class RoomTile extends StatefulWidget {
   final String roomName;
   const RoomTile({Key? key, required this.roomName, }) : super(key: key);
@@ -80,7 +80,6 @@ class _RoomTileState extends State<RoomTile> {
             },
           ),
         )
-
     );
   }
 }

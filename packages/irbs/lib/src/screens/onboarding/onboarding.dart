@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/widgets/nav_dots.dart';
+import 'package:irbs/src/widgets/onboarding/nav_dots.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -121,7 +121,9 @@ class _OnboardingState extends State<Onboarding> {
                   width: 0.5 * MediaQuery.of(context).size.width,
                   height: double.infinity,
                   child: ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+
+                    },
                     style: elevatedButtonStyle,
                     child: const Text(
                       "Start Booking",

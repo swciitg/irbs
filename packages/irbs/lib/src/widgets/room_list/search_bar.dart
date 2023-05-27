@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../globals/colors.dart';
+import '../../globals/colors.dart';
 
 class RoomSearchBar extends StatelessWidget {
   const RoomSearchBar({Key? key}) : super(key: key);
@@ -8,7 +8,6 @@ class RoomSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.fromLTRB(16,29,16,8,),
-
         decoration: BoxDecoration(
           color: Themes.darkSlateGrey,
           borderRadius: BorderRadius.circular(4), // Set the radius here
@@ -54,7 +53,6 @@ class RoomSearchBar extends StatelessWidget {
                 ),
               ),
             )
-
           ],
         )
     );

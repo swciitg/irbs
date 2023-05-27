@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/screens/room_list.dart';
 import 'package:irbs/src/screens/onboarding/onboarding.dart';
+import 'package:irbs/src/screens/room_list.dart';
 import 'package:irbs/src/store/room_list_store.dart';
 import 'package:provider/provider.dart';
 import 'globals/colors.dart';
@@ -40,7 +40,7 @@ class _IRBSState extends State<IRBS> {
             ],
             backgroundColor: Themes.tileColor,
           ),
-          body: const RoomList()
+          body: Onboarding()
         ),
       ),
     );
