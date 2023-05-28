@@ -5,6 +5,7 @@ import 'package:irbs/src/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
+import '../widgets/list_display.dart';
 class RoomList extends StatefulWidget {
   const RoomList({Key? key}) : super(key: key);
 
@@ -41,7 +42,7 @@ class _RoomListState extends State<RoomList> {
                           ],
                         ),
                       ),
-                      RoomDisplay(type: pin, pinned: true,),
+                      ListDisplay(type: pin, pinned: true,),
                       roomListProvider.commonRooms.isEmpty ? const SizedBox():const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16,vertical: 12),
                         child: Row(
@@ -53,7 +54,7 @@ class _RoomListState extends State<RoomList> {
                           ],
                         ),
                       ),
-                      RoomDisplay(type: common, pinned: false,),
+                      ListDisplay(type: common, pinned: false,),
                       roomListProvider.clubRooms.isEmpty ? const SizedBox():const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16,vertical: 12),
                         child: Row(
@@ -65,7 +66,7 @@ class _RoomListState extends State<RoomList> {
                           ],
                         ),
                       ),
-                      RoomDisplay(type: club, pinned: false,),
+                      ListDisplay(type: club, pinned: false,),
                     ],
                   ),
                 );
