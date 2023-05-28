@@ -27,19 +27,25 @@ class RoomListProvider with ChangeNotifier{
     notifyListeners();
   }
   void searchResult(String query){
-     searchResults=pinnedRooms
-         .where((item) =>
-         item.toLowerCase().contains(query.toLowerCase())).toList();
-    // searchResults.addAll(pinnedRooms
-    //     .where((item) =>
-    //     item.toLowerCase().contains(query.toLowerCase())).toList());
-    // searchResults.addAll(clubRooms
-    //     .where((item) =>
-    //     item.toLowerCase().contains(query.toLowerCase())).toList());
-    // searchResults.addAll(commonRooms
-    //     .where((item) =>
-    //     item.toLowerCase().contains(query.toLowerCase())).toList());
-    print("searchResults: ${searchResults}");
+      searchResults = [];
+
+      for (String item in pinnedRooms) {
+        if (item.toLowerCase().contains(query.toLowerCase()) ) {
+          searchResults.add(item);
+        }
+      }
+
+      for (String item in commonRooms) {
+        if (item.toLowerCase().contains(query.toLowerCase()) ) {
+          searchResults.add(item);
+        }
+      }
+
+      for (String item in clubRooms) {
+        if (item.toLowerCase().contains(query.toLowerCase()) ) {
+          searchResults.add(item);
+        }
+      }
     notifyListeners();
   }
 }
