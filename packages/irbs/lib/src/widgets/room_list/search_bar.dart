@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../globals/colors.dart';
-import '../store/room_list_store.dart';
+import '../../globals/colors.dart';
+import '../../store/room_list_store.dart';
 
 class RoomSearchBar extends StatelessWidget {
   const RoomSearchBar({Key? key}) : super(key: key);
@@ -11,7 +11,6 @@ class RoomSearchBar extends StatelessWidget {
     final roomListProvider = Provider.of<RoomListProvider>(context);
     return Container(
         margin: const EdgeInsets.fromLTRB(16,29,16,8,),
-
         decoration: BoxDecoration(
           color: Themes.darkSlateGrey,
           borderRadius: BorderRadius.circular(4), // Set the radius here
@@ -34,13 +33,13 @@ class RoomSearchBar extends StatelessWidget {
                 onChanged: (value){
                   roomListProvider.searchResult(value);
                 },
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                 ),
                 maxLines: 1,
-                scrollPhysics: ClampingScrollPhysics(),
+                scrollPhysics: const ClampingScrollPhysics(),
                 cursorColor: Themes.comet,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     isDense: true,
                     contentPadding: EdgeInsets.zero,
                     border: OutlineInputBorder(
@@ -60,7 +59,6 @@ class RoomSearchBar extends StatelessWidget {
                 ),
               ),
             )
-
           ],
         )
     );

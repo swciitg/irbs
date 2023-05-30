@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/store/room_list_store.dart';
-import 'package:irbs/src/widgets/room_tile.dart';
-import 'package:irbs/src/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
-import '../globals/colors.dart';
-import '../globals/styles.dart';
-import '../widgets/list_display.dart';
+import '../../globals/colors.dart';
+import '../../globals/styles.dart';
+import '../../store/room_list_store.dart';
+import '../../widgets/room_list/list_display.dart';
+import 'package:irbs/src/widgets/room_list/search_bar.dart';
 class RoomList extends StatefulWidget {
   const RoomList({Key? key}) : super(key: key);
 
@@ -17,6 +16,20 @@ class _RoomListState extends State<RoomList> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
+      appBar: AppBar(
+        title: const Center(
+          child: Text('IRBS',
+            style: appBarStyle,
+          ),
+        ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 8),
+            child: Icon(Icons.help_outline),
+          ),
+        ],
+        backgroundColor: Themes.tileColor,
+      ),
       body: SafeArea(
         child: ChangeNotifierProvider<RoomListProvider>(
           create: (context)=>RoomListProvider(),
@@ -78,3 +91,4 @@ class _RoomListState extends State<RoomList> {
     );
   }
 }
+

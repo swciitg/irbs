@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:irbs/src/store/room_list_store.dart';
-import '../globals/colors.dart';
-
+import '../../globals/colors.dart';
 import 'package:provider/provider.dart';
 class RoomTile extends StatefulWidget {
   final String room;
@@ -12,7 +11,6 @@ class RoomTile extends StatefulWidget {
   @override
   State<RoomTile> createState() => _RoomTileState();
 }
-
 class _RoomTileState extends State<RoomTile> {
   @override
   Widget build(BuildContext context) {
@@ -83,6 +81,6 @@ class _RoomTileState extends State<RoomTile> {
       ),
 
 
-    );;
+    );
   }
 }
