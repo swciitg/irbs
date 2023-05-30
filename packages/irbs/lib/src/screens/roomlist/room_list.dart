@@ -17,10 +17,9 @@ class _RoomListState extends State<RoomList> {
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
-        title: const Center(
-          child: Text('IRBS',
-            style: appBarStyle,
-          ),
+        centerTitle: true,
+        title: Text('IRBS',
+          style: appBarStyle,
         ),
         actions: const [
           Padding(
