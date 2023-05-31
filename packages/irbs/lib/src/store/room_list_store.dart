@@ -5,7 +5,7 @@ class RoomListProvider with ChangeNotifier{
   List<String> commonRoom=['Yoga Room','Conf. Room','Techboard Room','Alcher Room','Exhibition Room'];
   List<String> clubRoom=['Aeromodelling Club','Automobile Club','Electronics Club','Robotics Club','Cadence Club'];
   List<String> pinnedRooms=[];
-  bool ispinned=false;
+  List<String> searchResults = [];
   void modifyPinnedRooms(String room){
     if (pinnedRooms.contains(room)){
       pinnedRooms.remove(room);
@@ -19,15 +19,33 @@ class RoomListProvider with ChangeNotifier{
       pinnedRooms.add(room);
       if(commonRoom.contains(room)){
         commonRooms.remove(room);
-        print(commonRooms.length);
       }
       if(clubRoom.contains(room)){
         clubRooms.remove(room);
       }
     }
-    print("pinnedRooms: ${pinnedRooms}");
-    print("clubRooms: ${clubRooms}");
-    print("commonRooms: ${commonRooms}");
+    notifyListeners();
+  }
+  void searchResult(String query){
+      searchResults = [];
+
+      for (String item in pinnedRooms) {
+        if (item.toLowerCase().contains(query.toLowerCase()) ) {
+          searchResults.add(item);
+        }
+      }
+
+      for (String item in commonRooms) {
+        if (item.toLowerCase().contains(query.toLowerCase()) ) {
+          searchResults.add(item);
+        }
+      }
+
+      for (String item in clubRooms) {
+        if (item.toLowerCase().contains(query.toLowerCase()) ) {
+          searchResults.add(item);
+        }
+      }
     notifyListeners();
   }
 }
