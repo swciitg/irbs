@@ -123,3 +123,11 @@ const appBarStyle = TextStyle(
     fontFamily: 'Montserrat',
     package: 'irbs',
     fontWeight: FontWeight.w500);
+const rejectTextStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 12.0,
+  fontWeight: FontWeight.w500,
+  letterSpacing: 0.5,
+  color: Colors.white,
+);

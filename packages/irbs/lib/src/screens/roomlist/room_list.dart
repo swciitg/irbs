@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import '../../globals/colors.dart';
 import '../../globals/styles.dart';
 import '../../store/room_list_store.dart';
-import '../../widgets/room_list/list_display.dart';
-import 'package:irbs/src/widgets/room_list/search_bar.dart';
+import '../../widgets/roomlist/list_display.dart';
+import '../../widgets/roomlist/search_bar.dart';
 class RoomList extends StatefulWidget {
   const RoomList({Key? key}) : super(key: key);
 
@@ -18,7 +18,7 @@ class _RoomListState extends State<RoomList> {
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
         centerTitle: true,
-        title: Text('IRBS',
+        title: const Text('IRBS',
           style: appBarStyle,
         ),
         actions: const [

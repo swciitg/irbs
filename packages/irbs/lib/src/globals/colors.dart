@@ -15,4 +15,8 @@ class Themes{
   static const  darkSlateGrey = Color.fromRGBO(39, 49, 65, 1);
   static const  comet = Color.fromRGBO(85, 95, 113, 1);
   static const darkGrey=Color.fromRGBO(55,55,55,1);
+  static const rejectedColor =Color.fromRGBO(227, 114, 108, 1);
+  static const approvedGreenColor = Color.fromRGBO(83, 132, 75, 1);
+  static const pendingColor = Color.fromRGBO(147, 144, 148, 1);
+
 }

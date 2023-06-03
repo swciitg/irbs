@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import '../../globals/styles.dart';
-
-import '../../globals/colors.dart';
-
-class CurrentBookingsWidget extends StatefulWidget {
-  final bool cancelled;
+import 'package:irbs/src/globals/colors.dart';
+import 'package:irbs/src/globals/styles.dart';
+class BookingStatus extends StatefulWidget {
+  final bool rejected;
+  final bool approved;
   final String startTime;
+  final String roomName;
   final String endTime;
   final String date;
-  final String roomName;
-  const CurrentBookingsWidget({Key? key, required this.cancelled, required this.startTime, required this.endTime, required this.date, required this.roomName}) : super(key: key);
+  final bool current;
+  const BookingStatus({Key? key, required this.rejected, required this.startTime, required this.roomName, required this.endTime, required this.date, required this.approved, required this.current}) : super(key: key);
 
   @override
-  State<CurrentBookingsWidget> createState() => _CurrentBookingsWidgetState();
+  State<BookingStatus> createState() => _BookingStatusState();
 }
 
-class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
+class _BookingStatusState extends State<BookingStatus> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,8 +24,8 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
         width: double.maxFinite,
         decoration: BoxDecoration(
             gradient: LinearGradient(
-                stops: [0.0125, 0.0125],
-                colors: [widget.cancelled ? Color.fromRGBO(179, 38, 30, 1) : Color.fromRGBO(147, 144, 148, 1), Themes.kCommonBoxBackground]
+                stops: widget.current? const [0.0125, 0.0125]:const [0, 0],
+                colors: [ widget.rejected ? Themes.rejectedColor : widget.approved? Themes.approvedGreenColor:Themes.pendingColor, Themes.kCommonBoxBackground]
             ),
             borderRadius: BorderRadius.circular(4)),
         child: ListTile(
@@ -44,13 +44,13 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                   TextSpan(
                     text: widget.startTime,
                   ),
-                  TextSpan(
+                  const TextSpan(
                     text: ' - ',
                   ),
                   TextSpan(
                     text: widget.endTime,
                   ),
-                  TextSpan(
+                  const TextSpan(
                     text: ' · ',
                   ),
                   TextSpan(
@@ -68,12 +68,18 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
               height: 24,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(42),
-                color: widget.cancelled ? Color.fromRGBO(179, 38, 30, 1) : Color.fromRGBO(147, 144, 148, 1),
               ),
               child: Center(
                 child: Text(
-                  widget.cancelled ? 'Cancelled' : 'Pending',
-                  style: kRejectStyle,
+                  widget.rejected ? 'Rejected' : widget.approved? 'Approved':'Pending',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    package: 'irbs',
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.1,
+                    color: widget.rejected ? Themes.rejectedColor:widget.approved? Themes.approvedGreenColor:Themes.pendingColor,
+                  ),
                 ),
               ),
             ),
