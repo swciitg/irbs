@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/widgets/room_list/room_tile.dart';
+import 'package:irbs/src/widgets/roomlist/room_tile.dart';
 class ListDisplay extends StatefulWidget {
   final List<String> type;
   final bool pinned;

@@ -100,16 +100,21 @@ class _HomeState extends State<Home> {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Container(
-                  height: 40,
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                      color: Themes.kCommonBoxBackground,
-                      borderRadius: BorderRadius.circular(4)),
-                  child: Center(
-                    child: Text(
-                      'View Booking History',
-                      style: kRequestedRoomStyle,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/gc/bookingHistory');
+                  },
+                  child: Container(
+                    height: 40,
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                        color: Themes.kCommonBoxBackground,
+                        borderRadius: BorderRadius.circular(4)),
+                    child: Center(
+                      child: Text(
+                        'View Booking History',
+                        style: kRequestedRoomStyle,
+                      ),
                     ),
                   ),
                 ),
