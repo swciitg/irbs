@@ -4,19 +4,12 @@ import '../../globals/styles.dart';
 import '../../globals/colors.dart';
 
 class CurrentBookingsWidget extends StatefulWidget {
-  final int status;
+  final bool cancelled;
   final String startTime;
   final String endTime;
   final String date;
-  final String name;
-  const CurrentBookingsWidget(
-      {Key? key,
-      required this.status,
-      required this.startTime,
-      required this.endTime,
-      required this.date,
-      required this.name})
-      : super(key: key);
+  final String roomName;
+  const CurrentBookingsWidget({Key? key, required this.cancelled, required this.startTime, required this.endTime, required this.date, required this.roomName}) : super(key: key);
 
   @override
   State<CurrentBookingsWidget> createState() => _CurrentBookingsWidgetState();
@@ -30,61 +23,57 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
       child: Container(
         width: double.maxFinite,
         decoration: BoxDecoration(
-            gradient: LinearGradient(stops: [
-              0.0125,
-              0.0125
-            ], colors: [
-              (widget.status == 0)
-                  ? Color.fromRGBO(217, 114, 108, 1)
-                  : (widget.status == 1)
-                      ? Color.fromRGBO(147, 144, 148, 1)
-                      : Color.fromRGBO(53, 118, 42, 1),
-              Themes.kCommonBoxBackground
-            ]),
+            gradient: LinearGradient(
+                stops: [0.0125, 0.0125],
+                colors: [widget.cancelled ? Color.fromRGBO(179, 38, 30, 1) : Color.fromRGBO(147, 144, 148, 1), Themes.kCommonBoxBackground]
+            ),
             borderRadius: BorderRadius.circular(4)),
         child: ListTile(
           tileColor: Themes.kCommonBoxBackground,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4)
+          ),
           title: Text(
-            widget.name,
+            widget.roomName,
             style: kRequestedRoomStyle,
           ),
           subtitle: RichText(
-            text: TextSpan(style: kHeading3DescStyle, children: [
-              TextSpan(
-                text: widget.startTime,
-              ),
-              TextSpan(
-                text: ' - ',
-              ),
-              TextSpan(
-                text: widget.endTime,
-              ),
-              TextSpan(
-                text: ' · ',
-              ),
-              TextSpan(
-                text: widget.date,
-              )
-            ]),
+            text: TextSpan(
+                style: kHeading3DescStyle,
+                children: [
+                  TextSpan(
+                    text: widget.startTime,
+                  ),
+                  TextSpan(
+                    text: ' - ',
+                  ),
+                  TextSpan(
+                    text: widget.endTime,
+                  ),
+                  TextSpan(
+                    text: ' · ',
+                  ),
+                  TextSpan(
+                    text: widget.date,
+                  )
+                ]
+            ),
           ),
           trailing: InkWell(
-            onTap: () {},
+            onTap: (){
+
+            },
             child: Container(
               width: 88,
               height: 24,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(42),
+                color: widget.cancelled ? Color.fromRGBO(179, 38, 30, 1) : Color.fromRGBO(147, 144, 148, 1),
+              ),
               child: Center(
                 child: Text(
-                  (widget.status == 0)
-                      ? 'Rejected'
-                      : (widget.status == 1)
-                          ? 'Pending'
-                          : 'Approved',
-                  style: (widget.status == 0)
-                      ? rejectTextStyle
-                      : (widget.status == 1)
-                          ? pendingStyle
-                          : approvedStyle,
+                  widget.cancelled ? 'Cancelled' : 'Pending',
+                  style: kRejectStyle,
                 ),
               ),
             ),

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:irbs/src/widgets/roomdetails/request_modal.dart';
-import 'package:irbs/src/widgets/roomdetails/upcoming_bookings.dart';
-
 import '../../globals/colors.dart';
 import '../../globals/styles.dart';
+import '../../widgets/roomdetails/upcoming_booking_widget.dart';
 
 class RoomDetails extends StatefulWidget {
   const RoomDetails({super.key});
@@ -58,7 +56,7 @@ class _RoomDetailsState extends State<RoomDetails> {
       ),
       floatingActionButton: FloatingActionButton(
           child: Image.asset('packages/irbs/assets/images/add.png'),
-          backgroundColor: Color.fromRGBO(118, 172, 255, 1),
+          backgroundColor: Color.fromRGBO(28, 28, 30, 1),
           onPressed: () {
             _showModal(context);
           }),
@@ -86,7 +84,35 @@ class _RoomDetailsState extends State<RoomDetails> {
         SizedBox(
           height: 8,
         ),
-        UpcomingBookings(),
+        Theme(
+      data: Theme.of(context)
+          .copyWith(unselectedWidgetColor: Color.fromRGBO(135, 145, 165, 1)),
+      child: ExpansionTile(
+        title: Text(
+          'UpcomingBookings',
+          style: subHeadingStyle,
+        ),
+        children: [
+          UpcomingBookingsWidget(
+            status: 2,
+            name: 'Aarya Ghodke',
+            startTime: '10:00 AM',
+            endTime: '03:00 PM',
+            date: '21st April',
+          ),
+          UpcomingBookingsWidget(
+            status: 1,
+            name: 'Chandu Mandu',
+            startTime: '05:00 AM',
+            endTime: '06:30 PM',
+            date: '22nd April',
+          ),
+          SizedBox(
+            height: 8,
+          )
+        ],
+      ),
+    ),
         Divider(
           height: 0.5,
           color: Colors.white.withOpacity(0.2),

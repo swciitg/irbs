@@ -191,6 +191,20 @@ const roomheadingStyle = TextStyle(
     color: Color.fromRGBO(253, 252, 255, 1),
     fontWeight: FontWeight.w600,
     fontSize: 24);
+const sentRequestStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  color: Colors.white,
+  fontSize: 16,
+  fontWeight: FontWeight.w600,
+);
+const cancelButtonStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  color: Color.fromRGBO(255, 111, 102, 1),
+  fontSize: 12,
+  fontWeight: FontWeight.w500,
+);
 const rejectedStyle = TextStyle(
   fontFamily: 'Montserrat',
   package: 'irbs',
