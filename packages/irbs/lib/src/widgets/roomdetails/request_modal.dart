@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:irbs/src/widgets/roomdetails/datepicker_color.dart';
 import '../../globals/styles.dart';
@@ -315,6 +316,9 @@ class _RequestModalState extends State<RequestModal>
                     if (res1 != Null) {
                       String formattedTime = res1.toString().substring(10, 15);
                       if (formattedTime.compareTo(timeCtl.text) < 0) {
+                        Fluttertoast.showToast(
+                            msg: 'Please Enter a Valid Time Range',
+                            backgroundColor: Color.fromRGBO(39, 49, 65, 0.7));
                         setState(() {
                           timeCtl.text = '';
                         });

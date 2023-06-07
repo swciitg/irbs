@@ -84,18 +84,18 @@ class _HomeState extends State<Home> {
                 ),
               ),
               CurrentBookingsWidget(
-                status: 0,
+                cancelled: true,
                 startTime: '10:00 AM',
                 endTime: '03:00 PM',
                 date: '21st April',
-                name: 'Coding Club Room',
+                roomName: 'Coding Club Room',
               ),
               CurrentBookingsWidget(
-                status: 1,
+                cancelled: false,
                 startTime: '05:00 AM',
                 endTime: '06:30 AM',
                 date: '22nd April',
-                name: 'Finesse Room',
+                roomName: 'Finesse Room',
               ),
               Padding(
                 padding:

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:irbs/src/widgets/roomdetails/request_modal.dart';
 import '../../globals/colors.dart';
 import '../../globals/styles.dart';
 import '../../widgets/roomdetails/upcoming_booking_widget.dart';
 
 class RoomDetails extends StatefulWidget {
-  const RoomDetails({super.key});
+  const RoomDetails({super.key, required});
 
   @override
   State<RoomDetails> createState() => _RoomDetailsState();
@@ -73,7 +74,8 @@ class _RoomDetailsState extends State<RoomDetails> {
                 style: roomheadingStyle,
               )),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                  },
                   icon: Icon(
                     Icons.more_vert,
                     color: Colors.white,
@@ -85,34 +87,34 @@ class _RoomDetailsState extends State<RoomDetails> {
           height: 8,
         ),
         Theme(
-      data: Theme.of(context)
-          .copyWith(unselectedWidgetColor: Color.fromRGBO(135, 145, 165, 1)),
-      child: ExpansionTile(
-        title: Text(
-          'UpcomingBookings',
-          style: subHeadingStyle,
+          data: Theme.of(context).copyWith(
+              unselectedWidgetColor: Color.fromRGBO(135, 145, 165, 1)),
+          child: ExpansionTile(
+            title: Text(
+              'UpcomingBookings',
+              style: subHeadingStyle,
+            ),
+            children: [
+              UpcomingBookingsWidget(
+                status: 2,
+                name: 'Aarya Ghodke',
+                startTime: '10:00 AM',
+                endTime: '03:00 PM',
+                date: '21st April',
+              ),
+              UpcomingBookingsWidget(
+                status: 1,
+                name: 'Chandu Mandu',
+                startTime: '05:00 AM',
+                endTime: '06:30 PM',
+                date: '22nd April',
+              ),
+              SizedBox(
+                height: 8,
+              )
+            ],
+          ),
         ),
-        children: [
-          UpcomingBookingsWidget(
-            status: 2,
-            name: 'Aarya Ghodke',
-            startTime: '10:00 AM',
-            endTime: '03:00 PM',
-            date: '21st April',
-          ),
-          UpcomingBookingsWidget(
-            status: 1,
-            name: 'Chandu Mandu',
-            startTime: '05:00 AM',
-            endTime: '06:30 PM',
-            date: '22nd April',
-          ),
-          SizedBox(
-            height: 8,
-          )
-        ],
-      ),
-    ),
         Divider(
           height: 0.5,
           color: Colors.white.withOpacity(0.2),
