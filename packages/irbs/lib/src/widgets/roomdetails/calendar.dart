@@ -15,26 +15,44 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   String month = DateFormat('MMMM').format(DateTime.now());
 
-  List<Meeting> _getDataSource() {
-    final List<Meeting> meetings = <Meeting>[];
-    final DateTime today = DateTime.now();
-    final DateTime startTime = DateTime(today.year, today.month, today.day, 9);
-    final DateTime endTime = startTime.add(const Duration(hours: 2));
-    meetings.add(Meeting(
-        'Conference', startTime, endTime, const Color(0xFF0F8644), false));
-    meetings.add(Meeting('HackStack', DateTime(2023, 6, 1, 14), DateTime(2023, 6, 1, 17), Colors.red, false));
-    return meetings;
-  }
-
   final _calendarController = CalendarController();
   final _datePickerController = DateRangePickerController();
 
   double datePickerHeight = 0;
 
+  List<Meeting> _getDataSource(List<Map> data) {
+    final List<Meeting> meetings = <Meeting>[];
+
+    for(int i = 0; i < data.length; i++){
+      meetings.add(
+        Meeting(
+          eventName: data[i]['eventName'],
+          from: data[i]['startTime'],
+          to: data[i]['endTime'],
+          background: Colors.red,
+          isAllDay: false
+        )
+      );
+    }
+    return meetings;
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<Meeting> meetings = _getDataSource();
-    MeetingDataSource source = MeetingDataSource(meetings);
+    List<Map> data = [
+      {
+        'eventName': 'HackStack',
+        'startTime': DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 9),
+        'endTime': DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 11)
+      },
+      {
+        'eventName': 'New Event',
+        'startTime': DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1, 9),
+        'endTime': DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1, 11)
+      },
+    ];
+    
+    MeetingDataSource dataSource = MeetingDataSource(_getDataSource(data));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,7 +235,7 @@ class _CalendarState extends State<Calendar> {
               timeTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
             ),
             allowDragAndDrop: false,
-            dataSource: source,
+            dataSource: dataSource,
           ),
         ),
       ],
@@ -277,7 +295,13 @@ class MeetingDataSource extends CalendarDataSource {
 /// information about the event data which will be rendered in calendar.
 class Meeting {
   /// Creates a meeting class with required details.
-  Meeting(this.eventName, this.from, this.to, this.background, this.isAllDay);
+  Meeting({
+    required this.eventName, 
+    required this.from, 
+    required this.to, 
+    required this.background, 
+    required this.isAllDay
+  });
 
   /// Event name which is equivalent to subject property of [Appointment].
   String eventName;

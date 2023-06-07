@@ -64,7 +64,10 @@ class _RoomDetailsState extends State<RoomDetails> {
           onPressed: () {
             _showModal(context);
           },
-          child: Image.asset('packages/irbs/assets/images/add.png',)),
+          child: Image.asset(
+            'packages/irbs/assets/images/add.png',
+            fit: BoxFit.contain,
+          )),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
