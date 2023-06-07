@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:irbs/src/widgets/home/respond_dialog.dart';
 
 import '../../globals/styles.dart';
 import '../../globals/colors.dart';
@@ -33,7 +34,7 @@ class _RequestWidgetState extends State<RequestWidget> {
             ),
             GridView.count(
               physics: NeverScrollableScrollPhysics(),
-              childAspectRatio: 3,
+              childAspectRatio: 3.35,
               shrinkWrap: true,
               // primary: false,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
@@ -109,51 +110,38 @@ class _RequestWidgetState extends State<RequestWidget> {
                     style: kHeading3DescStyle,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: InkWell(
-                    child: Container(
-                      height: 24,
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(62, 71, 88, 1),
-                        borderRadius: BorderRadius.circular(4)
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Reject',
-                          style: kRejectStyle,
-                        ),
-                      ),
-                    ),
-                    onTap: (){
-
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: InkWell(
-                    child: Container(
-                      height: 24,
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(118, 172, 255, 1),
-                          borderRadius: BorderRadius.circular(4)
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Approve',
-                          style: kApproveStyle,
-                        ),
-                      ),
-                    ),
-                    onTap: (){
-
-                    },
-                  ),
-                ),
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 12),
+              child: InkWell(
+                child: Container(
+                  height: 32,
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(118, 172, 255, 1),
+                      borderRadius: BorderRadius.circular(4)
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Respond',
+                      style: kApproveStyle,
+                    ),
+                  ),
+                ),
+                onTap: (){
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context){
+                      return AlertDialog(
+                        contentPadding: EdgeInsets.zero,
+                        insetPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                        content: RespondDialog(),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),

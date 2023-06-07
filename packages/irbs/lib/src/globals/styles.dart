@@ -67,6 +67,60 @@ const kRequestedRoomStyle = TextStyle(
   color: Colors.white,
 );
 
+const kDialogRoomStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 16.0,
+  fontWeight: FontWeight.w600,
+  letterSpacing: 0.5,
+  color: Colors.white,
+);
+
+const kDialogSubRoomStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 12.0,
+  fontWeight: FontWeight.w400,
+  letterSpacing: 0.5,
+  color: Color.fromRGBO(189, 199, 220, 1),
+);
+
+const kDialogTimeStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 11.0,
+  fontWeight: FontWeight.w500,
+  letterSpacing: 0.5,
+  color: Color.fromRGBO(253, 252, 255, 1),
+);
+
+const kDialogPurposeStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 11.0,
+  fontWeight: FontWeight.w500,
+  letterSpacing: 0.5,
+  color: Color.fromRGBO(162, 172, 192, 1),
+);
+
+const kDialogInstStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 11.0,
+  fontWeight: FontWeight.w400,
+  letterSpacing: 0.5,
+  color: Color.fromRGBO(162, 172, 192, 1),
+);
+
+const kDialogHintStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 12.0,
+  fontWeight: FontWeight.w400,
+  letterSpacing: 0.5,
+  color: Color.fromRGBO(85, 95, 113, 1),
+);
+
 const kSubHeadingStyle = TextStyle(
   fontFamily: 'Montserrat',
   package: 'irbs',
@@ -94,20 +148,66 @@ const kHeading3DescStyle = TextStyle(
   color: Colors.white,
 );
 
-const kRejectStyle = TextStyle(
+const kRejectedStyle = TextStyle(
   fontFamily: 'Montserrat',
   package: 'irbs',
   fontSize: 12.0,
   fontWeight: FontWeight.w500,
   letterSpacing: 0.5,
+  color: Color.fromRGBO(179, 38, 30, 1),
+);
+
+const kLabelStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 8.0,
+  fontWeight: FontWeight.w500,
+  letterSpacing: 0.5,
   color: Colors.white,
+);
+
+const kReasonStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 8.0,
+  fontWeight: FontWeight.w500,
+  letterSpacing: 0.5,
+  color: Color.fromRGBO(218, 227, 249, 1),
+);
+
+const kTextButtonStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    fontSize: 12.0,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.5,
+    color: Color.fromRGBO(88, 129, 191, 1),
+    decoration: TextDecoration.underline
+);
+
+const kApprovedStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 12.0,
+  fontWeight: FontWeight.w500,
+  letterSpacing: 0.5,
+  color: Color.fromRGBO(83, 172, 75, 1),
+);
+
+const kPendingStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 12.0,
+  fontWeight: FontWeight.w500,
+  letterSpacing: 0.5,
+  color: Color.fromRGBO(147, 144, 148, 1),
 );
 
 const kApproveStyle = TextStyle(
   fontFamily: 'Montserrat',
   package: 'irbs',
-  fontSize: 12.0,
-  fontWeight: FontWeight.w500,
+  fontSize: 14.0,
+  fontWeight: FontWeight.w600,
   letterSpacing: 0.5,
   color: Color.fromRGBO(0, 27, 62, 1),
 );
