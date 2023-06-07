@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:irbs/src/widgets/roomdetails/calendar.dart';
 import 'package:irbs/src/widgets/roomdetails/request_modal.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../../globals/colors.dart';
 import '../../globals/styles.dart';
 import '../../widgets/roomdetails/upcoming_booking_widget.dart';
@@ -13,6 +14,8 @@ class RoomDetails extends StatefulWidget {
 }
 
 class _RoomDetailsState extends State<RoomDetails> {
+  CalendarView view = CalendarView.month;
+
   TextEditingController dateCtl = TextEditingController();
   _showModal(context) {
     showModalBottomSheet<dynamic>(
@@ -20,7 +23,7 @@ class _RoomDetailsState extends State<RoomDetails> {
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         builder: (BuildContext context) {
-          return RequestModal();
+          return const RequestModal();
         });
   }
 
@@ -30,6 +33,7 @@ class _RoomDetailsState extends State<RoomDetails> {
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
         centerTitle: true,
+        elevation: 0,
         leading: IconButton(
           onPressed: () {},
           icon: const Icon(
@@ -37,7 +41,7 @@ class _RoomDetailsState extends State<RoomDetails> {
             color: Colors.white,
           ),
         ),
-        title: Text(
+        title: const Text(
           "IRBS",
           style: kAppBarTextStyle,
         ),
@@ -56,19 +60,21 @@ class _RoomDetailsState extends State<RoomDetails> {
         backgroundColor: Themes.kCommonBoxBackground,
       ),
       floatingActionButton: FloatingActionButton(
-          child: Image.asset('packages/irbs/assets/images/add.png'),
-          backgroundColor: Color.fromRGBO(28, 28, 30, 1),
+          backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
           onPressed: () {
             _showModal(context);
-          }),
-      body: Column(children: [
+          },
+          child: Image.asset('packages/irbs/assets/images/add.png',)),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
         Container(
-          padding: EdgeInsets.only(left: 16),
+          padding: const EdgeInsets.only(left: 16),
           height: 60,
-          color: Color.fromRGBO(39, 49, 65, 1),
+          //color: const Color.fromRGBO(39, 49, 65, 1),
           child: Row(
             children: [
-              Expanded(
+              const Expanded(
                   child: Text(
                 'Yoga Room',
                 style: roomheadingStyle,
@@ -76,20 +82,20 @@ class _RoomDetailsState extends State<RoomDetails> {
               IconButton(
                   onPressed: () {
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.more_vert,
                     color: Colors.white,
                   ))
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Theme(
           data: Theme.of(context).copyWith(
-              unselectedWidgetColor: Color.fromRGBO(135, 145, 165, 1)),
-          child: ExpansionTile(
+              unselectedWidgetColor: const Color.fromRGBO(135, 145, 165, 1)),
+          child: const ExpansionTile(
             title: Text(
               'UpcomingBookings',
               style: subHeadingStyle,
@@ -118,7 +124,10 @@ class _RoomDetailsState extends State<RoomDetails> {
         Divider(
           height: 0.5,
           color: Colors.white.withOpacity(0.2),
-        )
+        ),
+        const Expanded(
+          child: Calendar()
+        ),
       ]),
     );
   }
