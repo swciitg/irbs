@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/widgets/home/common_rooms.dart';
-import 'package:irbs/src/widgets/home/pinned_rooms.dart';
 
+import '../../widgets/home/common_rooms.dart';
 import '../../widgets/home/current_bookings_widget.dart';
+import '../../widgets/home/pinned_rooms.dart';
 import '../../widgets/home/request_widget.dart';
 import '../../globals/styles.dart';
 import '../../globals/colors.dart';
@@ -47,6 +47,7 @@ class _AdminHomeState extends State<AdminHome> {
           //   height: 24,
           //   width: 24,
           // ))
+
         ],
         backgroundColor: Themes.kCommonBoxBackground,
       ),
@@ -171,7 +172,7 @@ class _AdminHomeState extends State<AdminHome> {
                       borderRadius: BorderRadius.all(Radius.circular(4))),
                   child: InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, '/gc/roomList');
+                        Navigator.pushNamed(context, '/irbs/roomList');
                       },
                       child: const Center(
                           child: Text(
