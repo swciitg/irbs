@@ -16,7 +16,7 @@ packages:
       sha256: c372bb384f273f0c2a8aaaa226dad84dc27c8519a691b888725dec59518ad53a
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.1"
+    version: "2.4.2"
   async:
     dependency: transitive
     description:
@@ -159,14 +159,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  lottie:
-    dependency: transitive
-    description:
-      name: lottie
-      sha256: f461105d3a35887b27089abf9c292334478dd292f7b47ecdccb6ae5c37a22c80
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.0"
   matcher:
     dependency: transitive
     description:
