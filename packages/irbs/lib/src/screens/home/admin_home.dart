@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/widgets/home/common_rooms.dart';
-import 'package:irbs/src/widgets/home/pinned_rooms.dart';
 
+import '../../widgets/home/common_rooms.dart';
 import '../../widgets/home/current_bookings_widget.dart';
+import '../../widgets/home/pinned_rooms.dart';
 import '../../widgets/home/request_widget.dart';
 import '../../globals/styles.dart';
 import '../../globals/colors.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class AdminHome extends StatefulWidget {
+  const AdminHome({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<AdminHome> createState() => _AdminHomeState();
 }
 
-class _HomeState extends State<Home> {
+class _AdminHomeState extends State<AdminHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,15 +34,20 @@ class _HomeState extends State<Home> {
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/irbs/onboarding');
-              },
-              icon: Image.asset(
-                'assets/question_circle.png',
-                package: 'irbs',
-                height: 24,
-                width: 24,
-              ))
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/gc/onboarding');
+            },
+            icon: Icon(
+              Icons.menu,
+              size: 24,
+            ),)
+          // icon: Image.asset(
+          //   Icon(Icons.menu),
+          //   package: 'irbs',
+          //   height: 24,
+          //   width: 24,
+          // ))
+
         ],
         backgroundColor: Themes.kCommonBoxBackground,
       ),
@@ -61,7 +66,7 @@ class _HomeState extends State<Home> {
               RequestWidget(),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Container(
                   height: 40,
                   width: double.maxFinite,
@@ -77,21 +82,40 @@ class _HomeState extends State<Home> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10, left: 16, bottom: 10),
-                child: Text(
-                  'Current Bookings',
-                  style: kSubHeadingStyle,
+                padding: const EdgeInsets.only(top: 15, left: 16, bottom: 7, right: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Current Bookings',
+                      style: kSubHeadingStyle,
+                    ),
+                    TextButton(
+                      onPressed: (){},
+                      child: Text(
+                        'View History',
+                        style: kTextButtonStyle,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               CurrentBookingsWidget(
-                cancelled: true,
+                status: 0,
                 startTime: '10:00 AM',
                 endTime: '03:00 PM',
                 date: '21st April',
                 roomName: 'Coding Club Room',
               ),
               CurrentBookingsWidget(
-                cancelled: false,
+                status: 1,
+                startTime: '05:00 AM',
+                endTime: '06:30 AM',
+                date: '22nd April',
+                roomName: 'Finesse Room',
+              ),
+              CurrentBookingsWidget(
+                status: 2,
                 startTime: '05:00 AM',
                 endTime: '06:30 AM',
                 date: '22nd April',
@@ -99,22 +123,17 @@ class _HomeState extends State<Home> {
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/irbs/bookingHistory');
-                  },
-                  child: Container(
-                    height: 40,
-                    width: double.maxFinite,
-                    decoration: BoxDecoration(
-                        color: Themes.kCommonBoxBackground,
-                        borderRadius: BorderRadius.circular(4)),
-                    child: Center(
-                      child: Text(
-                        'View Booking History',
-                        style: kRequestedRoomStyle,
-                      ),
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Container(
+                  height: 40,
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                      color: Themes.kCommonBoxBackground,
+                      borderRadius: BorderRadius.circular(4)),
+                  child: Center(
+                    child: Text(
+                      'View Booking History',
+                      style: kRequestedRoomStyle,
                     ),
                   ),
                 ),
@@ -139,9 +158,9 @@ class _HomeState extends State<Home> {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                      Color.fromRGBO(28, 28, 30, 0),
-                      Color.fromRGBO(28, 28, 30, 1)
-                    ])),
+                          Color.fromRGBO(28, 28, 30, 0),
+                          Color.fromRGBO(28, 28, 30, 1)
+                        ])),
               ),
               Container(
                 color: Color.fromRGBO(28, 28, 30, 1),
@@ -157,13 +176,13 @@ class _HomeState extends State<Home> {
                       },
                       child: const Center(
                           child: Text(
-                        'Book a Room',
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            package: 'irbs',
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ))),
+                            'Book a Room',
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                package: 'irbs',
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ))),
                 ),
               ),
             ]))
