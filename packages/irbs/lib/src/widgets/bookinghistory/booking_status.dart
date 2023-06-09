@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
 class BookingStatus extends StatefulWidget {
-  final bool rejected;
-  final bool approved;
+  final int status;
   final String startTime;
   final String roomName;
   final String endTime;
   final String date;
   final bool current;
-  const BookingStatus({Key? key, required this.rejected, required this.startTime, required this.roomName, required this.endTime, required this.date, required this.approved, required this.current}) : super(key: key);
+  const BookingStatus({Key? key, required this.startTime, required this.roomName, required this.endTime, required this.date,  required this.current, required this.status}) : super(key: key);
 
   @override
   State<BookingStatus> createState() => _BookingStatusState();
@@ -25,7 +24,7 @@ class _BookingStatusState extends State<BookingStatus> {
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 stops: widget.current? const [0.0125, 0.0125]:const [0, 0],
-                colors: [ widget.rejected ? Themes.rejectedColor : widget.approved? Themes.approvedGreenColor:Themes.pendingColor, Themes.kCommonBoxBackground]
+                colors: [widget.status==0? Themes.rejectedColor : widget.status==1? Themes.approvedGreenColor : Themes.pendingColor]
             ),
             borderRadius: BorderRadius.circular(4)),
         child: ListTile(
@@ -71,14 +70,14 @@ class _BookingStatusState extends State<BookingStatus> {
               ),
               child: Center(
                 child: Text(
-                  widget.rejected ? 'Rejected' : widget.approved? 'Approved':'Pending',
+                  widget.status==0 ? 'Rejected' : widget.status==1? 'Approved':'Pending',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     package: 'irbs',
                     fontSize: 12.0,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.1,
-                    color: widget.rejected ? Themes.rejectedColor:widget.approved? Themes.approvedGreenColor:Themes.pendingColor,
+                    color: widget.status==0 ? Themes.rejectedColor:widget.status==1 ? Themes.approvedGreenColor:Themes.pendingColor,
                   ),
                 ),
               ),
