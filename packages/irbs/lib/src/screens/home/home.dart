@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/gc/onboarding');
+                Navigator.pushReplacementNamed(context, '/irbs/onboarding');
               },
               icon: Image.asset(
                 'assets/question_circle.png',
@@ -102,7 +102,7 @@ class _HomeState extends State<Home> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, '/gc/bookingHistory');
+                    Navigator.pushNamed(context, '/irbs/bookingHistory');
                   },
                   child: Container(
                     height: 40,
@@ -153,7 +153,7 @@ class _HomeState extends State<Home> {
                       borderRadius: BorderRadius.all(Radius.circular(4))),
                   child: InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, '/gc/roomList');
+                        Navigator.pushNamed(context, '/irbs/roomList');
                       },
                       child: const Center(
                           child: Text(

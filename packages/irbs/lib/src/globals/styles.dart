@@ -131,3 +131,98 @@ const rejectTextStyle = TextStyle(
   letterSpacing: 0.5,
   color: Colors.white,
 );
+const roomNameTextStyle = TextStyle(
+  color: Colors.white,
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
+  height: 1.5,
+);
+
+final roomInstructTextSTyle = TextStyle(
+  color: Colors.white.withOpacity(0.6),
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 10,
+  fontWeight: FontWeight.w400,
+);
+const labelTextStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    color: Color.fromRGBO(169, 173, 179, 1),
+    fontWeight: FontWeight.w400,
+    fontSize: 12,
+    letterSpacing: 0.4,
+    height: 1.33);
+const permanentTextStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    color: Color.fromRGBO(169, 173, 179, 1),
+    fontWeight: FontWeight.w500,
+    fontSize: 14,);
+const TextFormFieldStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  color: Colors.white,
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+);
+const sendRequestTextStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  color: Color.fromRGBO(0, 27, 62, 1),
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+);
+const basicFontStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+);
+const hintTextStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    color: Color.fromRGBO(85, 95, 113, 1),
+    fontSize: 12,
+    fontWeight: FontWeight.w400);
+const roomheadingStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    color: Color.fromRGBO(253, 252, 255, 1),
+    fontWeight: FontWeight.w600,
+    fontSize: 24);
+const sentRequestStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  color: Colors.white,
+  fontSize: 16,
+  fontWeight: FontWeight.w600,
+);
+const cancelButtonStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  color: Color.fromRGBO(255, 111, 102, 1),
+  fontSize: 12,
+  fontWeight: FontWeight.w500,
+);
+const rejectedStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 14,
+  color: Color.fromRGBO(217, 114, 108, 1),
+  fontWeight: FontWeight.w500,
+);
+const pendingStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 14,
+  color: Color.fromRGBO(147, 144, 148, 1),
+  fontWeight: FontWeight.w500,
+);
+const approvedStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 14,
+  color: Color.fromRGBO(53, 118, 42, 1),
+  fontWeight: FontWeight.w500,
+);
