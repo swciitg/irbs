@@ -326,3 +326,39 @@ const approvedStyle = TextStyle(
   color: Color.fromRGBO(53, 118, 42, 1),
   fontWeight: FontWeight.w500,
 );
+
+final textInputDecoration = InputDecoration(
+  filled: true,
+  fillColor: Themes.tileColor,
+  hintText: 'Name*',
+  hintStyle: kSubHeadingStyle,
+  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(4),
+    borderSide: const BorderSide(
+      color: Colors.transparent,
+      width: 0,
+    )
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(4),
+    borderSide: const BorderSide(
+      color: Colors.transparent,
+      width: 0,
+    )
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(4),
+    borderSide: const BorderSide(
+      color: Colors.transparent,
+      width: 0,
+    )
+  ),
+  errorBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(4),
+    borderSide: const BorderSide(
+      color: Colors.transparent,
+      width: 0,
+    )
+  ),
+);
