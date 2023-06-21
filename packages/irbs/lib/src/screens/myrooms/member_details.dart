@@ -3,18 +3,28 @@ import 'package:intl/intl.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/widgets/myroom/dropdown.dart';
+import 'package:irbs/src/widgets/roomdetails/datepicker_color.dart';
 
-class AddNewMember extends StatefulWidget {
-  const AddNewMember({super.key});
+class MemberDetails extends StatefulWidget {
+  final bool isEdit;
+
+  const MemberDetails({required this.isEdit, super.key});
 
   @override
-  State<AddNewMember> createState() => _AddNewMemberState();
+  State<MemberDetails> createState() => _MemberDetailsState();
 }
 
-class _AddNewMemberState extends State<AddNewMember> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
+class _MemberDetailsState extends State<MemberDetails> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
+
+  String errorMessage = '';
+
+  final _formKey = GlobalKey<FormState>();
 
 
   final List<String> designationList = [
@@ -49,7 +59,7 @@ class _AddNewMemberState extends State<AddNewMember> {
               SizedBox(
                 height: 24,
                 child: Text(
-                  'Fill in the details',
+                  widget.isEdit ? 'Edit Details:' : 'Fill in the details',
                   style: appBarStyle.copyWith(
                     color: Themes.myRoomsFormHeadingColor
                   ),
@@ -58,12 +68,15 @@ class _AddNewMemberState extends State<AddNewMember> {
               ),
               const SizedBox(height: 18,),
               Form(
+                key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       height: 44,
                       child: TextFormField(
+                        style: permanentTextStyle,
+                        textCapitalization: TextCapitalization.words,
                         cursorColor: Themes.cursorColor,
                         controller: _nameController,
                         keyboardType: TextInputType.name,
@@ -74,6 +87,7 @@ class _AddNewMemberState extends State<AddNewMember> {
                     SizedBox(
                       height: 44,
                       child: TextFormField(
+                        style: permanentTextStyle,
                         cursorColor: Themes.cursorColor,
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
@@ -84,6 +98,7 @@ class _AddNewMemberState extends State<AddNewMember> {
                     SizedBox(
                       height: 44,
                       child: TextFormField(
+                        style: permanentTextStyle,
                         cursorColor: Themes.cursorColor,
                         controller: _phoneController,
                         keyboardType: TextInputType.phone,
@@ -171,7 +186,28 @@ class _AddNewMemberState extends State<AddNewMember> {
                           child: Row(
                             children: [
                               InkWell(
-                                onTap: (){},
+                                onTap: ()async{
+                                  DateTime? d = await showDatePicker(
+                                    context: context,
+                                    initialDate: startDate, 
+                                    firstDate: DateTime(2000), 
+                                    lastDate: DateTime(2025),
+                                    builder: (context, child) => CustomDatePicker(
+                                      child: DatePickerDialog(
+                                        initialDate: startDate, 
+                                        firstDate: DateTime(2000),
+                                        lastDate: DateTime(2025),
+                                        
+                                      ),
+                                    ),
+                                  );
+
+                                  if(mounted){
+                                    setState(() {
+                                      startDate = d ?? startDate;
+                                    });
+                                  }
+                                },
                                 child: SizedBox(
                                   width: 18,
                                   height: 18,
@@ -183,7 +219,7 @@ class _AddNewMemberState extends State<AddNewMember> {
                                 height: 24,
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  DateFormat('MMMM dd, yyyy').format(DateTime.now()),
+                                  DateFormat('MMMM dd, yyyy').format(startDate),
                                   style: permanentTextStyle,
                                 ),
                               ),
@@ -214,7 +250,28 @@ class _AddNewMemberState extends State<AddNewMember> {
                           child: Row(
                             children: [
                               InkWell(
-                                onTap: (){},
+                                onTap: ()async{
+                                  DateTime? d = await showDatePicker(
+                                    context: context,
+                                    initialDate: endDate, 
+                                    firstDate: DateTime(2000), 
+                                    lastDate: DateTime(2025),
+                                    builder: (context, child) => CustomDatePicker(
+                                      child: DatePickerDialog(
+                                        initialDate: endDate, 
+                                        firstDate: DateTime(2000),
+                                        lastDate: DateTime(2025),
+                                        
+                                      ),
+                                    ),
+                                  );
+
+                                  if(mounted){
+                                    setState(() {
+                                      endDate = d ?? endDate;
+                                    });
+                                  }
+                                },
                                 child: SizedBox(
                                   width: 18,
                                   height: 18,
@@ -226,7 +283,7 @@ class _AddNewMemberState extends State<AddNewMember> {
                                 height: 24,
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  DateFormat('MMMM dd, yyyy').format(DateTime.now()),
+                                  DateFormat('MMMM dd, yyyy').format(endDate),
                                   style: permanentTextStyle,
                                 ),
                               ),
@@ -235,14 +292,44 @@ class _AddNewMemberState extends State<AddNewMember> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 164,),
+                    const SizedBox(height: 16,),
+                    SizedBox(
+                      height: 24,
+                      child: Center(
+                        child: Text(
+                          errorMessage, 
+                          style: permanentTextStyle.copyWith(color: Colors.red),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 124,),
                     SizedBox(
                       height: 48,
                       width: 328,
                       child: ElevatedButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          if(
+                            _emailController.text.trim() != '' 
+                            && _nameController.text.trim() != '' 
+                            && _phoneController.text.trim() != '' 
+                            && selected != null){
+                            print({
+                              'name': _nameController.text.trim(),
+                              'mailId': _emailController.text.trim(),
+                              'phoneNo': _phoneController.text.trim(),
+                              'designation': selected,
+                              'startDate': startDate,
+                              'endDate': endDate
+                            });
+                          }
+                          else{
+                            setState(() {
+                              errorMessage = 'All fields are required!';
+                            });
+                          }
+                        },
                         style: elevatedButtonStyle,
-                        child: const Text('+ Add Member', style: elevatedButtonTextStyle,),
+                        child: Text(widget.isEdit ? 'Save' :'+ Add Member', style: elevatedButtonTextStyle,),
                       ),
                     )
                   ],

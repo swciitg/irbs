@@ -3,7 +3,7 @@ import 'package:irbs/src/screens/bookinghistory/booking_history.dart';
 import 'package:irbs/src/screens/home/admin_home.dart';
 import 'package:irbs/src/screens/home/home.dart';
 import 'package:irbs/src/screens/home/student_home.dart';
-import 'package:irbs/src/screens/myrooms/add_new_member.dart';
+import 'package:irbs/src/screens/myrooms/member_details.dart';
 import 'package:irbs/src/screens/onboarding/onboarding.dart';
 import 'package:irbs/src/screens/roomdetails/room_details.dart';
 import 'package:irbs/src/screens/roomlist/room_list.dart';
@@ -30,7 +30,7 @@ class _IRBSState extends State<IRBS> {
         debugShowCheckedModeBanner: false,
         initialRoute: '/irbs/add_new_member',
         routes: {
-          '/irbs/add_new_member':(context) => AddNewMember(),
+          '/irbs/add_new_member':(context) => MemberDetails(isEdit: true,),
           '/irbs/home': (context) => Home(isAdmin: false),
           '/irbs/RoomDetails': (context) => RoomDetails(),
           '/irbs/onboarding': (context) => const Onboarding(),
