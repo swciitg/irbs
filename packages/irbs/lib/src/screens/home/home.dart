@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:irbs/src/globals/colors.dart';
+import 'package:irbs/src/globals/styles.dart';
+import 'package:irbs/src/widgets/home/common_rooms.dart';
+import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
+import 'package:irbs/src/widgets/home/pinned_rooms.dart';
+import 'package:irbs/src/widgets/home/request_widget.dart';
 
-import '../../widgets/home/common_rooms.dart';
-import '../../widgets/home/current_bookings_widget.dart';
-import '../../widgets/home/pinned_rooms.dart';
-import '../../widgets/home/request_widget.dart';
-import '../../globals/styles.dart';
-import '../../globals/colors.dart';
+class Home extends StatefulWidget {
+  final bool isAdmin;
 
-class AdminHome extends StatefulWidget {
-  const AdminHome({super.key});
+  const Home({required this.isAdmin, super.key});
 
   @override
-  State<AdminHome> createState() => _AdminHomeState();
+  State<Home> createState() => _HomeState();
 }
 
-class _AdminHomeState extends State<AdminHome> {
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(28, 28, 30, 1),
-      endDrawer: Drawer(
-        child: Container(child: Text('Drawer')),
+      backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
+      endDrawer: (!widget.isAdmin) ? null : const Drawer(
+        child: Text('Drawer'),
       ),
       appBar: AppBar(
         centerTitle: true,
@@ -35,39 +36,34 @@ class _AdminHomeState extends State<AdminHome> {
           "IRBS",
           style: kAppBarTextStyle,
         ),
-        // actions: [
-        //   // IconButton(
-        //   //   onPressed: () {
-              
-        //   //   },
-        //   //   icon: Icon(
-        //   //     Icons.menu,
-        //   //     size: 24,
-        //   //   ),)
-        //   // icon: Image.asset(
-        //   //   Icon(Icons.menu),
-        //   //   package: 'irbs',
-        //   //   height: 24,
-        //   //   width: 24,
-        //   // ))
-
-        // ],
+        actions: widget.isAdmin ? [] : [
+          IconButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/irbs/onboarding');
+              },
+              icon: Image.asset(
+                'assets/question_circle.png',
+                package: 'irbs',
+                height: 24,
+                width: 24,
+              ))
+        ],
         backgroundColor: Themes.kCommonBoxBackground,
       ),
       body: Stack(fit: StackFit.expand, children: [
         SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 18, left: 16, bottom: 10),
+            children: [ 
+              if(widget.isAdmin) const Padding(
+                padding: EdgeInsets.only(top: 18, left: 16, bottom: 10),
                 child: Text(
                   'Requests',
                   style: kSubHeadingStyle,
                 ),
               ),
-              RequestWidget(),
-              Padding(
+              if(widget.isAdmin)const RequestWidget(),
+              if(widget.isAdmin)Padding(
                 padding:
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Container(
@@ -76,7 +72,7 @@ class _AdminHomeState extends State<AdminHome> {
                   decoration: BoxDecoration(
                       color: Themes.kCommonBoxBackground,
                       borderRadius: BorderRadius.circular(4)),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'View all Requests',
                       style: kRequestedRoomStyle,
@@ -85,17 +81,19 @@ class _AdminHomeState extends State<AdminHome> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 15, left: 16, bottom: 7, right: 16),
+                padding: const EdgeInsets.only(top: 20, left: 16, bottom: 7, right: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Current Bookings',
                       style: kSubHeadingStyle,
                     ),
                     TextButton(
-                      onPressed: (){},
-                      child: Text(
+                      onPressed: (){
+                        Navigator.pushNamed(context, '/irbs/bookingHistory');
+                      },
+                      child: const Text(
                         'View History',
                         style: kTextButtonStyle,
                       ),
@@ -103,21 +101,23 @@ class _AdminHomeState extends State<AdminHome> {
                   ],
                 ),
               ),
-              CurrentBookingsWidget(
+              const CurrentBookingsWidget(
                 status: 0,
                 startTime: '10:00 AM',
                 endTime: '03:00 PM',
                 date: '21st April',
                 roomName: 'Coding Club Room',
+                data: 'eSports team have to use the room for interIIT practice ',
               ),
-              CurrentBookingsWidget(
+              const CurrentBookingsWidget(
                 status: 1,
                 startTime: '05:00 AM',
                 endTime: '06:30 AM',
                 date: '22nd April',
                 roomName: 'Finesse Room',
+                data: 'Do no turn off the Server Computer and turn off the AC before leaving.',
               ),
-              CurrentBookingsWidget(
+              const CurrentBookingsWidget(
                 status: 2,
                 startTime: '05:00 AM',
                 endTime: '06:30 AM',
@@ -133,7 +133,7 @@ class _AdminHomeState extends State<AdminHome> {
                   decoration: BoxDecoration(
                       color: Themes.kCommonBoxBackground,
                       borderRadius: BorderRadius.circular(4)),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'View Booking History',
                       style: kRequestedRoomStyle,
@@ -141,9 +141,9 @@ class _AdminHomeState extends State<AdminHome> {
                   ),
                 ),
               ),
-              PinnedRooms(),
-              CommonRooms(),
-              SizedBox(
+              const PinnedRooms(),
+              const CommonRooms(),
+              const SizedBox(
                 height: 108,
               )
             ],
@@ -166,7 +166,7 @@ class _AdminHomeState extends State<AdminHome> {
                         ])),
               ),
               Container(
-                color: Color.fromRGBO(28, 28, 30, 1),
+                color: const Color.fromRGBO(28, 28, 30, 1),
                 child: Container(
                   height: 52,
                   margin: const EdgeInsets.fromLTRB(17, 0, 16, 36),

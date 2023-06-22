@@ -18,5 +18,7 @@ class Themes{
   static const rejectedColor =Color.fromRGBO(227, 114, 108, 1);
   static const approvedGreenColor = Color.fromRGBO(83, 132, 75, 1);
   static const pendingColor = Color.fromRGBO(147, 144, 148, 1);
-
+  static const cursorColor = Color.fromRGBO(64, 124, 235, 1);
+  static const dropDownColor = Color.fromRGBO(32, 40, 54, 1);
+  static const myRoomsFormHeadingColor = Color.fromRGBO(253, 252, 255, 1);
 }

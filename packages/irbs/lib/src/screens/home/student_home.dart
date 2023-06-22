@@ -84,7 +84,9 @@ class _StudentHomeState extends State<StudentHome> {
                       style: kSubHeadingStyle,
                     ),
                     TextButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        Navigator.pushNamed(context, '/irbs/bookingHistory');
+                      },
                       child: Text(
                         'View History',
                         style: kTextButtonStyle,
@@ -167,7 +169,7 @@ class _StudentHomeState extends State<StudentHome> {
                       borderRadius: BorderRadius.all(Radius.circular(4))),
                   child: InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, '/gc/roomList');
+                        Navigator.pushNamed(context, '/irbs/roomList');
                       },
                       child: const Center(
                           child: Text(
