@@ -38,6 +38,12 @@ class _MemberDetailsState extends State<MemberDetails> {
 
   @override
   Widget build(BuildContext context) {
+
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final double fieldWidth = screenWidth*328/360;
+    final double horizontalPadding = screenWidth*16/360;
+
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
@@ -51,7 +57,7 @@ class _MemberDetailsState extends State<MemberDetails> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -74,6 +80,7 @@ class _MemberDetailsState extends State<MemberDetails> {
                   children: [
                     SizedBox(
                       height: 44,
+                      width: fieldWidth,
                       child: TextFormField(
                         style: permanentTextStyle,
                         textCapitalization: TextCapitalization.words,
@@ -86,6 +93,7 @@ class _MemberDetailsState extends State<MemberDetails> {
                     const SizedBox(height: 12,),
                     SizedBox(
                       height: 44,
+                      width: fieldWidth,
                       child: TextFormField(
                         style: permanentTextStyle,
                         cursorColor: Themes.cursorColor,
@@ -97,6 +105,7 @@ class _MemberDetailsState extends State<MemberDetails> {
                     const SizedBox(height: 12,),
                     SizedBox(
                       height: 44,
+                      width: fieldWidth,
                       child: TextFormField(
                         style: permanentTextStyle,
                         cursorColor: Themes.cursorColor,
@@ -108,14 +117,14 @@ class _MemberDetailsState extends State<MemberDetails> {
                     const SizedBox(height: 12,),
                     SizedBox(
                       height: 44,
-                      child: CustomDropdown( 
+                      width: fieldWidth,
+                      child: CustomDropdown(
                         onChange: (int i){
                           setState(() {
                             selected = designationList[i];
                           });
                         },
                         dropdownStyle: DropdownStyle(
-                          width: 328,
                           padding: const EdgeInsets.symmetric(vertical: 4),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4)
@@ -146,13 +155,13 @@ class _MemberDetailsState extends State<MemberDetails> {
                             )
                           )).toList(),
                         child: Container(
-                          width: 328,
                           height: 48,
+                          width: fieldWidth,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4),
                             color: Themes.tileColor
                           ),
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 12),
                           child: Container(
                             alignment: Alignment.centerLeft,
                             height: 24,
@@ -175,7 +184,7 @@ class _MemberDetailsState extends State<MemberDetails> {
                     const SizedBox(height: 8,),
                     SizedBox(
                       height: 48,
-                      width: double.infinity,
+                      width: fieldWidth,
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
@@ -183,52 +192,52 @@ class _MemberDetailsState extends State<MemberDetails> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            children: [
-                              InkWell(
-                                onTap: ()async{
-                                  DateTime? d = await showDatePicker(
-                                    context: context,
+                          child: GestureDetector(
+                            onTap: ()async{
+                              DateTime? d = await showDatePicker(
+                                context: context,
+                                initialDate: startDate, 
+                                firstDate: DateTime(2000), 
+                                lastDate: DateTime(2025),
+                                builder: (context, child) => CustomDatePicker(
+                                  child: DatePickerDialog(
                                     initialDate: startDate, 
-                                    firstDate: DateTime(2000), 
+                                    firstDate: DateTime(2000),
                                     lastDate: DateTime(2025),
-                                    builder: (context, child) => CustomDatePicker(
-                                      child: DatePickerDialog(
-                                        initialDate: startDate, 
-                                        firstDate: DateTime(2000),
-                                        lastDate: DateTime(2025),
-                                        
-                                      ),
-                                    ),
-                                  );
-
-                                  if(mounted){
-                                    setState(() {
-                                      startDate = d ?? startDate;
-                                    });
-                                  }
-                                },
-                                child: SizedBox(
+                                    
+                                  ),
+                                ),
+                              );
+                    
+                              if(mounted){
+                                setState(() {
+                                  startDate = d ?? startDate;
+                                });
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                SizedBox(
                                   width: 18,
                                   height: 18,
                                   child: Image.asset('assets/images/calendar.png', package: 'irbs',)
                                 ),
-                              ),
-                              const SizedBox(width: 15,),
-                              Container(
-                                height: 24,
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  DateFormat('MMMM dd, yyyy').format(startDate),
-                                  style: permanentTextStyle,
+                                const SizedBox(width: 15,),
+                                Container(
+                                  height: 24,
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    DateFormat('MMMM dd, yyyy').format(startDate),
+                                    style: permanentTextStyle,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16,),
+                    SizedBox(height: horizontalPadding,),
                     SizedBox(
                       height: 20,
                       child: Text(
@@ -239,7 +248,7 @@ class _MemberDetailsState extends State<MemberDetails> {
                     const SizedBox(height: 8,),
                     SizedBox(
                       height: 48,
-                      width: double.infinity,
+                      width: fieldWidth,
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
@@ -247,52 +256,52 @@ class _MemberDetailsState extends State<MemberDetails> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            children: [
-                              InkWell(
-                                onTap: ()async{
-                                  DateTime? d = await showDatePicker(
-                                    context: context,
+                          child: GestureDetector(
+                            onTap: ()async{
+                              DateTime? d = await showDatePicker(
+                                context: context,
+                                initialDate: endDate, 
+                                firstDate: DateTime(2000), 
+                                lastDate: DateTime(2025),
+                                builder: (context, child) => CustomDatePicker(
+                                  child: DatePickerDialog(
                                     initialDate: endDate, 
-                                    firstDate: DateTime(2000), 
+                                    firstDate: DateTime(2000),
                                     lastDate: DateTime(2025),
-                                    builder: (context, child) => CustomDatePicker(
-                                      child: DatePickerDialog(
-                                        initialDate: endDate, 
-                                        firstDate: DateTime(2000),
-                                        lastDate: DateTime(2025),
-                                        
-                                      ),
-                                    ),
-                                  );
-
-                                  if(mounted){
-                                    setState(() {
-                                      endDate = d ?? endDate;
-                                    });
-                                  }
-                                },
-                                child: SizedBox(
+                                    
+                                  ),
+                                ),
+                              );
+                    
+                              if(mounted){
+                                setState(() {
+                                  endDate = d ?? endDate;
+                                });
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                SizedBox(
                                   width: 18,
                                   height: 18,
                                   child: Image.asset('assets/images/calendar.png', package: 'irbs',)
                                 ),
-                              ),
-                              const SizedBox(width: 15,),
-                              Container(
-                                height: 24,
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  DateFormat('MMMM dd, yyyy').format(endDate),
-                                  style: permanentTextStyle,
+                                const SizedBox(width: 15,),
+                                Container(
+                                  height: 24,
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    DateFormat('MMMM dd, yyyy').format(endDate),
+                                    style: permanentTextStyle,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16,),
+                    SizedBox(height: horizontalPadding,),
                     SizedBox(
                       height: 24,
                       child: Center(
@@ -305,7 +314,7 @@ class _MemberDetailsState extends State<MemberDetails> {
                     const SizedBox(height: 124,),
                     SizedBox(
                       height: 48,
-                      width: 328,
+                      width: fieldWidth,
                       child: ElevatedButton(
                         onPressed: (){
                           if(
