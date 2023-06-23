@@ -182,8 +182,7 @@ const kTextButtonStyle = TextStyle(
     fontWeight: FontWeight.w400,
     letterSpacing: 0.5,
     color: Color.fromRGBO(88, 129, 191, 1),
-    decoration: TextDecoration.underline
-);
+    decoration: TextDecoration.underline);
 
 const kApprovedStyle = TextStyle(
   fontFamily: 'Montserrat',
@@ -256,11 +255,12 @@ const labelTextStyle = TextStyle(
     letterSpacing: 0.4,
     height: 1.33);
 const permanentTextStyle = TextStyle(
-    fontFamily: 'Montserrat',
-    package: 'irbs',
-    color: Color.fromRGBO(169, 173, 179, 1),
-    fontWeight: FontWeight.w500,
-    fontSize: 14,);
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  color: Color.fromRGBO(169, 173, 179, 1),
+  fontWeight: FontWeight.w500,
+  fontSize: 14,
+);
 const TextFormFieldStyle = TextStyle(
   fontFamily: 'Montserrat',
   package: 'irbs',
@@ -334,31 +334,141 @@ final textInputDecoration = InputDecoration(
   hintStyle: kSubHeadingStyle,
   contentPadding: const EdgeInsets.symmetric(horizontal: 16),
   border: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(4),
-    borderSide: const BorderSide(
-      color: Colors.transparent,
-      width: 0,
-    )
-  ),
+      borderRadius: BorderRadius.circular(4),
+      borderSide: const BorderSide(
+        color: Colors.transparent,
+        width: 0,
+      )),
   focusedBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(4),
-    borderSide: const BorderSide(
-      color: Colors.transparent,
-      width: 0,
-    )
-  ),
+      borderRadius: BorderRadius.circular(4),
+      borderSide: const BorderSide(
+        color: Colors.transparent,
+        width: 0,
+      )),
   enabledBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(4),
-    borderSide: const BorderSide(
-      color: Colors.transparent,
-      width: 0,
-    )
-  ),
+      borderRadius: BorderRadius.circular(4),
+      borderSide: const BorderSide(
+        color: Colors.transparent,
+        width: 0,
+      )),
   errorBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(4),
-    borderSide: const BorderSide(
-      color: Colors.transparent,
-      width: 0,
-    )
-  ),
+      borderRadius: BorderRadius.circular(4),
+      borderSide: const BorderSide(
+        color: Colors.transparent,
+        width: 0,
+      )),
 );
+const instrHeadingStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 14,
+  fontWeight: FontWeight.w600,
+  color: Color.fromRGBO(135, 145, 165, 1),
+);
+const instrTextStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    fontSize: 11,
+    fontWeight: FontWeight.w500,
+    color: Color.fromRGBO(253, 252, 255, 1),
+    height: 1.4545);
+const seemoreStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 12,
+  fontWeight: FontWeight.w500,
+  color: Color.fromRGBO(118, 172, 255, 1),
+);
+const addmemberStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+  color: Color.fromRGBO(118, 172, 255, 1),
+);
+const designationStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    fontSize: 10,
+    fontWeight: FontWeight.w400,
+    color: Colors.white,
+    height: 1.2,
+    letterSpacing: 0.1);
+const popupMenuStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: Colors.white,
+    height: 1.219,
+    letterSpacing: 0.1);
+const dialogCancelStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    color: Colors.white,
+    height: 1.666,
+    letterSpacing: 0.1);
+const dialogConfirmStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    color: Color.fromRGBO(0, 27, 62, 1),
+    height: 1.666,
+    letterSpacing: 0.1);
+const editRoomHeading = TextStyle(
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: Color.fromRGBO(253, 252, 255, 1),
+    height: 1.5,
+    letterSpacing: 0.1);
+const editRoomText = TextStyle(
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: Colors.white,
+    height: 1.5,
+    letterSpacing: 0.1);
+const editRoomInstrText = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 12,
+  fontWeight: FontWeight.w400,
+  color: Colors.white,
+  height: 1.333,
+);
+const adminTileText = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 12,
+  fontWeight: FontWeight.w400,
+  color: Color.fromRGBO(255, 255, 255, 0.5),
+  height: 1.333,
+);
+const addmoreStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+  color: Color.fromRGBO(135, 145, 163, 1),
+);
+var textFieldDecoration = InputDecoration(
+    // hintText: 'Type here...',
+    // hintStyle: hintTextStyle,
+    enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(4.0),
+        borderSide: BorderSide(color: Color.fromRGBO(255, 255, 255, 0.5))),
+    focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(4.0),
+        borderSide: BorderSide(color: Color.fromRGBO(255, 255, 255, 0.5))),
+    errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(4.0),
+        borderSide: BorderSide(color: Colors.red)),
+    focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(4.0),
+        borderSide: BorderSide(color: Colors.red)));

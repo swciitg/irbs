@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:irbs/src/screens/myrooms/myRooms.dart';
 import 'package:irbs/src/widgets/home/common_rooms.dart';
 import 'package:irbs/src/widgets/home/pinned_rooms.dart';
 import '../../widgets/home/current_bookings_widget.dart';
@@ -75,7 +76,8 @@ class _StudentHomeState extends State<StudentHome> {
               //   ),
               // ),
               Padding(
-                padding: const EdgeInsets.only(top: 20, left: 16, bottom: 7, right: 16),
+                padding: const EdgeInsets.only(
+                    top: 20, left: 16, bottom: 7, right: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -101,7 +103,8 @@ class _StudentHomeState extends State<StudentHome> {
                 endTime: '03:00 PM',
                 date: '21st April',
                 roomName: 'Coding Club Room',
-                data: 'eSports team have to use the room for interIIT practice ',
+                data:
+                    'eSports team have to use the room for interIIT practice ',
               ),
               CurrentBookingsWidget(
                 status: 1,
@@ -109,7 +112,8 @@ class _StudentHomeState extends State<StudentHome> {
                 endTime: '06:30 AM',
                 date: '22nd April',
                 roomName: 'Finesse Room',
-                data: 'Do no turn off the Server Computer and turn off the AC before leaving.',
+                data:
+                    'Do no turn off the Server Computer and turn off the AC before leaving.',
               ),
               CurrentBookingsWidget(
                 status: 2,
@@ -120,7 +124,7 @@ class _StudentHomeState extends State<StudentHome> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Container(
                   height: 40,
                   width: double.maxFinite,
@@ -155,9 +159,9 @@ class _StudentHomeState extends State<StudentHome> {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          Color.fromRGBO(28, 28, 30, 0),
-                          Color.fromRGBO(28, 28, 30, 1)
-                        ])),
+                      Color.fromRGBO(28, 28, 30, 0),
+                      Color.fromRGBO(28, 28, 30, 1)
+                    ])),
               ),
               Container(
                 color: Color.fromRGBO(28, 28, 30, 1),
@@ -173,13 +177,13 @@ class _StudentHomeState extends State<StudentHome> {
                       },
                       child: const Center(
                           child: Text(
-                            'Book a Room',
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                package: 'irbs',
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ))),
+                        'Book a Room',
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            package: 'irbs',
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ))),
                 ),
               ),
             ]))

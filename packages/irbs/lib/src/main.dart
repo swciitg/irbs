@@ -4,6 +4,7 @@ import 'package:irbs/src/screens/home/admin_home.dart';
 import 'package:irbs/src/screens/home/home.dart';
 import 'package:irbs/src/screens/home/student_home.dart';
 import 'package:irbs/src/screens/myrooms/member_details.dart';
+import 'package:irbs/src/screens/myrooms/myRooms.dart';
 import 'package:irbs/src/screens/onboarding/onboarding.dart';
 import 'package:irbs/src/screens/roomdetails/room_details.dart';
 import 'package:irbs/src/screens/roomlist/room_list.dart';
@@ -28,10 +29,10 @@ class _IRBSState extends State<IRBS> {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: '/irbs/add_new_member',
+        initialRoute: '/irbs/home',
         routes: {
-          '/irbs/add_new_member':(context) => MemberDetails(isEdit: true,),
-          '/irbs/home': (context) => Home(isAdmin: false),
+          '/irbs/my_room': (context) => MyRooms(isAdmin: true),
+          '/irbs/home': (context) => Home(isAdmin: true),
           '/irbs/RoomDetails': (context) => RoomDetails(),
           '/irbs/onboarding': (context) => const Onboarding(),
           '/irbs/roomList': (context) => const RoomList(),

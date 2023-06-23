@@ -183,8 +183,6 @@ class _RequestModalState extends State<RequestModal>
                       decoration: InputDecoration(
                         labelText: 'Designation',
                         labelStyle: labelTextStyle,
-                        // prefixIconColor: Colors.white,
-                        // prefixIcon: Icon(Icons.local_phone_outlined),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4.0),
                             borderSide: BorderSide(
@@ -210,7 +208,7 @@ class _RequestModalState extends State<RequestModal>
                   return null;
                 },
                 style: TextFormFieldStyle,
-                decoration: InputDecoration(
+                decoration: textFieldDecoration.copyWith(
                     labelText: 'Date',
                     labelStyle: labelTextStyle,
                     prefixIconColor: Colors.white,
@@ -218,21 +216,8 @@ class _RequestModalState extends State<RequestModal>
                       AssetImage(
                           'packages/irbs/assets/images/calender_icon.png'),
                       color: Colors.white,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide: BorderSide(
-                            color: Color.fromRGBO(147, 152, 160, 1))),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide: BorderSide(
-                            color: Color.fromRGBO(147, 152, 160, 1))),
-                    errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide: BorderSide(color: Colors.red)),
-                    focusedErrorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide: BorderSide(color: Colors.red))),
+                    ),        
+                ),
                 readOnly: true,
                 onTap: () async {
                   FocusScope.of(context).requestFocus(FocusNode());
@@ -265,8 +250,8 @@ class _RequestModalState extends State<RequestModal>
                     return null;
                   },
                   style: TextFormFieldStyle,
-                  decoration: InputDecoration(
-                      labelText: 'Time',
+                  decoration: textFieldDecoration.copyWith(
+                    labelText: 'Time',
                       labelStyle: labelTextStyle,
                       prefixIconColor: Colors.white,
                       prefixIcon: ImageIcon(
@@ -274,20 +259,7 @@ class _RequestModalState extends State<RequestModal>
                             'packages/irbs/assets/images/clock_icon.png'),
                         color: Colors.white,
                       ),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide(
-                              color: Color.fromRGBO(147, 152, 160, 1))),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide(
-                              color: Color.fromRGBO(147, 152, 160, 1))),
-                      errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide(color: Colors.red)),
-                      focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide(color: Colors.red))),
+                  ),
                   readOnly: true,
                   onTap: () async {
                     TimeOfDay? res = await showTimePicker(
@@ -345,28 +317,15 @@ class _RequestModalState extends State<RequestModal>
                 },
                 style: TextFormFieldStyle,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                    labelText: 'Contact Number',
+                decoration: textFieldDecoration.copyWith(
+                  labelText: 'Contact Number',
                     labelStyle: labelTextStyle,
                     prefixIconColor: Colors.white,
                     prefixIcon: ImageIcon(
                       AssetImage('packages/irbs/assets/images/phone_icon.png'),
                       color: Colors.white,
                     ),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide: BorderSide(
-                            color: Color.fromRGBO(147, 152, 160, 1))),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide: BorderSide(
-                            color: Color.fromRGBO(147, 152, 160, 1))),
-                    errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide: BorderSide(color: Colors.red)),
-                    focusedErrorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide: BorderSide(color: Colors.red))),
+                )
               ),
               SizedBox(
                 height: 16,
@@ -392,23 +351,7 @@ class _RequestModalState extends State<RequestModal>
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
                 style: TextFormFieldStyle,
-                decoration: InputDecoration(
-                    hintText: 'Type here...',
-                    hintStyle: hintTextStyle,
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide: BorderSide(
-                            color: Color.fromRGBO(255, 255, 255, 0.5))),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide: BorderSide(
-                            color: Color.fromRGBO(255, 255, 255, 0.5))),
-                    errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide: BorderSide(color: Colors.red)),
-                    focusedErrorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide: BorderSide(color: Colors.red))),
+                decoration: textFieldDecoration.copyWith(hintText: 'Type here...',hintStyle: hintTextStyle)
               ),
               SizedBox(
                 height: 16,
@@ -452,6 +395,5 @@ class _RequestModalState extends State<RequestModal>
         ),
       ),
     ]);
-    ;
   }
 }
