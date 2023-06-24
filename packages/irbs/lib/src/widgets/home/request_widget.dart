@@ -12,8 +12,12 @@ class RequestWidget extends StatefulWidget {
 }
 
 class _RequestWidgetState extends State<RequestWidget> {
+
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Container(
@@ -24,16 +28,16 @@ class _RequestWidgetState extends State<RequestWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
+            const Padding(
               // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              padding: const EdgeInsets.only(top: 10, left: 16, right: 16, bottom: 0),
+              padding: EdgeInsets.only(top: 10, left: 16, right: 16, bottom: 0),
               child: Text(
                 'Coding Club Room',
                 style: kRequestedRoomStyle,
               ),
             ),
             GridView.count(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               childAspectRatio: 3.35,
               shrinkWrap: true,
               // primary: false,
@@ -43,13 +47,13 @@ class _RequestWidgetState extends State<RequestWidget> {
               crossAxisCount: 2,
               children: <Widget>[
                 ListTile(
-                  contentPadding: EdgeInsets.all(0),
+                  contentPadding: const EdgeInsets.all(0),
                   title: Text(
                     'Request by -',
                     style: kHeading3Style,
                   ),
                   subtitle: RichText(
-                    text: TextSpan(
+                    text: const TextSpan(
                         style: kHeading3DescStyle,
                         children: [
                           TextSpan(
@@ -66,24 +70,24 @@ class _RequestWidgetState extends State<RequestWidget> {
                   ),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.all(0),
+                  contentPadding: const EdgeInsets.all(0),
                   title: Text(
                     'Purpose -',
                     style: kHeading3Style,
                   ),
-                  subtitle: Text(
+                  subtitle: const Text(
                     'Club meeting',
                     style: kHeading3DescStyle,
                   ),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.all(0),
+                  contentPadding: const EdgeInsets.all(0),
                   title: Text(
                     'Time Slot -',
                     style: kHeading3Style,
                   ),
                   subtitle: RichText(
-                    text: TextSpan(
+                    text: const TextSpan(
                         style: kHeading3DescStyle,
                         children: [
                           TextSpan(
@@ -100,12 +104,12 @@ class _RequestWidgetState extends State<RequestWidget> {
                   ),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.all(0),
+                  contentPadding: const EdgeInsets.all(0),
                   title: Text(
                     'Date -',
                     style: kHeading3Style,
                   ),
-                  subtitle: Text(
+                  subtitle: const Text(
                     'April 24, 2023',
                     style: kHeading3DescStyle,
                   ),
@@ -119,10 +123,10 @@ class _RequestWidgetState extends State<RequestWidget> {
                   height: 32,
                   width: double.maxFinite,
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(118, 172, 255, 1),
+                      color: const Color.fromRGBO(118, 172, 255, 1),
                       borderRadius: BorderRadius.circular(4)
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Respond',
                       style: kApproveStyle,
@@ -133,7 +137,7 @@ class _RequestWidgetState extends State<RequestWidget> {
                   showDialog(
                     context: context,
                     builder: (BuildContext context){
-                      return AlertDialog(
+                      return const AlertDialog(
                         contentPadding: EdgeInsets.zero,
                         insetPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                         content: RespondDialog(),

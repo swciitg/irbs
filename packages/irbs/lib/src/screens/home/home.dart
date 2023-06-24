@@ -4,6 +4,8 @@ import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/widgets/home/common_rooms.dart';
 import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
 import 'package:irbs/src/widgets/home/pinned_rooms.dart';
+import 'package:irbs/src/widgets/home/request.dart';
+import 'package:irbs/src/widgets/home/request_list.dart';
 import 'package:irbs/src/widgets/home/request_widget.dart';
 
 class Home extends StatefulWidget {
@@ -18,6 +20,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
       endDrawer: (!widget.isAdmin) ? null : const Drawer(
@@ -55,17 +58,19 @@ class _HomeState extends State<Home> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [ 
-              if(widget.isAdmin) const Padding(
-                padding: EdgeInsets.only(top: 18, left: 16, bottom: 10),
+              if(widget.isAdmin) Padding(
+                padding: const EdgeInsets.only(top: 18, left: 16, bottom: 10),
                 child: Text(
                   'Requests',
-                  style: kSubHeadingStyle,
+                  style: kSubHeadingStyle.copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
-              if(widget.isAdmin)const RequestWidget(),
+              if(widget.isAdmin)SizedBox(
+                height: 167*screenWidth/360,
+                child: const RequestList()),
               if(widget.isAdmin)Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: Container(
                   height: 40,
                   width: double.maxFinite,
@@ -81,13 +86,13 @@ class _HomeState extends State<Home> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 20, left: 16, bottom: 7, right: 16),
+                padding: const EdgeInsets.only(top: 10, left: 16, bottom: 7, right: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       'Current Bookings',
-                      style: kSubHeadingStyle,
+                      style: kSubHeadingStyle.copyWith(fontWeight: FontWeight.w600),
                     ),
                     TextButton(
                       onPressed: (){
