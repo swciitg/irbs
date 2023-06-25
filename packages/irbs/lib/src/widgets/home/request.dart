@@ -40,22 +40,31 @@ class _RequestState extends State<Request> {
             left: 16*screenWidth/360,
             top: 42*screenWidth/360,
             child: SizedBox(
-              height: 26*screenWidth/360,
+              height: 27*screenWidth/360,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+                    height: 12*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Request by -',
-                      style: labelTextStyle.copyWith(fontSize: 10*screenWidth/360, color: Colors.white60),
+                      style: labelTextStyle.copyWith(
+                        fontSize: 10*screenWidth/360, color: Colors.white60,
+                        height: 1
+                      ),
                     ),
                   ),
                   Container(
+                    height: 12*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Aarya · Design Head',
-                      style: labelTextStyle.copyWith(fontSize: 10*screenWidth/360, color: Colors.white),
+                      style: labelTextStyle.copyWith(
+                        fontSize: 10*screenWidth/360, color: Colors.white,
+                        height: 1
+                      ),
                     ),
                   )
                 ],
@@ -66,22 +75,31 @@ class _RequestState extends State<Request> {
             left: 168*screenWidth/360,
             top: 42*screenWidth/360,
             child: SizedBox(
-              height: 26*screenWidth/360,
+              height: 27*screenWidth/360,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+                    height: 12*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Purpose -',
-                      style: labelTextStyle.copyWith(fontSize: 10*screenWidth/360, color: Colors.white60),
+                      style: labelTextStyle.copyWith(
+                        fontSize: 10*screenWidth/360, color: Colors.white60,
+                        height: 1
+                      ),
                     ),
                   ),
                   Container(
+                    height: 12*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Club Meeting',
-                      style: labelTextStyle.copyWith(fontSize: 10*screenWidth/360, color: Colors.white),
+                      style: labelTextStyle.copyWith(
+                        fontSize: 10*screenWidth/360, color: Colors.white,
+                        height: 1
+                      ),
                     ),
                   )
                 ],
@@ -92,22 +110,31 @@ class _RequestState extends State<Request> {
             left: 16*screenWidth/360,
             top: 77*screenWidth/360,
             child: SizedBox(
-              height: 26*screenWidth/360,
+              height: 30*screenWidth/360,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+                    height: 12*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Time Slot -',
-                      style: labelTextStyle.copyWith(fontSize: 10*screenWidth/360, color: Colors.white60),
+                      style: labelTextStyle.copyWith(
+                        fontSize: 10*screenWidth/360, color: Colors.white60,
+                        height: 1
+                      ),
                     ),
                   ),
                   Container(
+                    height: 16*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
                       '10:00 AM - 02:00 PM',
-                      style: labelTextStyle.copyWith(fontSize: 10*screenWidth/360, color: Colors.white),
+                      style: labelTextStyle.copyWith(
+                        fontSize: 10*screenWidth/360, color: Colors.white,
+                        height: 1
+                      ),
                     ),
                   )
                 ],
@@ -118,22 +145,31 @@ class _RequestState extends State<Request> {
             left: 168*screenWidth/360,
             top: 77*screenWidth/360,
             child: SizedBox(
-              height: 26*screenWidth/360,
+              height: 30*screenWidth/360,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+                    height: 12*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Date -',
-                      style: labelTextStyle.copyWith(fontSize: 10*screenWidth/360, color: Colors.white60),
+                      style: labelTextStyle.copyWith(
+                        fontSize: 10*screenWidth/360, color: Colors.white60,
+                        height: 1
+                      ),
                     ),
                   ),
                   Container(
+                    height: 16*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'April 24, 2023',
-                      style: labelTextStyle.copyWith(fontSize: 10*screenWidth/360, color: Colors.white),
+                      style: labelTextStyle.copyWith(
+                        fontSize: 10*screenWidth/360, color: Colors.white,
+                        height: 1
+                      ),
                     ),
                   )
                 ],
