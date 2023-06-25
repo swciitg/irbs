@@ -21,4 +21,5 @@ class Themes{
   static const cursorColor = Color.fromRGBO(64, 124, 235, 1);
   static const dropDownColor = Color.fromRGBO(32, 40, 54, 1);
   static const myRoomsFormHeadingColor = Color.fromRGBO(253, 252, 255, 1);
+  static const requestTile = Color.fromRGBO(35, 41, 52, 1);
 }
