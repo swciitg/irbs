@@ -472,3 +472,19 @@ var textFieldDecoration = InputDecoration(
     focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(4.0),
         borderSide: BorderSide(color: Colors.red)));
+const sideDrawerStyle = TextStyle(
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: Colors.white,
+    height: 1.715,
+    letterSpacing: 0.1);
+const sideDrawerRoomStyle=TextStyle(
+    fontFamily: 'Montserrat',
+    package: 'irbs',
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+    color: Colors.white,
+    height: 1.333,
+    letterSpacing: 0.1);

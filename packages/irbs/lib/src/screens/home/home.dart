@@ -3,6 +3,7 @@ import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/widgets/home/common_rooms.dart';
 import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
+import 'package:irbs/src/widgets/home/drawer.dart';
 import 'package:irbs/src/widgets/home/pinned_rooms.dart';
 import 'package:irbs/src/widgets/home/request.dart';
 import 'package:irbs/src/widgets/home/request_list.dart';
@@ -23,9 +24,7 @@ class _HomeState extends State<Home> {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
-      endDrawer: (!widget.isAdmin) ? null : const Drawer(
-        child: Text('Drawer'),
-      ),
+      endDrawer: (!widget.isAdmin) ? null : SideDrawer(),
       appBar: AppBar(
         centerTitle: true,
         leading: IconButton(

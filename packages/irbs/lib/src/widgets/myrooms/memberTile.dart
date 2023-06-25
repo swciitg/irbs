@@ -107,7 +107,7 @@ class _MemberTileState extends State<MemberTile> {
               )
             ],
           )),
-          if (widget.isAdmin &&
+          if (!widget.isAdmin &&
               widget.designations[widget.member["designation"]])
             Text(
               'Admin',
