@@ -35,7 +35,9 @@ class _RoomDetailsState extends State<RoomDetails> {
         centerTitle: true,
         elevation: 0,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
           icon: const Icon(
             Icons.arrow_back_sharp,
             color: Colors.white,

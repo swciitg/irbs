@@ -19,6 +19,9 @@ class _AdminHomeState extends State<AdminHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(28, 28, 30, 1),
+      endDrawer: Drawer(
+        child: Container(child: Text('Drawer')),
+      ),
       appBar: AppBar(
         centerTitle: true,
         leading: IconButton(
@@ -28,27 +31,27 @@ class _AdminHomeState extends State<AdminHome> {
             color: Colors.white,
           ),
         ),
-        title: Text(
+        title: const Text(
           "IRBS",
           style: kAppBarTextStyle,
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/gc/onboarding');
-            },
-            icon: Icon(
-              Icons.menu,
-              size: 24,
-            ),)
-          // icon: Image.asset(
-          //   Icon(Icons.menu),
-          //   package: 'irbs',
-          //   height: 24,
-          //   width: 24,
-          // ))
+        // actions: [
+        //   // IconButton(
+        //   //   onPressed: () {
+              
+        //   //   },
+        //   //   icon: Icon(
+        //   //     Icons.menu,
+        //   //     size: 24,
+        //   //   ),)
+        //   // icon: Image.asset(
+        //   //   Icon(Icons.menu),
+        //   //   package: 'irbs',
+        //   //   height: 24,
+        //   //   width: 24,
+        //   // ))
 
-        ],
+        // ],
         backgroundColor: Themes.kCommonBoxBackground,
       ),
       body: Stack(fit: StackFit.expand, children: [
