@@ -38,7 +38,6 @@ class _IRBSState extends State<IRBS> {
           '/irbs/roomList': (context) => const RoomList(),
           '/irbs/bookingHistory': (context) => const BookingHistory(),
         },
-        theme: ThemeData(),
       ),
     );
   }
