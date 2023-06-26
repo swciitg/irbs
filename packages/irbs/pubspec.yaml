@@ -17,6 +17,7 @@ dependencies:
   fluttertoast: ^8.2.2
   syncfusion_flutter_calendar: ^21.2.9
   syncfusion_flutter_datepicker: ^21.2.9
+  carousel_slider: ^4.2.1
 
 
 dev_dependencies:

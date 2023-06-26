@@ -1,40 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/screens/myrooms/myRooms.dart';
+import 'package:irbs/src/globals/colors.dart';
+import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/widgets/home/common_rooms.dart';
+import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
+import 'package:irbs/src/widgets/home/drawer.dart';
 import 'package:irbs/src/widgets/home/pinned_rooms.dart';
-import '../../widgets/home/current_bookings_widget.dart';
-import '../../globals/styles.dart';
-import '../../globals/colors.dart';
+import 'package:irbs/src/widgets/home/request.dart';
+import 'package:irbs/src/widgets/home/request_list.dart';
+import 'package:irbs/src/widgets/home/request_widget.dart';
 
-class StudentHome extends StatefulWidget {
-  const StudentHome({super.key});
+class Home extends StatefulWidget {
+  final bool isAdmin;
+
+  const Home({required this.isAdmin, super.key});
 
   @override
-  State<StudentHome> createState() => _StudentHomeState();
+  State<Home> createState() => _HomeState();
 }
 
-class _StudentHomeState extends State<StudentHome> {
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(28, 28, 30, 1),
+      backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
+      endDrawer: (!widget.isAdmin) ? null : SideDrawer(),
       appBar: AppBar(
         centerTitle: true,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
           icon: const Icon(
             Icons.arrow_back_sharp,
             color: Colors.white,
           ),
         ),
-        title: Text(
+        title: const Text(
           "IRBS",
           style: kAppBarTextStyle,
         ),
-        actions: [
+        actions: widget.isAdmin ? [] : [
           IconButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/gc/onboarding');
+                Navigator.pushReplacementNamed(context, '/irbs/onboarding');
               },
               icon: Image.asset(
                 'assets/question_circle.png',
@@ -49,47 +58,48 @@ class _StudentHomeState extends State<StudentHome> {
         SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 18, left: 16, bottom: 10),
-              //   child: Text(
-              //     'Requests',
-              //     style: kSubHeadingStyle,
-              //   ),
-              // ),
-              // RequestWidget(),
-              // Padding(
-              //   padding:
-              //       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              //   child: Container(
-              //     height: 40,
-              //     width: double.maxFinite,
-              //     decoration: BoxDecoration(
-              //         color: Themes.kCommonBoxBackground,
-              //         borderRadius: BorderRadius.circular(4)),
-              //     child: Center(
-              //       child: Text(
-              //         'View all Requests',
-              //         style: kRequestedRoomStyle,
-              //       ),
-              //     ),
-              //   ),
-              // ),
+            children: [ 
+              if(widget.isAdmin) Padding(
+                padding: const EdgeInsets.only(top: 18, left: 16, bottom: 10),
+                child: Text(
+                  'Requests',
+                  style: kSubHeadingStyle.copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+              if(widget.isAdmin)SizedBox(
+                height: 167*screenWidth/360,
+                child: const RequestList()),
+              if(widget.isAdmin)Padding(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Container(
+                  height: 40,
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                      color: Themes.kCommonBoxBackground,
+                      borderRadius: BorderRadius.circular(4)),
+                  child: const Center(
+                    child: Text(
+                      'View all Requests',
+                      style: kRequestedRoomStyle,
+                    ),
+                  ),
+                ),
+              ),
               Padding(
-                padding: const EdgeInsets.only(
-                    top: 20, left: 16, bottom: 7, right: 16),
+                padding: const EdgeInsets.only(top: 10, left: 16, bottom: 7, right: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Current Bookings',
-                      style: kSubHeadingStyle,
+                      style: kSubHeadingStyle.copyWith(fontWeight: FontWeight.w600),
                     ),
                     TextButton(
                       onPressed: (){
                         Navigator.pushNamed(context, '/irbs/bookingHistory');
                       },
-                      child: Text(
+                      child: const Text(
                         'View History',
                         style: kTextButtonStyle,
                       ),
@@ -97,25 +107,23 @@ class _StudentHomeState extends State<StudentHome> {
                   ],
                 ),
               ),
-              CurrentBookingsWidget(
+              const CurrentBookingsWidget(
                 status: 0,
                 startTime: '10:00 AM',
                 endTime: '03:00 PM',
                 date: '21st April',
                 roomName: 'Coding Club Room',
-                data:
-                    'eSports team have to use the room for interIIT practice ',
+                data: 'eSports team have to use the room for interIIT practice ',
               ),
-              CurrentBookingsWidget(
+              const CurrentBookingsWidget(
                 status: 1,
                 startTime: '05:00 AM',
                 endTime: '06:30 AM',
                 date: '22nd April',
                 roomName: 'Finesse Room',
-                data:
-                    'Do no turn off the Server Computer and turn off the AC before leaving.',
+                data: 'Do no turn off the Server Computer and turn off the AC before leaving.',
               ),
-              CurrentBookingsWidget(
+              const CurrentBookingsWidget(
                 status: 2,
                 startTime: '05:00 AM',
                 endTime: '06:30 AM',
@@ -124,14 +132,14 @@ class _StudentHomeState extends State<StudentHome> {
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Container(
                   height: 40,
                   width: double.maxFinite,
                   decoration: BoxDecoration(
                       color: Themes.kCommonBoxBackground,
                       borderRadius: BorderRadius.circular(4)),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'View Booking History',
                       style: kRequestedRoomStyle,
@@ -139,9 +147,9 @@ class _StudentHomeState extends State<StudentHome> {
                   ),
                 ),
               ),
-              PinnedRooms(),
-              CommonRooms(),
-              SizedBox(
+              const PinnedRooms(),
+              const CommonRooms(),
+              const SizedBox(
                 height: 108,
               )
             ],
@@ -159,12 +167,12 @@ class _StudentHomeState extends State<StudentHome> {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                      Color.fromRGBO(28, 28, 30, 0),
-                      Color.fromRGBO(28, 28, 30, 1)
-                    ])),
+                          Color.fromRGBO(28, 28, 30, 0),
+                          Color.fromRGBO(28, 28, 30, 1)
+                        ])),
               ),
               Container(
-                color: Color.fromRGBO(28, 28, 30, 1),
+                color: const Color.fromRGBO(28, 28, 30, 1),
                 child: Container(
                   height: 52,
                   margin: const EdgeInsets.fromLTRB(17, 0, 16, 36),
@@ -177,13 +185,13 @@ class _StudentHomeState extends State<StudentHome> {
                       },
                       child: const Center(
                           child: Text(
-                        'Book a Room',
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            package: 'irbs',
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ))),
+                            'Book a Room',
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                package: 'irbs',
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ))),
                 ),
               ),
             ]))

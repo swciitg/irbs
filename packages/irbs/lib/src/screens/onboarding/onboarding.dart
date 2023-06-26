@@ -120,7 +120,7 @@ class _OnboardingState extends State<Onboarding> {
                     height: double.infinity,
                     child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushReplacementNamed(context, '/gc/student_home');
+                          Navigator.pushReplacementNamed(context, '/irbs/home');
                         },
                         style: elevatedButtonStyle,
                         child: const Text(
