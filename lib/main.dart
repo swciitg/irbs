@@ -33,20 +33,18 @@ class HomePage extends StatelessWidget {
             height: 50,
             width: 50,
             color: Colors.red,
-            child: Center(
-              child: GestureDetector(
-                child: Text(
-                  'IRBS',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(
-                          builder: (context) => const IRBS()
-                      )
-                  );
-                },
+            child: GestureDetector(
+              child: Text(
+                'IRBS',
+                style: TextStyle(color: Colors.white),
               ),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) => const IRBS()
+                    )
+                );
+              },
             ),
           ),
         ],

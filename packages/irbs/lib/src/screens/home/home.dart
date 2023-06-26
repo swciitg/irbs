@@ -130,23 +130,6 @@ class _HomeState extends State<Home> {
                 date: '22nd April',
                 roomName: 'Finesse Room',
               ),
-              Padding(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Container(
-                  height: 40,
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                      color: Themes.kCommonBoxBackground,
-                      borderRadius: BorderRadius.circular(4)),
-                  child: const Center(
-                    child: Text(
-                      'View Booking History',
-                      style: kRequestedRoomStyle,
-                    ),
-                  ),
-                ),
-              ),
               const PinnedRooms(),
               const CommonRooms(),
               const SizedBox(
