@@ -269,7 +269,7 @@ class _RequestModalState extends State<RequestModal>
                         child: child,
                       ),
                     );
-                    if (res != Null) {
+                    if (res != null) {
                       String formattedTime = res.toString().substring(10, 15);
                       if (formattedTime[0] == '0' &&
                           formattedTime[1].compareTo('8') < 0) {
