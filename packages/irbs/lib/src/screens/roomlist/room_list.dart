@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../globals/colors.dart';
 import '../../globals/styles.dart';
 import '../../store/room_list_store.dart';
@@ -12,6 +15,21 @@ class RoomList extends StatefulWidget {
   State<RoomList> createState() => _RoomListState();
 }
 class _RoomListState extends State<RoomList> {
+
+  late List<String> pin;
+  // late bool pinEmpty;
+  late Timer timer;
+
+  @override
+  void initState(){
+    pin = [];
+    super.initState();
+    getPinnedRooms();
+    timer=Timer.periodic(Duration(milliseconds: 100), (timer) {
+      getPinnedRooms();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +52,7 @@ class _RoomListState extends State<RoomList> {
           create: (context)=>RoomListProvider(),
           child: Consumer<RoomListProvider>(
               builder: (context,roomListProvider,child){
-                var pin =roomListProvider.pinnedRooms;
+                // var pin =roomListProvider.pinnedRooms;
                 var club =roomListProvider.clubRooms;
                 var common = roomListProvider.commonRooms;
                 var searchResults = roomListProvider.searchResults;
@@ -50,7 +68,20 @@ class _RoomListState extends State<RoomList> {
                         padding: EdgeInsets.all(8.0),
                         child: Text('Please Enter Correct Keyword',style: textStyle,),
                       ):const SizedBox(),
-                      roomListProvider.pinnedRooms.isEmpty||wrongKeyword ? const SizedBox(): Padding(
+                      // roomListProvider.pinnedRooms.isEmpty||wrongKeyword ? const SizedBox(): Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     children: [
+                      //       roomListProvider.searchResults.isEmpty ?
+                      //       const Text('Pinned Rooms',
+                      //         style: roomTypeStyle,
+                      //       ):const SizedBox(),
+                      //     ],
+                      //   ),
+                      // ),
+                      // if(!wrongKeyword ) ListDisplay(type: pin, ),
+                      pin.isEmpty||wrongKeyword ? const SizedBox(): Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -62,7 +93,7 @@ class _RoomListState extends State<RoomList> {
                           ],
                         ),
                       ),
-                      if(!wrongKeyword ) ListDisplay(type: pin, ),
+                      if(!pin.isEmpty ) ListDisplay(type: pin, ),
                       roomListProvider.commonRooms.isEmpty||wrongKeyword ? const SizedBox(): Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
                         child: Row(
@@ -109,6 +140,15 @@ class _RoomListState extends State<RoomList> {
 
       ),
     );
+  }
+
+  Future<void> getPinnedRooms() async {
+    if(!mounted)return;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    pin = prefs.getStringList('pinnedRooms') ?? [];
+    setState(() {
+
+    });
   }
 }
 
