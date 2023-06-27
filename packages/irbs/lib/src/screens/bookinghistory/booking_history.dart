@@ -28,8 +28,8 @@ class _BookingHistoryState extends State<BookingHistory> {
         ],
         backgroundColor: Themes.tileColor,
       ),
-      body: SingleChildScrollView(
-        child: const Column(
+      body: const SingleChildScrollView(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
@@ -50,19 +50,19 @@ class _BookingHistoryState extends State<BookingHistory> {
                 style: roomTypeStyle,
               ),
             ),
-            BookingStatus(current: true,rejected: true, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', approved: false),
-            BookingStatus(current: true,rejected: false, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', approved: true),
-            BookingStatus(current: true,rejected: false, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', approved: false),
+            BookingStatus(current: true, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', status: 0, ),
+            BookingStatus(current: true, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', status: 2, ),
+            BookingStatus(current: true, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', status: 1, ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
               child: Text('Past Bookings',
                 style: roomTypeStyle,
               ),
             ),
-            BookingStatus(current: false,rejected: false, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', approved: true),
-            BookingStatus(current: false,rejected: false, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', approved: false),
-            BookingStatus(current: false,rejected: false, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', approved: true),
-            BookingStatus(current: false,rejected: false, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', approved: false),
+            BookingStatus(current: false, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', status: 1, ),
+            BookingStatus(current: false, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', status: 2, ),
+            BookingStatus(current: false, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', status: 1, ),
+            BookingStatus(current: false, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', status: 2, ),
           ],
         ),
       ),
