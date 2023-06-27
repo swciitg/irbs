@@ -28,8 +28,8 @@ class _BookingHistoryState extends State<BookingHistory> {
         ],
         backgroundColor: Themes.tileColor,
       ),
-      body: SingleChildScrollView(
-        child: const Column(
+      body: const SingleChildScrollView(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
@@ -63,7 +63,6 @@ class _BookingHistoryState extends State<BookingHistory> {
             BookingStatus(current: false, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', status: 2, ),
             BookingStatus(current: false, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', status: 1, ),
             BookingStatus(current: false, startTime: '8:00 AM', roomName: 'Coding Club Room', endTime: '9:00PM', date:'21st April', status: 2, ),
-
           ],
         ),
       ),

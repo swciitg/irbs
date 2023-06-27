@@ -18,6 +18,7 @@ dependencies:
   syncfusion_flutter_calendar: ^21.2.9
   syncfusion_flutter_datepicker: ^21.2.9
   carousel_slider: ^4.2.1
+  dotted_border: ^2.0.0+3
 
 
 dev_dependencies:

@@ -39,7 +39,7 @@ class RoomSearchBar extends StatelessWidget {
                 maxLines: 1,
                 scrollPhysics: const ClampingScrollPhysics(),
                 cursorColor: Themes.comet,
-                decoration: const InputDecoration(
+                decoration:  const InputDecoration(
                     isDense: true,
                     contentPadding: EdgeInsets.zero,
                     border: OutlineInputBorder(
@@ -55,8 +55,19 @@ class RoomSearchBar extends StatelessWidget {
                     hintStyle: TextStyle(
                       color: Themes.comet,
                       fontSize: 12,
-                    )
+                    ),
+                  // suffixIcon: GestureDetector(
+                  //   child: const Icon(
+                  //       Icons.close,
+                  //       size: 16,
+                  //       color: Colors.white,
+                  //   ),
+                  //   onTap: (){
+                  //     roomListProvider.searchResults.clear();
+                  //   },
+                  // ),
                 ),
+
               ),
             )
           ],

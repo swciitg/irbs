@@ -37,51 +37,68 @@ class _RoomListState extends State<RoomList> {
                 var pin =roomListProvider.pinnedRooms;
                 var club =roomListProvider.clubRooms;
                 var common = roomListProvider.commonRooms;
-                return SingleChildScrollView(
+                var searchResults = roomListProvider.searchResults;
+                return searchResults.isEmpty?
+                SingleChildScrollView(
                   child: Column(
 
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const RoomSearchBar(),
-                      roomListProvider.pinnedRooms.isEmpty ? const SizedBox():const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16,vertical: 12),
+
+                      roomListProvider.pinnedRooms.isEmpty ? const SizedBox(): Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Pinned Rooms',
+                            roomListProvider.searchResults.isEmpty ?
+                            const Text('Pinned Rooms',
                               style: roomTypeStyle,
-                            ),
+                            ):const SizedBox(),
                           ],
                         ),
                       ),
-                      ListDisplay(type: pin, pinned: true,),
-                      roomListProvider.commonRooms.isEmpty ? const SizedBox():const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16,vertical: 12),
+                      ListDisplay(type: pin, ),
+                      roomListProvider.commonRooms.isEmpty ? const SizedBox(): Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Common Rooms',
+                            roomListProvider.searchResults.isEmpty ?
+                            const Text( 'Common Rooms',
                               style: roomTypeStyle,
-                            ),
+                            ):const SizedBox(),
                           ],
                         ),
                       ),
-                      ListDisplay(type: common, pinned: false,),
-                      roomListProvider.clubRooms.isEmpty ? const SizedBox():const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16,vertical: 12),
+                      ListDisplay(type: common, ),
+                      roomListProvider.clubRooms.isEmpty ? const SizedBox(): Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Club Rooms',
+                            roomListProvider.searchResults.isEmpty ?
+                            const Text('Club Rooms',
                                 style: roomTypeStyle
-                            ),
+                            ):const SizedBox(),
                           ],
                         ),
                       ),
-                      ListDisplay(type: club, pinned: false,),
+                      ListDisplay(type: club,),
                     ],
                   ),
-                );
+                ):
+                SingleChildScrollView(
+                  child: Column(
+
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const RoomSearchBar(),
+                      ListDisplay(type: searchResults,),
+                    ],
+                  ),
+                )
+                ;
               }
           ),
         ),
