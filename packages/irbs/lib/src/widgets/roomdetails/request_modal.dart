@@ -209,14 +209,13 @@ class _RequestModalState extends State<RequestModal>
                 },
                 style: TextFormFieldStyle,
                 decoration: textFieldDecoration.copyWith(
-                    labelText: 'Date',
-                    labelStyle: labelTextStyle,
-                    prefixIconColor: Colors.white,
-                    prefixIcon: ImageIcon(
-                      AssetImage(
-                          'packages/irbs/assets/images/calender_icon.png'),
-                      color: Colors.white,
-                    ),        
+                  labelText: 'Date',
+                  labelStyle: labelTextStyle,
+                  prefixIconColor: Colors.white,
+                  prefixIcon: ImageIcon(
+                    AssetImage('packages/irbs/assets/images/calender_icon.png'),
+                    color: Colors.white,
+                  ),
                 ),
                 readOnly: true,
                 onTap: () async {
@@ -252,16 +251,16 @@ class _RequestModalState extends State<RequestModal>
                   style: TextFormFieldStyle,
                   decoration: textFieldDecoration.copyWith(
                     labelText: 'Time',
-                      labelStyle: labelTextStyle,
-                      prefixIconColor: Colors.white,
-                      prefixIcon: ImageIcon(
-                        AssetImage(
-                            'packages/irbs/assets/images/clock_icon.png'),
-                        color: Colors.white,
-                      ),
+                    labelStyle: labelTextStyle,
+                    prefixIconColor: Colors.white,
+                    prefixIcon: ImageIcon(
+                      AssetImage('packages/irbs/assets/images/clock_icon.png'),
+                      color: Colors.white,
+                    ),
                   ),
                   readOnly: true,
                   onTap: () async {
+                    String text = '';
                     TimeOfDay? res = await showTimePicker(
                       context: context,
                       initialTime: TimeOfDay.now(),
@@ -272,20 +271,34 @@ class _RequestModalState extends State<RequestModal>
                     );
                     if (res != Null) {
                       String formattedTime = res.toString().substring(10, 15);
-                      setState(() {
-                        timeCtl.text = formattedTime;
-                      });
+                      if (formattedTime[0] == '0' &&
+                          formattedTime[1].compareTo('8') < 0) {
+                        Fluttertoast.showToast(
+                            msg:
+                                'You cannot book after 12:00 AM and before 8:00 AM',
+                            backgroundColor: Color.fromRGBO(39, 49, 65, 0.7));
+
+                        setState(() {
+                          text = '';
+                        });
+                      } else {
+                        setState(() {
+                          text = formattedTime;
+                        });
+                      }
                     }
-                    TimeOfDay? res1 = await showTimePicker(
-                      context: context,
-                      initialTime: res!,
-                      helpText: 'SELECT TO TIME',
-                      routeSettings: RouteSettings(),
-                      builder: (context, child) => CustomDatePicker(
-                        child: child,
-                      ),
-                    );
-                    if (res1 != Null) {
+                    TimeOfDay? res1 = (text == '')
+                        ? null
+                        : await showTimePicker(
+                            context: context,
+                            initialTime: res!,
+                            helpText: 'SELECT TO TIME',
+                            // routeSettings: RouteSettings(),
+                            builder: (context, child) => CustomDatePicker(
+                              child: child,
+                            ),
+                          );
+                    if (res1 != null) {
                       String formattedTime = res1.toString().substring(10, 15);
                       if (formattedTime.compareTo(timeCtl.text) < 0) {
                         Fluttertoast.showToast(
@@ -296,10 +309,21 @@ class _RequestModalState extends State<RequestModal>
                         });
                         print('To time should be after From time');
                       } else {
-                        setState(() {
-                          timeCtl.text =
-                              "${time24to12Format(timeCtl.text)} - ${time24to12Format(formattedTime)}";
-                        });
+                        if (formattedTime[0] == '0' &&
+                            formattedTime[1].compareTo('8') < 0) {
+                          Fluttertoast.showToast(
+                              msg:
+                                  'You cannot book after 12:00 AM and before 8:00 AM',
+                              backgroundColor: Color.fromRGBO(39, 49, 65, 0.7));
+                          setState(() {
+                            timeCtl.text = '';
+                          });
+                        } else {
+                          setState(() {
+                            timeCtl.text =
+                                "${time24to12Format(text)} - ${time24to12Format(formattedTime)}";
+                          });
+                        }
                       }
                     }
                   }),
@@ -307,26 +331,26 @@ class _RequestModalState extends State<RequestModal>
                 height: 12,
               ),
               TextFormField(
-                controller: contactCtl,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter Contact Number';
-                  }
-                  if (value.length != 10) return 'Enter a Valid Contant Number';
-                  return null;
-                },
-                style: TextFormFieldStyle,
-                keyboardType: TextInputType.number,
-                decoration: textFieldDecoration.copyWith(
-                  labelText: 'Contact Number',
+                  controller: contactCtl,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Enter Contact Number';
+                    }
+                    if (value.length != 10)
+                      return 'Enter a Valid Contant Number';
+                    return null;
+                  },
+                  style: TextFormFieldStyle,
+                  keyboardType: TextInputType.number,
+                  decoration: textFieldDecoration.copyWith(
+                    labelText: 'Contact Number',
                     labelStyle: labelTextStyle,
                     prefixIconColor: Colors.white,
                     prefixIcon: ImageIcon(
                       AssetImage('packages/irbs/assets/images/phone_icon.png'),
                       color: Colors.white,
                     ),
-                )
-              ),
+                  )),
               SizedBox(
                 height: 16,
               ),
@@ -341,18 +365,18 @@ class _RequestModalState extends State<RequestModal>
                 height: 8,
               ),
               TextFormField(
-                controller: purposeCtl,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter the Purpose of your booking';
-                  }
-                  return null;
-                },
-                maxLines: 3,
-                keyboardType: TextInputType.multiline,
-                style: TextFormFieldStyle,
-                decoration: textFieldDecoration.copyWith(hintText: 'Type here...',hintStyle: hintTextStyle)
-              ),
+                  controller: purposeCtl,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Enter the Purpose of your booking';
+                    }
+                    return null;
+                  },
+                  maxLines: 3,
+                  keyboardType: TextInputType.multiline,
+                  style: TextFormFieldStyle,
+                  decoration: textFieldDecoration.copyWith(
+                      hintText: 'Type here...', hintStyle: hintTextStyle)),
               SizedBox(
                 height: 16,
               ),

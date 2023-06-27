@@ -8,23 +8,23 @@ class RequestList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      physics: NeverScrollableScrollPhysics(),
       children: [
         CarouselSlider(
-          items: const[
-            Request(),
-            Request(),
-            Request(),
-            Request(),
-          ],
-          options: CarouselOptions(
-            height: 167,
-            padEnds: true,
-            enlargeCenterPage: false,
-            autoPlay: false,            
-            enableInfiniteScroll: false,
-            viewportFraction: 0.9,
-          )
-        )
+            items: const [
+              Request(),
+              Request(),
+              Request(),
+              Request(),
+            ],
+            options: CarouselOptions(
+              height: (167 * MediaQuery.of(context).size.width) / 360,
+              padEnds: true,
+              enlargeCenterPage: false,
+              autoPlay: false,
+              enableInfiniteScroll: false,
+              viewportFraction: 0.9,
+            ))
       ],
     );
   }

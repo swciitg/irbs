@@ -53,6 +53,7 @@ class SideDrawer extends StatelessWidget {
                           height: 28,
                         ),
                         ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           itemCount: rooms.length,
@@ -122,6 +123,7 @@ class SideDrawer extends StatelessWidget {
                           ),
                           // SizedBox(height: 14,),
                           ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: rooms.length,
                             itemBuilder: (BuildContext context, int index) {
@@ -150,8 +152,8 @@ class SideDrawer extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Positioned(
-                      bottom: 0,
+                  Align(
+                      alignment: Alignment.bottomLeft,
                       child: Column(
                         children: [
                           Container(
