@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context, rootNavigator: true).pop();
           },
           icon: const Icon(
             Icons.arrow_back_sharp,
