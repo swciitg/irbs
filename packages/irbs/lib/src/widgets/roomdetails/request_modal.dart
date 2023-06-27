@@ -300,7 +300,20 @@ class _RequestModalState extends State<RequestModal>
                           );
                     if (res1 != null) {
                       String formattedTime = res1.toString().substring(10, 15);
-                      if (formattedTime.compareTo(timeCtl.text) < 0) {
+                      print(text);
+                      print(formattedTime);
+                      if (formattedTime[0] == '0' &&
+                          formattedTime[1].compareTo('8') < 0) {
+                        print('Morning');
+                        Fluttertoast.showToast(
+                            msg:
+                                'You cannot book after 12:00 AM and before 8:00 AM',
+                            backgroundColor: Color.fromRGBO(39, 49, 65, 0.7));
+                        setState(() {
+                          text = '';
+                          timeCtl.text = '';
+                        });
+                      } else if (formattedTime.compareTo(text) < 0) {
                         Fluttertoast.showToast(
                             msg: 'Please Enter a Valid Time Range',
                             backgroundColor: Color.fromRGBO(39, 49, 65, 0.7));
@@ -309,21 +322,10 @@ class _RequestModalState extends State<RequestModal>
                         });
                         print('To time should be after From time');
                       } else {
-                        if (formattedTime[0] == '0' &&
-                            formattedTime[1].compareTo('8') < 0) {
-                          Fluttertoast.showToast(
-                              msg:
-                                  'You cannot book after 12:00 AM and before 8:00 AM',
-                              backgroundColor: Color.fromRGBO(39, 49, 65, 0.7));
-                          setState(() {
-                            timeCtl.text = '';
-                          });
-                        } else {
-                          setState(() {
-                            timeCtl.text =
-                                "${time24to12Format(text)} - ${time24to12Format(formattedTime)}";
-                          });
-                        }
+                        setState(() {
+                          timeCtl.text =
+                              "${time24to12Format(text)} - ${time24to12Format(formattedTime)}";
+                        });
                       }
                     }
                   }),
