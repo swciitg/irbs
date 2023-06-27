@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 class RoomListProvider with ChangeNotifier{
   List<String> commonRooms=['Yoga Room','Conf. Room','Techboard Room','Alcher Room','Exhibition Room'];
   List<String> clubRooms=['Aeromodelling Club','Automobile Club','Electronics Club','Robotics Club','Cadence Club'];
-  List<String> commonRoom=['Yoga Room','Conf. Room','Techboard Room','Alcher Room','Exhibition Room'];
-  List<String> clubRoom=['Aeromodelling Club','Automobile Club','Electronics Club','Robotics Club','Cadence Club'];
   List<String> pinnedRooms=[];
   List<String> searchResults = [];
+  bool wrongKeyword = false;
   void modifyPinnedRooms(String room){
     if (pinnedRooms.contains(room)){
       pinnedRooms.remove(room);
@@ -19,28 +18,31 @@ class RoomListProvider with ChangeNotifier{
       query = query.trim();
       if(query.isEmpty){
         searchResults.clear();
+        wrongKeyword = false;
+        print("hi");
+        print("__________________________");
+        print(searchResults.length);
       }else{
-        for (String item in pinnedRooms) {
-          if (item.toLowerCase().contains(query.toLowerCase()) ) {
-            searchResults.add(item);
-          }
-        }
-
         for (String item in commonRooms) {
-          if (item.toLowerCase().contains(query.toLowerCase()) ) {
+          if (item.trim().toLowerCase().contains(query.toLowerCase()) ) {
             searchResults.add(item);
+            wrongKeyword = false;
           }
         }
-
         for (String item in clubRooms) {
-          if (item.toLowerCase().contains(query.toLowerCase()) ) {
+          if (item.trim().toLowerCase().contains(query.toLowerCase()) ) {
             searchResults.add(item);
+            wrongKeyword = false;
           }
+        }
+        if(searchResults.isEmpty){
+          wrongKeyword = true;
         }
       }
 
       print("_______________________");
       print(searchResults);
+      print(wrongKeyword);
     notifyListeners();
   }
 }
