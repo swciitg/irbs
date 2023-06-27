@@ -38,15 +38,19 @@ class _RoomListState extends State<RoomList> {
                 var club =roomListProvider.clubRooms;
                 var common = roomListProvider.commonRooms;
                 var searchResults = roomListProvider.searchResults;
-                return searchResults.isEmpty?
+                bool wrongKeyword = roomListProvider.wrongKeyword;
+                return searchResults.isEmpty ?
                 SingleChildScrollView(
                   child: Column(
 
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const RoomSearchBar(),
-
-                      roomListProvider.pinnedRooms.isEmpty ? const SizedBox(): Padding(
+                      wrongKeyword ? const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text('Please Enter Correct Keyword',style: textStyle,),
+                      ):const SizedBox(),
+                      roomListProvider.pinnedRooms.isEmpty||wrongKeyword ? const SizedBox(): Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -58,8 +62,8 @@ class _RoomListState extends State<RoomList> {
                           ],
                         ),
                       ),
-                      ListDisplay(type: pin, ),
-                      roomListProvider.commonRooms.isEmpty ? const SizedBox(): Padding(
+                      if(!wrongKeyword ) ListDisplay(type: pin, ),
+                      roomListProvider.commonRooms.isEmpty||wrongKeyword ? const SizedBox(): Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -71,8 +75,8 @@ class _RoomListState extends State<RoomList> {
                           ],
                         ),
                       ),
-                      ListDisplay(type: common, ),
-                      roomListProvider.clubRooms.isEmpty ? const SizedBox(): Padding(
+                      if(!wrongKeyword) ListDisplay(type: common, ),
+                      roomListProvider.clubRooms.isEmpty||wrongKeyword ? const SizedBox(): Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -84,7 +88,7 @@ class _RoomListState extends State<RoomList> {
                           ],
                         ),
                       ),
-                      ListDisplay(type: club,),
+                      if(!wrongKeyword) ListDisplay(type: club,),
                     ],
                   ),
                 ):
