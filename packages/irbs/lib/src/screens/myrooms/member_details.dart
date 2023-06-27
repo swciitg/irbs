@@ -377,7 +377,7 @@ class _MemberDetailsState extends State<MemberDetails> {
                     color: const Color.fromRGBO(28, 28, 30, 1),
                     child: Container(
                       height: 48,
-                      margin: const EdgeInsets.fromLTRB(0, 0, 0, 36),
+                      margin:  EdgeInsets.fromLTRB(0, 0, 0, screenWidth*0.1),
                       decoration: const BoxDecoration(
                           color: Color.fromRGBO(118, 172, 255, 1),
                           borderRadius: BorderRadius.all(Radius.circular(4))),
