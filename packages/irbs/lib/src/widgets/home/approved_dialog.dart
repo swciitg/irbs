@@ -22,16 +22,17 @@ class _ApprovedDialogState extends State<ApprovedDialog> {
             Positioned(
               right: 8,
               top: 8,
-              child: IconButton(
-                constraints: BoxConstraints(),
-                padding: EdgeInsets.zero,
-                iconSize: 20,
-                onPressed: () {
+              child: GestureDetector(
+                // constraints: BoxConstraints(),
+                // padding: EdgeInsets.zero,
+                // iconSize: 20,
+                onTap: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(
+                child: Icon(
                   Icons.clear,
                   color: Colors.white,
+                  size: 20,
                 ),
               ),
             ),

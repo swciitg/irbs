@@ -47,11 +47,11 @@ class _HomeState extends State<Home> {
       endDrawer: (!widget.isAdmin) ? null : SideDrawer(),
       appBar: AppBar(
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
+        leading: GestureDetector(
+          onTap: () {
             Navigator.of(context, rootNavigator: true).pop();
           },
-          icon: const Icon(
+          child: const Icon(
             Icons.arrow_back_sharp,
             color: Colors.white,
           ),
@@ -60,63 +60,75 @@ class _HomeState extends State<Home> {
           "IRBS",
           style: kAppBarTextStyle,
         ),
-        actions: widget.isAdmin ? [] : [
-          IconButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/irbs/onboarding');
-              },
-              icon: Image.asset(
-                'assets/question_circle.png',
-                package: 'irbs',
-                height: 24,
-                width: 24,
-              ))
-        ],
+        actions: widget.isAdmin
+            ? []
+            : [
+                GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacementNamed(
+                          context, '/irbs/onboarding');
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right:11.0),
+                      child: Image.asset(
+                        'assets/question_circle.png',
+                        package: 'irbs',
+                        height: 24,
+                        width: 24,
+                      ),
+                    ))
+              ],
         backgroundColor: Themes.kCommonBoxBackground,
       ),
       body: Stack(fit: StackFit.expand, children: [
         SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [ 
-              if(widget.isAdmin) Padding(
-                padding: const EdgeInsets.only(top: 18, left: 16, bottom: 10),
-                child: Text(
-                  'Requests',
-                  style: kSubHeadingStyle.copyWith(fontWeight: FontWeight.w600),
+            children: [
+              if (widget.isAdmin)
+                Padding(
+                  padding: const EdgeInsets.only(top: 18, left: 16, bottom: 10),
+                  child: Text(
+                    'Requests',
+                    style:
+                        kSubHeadingStyle.copyWith(fontWeight: FontWeight.w600),
+                  ),
                 ),
-              ),
-              if(widget.isAdmin)SizedBox(
-                height: 167*screenWidth/360,
-                child: const RequestList()),
-              if(widget.isAdmin)Padding(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                child: Container(
-                  height: 40,
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                      color: Themes.kCommonBoxBackground,
-                      borderRadius: BorderRadius.circular(4)),
-                  child: const Center(
-                    child: Text(
-                      'View all Requests',
-                      style: kRequestedRoomStyle,
+              if (widget.isAdmin)
+                SizedBox(
+                    height: 167 * screenWidth / 360,
+                    child: const RequestList()),
+              if (widget.isAdmin)
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  child: Container(
+                    height: 40,
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                        color: Themes.kCommonBoxBackground,
+                        borderRadius: BorderRadius.circular(4)),
+                    child: const Center(
+                      child: Text(
+                        'View all Requests',
+                        style: kRequestedRoomStyle,
+                      ),
                     ),
                   ),
                 ),
-              ),
               Padding(
-                padding: const EdgeInsets.only(top: 10, left: 16, bottom: 7, right: 16),
+                padding: const EdgeInsets.only(
+                    top: 10, left: 16, bottom: 7, right: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Current Bookings',
-                      style: kSubHeadingStyle.copyWith(fontWeight: FontWeight.w600),
+                      style: kSubHeadingStyle.copyWith(
+                          fontWeight: FontWeight.w600),
                     ),
                     TextButton(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pushNamed(context, '/irbs/bookingHistory');
                       },
                       child: const Text(
@@ -133,7 +145,8 @@ class _HomeState extends State<Home> {
                 endTime: '03:00 PM',
                 date: '21st April',
                 roomName: 'Coding Club Room',
-                data: 'eSports team have to use the room for interIIT practice ',
+                data:
+                    'eSports team have to use the room for interIIT practice ',
               ),
               const CurrentBookingsWidget(
                 status: 1,
@@ -141,7 +154,8 @@ class _HomeState extends State<Home> {
                 endTime: '06:30 AM',
                 date: '22nd April',
                 roomName: 'Finesse Room',
-                data: 'Do no turn off the Server Computer and turn off the AC before leaving.',
+                data:
+                    'Do no turn off the Server Computer and turn off the AC before leaving.',
               ),
               const CurrentBookingsWidget(
                 status: 2,
@@ -182,9 +196,9 @@ class _HomeState extends State<Home> {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          Color.fromRGBO(28, 28, 30, 0),
-                          Color.fromRGBO(28, 28, 30, 1)
-                        ])),
+                      Color.fromRGBO(28, 28, 30, 0),
+                      Color.fromRGBO(28, 28, 30, 1)
+                    ])),
               ),
               Container(
                 color: const Color.fromRGBO(28, 28, 30, 1),
@@ -200,13 +214,13 @@ class _HomeState extends State<Home> {
                       },
                       child: const Center(
                           child: Text(
-                            'Book a Room',
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                package: 'irbs',
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ))),
+                        'Book a Room',
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            package: 'irbs',
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ))),
                 ),
               ),
             ]))

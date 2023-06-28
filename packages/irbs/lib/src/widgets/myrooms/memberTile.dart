@@ -109,16 +109,24 @@ class _MemberTileState extends State<MemberTile> {
           )),
           if (!widget.isAdmin &&
               widget.designations[widget.member["designation"]])
-            Text(
-              'Admin',
-              style: labelTextStyle,
+            Row(
+              children: [
+                Text(
+                  'Admin',
+                  style: labelTextStyle,
+                ),
+                SizedBox(
+                  width: 24,
+                )
+              ],
             ),
-          IconButton(
-            padding: EdgeInsets.all(0),
-            onPressed: () {},
-            iconSize: 20,
-            icon: ImageIcon(
+          GestureDetector(
+            // padding: EdgeInsets.all(0),
+            onTap: () {},
+            // iconSize: 20,
+            child: ImageIcon(
               AssetImage('packages/irbs/assets/images/phone_icon.png'),
+              size: 20,
               color: Colors.white,
             ),
           ),
@@ -153,7 +161,10 @@ class _MemberTileState extends State<MemberTile> {
                   }
                 },
               ),
-            )
+            ),
+          SizedBox(
+            width: 8,
+          )
         ],
       ),
     );

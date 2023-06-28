@@ -31,11 +31,11 @@ class _EditRoomState extends State<EditRoom> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        leading: IconButton(
-          onPressed: () {
+        leading: GestureDetector(
+          onTap: () {
             Navigator.pop(context);
           },
-          icon: const Icon(
+          child: const Icon(
             Icons.arrow_back_sharp,
             color: Colors.white,
           ),
