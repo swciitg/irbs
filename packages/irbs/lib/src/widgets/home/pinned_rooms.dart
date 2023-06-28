@@ -28,7 +28,7 @@ class _PinnedRoomsState extends State<PinnedRooms> {
         Align(
           alignment: Alignment.centerLeft,
           child: Container(
-            margin:const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: const Text(
               'Pinned Rooms',
               style: subHeadingStyle,
@@ -76,12 +76,18 @@ class _PinnedRoomsState extends State<PinnedRooms> {
                       ),
                       onTap: () {},
                     ),
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(
+                    SizedBox(
+                      width: 16,
+                    ),
+                    GestureDetector(
+                        onTap: () {},
+                        child: Icon(
                           Icons.more_vert,
                           color: Colors.white,
-                        ))
+                        )),
+                    SizedBox(
+                      width: 14,
+                    )
                   ],
                 ),
               ),

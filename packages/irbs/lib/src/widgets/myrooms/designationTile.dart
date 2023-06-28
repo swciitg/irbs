@@ -14,6 +14,7 @@ class _DesignationTileState extends State<DesignationTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 48,
       padding: EdgeInsets.fromLTRB(16, 2, 16, 2),
       decoration: BoxDecoration(
           color: Color.fromRGBO(39, 49, 65, 1),
@@ -30,13 +31,20 @@ class _DesignationTileState extends State<DesignationTile> {
               "Admin",
               style: adminTileText,
             ),
-          IconButton(
-              onPressed: () {},
-              icon: ImageIcon(
-                      AssetImage(
-                          'packages/irbs/assets/images/remove_cross.png'),
-                      color: Colors.white,
-                    ),)
+          SizedBox(
+            width: 24,
+          ),
+          GestureDetector(
+            onTap: () {},
+            child: ImageIcon(
+              AssetImage('packages/irbs/assets/images/remove_cross.png'),
+              size: 20,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(
+            width: 8,
+          )
         ],
       ),
     );

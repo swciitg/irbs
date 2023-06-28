@@ -45,11 +45,11 @@ class _MyRoomsState extends State<MyRooms> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        leading: IconButton(
-          onPressed: () {
+        leading: GestureDetector(
+          onTap: () {
             Navigator.of(context).pop();
           },
-          icon: const Icon(
+          child: const Icon(
             Icons.arrow_back_sharp,
             color: Colors.white,
           ),
@@ -73,8 +73,8 @@ class _MyRoomsState extends State<MyRooms> {
                     style: roomheadingStyle,
                   )),
                   if (widget.isAdmin)
-                    IconButton(
-                      onPressed: () {
+                    GestureDetector(
+                      onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => EditRoom(
@@ -82,12 +82,11 @@ class _MyRoomsState extends State<MyRooms> {
                           ),
                         );
                       },
-                      icon: ImageIcon(
+                      child: ImageIcon(
                       AssetImage(
                           'packages/irbs/assets/images/edit.png'),
                       color: Colors.white,
                     ),
-                      color: Colors.white,
                     )
                 ],
               ),

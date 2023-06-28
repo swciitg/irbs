@@ -34,11 +34,11 @@ class _RoomDetailsState extends State<RoomDetails> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        leading: IconButton(
-          onPressed: () {
+        leading: GestureDetector(
+          onTap: () {
             Navigator.of(context).pop();
           },
-          icon: const Icon(
+          child: const Icon(
             Icons.arrow_back_sharp,
             color: Colors.white,
           ),
@@ -48,15 +48,18 @@ class _RoomDetailsState extends State<RoomDetails> {
           style: kAppBarTextStyle,
         ),
         actions: [
-          IconButton(
-              onPressed: () {
+          GestureDetector(
+              onTap: () {
                 Navigator.pushReplacementNamed(context, '/irbs/onboarding');
               },
-              icon: Image.asset(
-                'assets/question_circle.png',
-                package: 'irbs',
-                height: 24,
-                width: 24,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 11.0),
+                child: Image.asset(
+                  'assets/question_circle.png',
+                  package: 'irbs',
+                  height: 24,
+                  width: 24,
+                ),
               ))
         ],
         backgroundColor: Themes.kCommonBoxBackground,
@@ -70,9 +73,7 @@ class _RoomDetailsState extends State<RoomDetails> {
             'packages/irbs/assets/images/add.png',
             fit: BoxFit.contain,
           )),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Container(
           padding: const EdgeInsets.only(left: 16),
           height: 60,
@@ -84,12 +85,14 @@ class _RoomDetailsState extends State<RoomDetails> {
                 'Yoga Room',
                 style: roomheadingStyle,
               )),
-              IconButton(
-                  onPressed: () {
-                  },
-                  icon: const Icon(
-                    Icons.more_vert,
-                    color: Colors.white,
+              GestureDetector(
+                  onTap: () {},
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: Icon(
+                      Icons.more_vert,
+                      color: Colors.white,
+                    ),
                   ))
             ],
           ),
@@ -130,9 +133,7 @@ class _RoomDetailsState extends State<RoomDetails> {
           height: 0.5,
           color: Colors.white.withOpacity(0.2),
         ),
-        const Expanded(
-          child: Calendar()
-        ),
+        const Expanded(child: Calendar()),
       ]),
     );
   }
