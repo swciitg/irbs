@@ -61,29 +61,48 @@ class _RoomTileState extends State<RoomTile> {
               ],
             ),
             Row(
-              children:  [
-                widget.pinned? IconButton(
-                  icon: SvgPicture.asset("packages/irbs/assets/images/pinned.svg",height: 24,width: 24,),
-                  onPressed: () async {
-                    // roomListProvider.modifyPinnedRooms(widget.room);
-                    final SharedPreferences prefs = await SharedPreferences.getInstance();
-                    final List<String>? pinned_rooms = prefs.getStringList('pinnedRooms');
-                    // await prefs.remove('pinnedRooms');
-                    pinned_rooms?.remove(widget.room);
-                    await prefs.setStringList('pinnedRooms', pinned_rooms!);
-                    prefs.reload();
-                  },
-                ):IconButton(
-                  icon: SvgPicture.asset("packages/irbs/assets/images/unpinned.svg",height: 24,width: 24,),
-                  onPressed: () async {
-                    // roomListProvider.modifyPinnedRooms(widget.room);
-                    final SharedPreferences prefs = await SharedPreferences.getInstance();
-                    final List<String> pinned_rooms = prefs.getStringList('pinnedRooms') ?? [];
-                    // await prefs.remove('pinnedRooms');
-                    pinned_rooms.add(widget.room);
-                    await prefs.setStringList('pinnedRooms', pinned_rooms);
-                    prefs.reload();
-                  },
+              children: [
+                widget.pinned
+                    ? GestureDetector(
+                        child: SvgPicture.asset(
+                          "packages/irbs/assets/images/pinned.svg",
+                          height: 20,
+                          width: 20,
+                        ),
+                        onTap: () async {
+                          // roomListProvider.modifyPinnedRooms(widget.room);
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          final List<String>? pinned_rooms =
+                              prefs.getStringList('pinnedRooms');
+                          // await prefs.remove('pinnedRooms');
+                          pinned_rooms?.remove(widget.room);
+                          await prefs.setStringList(
+                              'pinnedRooms', pinned_rooms!);
+                          prefs.reload();
+                        },
+                      )
+                    : GestureDetector(
+                        child: SvgPicture.asset(
+                          "packages/irbs/assets/images/unpinned.svg",
+                          height: 20,
+                          width: 20,
+                        ),
+                        onTap: () async {
+                          // roomListProvider.modifyPinnedRooms(widget.room);
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          final List<String> pinned_rooms =
+                              prefs.getStringList('pinnedRooms') ?? [];
+                          // await prefs.remove('pinnedRooms');
+                          pinned_rooms.add(widget.room);
+                          await prefs.setStringList(
+                              'pinnedRooms', pinned_rooms);
+                          prefs.reload();
+                        },
+                      ),
+                SizedBox(
+                  width: 12,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
