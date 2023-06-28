@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:irbs/src/store/room_list_store.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../globals/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +18,7 @@ class RoomTile extends StatefulWidget {
 class _RoomTileState extends State<RoomTile> {
   @override
   Widget build(BuildContext context) {
-    final roomListProvider = Provider.of<RoomListProvider>(context);
+    // final roomListProvider = Provider.of<RoomListProvider>(context);
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, '/irbs/RoomDetails');
@@ -60,30 +61,29 @@ class _RoomTileState extends State<RoomTile> {
               ],
             ),
             Row(
-              children: [
-                widget.pinned
-                    ? GestureDetector(
-                        child: SvgPicture.asset(
-                          "packages/irbs/assets/images/pinned.svg",
-                          height: 20,
-                          width: 20,
-                        ),
-                        onTap: () {
-                          roomListProvider.modifyPinnedRooms(widget.room);
-                        },
-                      )
-                    : GestureDetector(
-                        child: SvgPicture.asset(
-                          "packages/irbs/assets/images/unpinned.svg",
-                          height: 20,
-                          width: 20,
-                        ),
-                        onTap: () {
-                          roomListProvider.modifyPinnedRooms(widget.room);
-                        },
-                      ),
-                SizedBox(
-                  width: 12,
+              children:  [
+                widget.pinned? IconButton(
+                  icon: SvgPicture.asset("packages/irbs/assets/images/pinned.svg",height: 24,width: 24,),
+                  onPressed: () async {
+                    // roomListProvider.modifyPinnedRooms(widget.room);
+                    final SharedPreferences prefs = await SharedPreferences.getInstance();
+                    final List<String>? pinned_rooms = prefs.getStringList('pinnedRooms');
+                    // await prefs.remove('pinnedRooms');
+                    pinned_rooms?.remove(widget.room);
+                    await prefs.setStringList('pinnedRooms', pinned_rooms!);
+                    prefs.reload();
+                  },
+                ):IconButton(
+                  icon: SvgPicture.asset("packages/irbs/assets/images/unpinned.svg",height: 24,width: 24,),
+                  onPressed: () async {
+                    // roomListProvider.modifyPinnedRooms(widget.room);
+                    final SharedPreferences prefs = await SharedPreferences.getInstance();
+                    final List<String> pinned_rooms = prefs.getStringList('pinnedRooms') ?? [];
+                    // await prefs.remove('pinnedRooms');
+                    pinned_rooms.add(widget.room);
+                    await prefs.setStringList('pinnedRooms', pinned_rooms);
+                    prefs.reload();
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
