@@ -17,17 +17,16 @@ class RoomList extends StatefulWidget {
 }
 
 class _RoomListState extends State<RoomList> {
-
   late List<String> pin;
   // late bool pinEmpty;
   late Timer timer;
 
   @override
-  void initState(){
+  void initState() {
     pin = [];
     super.initState();
     getPinnedRooms();
-    timer=Timer.periodic(Duration(milliseconds: 100), (timer) {
+    timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
       getPinnedRooms();
     });
   }
@@ -68,59 +67,76 @@ class _RoomListState extends State<RoomList> {
         child: ChangeNotifierProvider<RoomListProvider>(
           create: (context) => RoomListProvider(),
           child: Consumer<RoomListProvider>(
-              builder: (context,roomListProvider,child){
-                // var pin =roomListProvider.pinnedRooms;
-                var club =roomListProvider.clubRooms;
-                var common = roomListProvider.commonRooms;
-                var searchResults = roomListProvider.searchResults;
-                bool wrongKeyword = roomListProvider.wrongKeyword;
-                return searchResults.isEmpty ?
-                SingleChildScrollView(
-                  child: Column(
-
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const RoomSearchBar(),
-                      wrongKeyword ? const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('Please Enter Correct Keyword',style: textStyle,),
-                      ):const SizedBox(),
-                      // roomListProvider.pinnedRooms.isEmpty||wrongKeyword ? const SizedBox(): Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.start,
-                      //     children: [
-                      //       roomListProvider.searchResults.isEmpty ?
-                      //       const Text('Pinned Rooms',
-                      //         style: roomTypeStyle,
-                      //       ):const SizedBox(),
-                      //     ],
-                      //   ),
-                      // ),
-                      // if(!wrongKeyword ) ListDisplay(type: pin, ),
-                      pin.isEmpty||wrongKeyword ? const SizedBox(): Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            roomListProvider.searchResults.isEmpty ?
-                            const Text('Pinned Rooms',
-                              style: roomTypeStyle,
-                            ):const SizedBox(),
-                          ],
-                        ),
-                      ),
-                      if(!pin.isEmpty ) ListDisplay(type: pin, ),
-                      roomListProvider.commonRooms.isEmpty||wrongKeyword ? const SizedBox(): Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            roomListProvider.searchResults.isEmpty ?
-                            const Text( 'Common Rooms',
-                              style: roomTypeStyle,
-                            ):const SizedBox(),
-                          ],
+              builder: (context, roomListProvider, child) {
+            var pin = roomListProvider.pinnedRooms;
+            var club = roomListProvider.clubRooms;
+            var common = roomListProvider.commonRooms;
+            var searchResults = roomListProvider.searchResults;
+            bool wrongKeyword = roomListProvider.wrongKeyword;
+            return searchResults.isEmpty
+                ? SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const RoomSearchBar(),
+                        wrongKeyword
+                            ? const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Please Enter Correct Keyword',
+                                  style: textStyle,
+                                ),
+                              )
+                            : const SizedBox(),
+                        // roomListProvider.pinnedRooms.isEmpty||wrongKeyword ? const SizedBox(): Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.start,
+                        //     children: [
+                        //       roomListProvider.searchResults.isEmpty ?
+                        //       const Text('Pinned Rooms',
+                        //         style: roomTypeStyle,
+                        //       ):const SizedBox(),
+                        //     ],
+                        //   ),
+                        // ),
+                        // if(!wrongKeyword ) ListDisplay(type: pin, ),
+                        pin.isEmpty || wrongKeyword
+                            ? const SizedBox()
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 12),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    roomListProvider.searchResults.isEmpty
+                                        ? const Text(
+                                            'Pinned Rooms',
+                                            style: roomTypeStyle,
+                                          )
+                                        : const SizedBox(),
+                                  ],
+                                ),
+                              ),
+                        if (!pin.isEmpty)
+                          ListDisplay(
+                            type: pin,
+                          ),
+                        roomListProvider.commonRooms.isEmpty || wrongKeyword
+                            ? const SizedBox()
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 12),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    roomListProvider.searchResults.isEmpty
+                                        ? const Text(
+                                            'Common Rooms',
+                                            style: roomTypeStyle,
+                                          )
+                                        : const SizedBox(),
+                                  ],
 //               builder: (context, roomListProvider, child) {
 //             var pin = roomListProvider.pinnedRooms;
 //             var club = roomListProvider.clubRooms;
@@ -213,10 +229,65 @@ class _RoomListState extends State<RoomList> {
 //                         const RoomSearchBar(),
 //                         ListDisplay(
 //                           type: searchResults,
-                        ),
+                                ),
+                              ),
+
+                        //        if (!wrongKeyword)
+                        //   ListDisplay(
+                        //     type: pin,
+                        //   ),
+                        // roomListProvider.commonRooms.isEmpty || wrongKeyword
+                        //     ? const SizedBox()
+                        //     : Padding(
+                        //         padding: const EdgeInsets.symmetric(
+                        //             horizontal: 16, vertical: 12),
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.start,
+                        //           children: [
+                        //             roomListProvider.searchResults.isEmpty
+                        //                 ? const Text(
+                        //                     'Common Rooms',
+                        //                     style: roomTypeStyle,
+                        //                   )
+                        //                 : const SizedBox(),
+                        //           ],
+                        //         ),
+                        //       ),
+                        if (!wrongKeyword)
+                          ListDisplay(
+                            type: common,
+                          ),
+                        roomListProvider.clubRooms.isEmpty || wrongKeyword
+                            ? const SizedBox()
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 12),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    roomListProvider.searchResults.isEmpty
+                                        ? const Text('Club Rooms',
+                                            style: roomTypeStyle)
+                                        : const SizedBox(),
+                                  ],
+                                ),
+                              ),
+                        if (!wrongKeyword)
+                          ListDisplay(
+                            type: club,
+                          ),
                       ],
                     ),
-                  );
+                  )
+                : SingleChildScrollView(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                        const RoomSearchBar(),
+                        ListDisplay(
+                          type: searchResults,
+                        )
+                      ]));
           }),
         ),
       ),
@@ -224,11 +295,9 @@ class _RoomListState extends State<RoomList> {
   }
 
   Future<void> getPinnedRooms() async {
-    if(!mounted)return;
+    if (!mounted) return;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     pin = prefs.getStringList('pinnedRooms') ?? [];
-    setState(() {
-
-    });
+    setState(() {});
   }
 }
