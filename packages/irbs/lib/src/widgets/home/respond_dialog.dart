@@ -23,15 +23,16 @@ class _RespondDialogState extends State<RespondDialog> {
         Positioned(
           right: 16,
           top: 16,
-          child: IconButton(
-            constraints: BoxConstraints(),
-            padding: EdgeInsets.zero,
-            iconSize: 20,
-            onPressed: () {
+          child: GestureDetector(
+            // constraints: BoxConstraints(),
+            // padding: EdgeInsets.zero,
+            // iconSize: 20,
+            onTap: () {
               Navigator.pop(context);
             },
-            icon: Icon(
+            child: Icon(
               Icons.clear,
+              size: 20,
               color: Colors.white,
             ),
           ),

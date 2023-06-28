@@ -197,14 +197,14 @@ class SideDrawer extends StatelessWidget {
                 ],
               ),
               Positioned(
-                  left: 0,
-                  top: 0,
-                  child: IconButton(
-                    icon: Icon(
+                  left: 16,
+                  top: 16,
+                  child: GestureDetector(
+                    child: Icon(
                       Icons.close,
                       color: Colors.white,
                     ),
-                    onPressed: () {
+                    onTap: () {
                       Navigator.pop(context);
                     },
                   )),

@@ -49,13 +49,16 @@ class _RequestModalState extends State<RequestModal>
             children: [
               Align(
                 alignment: Alignment.centerRight,
-                child: IconButton(
-                    onPressed: () {
+                child: GestureDetector(
+                    onTap: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(
-                      Icons.close,
-                      color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 16.0),
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
                     )),
               ),
               Lottie.asset('packages/irbs/assets/sent_request.json',
