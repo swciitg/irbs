@@ -19,7 +19,8 @@ jobs:
           channel: "stable"
       - run: flutter --version
       - run: flutter pub get
-      - run: flutter pub upgrade--dart-define SERVER-URL="https://swc.iitg.ac.in/test/onestopapi/v2/" --dart-define SECURITY-KEY=${{ secrets.SECURITY_KEY }}
+      - run: flutter pub upgrade
+      - run: flutter build apk --no-tree-shake-icons --debug
       - name: Create Release
         uses: ncipollo/release-action@v1.10.0
         with:
