@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:irbs/src/store/room_list_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../globals/colors.dart';
-import 'package:provider/provider.dart';
 
 class RoomTile extends StatefulWidget {
   final String room;
@@ -18,7 +16,6 @@ class RoomTile extends StatefulWidget {
 class _RoomTileState extends State<RoomTile> {
   @override
   Widget build(BuildContext context) {
-    // final roomListProvider = Provider.of<RoomListProvider>(context);
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, '/irbs/RoomDetails');
@@ -36,19 +33,19 @@ class _RoomTileState extends State<RoomTile> {
           children: [
             Row(
               children: [
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 9, horizontal: 16),
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                        BorderRadius.circular(4), // Set the radius here
-                  ),
-                ),
+                // Container(
+                //   margin:
+                //       const EdgeInsets.symmetric(vertical: 9, horizontal: 16),
+                //   height: 30,
+                //   width: 30,
+                //   decoration: BoxDecoration(
+                //     color: Colors.white,
+                //     borderRadius:
+                //         BorderRadius.circular(4), // Set the radius here
+                //   ),
+                // ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15, bottom: 16),
+                  padding: const EdgeInsets.only(top: 15, bottom: 16, left: 15),
                   child: Text(
                     widget.room,
                     style: const TextStyle(
@@ -70,15 +67,13 @@ class _RoomTileState extends State<RoomTile> {
                           width: 20,
                         ),
                         onTap: () async {
-                          // roomListProvider.modifyPinnedRooms(widget.room);
                           final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
-                          final List<String>? pinned_rooms =
+                          final List<String>? pinnedRooms =
                               prefs.getStringList('pinnedRooms');
-                          // await prefs.remove('pinnedRooms');
-                          pinned_rooms?.remove(widget.room);
+                          pinnedRooms?.remove(widget.room);
                           await prefs.setStringList(
-                              'pinnedRooms', pinned_rooms!);
+                              'pinnedRooms', pinnedRooms!);
                           prefs.reload();
                         },
                       )
@@ -89,33 +84,18 @@ class _RoomTileState extends State<RoomTile> {
                           width: 20,
                         ),
                         onTap: () async {
-                          // roomListProvider.modifyPinnedRooms(widget.room);
                           final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
-                          final List<String> pinned_rooms =
+                          final List<String> pinnedRooms =
                               prefs.getStringList('pinnedRooms') ?? [];
-                          // await prefs.remove('pinnedRooms');
-                          pinned_rooms.add(widget.room);
+                          pinnedRooms.add(widget.room);
                           await prefs.setStringList(
-                              'pinnedRooms', pinned_rooms);
+                              'pinnedRooms', pinnedRooms);
                           prefs.reload();
                         },
                       ),
-                SizedBox(
-                  width: 12,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    right: 16,
-                  ),
-                  child: GestureDetector(
-                    child: const Icon(
-                      Icons.more_vert,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    onTap: () {},
-                  ),
+                const SizedBox(
+                  width: 15,
                 ),
               ],
             )

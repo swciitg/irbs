@@ -1,18 +1,12 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/widgets/home/common_rooms.dart';
 import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
 import 'package:irbs/src/widgets/home/drawer.dart';
-import 'package:irbs/src/widgets/home/pinned_rooms.dart';
-import 'package:irbs/src/widgets/home/request.dart';
 import 'package:irbs/src/widgets/home/request_list.dart';
-import 'package:irbs/src/widgets/home/request_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../widgets/roomlist/list_display.dart';
 
 class Home extends StatefulWidget {
   final bool isAdmin;
@@ -164,19 +158,6 @@ class _HomeState extends State<Home> {
                 date: '22nd April',
                 roomName: 'Finesse Room',
               ),
-              // const PinnedRooms(),
-              pin.isEmpty ? const SizedBox(): const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16,vertical: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text('Pinned Rooms',
-                      style: roomTypeStyle,
-                    )
-                  ],
-                ),
-              ),
-              if(!pin.isEmpty ) ListDisplay(type: pin, ),
               const CommonRooms(),
               const SizedBox(
                 height: 108,
