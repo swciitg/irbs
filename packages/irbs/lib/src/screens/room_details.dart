@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:irbs/src/widgets/roomdetails/calendar.dart';
 import 'package:irbs/src/widgets/roomdetails/request_modal.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import '../../globals/colors.dart';
-import '../../globals/styles.dart';
-import '../../widgets/roomdetails/upcoming_booking_widget.dart';
+import '../globals/colors.dart';
+import '../globals/styles.dart';
+import '../widgets/roomdetails/upcoming_booking_widget.dart';
 
 class RoomDetails extends StatefulWidget {
   const RoomDetails({super.key, required});

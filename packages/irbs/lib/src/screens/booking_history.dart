@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/widgets/bookinghistory/booking_status.dart';
+import 'package:irbs/src/widgets/bookinghistory/booking_tile.dart';
 
-import '../../globals/colors.dart';
-import '../../globals/styles.dart';
+import '../globals/colors.dart';
+import '../globals/styles.dart';
 
 class BookingHistory extends StatefulWidget {
   const BookingHistory({Key? key}) : super(key: key);
@@ -62,7 +62,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                 style: roomTypeStyle,
               ),
             ),
-            BookingStatus(
+            BookingTile(
               current: true,
               startTime: '8:00 AM',
               roomName: 'Coding Club Room',
@@ -70,7 +70,7 @@ class _BookingHistoryState extends State<BookingHistory> {
               date: '21st April',
               status: 0,
             ),
-            BookingStatus(
+            BookingTile(
               current: true,
               startTime: '8:00 AM',
               roomName: 'Coding Club Room',
@@ -78,7 +78,7 @@ class _BookingHistoryState extends State<BookingHistory> {
               date: '21st April',
               status: 2,
             ),
-            BookingStatus(
+            BookingTile(
               current: true,
               startTime: '8:00 AM',
               roomName: 'Coding Club Room',
@@ -93,7 +93,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                 style: roomTypeStyle,
               ),
             ),
-            BookingStatus(
+            BookingTile(
               current: false,
               startTime: '8:00 AM',
               roomName: 'Coding Club Room',
@@ -101,7 +101,7 @@ class _BookingHistoryState extends State<BookingHistory> {
               date: '21st April',
               status: 1,
             ),
-            BookingStatus(
+            BookingTile(
               current: false,
               startTime: '8:00 AM',
               roomName: 'Coding Club Room',
@@ -109,7 +109,7 @@ class _BookingHistoryState extends State<BookingHistory> {
               date: '21st April',
               status: 2,
             ),
-            BookingStatus(
+            BookingTile(
               current: false,
               startTime: '8:00 AM',
               roomName: 'Coding Club Room',
@@ -117,7 +117,7 @@ class _BookingHistoryState extends State<BookingHistory> {
               date: '21st April',
               status: 1,
             ),
-            BookingStatus(
+            BookingTile(
               current: false,
               startTime: '8:00 AM',
               roomName: 'Coding Club Room',

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import '../../functions/filter_rooms.dart';
-import '../../globals/colors.dart';
-import '../../globals/styles.dart';
-import '../../models/room_model.dart';
-import '../../services/api.dart';
-import '../../store/common_store.dart';
-import '../../widgets/roomlist/list_display.dart';
-import '../../widgets/roomlist/search_bar.dart';
+import '../functions/filter_rooms.dart';
+import '../globals/colors.dart';
+import '../globals/styles.dart';
+import '../models/room_model.dart';
+import '../services/api.dart';
+import '../store/common_store.dart';
+import '../widgets/roomlist/list_display.dart';
+import '../widgets/roomlist/search_bar.dart';
 
 class RoomList extends StatefulWidget {
   const RoomList({Key? key}) : super(key: key);

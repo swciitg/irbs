@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/globals/colors.dart';
-import 'package:irbs/src/widgets/myroom/dropdown.dart';
+import 'package:irbs/src/widgets/myrooms/dropdown.dart';
 import 'package:irbs/src/widgets/roomdetails/datepicker_color.dart';
 
 class MemberDetails extends StatefulWidget {

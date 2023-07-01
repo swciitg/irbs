@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
 
-class BookingStatus extends StatefulWidget {
+class BookingTile extends StatefulWidget {
   final int status;
   final String startTime;
   final String roomName;
   final String endTime;
   final String date;
   final bool current;
-  const BookingStatus(
+  const BookingTile(
       {Key? key,
       required this.startTime,
       required this.roomName,
@@ -20,10 +20,10 @@ class BookingStatus extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<BookingStatus> createState() => _BookingStatusState();
+  State<BookingTile> createState() => _BookingTileState();
 }
 
-class _BookingStatusState extends State<BookingStatus> {
+class _BookingTileState extends State<BookingTile> {
   @override
   Widget build(BuildContext context) {
     return Padding(
