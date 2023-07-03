@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:irbs/src/models/room_model.dart';
+import '../functions/auth_helper_functions.dart';
+import '../functions/snackbar.dart';
 import '../globals/endpoints.dart';
+import '../models/myroom_model.dart';
 
 class APIService {
 
@@ -92,4 +95,33 @@ class APIService {
       throw Exception(e.toString());
     }
   }
+  Future<List<MyRoomModel>> getMyRooms() async {
+
+    try{
+      dio.options.headers["Authorization"] = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YTAzYzQwOWIyOTlkMmNlMjZkMGI3MiIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTY4ODIyMzQ0OH0.cvC4lgddKFUJnt7upO5eOqBt2m5Re4elgTKrRIAO-Iw";
+      var response = await dio.get(Endpoints.getMyRooms,
+      );
+      //dio.options.headers["authorization"] = " ";
+      if(response.statusCode == 200)
+      {
+        var myRooms = response.data;
+        List<MyRoomModel> ans = [];
+        print(myRooms);
+        for (var room in myRooms)
+        {
+          ans.add(room);
+        }
+        return ans;
+      }
+      else
+      {
+        throw Exception(response.statusMessage);
+      }
+    }catch(e)
+    {
+      throw Exception(e.toString());
+    }
+  }
+
+
 }
