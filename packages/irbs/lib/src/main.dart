@@ -32,7 +32,7 @@ class _IRBSState extends State<IRBS> {
         routes: {
           '/irbs/my_room': (context) => MyRooms(isAdmin: true),
           '/irbs/home': (context) => const Home(isAdmin: true),
-          '/irbs/RoomDetails': (context) => const RoomDetails(),
+          '/irbs/RoomDetails': (context) => const RoomDetails(roomId: '64a14d21eb998e5dea2594fd'),
           '/irbs/onboarding': (context) => const Onboarding(),
           '/irbs/roomList': (context) => const RoomList(),
           '/irbs/bookingHistory': (context) => const BookingHistory(),

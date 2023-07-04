@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:irbs/src/models/booking_model.dart';
 import 'package:irbs/src/models/room_model.dart';
+import 'package:irbs/src/widgets/roomdetails/upcoming_booking_widget.dart';
 import '../globals/endpoints.dart';
 
 class APIService {
@@ -89,6 +91,56 @@ class APIService {
         }
     }catch(e)
     {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<String> getRoomFromId(String roomId)async{
+    try {
+      Response res = await dio.get('${Endpoints.getSpecificRoom}/$roomId');
+
+      if(res.statusCode == 200){
+        return res.data['roomName'];
+      }
+      else{
+        throw Exception(res.statusMessage);
+      }
+    }catch(e){
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<List<BookingModel>> getRoomBookings(String roomId)async{
+    try{
+      Response res = await dio.get('${Endpoints.getRoomBookings}/$roomId/all');
+      
+      if(res.statusCode == 200){
+        var bookingMapList = res.data;
+
+        List<BookingModel> bookingList = [];
+
+        for(var booking in bookingMapList){
+          bookingList.add(
+            BookingModel(
+              roomId: booking['roomId'],
+              user: booking['user'],
+              status: booking['status'],
+              inTime: booking['inTime'],
+              outTime: booking['outTime'],
+              bookingPurpose: booking['bookingPurpose'],
+              acceptInstructions: '',
+              createdAt: booking['createdAt'],
+              id: booking['id']
+            )
+          );
+        }
+
+        return bookingList;
+      }
+      else{
+        throw Exception(res.statusMessage);
+      }
+    }catch(e){
       throw Exception(e.toString());
     }
   }

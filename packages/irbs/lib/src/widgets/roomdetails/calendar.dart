@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
+import 'package:irbs/src/models/calendar_data.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class Calendar extends StatefulWidget {
-  const Calendar({super.key});
+  final List<CalendarData> bookings;
+  const Calendar({required this.bookings, super.key});
 
   @override
   State<Calendar> createState() => _CalendarState();
@@ -20,15 +22,15 @@ class _CalendarState extends State<Calendar> {
 
   double datePickerHeight = 0;
 
-  List<Meeting> _getDataSource(List<Map> data) {
+  List<Meeting> _getDataSource(List<CalendarData> data) {
     final List<Meeting> meetings = <Meeting>[];
 
     for(int i = 0; i < data.length; i++){
       meetings.add(
         Meeting(
-          eventName: data[i]['eventName'],
-          from: data[i]['startTime'],
-          to: data[i]['endTime'],
+          eventName: data[i].eventName,
+          from: data[i].startTime,
+          to: data[i].endTime,
           background: Colors.red,
           isAllDay: false
         )
@@ -39,20 +41,7 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    List<Map> data = [
-      {
-        'eventName': 'HackStack',
-        'startTime': DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 9),
-        'endTime': DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 11)
-      },
-      {
-        'eventName': 'New Event',
-        'startTime': DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1, 9),
-        'endTime': DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1, 11)
-      },
-    ];
-    
-    MeetingDataSource dataSource = MeetingDataSource(_getDataSource(data));
+    MeetingDataSource dataSource = MeetingDataSource(_getDataSource(widget.bookings));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +69,7 @@ class _CalendarState extends State<Calendar> {
                   if(mounted){
                     setState(() {
                       if(datePickerHeight == 0){
-                        month = DateFormat('MMMM').format(_datePickerController.selectedDate!);
+                        month = DateFormat('MMMM').format(_datePickerController.selectedDate ?? DateTime.now());
                         datePickerHeight = 350;
                       }else{
                         month = DateFormat('MMMM').format(_calendarController.displayDate!);
@@ -151,91 +140,105 @@ class _CalendarState extends State<Calendar> {
         AnimatedContainer(
           height: datePickerHeight,
           duration: const Duration(milliseconds: 300),
-          child: SfDateRangePicker(
-            selectionColor: Themes.primaryColor,
-            selectionRadius: 15,
-            selectionTextStyle: const TextStyle(
-              color: Themes.onPrimaryColor
-            ),
-            headerStyle: const DateRangePickerHeaderStyle(
-              textStyle: TextStyle(
-                color: Colors.red
-              )
-            ),
-            headerHeight: 0,
-            monthViewSettings: const DateRangePickerMonthViewSettings(
-              firstDayOfWeek: 1,
-              viewHeaderHeight: 40,
-              viewHeaderStyle: DateRangePickerViewHeaderStyle(
-                textStyle: TextStyle(
-                  color: Themes.blueGrey,
-                )
-              )
-            ),
-            controller: _datePickerController,
-            onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
-              _calendarController.displayDate = args.value;
-            },
-            onViewChanged: (DateRangePickerViewChangedArgs args){
-              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                _datePickerController.selectedDate = args.visibleDateRange.startDate;
-                month = DateFormat('MMMM').format(args.visibleDateRange.startDate!);
-              });
-            },
-            monthCellStyle: const DateRangePickerMonthCellStyle(
-              cellDecoration: BoxDecoration(
-                color: Themes.backgroundColor
-              ),
-              textStyle: TextStyle(
-                color: Colors.white,
-              ),
-              weekendTextStyle: TextStyle(
-                color: Colors.red
-              ),
-              todayTextStyle: TextStyle(
-                color: Themes.primaryColor
-              )
-            ),
+          child: Builder(
+            builder: (context) {
+              
+              return SfDateRangePicker(
+                selectionColor: Themes.primaryColor,
+                selectionRadius: 15,
+                selectionTextStyle: const TextStyle(
+                  color: Themes.onPrimaryColor
+                ),
+                headerStyle: const DateRangePickerHeaderStyle(
+                  textStyle: TextStyle(
+                    color: Colors.red
+                  )
+                ),
+                headerHeight: 0,
+                monthViewSettings: const DateRangePickerMonthViewSettings(
+                  firstDayOfWeek: 1,
+                  viewHeaderHeight: 40,
+                  viewHeaderStyle: DateRangePickerViewHeaderStyle(
+                    textStyle: TextStyle(
+                      color: Themes.blueGrey,
+                    )
+                  )
+                ),
+                controller: _datePickerController,
+                onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
+                  _calendarController.displayDate = args.value;
+                },
+                initialSelectedDate: DateTime.now(),
+                onViewChanged: (DateRangePickerViewChangedArgs args){
+                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                    if(datePickerHeight != 0){_datePickerController.selectedDate = args.visibleDateRange.startDate;}
+                    month = DateFormat('MMMM').format(args.visibleDateRange.startDate!);
+                  });
+                },
+                monthCellStyle: const DateRangePickerMonthCellStyle(
+                  cellDecoration: BoxDecoration(
+                    color: Themes.backgroundColor
+                  ),
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  weekendTextStyle: TextStyle(
+                    color: Colors.red
+                  ),
+                  todayTextStyle: TextStyle(
+                    color: Themes.primaryColor
+                  )
+                ),
+              );
+            }
           )
         ),
         Expanded(
-          child: SfCalendar(
-            onViewChanged: (viewChangedDetails){
-              WidgetsBinding.instance.addPostFrameCallback((timeStamp){
-                if(mounted) {
-                  setState(() {
-                  if(datePickerHeight == 0){
-                    month = DateFormat('MMMM').format(viewChangedDetails.visibleDates.first);
-                  }
-                });
-                }
-              });
-            },
-            showDatePickerButton: true,
-            initialDisplayDate: DateTime.now(),
-            firstDayOfWeek: 1,
-            view: CalendarView.week,
-            controller: _calendarController,
-            backgroundColor: const Color.fromRGBO(35, 35, 35, 1),
-            cellBorderColor: const Color.fromRGBO(135, 145, 165, 1),
-            viewHeaderStyle: const ViewHeaderStyle(
-              backgroundColor: Color.fromRGBO(35, 35, 35, 1),
-              dateTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
-              dayTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
-            ),
-            todayHighlightColor: Themes.primaryColor,
-            headerDateFormat: 'MMMM',
-            headerHeight: 0,            
-            headerStyle: const CalendarHeaderStyle(
-              backgroundColor: Themes.backgroundColor,
-              textStyle: appBarStyle,
+          child: Builder(
+            builder: (context) {
+              print("hello");
+              _calendarController.addPropertyChangedListener((p0) {
+                print(p0);
+              },);
+              return SfCalendar(
+                onViewChanged: (viewChangedDetails){
+                  WidgetsBinding.instance.addPostFrameCallback((timeStamp){
+                    if(mounted) {
+                      setState(() {
+                      if(datePickerHeight == 0){
+                        month = DateFormat('MMMM').format(viewChangedDetails.visibleDates.first);
+                      }
+                    });
+                    }
+                  });
+                },
+                showDatePickerButton: true,
+                initialDisplayDate: DateTime.now(),
+                firstDayOfWeek: 1,
+                view: CalendarView.week,
+                controller: _calendarController,
+                backgroundColor: const Color.fromRGBO(35, 35, 35, 1),
+                cellBorderColor: const Color.fromRGBO(135, 145, 165, 1),
+                viewHeaderStyle: const ViewHeaderStyle(
+                  backgroundColor: Color.fromRGBO(35, 35, 35, 1),
+                  dateTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
+                  dayTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
+                ),
+                todayHighlightColor: Themes.primaryColor,
+                headerDateFormat: 'MMMM',
+                headerHeight: 0,            
+                headerStyle: const CalendarHeaderStyle(
+                  backgroundColor: Themes.backgroundColor,
+                  textStyle: appBarStyle,
 
-            ),
-            timeSlotViewSettings: const TimeSlotViewSettings(
-              timeTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
-            ),
-            allowDragAndDrop: false,
-            dataSource: dataSource,
+                ),
+                timeSlotViewSettings: const TimeSlotViewSettings(
+                  timeTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
+                ),
+                allowDragAndDrop: false,
+                dataSource: dataSource,
+              );
+            }
           ),
         ),
       ],
@@ -244,13 +247,7 @@ class _CalendarState extends State<Calendar> {
 }
 
 
-
-/// An object to set the appointment collection data source to calendar, which
-/// used to map the custom appointment data to the calendar appointment, and
-/// allows to add, remove or reset the appointment collection.
 class MeetingDataSource extends CalendarDataSource {
-  /// Creates a meeting data source, which used to set the appointment
-  /// collection to the calendar
   MeetingDataSource(List<Meeting> source) {
     appointments = source;
   }
@@ -291,10 +288,7 @@ class MeetingDataSource extends CalendarDataSource {
   }
 }
 
-/// Custom business object class which contains properties to hold the detailed
-/// information about the event data which will be rendered in calendar.
 class Meeting {
-  /// Creates a meeting class with required details.
   Meeting({
     required this.eventName, 
     required this.from, 
@@ -303,18 +297,9 @@ class Meeting {
     required this.isAllDay
   });
 
-  /// Event name which is equivalent to subject property of [Appointment].
   String eventName;
-
-  /// From which is equivalent to start time property of [Appointment].
   DateTime from;
-
-  /// To which is equivalent to end time property of [Appointment].
   DateTime to;
-
-  /// Background which is equivalent to color property of [Appointment].
   Color background;
-
-  /// IsAllDay which is equivalent to isAllDay property of [Appointment].
   bool isAllDay;
 }
