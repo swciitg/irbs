@@ -9,11 +9,12 @@ import '../globals/styles.dart';
 import 'package:intl/intl.dart';
 import '../widgets/roomdetails/upcoming_booking_widget.dart';
 import '../models/booking_model.dart';
+import '../models/room_model.dart';
 
 class RoomDetailArguements{
-  final String roomId;
+  final RoomModel room;
 
-  RoomDetailArguements(this.roomId);
+  RoomDetailArguements(this.room);
 }
 
 class RoomDetails extends StatefulWidget {
@@ -88,7 +89,7 @@ class _RoomDetailsState extends State<RoomDetails> {
             fit: BoxFit.contain,
           )),
       body: FutureBuilder(
-        future: APIService().getRoomBookings(args.roomId),
+        future: APIService().getRoomBookings(args.room.id),
         builder: (context, snapshot) {
           if(!snapshot.hasData){
             return const Center(child: CircularProgressIndicator(),);
@@ -112,76 +113,63 @@ class _RoomDetailsState extends State<RoomDetails> {
             else{
               latestBookings = [allBookings[0], allBookings[1]];
             }
-            return FutureBuilder(
-              future: APIService().getRoomFromId(args.roomId),
-              builder: (context, snapshot2){
-                if(!snapshot2.hasData){
-                  return const Center(child: CircularProgressIndicator(),);
-                }
-                else if(snapshot2.hasError){
-                  return const Text('Error');
-                }
-                else{
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start, 
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start, 
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(left: 16),
+                  height: 60,
+                  //color: const Color.fromRGBO(39, 49, 65, 1),
+                  child: Row(
                     children: [
-                      Container(
-                        padding: const EdgeInsets.only(left: 16),
-                        height: 60,
-                        //color: const Color.fromRGBO(39, 49, 65, 1),
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child: Text(
-                              snapshot2.data!,
-                              style: roomheadingStyle,
-                            )),
-                            GestureDetector(
-                                onTap: () {},
-                                child: const Padding(
-                                  padding: EdgeInsets.only(right: 16.0),
-                                  child: Icon(
-                                    Icons.more_vert,
-                                    color: Colors.white,
-                                  ),
-                                ))
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Divider(
-                        height: 0.5,
-                        color: Colors.white.withOpacity(0.2),
-                      ),
-                      ExpansionTile(
-                        childrenPadding: const EdgeInsets.only(bottom: 12),
-                        title: const Text(
-                          'Upcoming Bookings',
-                          style: subHeadingStyle,
-                        ),
-                        collapsedIconColor:const Color.fromRGBO(135, 145, 165, 1),
-                        iconColor:const Color.fromRGBO(135, 145, 165, 1),
-                        children: latestBookings.map(
-                          (e) => UpcomingBookingsWidget(
-                            name: e.user,
-                            startTime: DateFormat("hh:mm a").format(DateTime.parse(e.inTime)),
-                            endTime: DateFormat("hh:mm a").format(DateTime.parse(e.outTime)),
-                            date: DateFormat("dd MMMM").format(DateTime.parse(e.inTime)),
-                            status: e.status == 'requested' ? 1 : e.status == 'accepted' ? 2 : 0,
-                          )
-                        ).toList(),
-                      ),
-                      Divider(
-                        height: 0.5,
-                        color: Colors.white.withOpacity(0.2),
-                      ),
-                      Expanded(child: Calendar(bookings: allBookings.map((e) => CalendarData.fromBookingModel(e)).toList(),)),
-                    ]
-                  );
-                }
-              },
+                      Expanded(
+                          child: Text(
+                        args.room.roomName,
+                        style: roomheadingStyle,
+                      )),
+                      GestureDetector(
+                          onTap: () {},
+                          child: const Padding(
+                            padding: EdgeInsets.only(right: 16.0),
+                            child: Icon(
+                              Icons.more_vert,
+                              color: Colors.white,
+                            ),
+                          ))
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Divider(
+                  height: 0.5,
+                  color: Colors.white.withOpacity(0.2),
+                ),
+                ExpansionTile(
+                  childrenPadding: const EdgeInsets.only(bottom: 12),
+                  title: const Text(
+                    'Upcoming Bookings',
+                    style: subHeadingStyle,
+                  ),
+                  collapsedIconColor:const Color.fromRGBO(135, 145, 165, 1),
+                  iconColor:const Color.fromRGBO(135, 145, 165, 1),
+                  children: latestBookings.map(
+                    (e) => UpcomingBookingsWidget(
+                      name: e.user,
+                      startTime: DateFormat("hh:mm a").format(DateTime.parse(e.inTime)),
+                      endTime: DateFormat("hh:mm a").format(DateTime.parse(e.outTime)),
+                      date: DateFormat("dd MMMM").format(DateTime.parse(e.inTime)),
+                      status: e.status == 'requested' ? 1 : e.status == 'accepted' ? 2 : 0,
+                    )
+                  ).toList(),
+                ),
+                Divider(
+                  height: 0.5,
+                  color: Colors.white.withOpacity(0.2),
+                ),
+                Expanded(child: Calendar(bookings: allBookings.map((e) => CalendarData.fromBookingModel(e)).toList(),)),
+              ]
             );
           }
         },

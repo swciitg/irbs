@@ -40,8 +40,7 @@ class _ListDisplayState extends State<ListDisplay> {
                   itemCount: widget.roomList.length,
                   itemBuilder: (context, index) {
                     return RoomTile(
-                        roomId: widget.roomList[index].id,
-                        room: widget.roomList[index].roomName, pinned: false);
+                        room: widget.roomList[index], pinned: false);
                   }),
             ],
           );
