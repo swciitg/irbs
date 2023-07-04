@@ -55,7 +55,7 @@ class _RoomListState extends State<RoomList> {
           future: APIService().getAllRooms(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
+              return CircularProgressIndicator();
             } else if (snapshot.hasError) {
               print(snapshot.error);
               return Text('Error');

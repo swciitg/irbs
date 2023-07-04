@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/models/calendar_data.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class Calendar extends StatefulWidget {
-  final List<CalendarData> bookings;
-  const Calendar({required this.bookings, super.key});
+  const Calendar({super.key});
 
   @override
   State<Calendar> createState() => _CalendarState();
@@ -22,15 +20,15 @@ class _CalendarState extends State<Calendar> {
 
   double datePickerHeight = 0;
 
-  List<Meeting> _getDataSource(List<CalendarData> data) {
+  List<Meeting> _getDataSource(List<Map> data) {
     final List<Meeting> meetings = <Meeting>[];
 
     for(int i = 0; i < data.length; i++){
       meetings.add(
         Meeting(
-          eventName: data[i].eventName,
-          from: data[i].startTime,
-          to: data[i].endTime,
+          eventName: data[i]['eventName'],
+          from: data[i]['startTime'],
+          to: data[i]['endTime'],
           background: Colors.red,
           isAllDay: false
         )
@@ -41,7 +39,20 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    MeetingDataSource dataSource = MeetingDataSource(_getDataSource(widget.bookings));
+    List<Map> data = [
+      {
+        'eventName': 'HackStack',
+        'startTime': DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 9),
+        'endTime': DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 11)
+      },
+      {
+        'eventName': 'New Event',
+        'startTime': DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1, 9),
+        'endTime': DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1, 11)
+      },
+    ];
+    
+    MeetingDataSource dataSource = MeetingDataSource(_getDataSource(data));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +80,7 @@ class _CalendarState extends State<Calendar> {
                   if(mounted){
                     setState(() {
                       if(datePickerHeight == 0){
-                        month = DateFormat('MMMM').format(_datePickerController.selectedDate ?? DateTime.now());
+                        month = DateFormat('MMMM').format(_datePickerController.selectedDate!);
                         datePickerHeight = 350;
                       }else{
                         month = DateFormat('MMMM').format(_calendarController.displayDate!);
@@ -165,10 +176,9 @@ class _CalendarState extends State<Calendar> {
             onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
               _calendarController.displayDate = args.value;
             },
-            initialSelectedDate: DateTime.now(),
             onViewChanged: (DateRangePickerViewChangedArgs args){
               WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                if(datePickerHeight != 0){_datePickerController.selectedDate = args.visibleDateRange.startDate;}
+                _datePickerController.selectedDate = args.visibleDateRange.startDate;
                 month = DateFormat('MMMM').format(args.visibleDateRange.startDate!);
               });
             },
@@ -234,7 +244,13 @@ class _CalendarState extends State<Calendar> {
 }
 
 
+
+/// An object to set the appointment collection data source to calendar, which
+/// used to map the custom appointment data to the calendar appointment, and
+/// allows to add, remove or reset the appointment collection.
 class MeetingDataSource extends CalendarDataSource {
+  /// Creates a meeting data source, which used to set the appointment
+  /// collection to the calendar
   MeetingDataSource(List<Meeting> source) {
     appointments = source;
   }
@@ -275,7 +291,10 @@ class MeetingDataSource extends CalendarDataSource {
   }
 }
 
+/// Custom business object class which contains properties to hold the detailed
+/// information about the event data which will be rendered in calendar.
 class Meeting {
+  /// Creates a meeting class with required details.
   Meeting({
     required this.eventName, 
     required this.from, 
@@ -284,9 +303,18 @@ class Meeting {
     required this.isAllDay
   });
 
+  /// Event name which is equivalent to subject property of [Appointment].
   String eventName;
+
+  /// From which is equivalent to start time property of [Appointment].
   DateTime from;
+
+  /// To which is equivalent to end time property of [Appointment].
   DateTime to;
+
+  /// Background which is equivalent to color property of [Appointment].
   Color background;
+
+  /// IsAllDay which is equivalent to isAllDay property of [Appointment].
   bool isAllDay;
 }

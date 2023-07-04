@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: HomePage()
     );
@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
             width: 50,
             color: Colors.red,
             child: GestureDetector(
-              child: const Text(
+              child: Text(
                 'IRBS',
                 style: TextStyle(color: Colors.white),
               ),
