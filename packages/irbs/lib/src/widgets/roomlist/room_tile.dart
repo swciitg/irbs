@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:irbs/src/models/room_model.dart';
+import 'package:irbs/src/screens/room_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../globals/colors.dart';
 
 class RoomTile extends StatefulWidget {
-  final String room;
+  final RoomModel room;
   final bool pinned;
   const RoomTile({Key? key, required this.room, required this.pinned})
       : super(key: key);
@@ -18,7 +20,7 @@ class _RoomTileState extends State<RoomTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/irbs/RoomDetails');
+        Navigator.pushNamed(context, '/irbs/RoomDetails', arguments: RoomDetailArguements(widget.room));
       },
       child: Container(
         height: 48,
@@ -47,7 +49,7 @@ class _RoomTileState extends State<RoomTile> {
                 Padding(
                   padding: const EdgeInsets.only(top: 15, bottom: 16, left: 15),
                   child: Text(
-                    widget.room,
+                    widget.room.roomName,
                     style: const TextStyle(
                         fontSize: 14,
                         color: Colors.white,
@@ -88,7 +90,7 @@ class _RoomTileState extends State<RoomTile> {
                               await SharedPreferences.getInstance();
                           final List<String> pinnedRooms =
                               prefs.getStringList('pinnedRooms') ?? [];
-                          pinnedRooms.add(widget.room);
+                          pinnedRooms.add(widget.room.roomName);
                           await prefs.setStringList(
                               'pinnedRooms', pinnedRooms);
                           prefs.reload();
