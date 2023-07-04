@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:irbs/src/screens/room_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../globals/colors.dart';
 
 class RoomTile extends StatefulWidget {
   final String room;
   final bool pinned;
-  const RoomTile({Key? key, required this.room, required this.pinned})
+  final String roomId;
+  const RoomTile({Key? key, required this.roomId, required this.room, required this.pinned})
       : super(key: key);
 
   @override
@@ -18,7 +20,7 @@ class _RoomTileState extends State<RoomTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/irbs/RoomDetails');
+        Navigator.pushNamed(context, '/irbs/RoomDetails', arguments: RoomDetailArguements(widget.roomId));
       },
       child: Container(
         height: 48,

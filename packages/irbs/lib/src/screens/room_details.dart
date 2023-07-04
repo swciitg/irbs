@@ -10,9 +10,14 @@ import 'package:intl/intl.dart';
 import '../widgets/roomdetails/upcoming_booking_widget.dart';
 import '../models/booking_model.dart';
 
-class RoomDetails extends StatefulWidget {
+class RoomDetailArguements{
   final String roomId;
-  const RoomDetails({required this.roomId, super.key, required});
+
+  RoomDetailArguements(this.roomId);
+}
+
+class RoomDetails extends StatefulWidget {
+  const RoomDetails({super.key, required});
 
   @override
   State<RoomDetails> createState() => _RoomDetailsState();
@@ -36,6 +41,8 @@ class _RoomDetailsState extends State<RoomDetails> {
   Widget build(BuildContext context) {
     List<BookingModel> allBookings = [];
     List<BookingModel> latestBookings = [];
+
+    final RoomDetailArguements args = ModalRoute.of(context)!.settings.arguments as RoomDetailArguements;
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
@@ -81,7 +88,7 @@ class _RoomDetailsState extends State<RoomDetails> {
             fit: BoxFit.contain,
           )),
       body: FutureBuilder(
-        future: APIService().getRoomBookings(widget.roomId),
+        future: APIService().getRoomBookings(args.roomId),
         builder: (context, snapshot) {
           if(!snapshot.hasData){
             return const Center(child: CircularProgressIndicator(),);
@@ -106,7 +113,7 @@ class _RoomDetailsState extends State<RoomDetails> {
               latestBookings = [allBookings[0], allBookings[1]];
             }
             return FutureBuilder(
-              future: APIService().getRoomFromId(widget.roomId),
+              future: APIService().getRoomFromId(args.roomId),
               builder: (context, snapshot2){
                 if(!snapshot2.hasData){
                   return const Center(child: CircularProgressIndicator(),);
@@ -165,16 +172,6 @@ class _RoomDetailsState extends State<RoomDetails> {
                             status: e.status == 'requested' ? 1 : e.status == 'accepted' ? 2 : 0,
                           )
                         ).toList(),
-                        
-                        // children: [
-                        //   UpcomingBookingsWidget(
-                        //     status: 2,
-                        //     name: 'Aarya Ghodke',
-                        //     startTime: '10:00 AM',
-                        //     endTime: '03:00 PM',
-                        //     date: '21st April',
-                        //   ),
-                        // ],
                       ),
                       Divider(
                         height: 0.5,
