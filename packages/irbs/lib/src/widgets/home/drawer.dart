@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/models/myroom_model.dart';
-import 'package:irbs/src/screens/myrooms/myRooms.dart';
-
-import '../../services/api.dart';
+import 'package:irbs/src/screens/room_details.dart';
+import 'package:irbs/src/store/data_store.dart';
+import '../../models/room_model.dart';
 
 class SideDrawer extends StatelessWidget {
   SideDrawer({Key? key}) : super(key: key);
-  static const name = "Aditya Pandey";
-  var roll = "210206006";
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: APIService().getMyRooms(),
+        future: DataStore().getMyRooms(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
+            print(snapshot.data);
             return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
             return const Text('Error');
           }
-          List<MyRoomModel>? rooms = snapshot.data;
+          List<RoomModel>? rooms = snapshot.data;
           return SafeArea(
             child: Container(
                 width: 240,
-// height: 720,
                 decoration: const BoxDecoration(
                     color: Color.fromRGBO(39, 49, 65, 1),
                     borderRadius: BorderRadius.only(
@@ -49,12 +46,12 @@ class SideDrawer extends StatelessWidget {
                                 'packages/irbs/assets/images/person.svg',
                                 color: Colors.white,
                               ),
-                              const Text(
-                                name,
+                              Text(
+                                DataStore.userData["name"] ?? "Name",
                                 style: sideDrawerStyle,
                               ),
                               Text(
-                                roll,
+                                DataStore.userData["rollNo"] ?? "RollNumber",
                                 style: sideDrawerStyle,
                               ),
                               const SizedBox(
@@ -155,7 +152,7 @@ class SideDrawer extends StatelessWidget {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                MyRooms(isAdmin: true),
+                                                RoomDetails(isAdmin: true, roomModel: rooms![index],),
                                           ),
                                         );
                                       },

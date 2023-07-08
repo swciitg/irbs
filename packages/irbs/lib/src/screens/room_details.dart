@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/widgets/roomdetails/calendar.dart';
-import 'package:irbs/src/widgets/roomdetails/request_modal.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:irbs/src/models/room_model.dart';
+import 'package:irbs/src/screens/myrooms/member_details.dart';
+import 'package:irbs/src/widgets/myrooms/memberTile.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
-import '../widgets/roomdetails/upcoming_booking_widget.dart';
+import 'myrooms/editRoom.dart';
 
 class RoomDetails extends StatefulWidget {
-  const RoomDetails({super.key, required});
+  final RoomModel roomModel;
+  bool isAdmin = false;
+  RoomDetails({required this.isAdmin, required this.roomModel});
 
   @override
   State<RoomDetails> createState() => _RoomDetailsState();
 }
 
 class _RoomDetailsState extends State<RoomDetails> {
-  CalendarView view = CalendarView.month;
-
-  TextEditingController dateCtl = TextEditingController();
-  _showModal(context) {
-    showModalBottomSheet<dynamic>(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext context) {
-          return const RequestModal();
-        });
-  }
-
+  var data = {
+    "name": "Coding Club",
+    "capacity": "25",
+    "instructions":
+        "Lorem ipsum dolor sit amet consectetur. Dolor in felis nec aliquam. Mauris sed odio morbi dignissim pulvinar nunc semper eu habitant. Eu at quisque libero ullamcorper. Luctus neque enim cras semper aliquam.",
+  };
+  var members = [
+    {"name": "Kunal Pal", "designation": "Secretary"},
+  ];
+  var designations = {
+    "Secretary": true,
+    "Overall Coordinator": true,
+    "Design Head": false,
+    "App Dev Head": false,
+    "Web Developer": false
+  };
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,94 +52,160 @@ class _RoomDetailsState extends State<RoomDetails> {
           "IRBS",
           style: kAppBarTextStyle,
         ),
-        actions: [
-          GestureDetector(
-              onTap: () {
-                Navigator.pushReplacementNamed(context, '/irbs/onboarding');
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(right: 11.0),
-                child: Image.asset(
-                  'assets/question_circle.png',
-                  package: 'irbs',
-                  height: 24,
-                  width: 24,
-                ),
-              ))
-        ],
         backgroundColor: Themes.kCommonBoxBackground,
       ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
-          onPressed: () {
-            _showModal(context);
-          },
-          child: Image.asset(
-            'packages/irbs/assets/images/add.png',
-            fit: BoxFit.contain,
-          )),
-      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(
-          padding: const EdgeInsets.only(left: 16),
-          height: 60,
-          //color: const Color.fromRGBO(39, 49, 65, 1),
-          child: Row(
+      body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+          child: Column(
             children: [
-              const Expanded(
-                  child: Text(
-                'Yoga Room',
-                style: roomheadingStyle,
-              )),
-              GestureDetector(
-                  onTap: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: Icon(
-                      Icons.more_vert,
+              Row(
+                children: [
+                  Expanded(
+                      child: Text(
+                    widget.roomModel.roomName,
+                    style: roomheadingStyle,
+                  )),
+                  if (widget.isAdmin)
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => EditRoom(
+                                data: data, designations: designations),
+                          ),
+                        );
+                      },
+                      child: const ImageIcon(
+                      AssetImage(
+                          'packages/irbs/assets/images/edit.png'),
                       color: Colors.white,
                     ),
-                  ))
+                    )
+                ],
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Capacity: ${widget.roomModel.roomCapacity}',
+                  style: kRequestedRoomStyle,
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Instructions',
+                  style: instrHeadingStyle,
+                ),
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '${widget.roomModel.instructions}',
+                  style: instrTextStyle,
+                ),
+              ),
+              const Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  "See more",
+                  style: seemoreStyle,
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Members',
+                  style: instrHeadingStyle,
+                ),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              if (widget.isAdmin)
+                InkWell(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(
+                          color: const Color.fromRGBO(85, 95, 113, 1), width: 1),
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.add,
+                          color: Color.fromRGBO(118, 172, 255, 1),
+                        ),
+                        Text(
+                          'Add Member',
+                          style: addmemberStyle,
+                        )
+                      ],
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const MemberDetails(isEdit: false),
+                    ));
+                  },
+                ),
+              const SizedBox(
+                height: 12,
+              ),
+              ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: widget.roomModel.owner.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        MemberTile(
+                          isAdmin: widget.isAdmin,
+                          member: widget.roomModel.owner[index],
+                          designations: 'Admin',
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        )
+                      ],
+                    );
+                  }),
+              ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: widget.roomModel.allowedUsers.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      children: [
+                        MemberTile(
+                          isAdmin: widget.isAdmin,
+                          member: widget.roomModel.allowedUsers[index],
+                          designations: 'Member',
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        )
+                      ],
+                    );
+                  }),
             ],
           ),
         ),
-        const SizedBox(
-          height: 8,
-        ),
-        Theme(
-          data: Theme.of(context).copyWith(
-              unselectedWidgetColor: const Color.fromRGBO(135, 145, 165, 1)),
-          child: const ExpansionTile(
-            title: Text(
-              'UpcomingBookings',
-              style: subHeadingStyle,
-            ),
-            children: [
-              UpcomingBookingsWidget(
-                status: 2,
-                name: 'Aarya Ghodke',
-                startTime: '10:00 AM',
-                endTime: '03:00 PM',
-                date: '21st April',
-              ),
-              UpcomingBookingsWidget(
-                status: 1,
-                name: 'Chandu Mandu',
-                startTime: '05:00 AM',
-                endTime: '06:30 PM',
-                date: '22nd April',
-              ),
-              SizedBox(
-                height: 8,
-              )
-            ],
-          ),
-        ),
-        Divider(
-          height: 0.5,
-          color: Colors.white.withOpacity(0.2),
-        ),
-        const Expanded(child: Calendar()),
-      ]),
+      ),
     );
   }
 }

@@ -98,11 +98,11 @@ class _MemberTileState extends State<MemberTile> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "${widget.member["name"]}",
+                "${widget.member}",
                 style: TextFormFieldStyle,
               ),
               Text(
-                "${widget.member["designation"]}",
+                "${widget.designations}",
                 style: designationStyle,
               )
             ],

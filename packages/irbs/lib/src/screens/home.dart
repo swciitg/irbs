@@ -19,21 +19,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-  late List<String> pin;
-  // late bool pinEmpty;
-  late Timer timer;
-
-  @override
-  void initState(){
-    pin = [];
-    super.initState();
-    getPinnedRooms();
-    timer=Timer.periodic(Duration(milliseconds: 100), (timer) {
-      getPinnedRooms();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -216,14 +201,5 @@ class _HomeState extends State<Home> {
             ]))
       ]),
     );
-  }
-
-  Future<void> getPinnedRooms() async {
-    if(!mounted)return;
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    pin = prefs.getStringList('pinnedRooms') ?? [];
-    setState(() {
-
-    });
   }
 }
