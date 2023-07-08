@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
+import 'package:irbs/src/screens/all_request.sdart.dart';
 import 'package:irbs/src/widgets/home/common_rooms.dart';
 import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
 import 'package:irbs/src/widgets/home/drawer.dart';
@@ -93,22 +94,30 @@ class _HomeState extends State<Home> {
                     height: 167 * screenWidth / 360,
                     child: const RequestList()),
               if (widget.isAdmin)
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: Container(
-                    height: 40,
-                    width: double.maxFinite,
-                    decoration: BoxDecoration(
-                        color: Themes.kCommonBoxBackground,
-                        borderRadius: BorderRadius.circular(4)),
-                    child: const Center(
-                      child: Text(
-                        'View all Requests',
-                        style: kRequestedRoomStyle,
+                GestureDetector(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    child: Container(
+                      height: 40,
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                          color: Themes.kCommonBoxBackground,
+                          borderRadius: BorderRadius.circular(4)),
+                      child: const Center(
+                        child: Text(
+                          'View all Requests',
+                          style: kRequestedRoomStyle,
+                        ),
                       ),
                     ),
                   ),
+                  onTap: (){
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context)=> ViewAllRequests()
+                      )
+                    );
+                  },
                 ),
               Padding(
                 padding: const EdgeInsets.only(

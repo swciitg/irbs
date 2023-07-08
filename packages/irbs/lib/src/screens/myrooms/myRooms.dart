@@ -62,7 +62,7 @@ class _MyRoomsState extends State<MyRooms> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+          margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
           child: Column(
             children: [
               Row(
@@ -82,7 +82,7 @@ class _MyRoomsState extends State<MyRooms> {
                           ),
                         );
                       },
-                      child: ImageIcon(
+                      child: const ImageIcon(
                       AssetImage(
                           'packages/irbs/assets/images/edit.png'),
                       color: Colors.white,
@@ -90,7 +90,7 @@ class _MyRoomsState extends State<MyRooms> {
                     )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               Align(
@@ -100,17 +100,17 @@ class _MyRoomsState extends State<MyRooms> {
                   style: kRequestedRoomStyle,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Instructions',
                   style: instrHeadingStyle,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 4,
               ),
               Align(
@@ -120,36 +120,36 @@ class _MyRoomsState extends State<MyRooms> {
                   style: instrTextStyle,
                 ),
               ),
-              Align(
+              const Align(
                 alignment: Alignment.centerRight,
                 child: Text(
                   "See more",
                   style: seemoreStyle,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Members',
                   style: instrHeadingStyle,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
               if (widget.isAdmin)
                 InkWell(
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4),
                       border: Border.all(
-                          color: Color.fromRGBO(85, 95, 113, 1), width: 1),
+                          color: const Color.fromRGBO(85, 95, 113, 1), width: 1),
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
@@ -165,15 +165,15 @@ class _MyRoomsState extends State<MyRooms> {
                   ),
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => MemberDetails(isEdit: false),
+                      builder: (context) => const MemberDetails(isEdit: false),
                     ));
                   },
                 ),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
               ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: members != Null ? members.length : 0,
                   itemBuilder: (BuildContext context, int index) {
@@ -184,7 +184,7 @@ class _MyRoomsState extends State<MyRooms> {
                           member: members[index],
                           designations: designations,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         )
                       ],
