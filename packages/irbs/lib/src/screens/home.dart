@@ -1,13 +1,15 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/screens/all_request.sdart.dart';
+import 'package:irbs/src/store/common_store.dart';
 import 'package:irbs/src/widgets/home/common_rooms.dart';
 import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
 import 'package:irbs/src/widgets/home/drawer.dart';
 import 'package:irbs/src/widgets/home/request_list.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:irbs/src/widgets/roomlist/list_display.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   final bool isAdmin;
@@ -22,6 +24,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    var cs = context.read<CommonStore>();
     return Scaffold(
       backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
       endDrawer: (!widget.isAdmin) ? null : SideDrawer(),
@@ -152,6 +155,16 @@ class _HomeState extends State<Home> {
                 date: '22nd April',
                 roomName: 'Finesse Room',
               ),
+              FutureBuilder(
+                future: cs.initialisePinnedRooms(),
+                  builder: (context, snapshot){
+                if(!snapshot.hasData){return SizedBox();}
+                return Observer(
+                  builder: (context) {
+                    return ListDisplay(roomList: cs.pinnedRooms.values.toList(), type: 'Pinned Rooms');
+                  }
+                );
+              }),
               const CommonRooms(),
               const SizedBox(
                 height: 108,
