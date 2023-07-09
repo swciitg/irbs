@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:irbs/src/models/booking_model.dart';
 import 'package:irbs/src/models/room_model.dart';
-import 'package:irbs/src/widgets/roomdetails/upcoming_booking_widget.dart';
+import 'package:irbs/src/widgets/roomBookingDetails/upcoming_booking_widget.dart';
 import '../globals/endpoints.dart';
 
 class APIService {

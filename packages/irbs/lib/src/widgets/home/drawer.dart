@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/screens/myrooms/myRooms.dart';
+import 'package:irbs/src/screens/myrooms/room_details.dart';
 
 class SideDrawer extends StatelessWidget {
   SideDrawer({Key? key}) : super(key: key);
@@ -141,7 +141,7 @@ class SideDrawer extends StatelessWidget {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          MyRooms(isAdmin: true),
+                                          RoomDetails(isAdmin: true),
                                     ),
                                   );
                                 },
