@@ -458,20 +458,18 @@ const addmoreStyle = TextStyle(
   color: Color.fromRGBO(135, 145, 163, 1),
 );
 var textFieldDecoration = InputDecoration(
-    // hintText: 'Type here...',
-    // hintStyle: hintTextStyle,
     enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(4.0),
-        borderSide: BorderSide(color: Color.fromRGBO(255, 255, 255, 0.5))),
+        borderSide: const BorderSide(color: Color.fromRGBO(255, 255, 255, 0.5))),
     focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(4.0),
-        borderSide: BorderSide(color: Color.fromRGBO(255, 255, 255, 0.5))),
+        borderSide: const BorderSide(color: Color.fromRGBO(255, 255, 255, 0.5))),
     errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(4.0),
-        borderSide: BorderSide(color: Colors.red)),
+        borderSide: const BorderSide(color: Colors.red)),
     focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(4.0),
-        borderSide: BorderSide(color: Colors.red)));
+        borderSide: const BorderSide(color: Colors.red)));
 const sideDrawerStyle = TextStyle(
     fontFamily: 'Montserrat',
     package: 'irbs',

@@ -7,6 +7,7 @@ import '../globals/styles.dart';
 import '../models/room_model.dart';
 import '../services/api.dart';
 import '../store/common_store.dart';
+import '../store/data_store.dart';
 import '../widgets/roomlist/list_display.dart';
 import '../widgets/roomlist/search_bar.dart';
 
@@ -52,16 +53,15 @@ class _RoomListState extends State<RoomList> {
         backgroundColor: Themes.tileColor,
       ),
       body: FutureBuilder(
-          future: APIService().getAllRooms(),
+          future: DataStore().getAllRooms(),
           builder: (context, snapshot) {
+            commonStore.setSearchText('');
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              print(snapshot.error);
-              return Text('Error');
+              return const Text('Error');
             }
             return Observer(builder: (context) {
-              //Map<String, List<RoomModel>> filteredrooms = filterRooms(snapshot.data!, commonStore.searchText);
               return SafeArea(
                 child: SingleChildScrollView(
                     child: Column(
@@ -77,7 +77,12 @@ class _RoomListState extends State<RoomList> {
                         type: 'Common Rooms',
                         roomList: filterRooms(
                             snapshot.data!['common']!, commonStore.searchText),
-                      )
+                      ),
+                          ListDisplay(
+                            type: 'Board Rooms',
+                            roomList: filterRooms(
+                                snapshot.data!['board']!, commonStore.searchText),
+                          )
                     ])),
               );
             });
