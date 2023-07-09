@@ -127,5 +127,23 @@ class APIService {
     }
   }
 
+  Future<Map<String,dynamic>> createBooking(String details) async {
+    try{
+      var response = await dio.post(Endpoints.createBooking,data: details);
+      if(response.statusCode==201){
+        var booking=response.data;
+        print(booking);
+        return booking;
+        // return BookingModel.fromJson(booking);
+      }
+      else
+      {
+        throw Exception(response.statusMessage);
+      }
+    }catch(e)
+    {
+      throw Exception(e.toString());
+    }
+  }
 
 }
