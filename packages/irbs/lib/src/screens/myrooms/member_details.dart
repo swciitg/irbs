@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/widgets/myrooms/dropdown.dart';
-import 'package:irbs/src/widgets/roomdetails/datepicker_color.dart';
+import 'package:irbs/src/widgets/roomBookingDetails/datepicker_color.dart';
 
 class MemberDetails extends StatefulWidget {
   final bool isEdit;

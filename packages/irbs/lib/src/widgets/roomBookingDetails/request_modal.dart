@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:irbs/src/widgets/roomdetails/datepicker_color.dart';
+import 'package:irbs/src/widgets/roomBookingDetails/datepicker_color.dart';
 import '../../globals/styles.dart';
 import 'package:lottie/lottie.dart';
 

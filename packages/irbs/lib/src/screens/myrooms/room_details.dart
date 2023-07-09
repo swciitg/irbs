@@ -6,15 +6,15 @@ import '../../globals/colors.dart';
 import '../../globals/styles.dart';
 import 'editRoom.dart';
 
-class MyRooms extends StatefulWidget {
+class RoomDetails extends StatefulWidget {
   bool isAdmin = false;
-  MyRooms({required this.isAdmin});
+  RoomDetails({required this.isAdmin});
 
   @override
-  State<MyRooms> createState() => _MyRoomsState();
+  State<RoomDetails> createState() => _RoomDetailsState();
 }
 
-class _MyRoomsState extends State<MyRooms> {
+class _RoomDetailsState extends State<RoomDetails> {
   var data = {
     "name": "Coding Club",
     "capacity": "25",

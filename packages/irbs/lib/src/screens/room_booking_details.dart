@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:irbs/src/models/calendar_data.dart';
 import 'package:irbs/src/services/api.dart';
-import 'package:irbs/src/widgets/roomdetails/calendar.dart';
-import 'package:irbs/src/widgets/roomdetails/request_modal.dart';
+import 'package:irbs/src/widgets/roomBookingDetails/calendar.dart';
+import 'package:irbs/src/widgets/roomBookingDetails/request_modal.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
 import 'package:intl/intl.dart';
-import '../widgets/roomdetails/upcoming_booking_widget.dart';
+import '../widgets/roomBookingDetails/upcoming_booking_widget.dart';
 import '../models/booking_model.dart';
 import '../models/room_model.dart';
 
@@ -17,14 +17,14 @@ class RoomDetailArguements{
   RoomDetailArguements(this.room);
 }
 
-class RoomDetails extends StatefulWidget {
-  const RoomDetails({super.key, required});
+class RoomBookingDetails extends StatefulWidget {
+  const RoomBookingDetails({super.key, required});
 
   @override
-  State<RoomDetails> createState() => _RoomDetailsState();
+  State<RoomBookingDetails> createState() => _RoomBookingDetailsState();
 }
 
-class _RoomDetailsState extends State<RoomDetails> {
+class _RoomBookingDetailsState extends State<RoomBookingDetails> {
   CalendarView view = CalendarView.month;
 
   TextEditingController dateCtl = TextEditingController();

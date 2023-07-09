@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:irbs/src/models/room_model.dart';
-import 'package:irbs/src/screens/room_details.dart';
+import 'package:irbs/src/screens/room_booking_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../globals/colors.dart';
 
@@ -20,7 +20,7 @@ class _RoomTileState extends State<RoomTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/irbs/RoomDetails', arguments: RoomDetailArguements(widget.room));
+        Navigator.pushNamed(context, '/irbs/roomBookingDetails', arguments: RoomDetailArguements(widget.room));
       },
       child: Container(
         height: 48,
