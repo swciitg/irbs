@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:irbs/src/models/room_model.dart';
 import 'package:irbs/src/screens/room_booking_details.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:irbs/src/store/common_store.dart';
+import 'package:provider/provider.dart';
 import '../../globals/colors.dart';
 
 class RoomTile extends StatefulWidget {
@@ -17,6 +19,7 @@ class RoomTile extends StatefulWidget {
 class _RoomTileState extends State<RoomTile> {
   @override
   Widget build(BuildContext context) {
+    var cs = context.read<CommonStore>();
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => RoomBookingDetails(room: widget.room,)));
@@ -58,47 +61,37 @@ class _RoomTileState extends State<RoomTile> {
                 ),
               ],
             ),
-            Row(
-              children: [
-                false
-                    ? GestureDetector(
-                        child: SvgPicture.asset(
-                          "packages/irbs/assets/images/pinned.svg",
-                          height: 20,
-                          width: 20,
-                        ),
-                        onTap: () async {
-                          final SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          final List<String>? pinnedRooms =
-                              prefs.getStringList('pinnedRooms');
-                          pinnedRooms?.remove(widget.room);
-                          await prefs.setStringList(
-                              'pinnedRooms', pinnedRooms!);
-                          prefs.reload();
-                        },
-                      )
-                    : GestureDetector(
-                        child: SvgPicture.asset(
-                          "packages/irbs/assets/images/unpinned.svg",
-                          height: 20,
-                          width: 20,
-                        ),
-                        onTap: () async {
-                          // final SharedPreferences prefs =
-                          // await SharedPreferences.getInstance();
-                          // final List<String> pinnedRooms =
-                          //     prefs.getStringList('pinnedRooms') ?? [];
-                          // pinnedRooms.add(widget.room);
-                          // await prefs.setStringList(
-                          //     'pinnedRooms', pinnedRooms);
-                          // prefs.reload();
-                        },
-                      ),
-                const SizedBox(
-                  width: 15,
-                ),
-              ],
+            Observer(
+              builder: (context) {
+                return Row(
+                  children: [
+                    cs.pinnedRooms.keys.contains(widget.room.id)
+                        ? GestureDetector(
+                            child: SvgPicture.asset(
+                              "packages/irbs/assets/images/pinned.svg",
+                              height: 20,
+                              width: 20,
+                            ),
+                            onTap: () async {
+                              await cs.removePinnedRooms(widget.room.id);
+                            },
+                          )
+                        : GestureDetector(
+                            child: SvgPicture.asset(
+                              "packages/irbs/assets/images/unpinned.svg",
+                              height: 20,
+                              width: 20,
+                            ),
+                            onTap: () async {
+                              await cs.addPinnedRooms(widget.room);
+                            },
+                          ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                  ],
+                );
+              }
             )
           ],
         ),

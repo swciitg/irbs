@@ -25,6 +25,48 @@ mixin _$CommonStore on _CommonStore, Store {
     });
   }
 
+  late final _$pinnedRoomsAtom =
+      Atom(name: '_CommonStore.pinnedRooms', context: context);
+
+  @override
+  ObservableMap<String, RoomModel> get pinnedRooms {
+    _$pinnedRoomsAtom.reportRead();
+    return super.pinnedRooms;
+  }
+
+  @override
+  set pinnedRooms(ObservableMap<String, RoomModel> value) {
+    _$pinnedRoomsAtom.reportWrite(value, super.pinnedRooms, () {
+      super.pinnedRooms = value;
+    });
+  }
+
+  late final _$initialisePinnedRoomsAsyncAction =
+      AsyncAction('_CommonStore.initialisePinnedRooms', context: context);
+
+  @override
+  Future initialisePinnedRooms() {
+    return _$initialisePinnedRoomsAsyncAction
+        .run(() => super.initialisePinnedRooms());
+  }
+
+  late final _$addPinnedRoomsAsyncAction =
+      AsyncAction('_CommonStore.addPinnedRooms', context: context);
+
+  @override
+  Future<void> addPinnedRooms(RoomModel room) {
+    return _$addPinnedRoomsAsyncAction.run(() => super.addPinnedRooms(room));
+  }
+
+  late final _$removePinnedRoomsAsyncAction =
+      AsyncAction('_CommonStore.removePinnedRooms', context: context);
+
+  @override
+  Future<void> removePinnedRooms(String id) {
+    return _$removePinnedRoomsAsyncAction
+        .run(() => super.removePinnedRooms(id));
+  }
+
   late final _$_CommonStoreActionController =
       ActionController(name: '_CommonStore', context: context);
 
@@ -53,7 +95,8 @@ mixin _$CommonStore on _CommonStore, Store {
   @override
   String toString() {
     return '''
-searchText: ${searchText}
+searchText: ${searchText},
+pinnedRooms: ${pinnedRooms}
     ''';
   }
 }
