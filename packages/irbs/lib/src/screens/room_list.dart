@@ -57,7 +57,7 @@ class _RoomListState extends State<RoomList> {
           builder: (context, snapshot) {
             commonStore.setSearchText('');
             if (!snapshot.hasData) {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               return const Text('Error');
             }

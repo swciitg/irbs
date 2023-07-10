@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:irbs/src/models/room_model.dart';
 import 'package:irbs/src/screens/room_booking_details.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:irbs/src/store/common_store.dart';
 import 'package:provider/provider.dart';
 import '../../globals/colors.dart';
@@ -22,7 +23,7 @@ class _RoomTileState extends State<RoomTile> {
     var cs = context.read<CommonStore>();
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => RoomBookingDetails(room: widget.room,)));
+        Navigator.pushNamed(context, '/irbs/roomBookingDetails', arguments: RoomDetailArguements(widget.room));
       },
       child: Container(
         height: 48,

@@ -31,6 +31,7 @@ class _IRBSState extends State<IRBS> {
         initialRoute: '/irbs/home',
         routes: {
           '/irbs/home': (context) => const Home(isAdmin: true),
+          '/irbs/RoomBookingDetails': (context) => const RoomBookingDetails(),
           '/irbs/onboarding': (context) => const Onboarding(),
           '/irbs/roomList': (context) => const RoomList(),
           '/irbs/bookingHistory': (context) => const BookingHistory(),
