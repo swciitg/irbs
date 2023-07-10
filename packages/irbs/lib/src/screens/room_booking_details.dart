@@ -26,7 +26,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         builder: (BuildContext context) {
-          return const RequestModal();
+          return RequestModal(room: widget.room,);
         });
   }
 

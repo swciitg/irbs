@@ -1,3 +1,5 @@
+import 'package:irbs/src/models/room_model.dart';
+
 class BookingModel {
   String roomId = '';
   String user = '';
@@ -10,7 +12,7 @@ class BookingModel {
   String acceptInstructions = '';
   String createdAt = '';
   String id = '';
-
+  late RoomModel roomDetails;
   BookingModel(
       {required this.roomId,
         required this.user,
@@ -20,6 +22,7 @@ class BookingModel {
         required this.bookingPurpose,
         required this.acceptInstructions,
         required this.createdAt,
+        required this.roomDetails,
         required this.id});
 
   BookingModel.fromJson(Map<String, dynamic> json) {
@@ -32,6 +35,7 @@ class BookingModel {
     acceptInstructions = json['acceptInstructions'];
     createdAt = json['createdAt'];
     id = json['id'];
+    roomDetails= new RoomModel.fromJson(json['roomDetails']);
   }
 
   Map<String, dynamic> toJson() {
@@ -45,6 +49,7 @@ class BookingModel {
     data['acceptInstructions'] = acceptInstructions;
     data['createdAt'] = createdAt;
     data['id'] = id;
+    data['roomDetails']=roomDetails.toJson();
     return data;
   }
 }
