@@ -1,8 +1,8 @@
+
 class BookingModel {
   String roomId = '';
   String user = '';
   String status = '';
-
   //TODO convert this string to datetime approriately
   String inTime = '';
   String outTime = '';
@@ -10,7 +10,12 @@ class BookingModel {
   String acceptInstructions = '';
   String createdAt = '';
   String id = '';
-
+  RoomDetails roomDetails = RoomDetails(
+      owner: [],
+      roomName: '',
+      allowedUsers: [],
+      roomType: '',
+      roomCapacity: 1);
   BookingModel(
       {required this.roomId,
         required this.user,
@@ -20,8 +25,9 @@ class BookingModel {
         required this.bookingPurpose,
         required this.acceptInstructions,
         required this.createdAt,
-        required this.id});
-
+        required this.id,
+        required this.roomDetails,
+      });
   BookingModel.fromJson(Map<String, dynamic> json) {
     roomId = json['roomId'];
     user = json['user'];
@@ -48,3 +54,19 @@ class BookingModel {
     return data;
   }
 }
+class RoomDetails{
+   List<dynamic> owner=[];
+   String roomName='';
+   List<dynamic> allowedUsers=[];
+   String roomType='';
+   int roomCapacity=1;
+
+  RoomDetails({
+    required this.owner,
+    required this.roomName,
+    required this.allowedUsers,
+    required this.roomType,
+    required this.roomCapacity,
+  });
+}
+

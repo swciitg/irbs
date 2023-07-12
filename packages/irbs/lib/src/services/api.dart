@@ -127,6 +127,7 @@ class APIService {
         List<BookingModel> bookingList = [];
 
         for(var booking in bookingMapList){
+
           bookingList.add(
             BookingModel(
               roomId: booking['roomId'],
@@ -137,7 +138,15 @@ class APIService {
               bookingPurpose: booking['bookingPurpose'],
               acceptInstructions: '',
               createdAt: booking['createdAt'],
-              id: booking['id']
+              id: booking['id'],
+              roomDetails: RoomDetails(
+                  owner: booking['roomDetails']['owner'],
+                  roomName:booking['roomDetails']['roomName'],
+                  allowedUsers: booking['roomDetails']['allowedUsers'],
+                  roomType: booking['roomDetails']['roomType'],
+                  roomCapacity: booking['roomDetails']['roomCapacity']
+
+              ),
             )
           );
         }
@@ -154,8 +163,7 @@ class APIService {
   Future<List<RoomModel>> getMyRooms() async {
 
     try{
-      var response = await dio.get(Endpoints.getMyRooms,
-      );
+      var response = await dio.get(Endpoints.getMyRooms);
       if(response.statusCode == 200)
       {
         var myRooms = response.data;
@@ -178,6 +186,105 @@ class APIService {
       throw Exception(e.toString());
     }
   }
+  Future<List<List<BookingModel>>> getBookingHistory()async{
+    try{
+      Response res = await dio.get(Endpoints.getRoomBookings);
 
+      if(res.statusCode == 200){
+        var bookingMapList = res.data;
 
+        List<BookingModel> currentBooking = [];
+        List<BookingModel> pastBooking = [];
+        DateTime a =DateTime.now();
+        for(var booking in bookingMapList){
+          print("__________________________________");
+          print(booking['roomDetails']);
+          DateTime b = DateTime.parse(booking['outTime']);
+          if(a.isBefore(b)){
+            currentBooking.add(
+                BookingModel(
+                    roomId: await getRoomFromId(booking['roomId']),
+                    user: booking['user'],
+                    status: booking['status'],
+                    inTime: booking['inTime'],
+                    outTime: booking['outTime'],
+                    bookingPurpose: booking['bookingPurpose'],
+                    acceptInstructions: '',
+                    createdAt: booking['createdAt'],
+                    id: booking['id'],
+                  roomDetails: RoomDetails(
+                      owner: booking['roomDetails']['owner'],
+                      roomName:booking['roomDetails']['roomName'],
+                      allowedUsers: booking['roomDetails']['allowedUsers'],
+                      roomType: booking['roomDetails']['roomType'],
+                      roomCapacity: booking['roomDetails']['roomCapacity']
+
+                  ),
+                )
+            );
+          }else{
+            pastBooking.add(
+                BookingModel(
+                    roomId: await getRoomFromId(booking['roomId']),
+                    user: booking['user'],
+                    status: booking['status'],
+                    inTime: booking['inTime'],
+                    outTime: booking['outTime'],
+                    bookingPurpose: booking['bookingPurpose'],
+                    acceptInstructions: '',
+                    createdAt: booking['createdAt'],
+                    id: booking['id'],
+                  roomDetails: RoomDetails(
+                      owner: booking['roomDetails']['owner'],
+                      roomName:booking['roomDetails']['roomName'],
+                      allowedUsers: booking['roomDetails']['allowedUsers'],
+                      roomType: booking['roomDetails']['roomType'],
+                      roomCapacity: booking['roomDetails']['roomCapacity']
+
+                  ),
+                )
+            );
+          }
+
+        }
+        List<List<BookingModel>> answer = [];
+        answer.add(currentBooking);
+        answer.add(pastBooking);
+        return answer;
+      }
+      else{
+        throw Exception(res.statusMessage);
+      }
+    }catch(e){
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+  Future<void> deleteBooking(String id) async {
+    try {
+      Response response = await dio.delete('${Endpoints.deleteBooking}/$id');
+      if (response.statusCode == 200) {
+        print('deleted');
+      } else {
+        print('failed___ ${response.statusCode}');
+      }
+    } catch (error) {
+      print('ERROR: $error');
+    }
+  }
+  Future<void> endBooking(String id) async{
+    try {
+      Response response = await dio.patch('${Endpoints.deleteBooking}/$id', data: {
+        "outTime": DateTime.now().toString(),
+      },
+      );
+      if (response.statusCode == 200) {
+        print('updated');
+      } else {
+        print('failed___ ${response.statusCode}');
+      }
+    } catch (error) {
+      print('ERROR: $error');
+    }
+  }
 }
