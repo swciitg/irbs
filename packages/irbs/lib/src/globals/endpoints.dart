@@ -5,6 +5,7 @@ class Endpoints{
   static const getRoomBookings = '/api/booking';
   static const getSpecificRoom = '/api/room';
   static const getMyRooms ='/api/room/owned';
+  static const deleteBooking ='/api/booking';
 
   static getHeader() {
     return {'Content-Type': 'application/json', 'security-key': Endpoints.apiSecurityKey};
