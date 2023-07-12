@@ -129,25 +129,7 @@ class APIService {
         for(var booking in bookingMapList){
 
           bookingList.add(
-            BookingModel(
-              roomId: booking['roomId'],
-              user: booking['user'],
-              status: booking['status'],
-              inTime: booking['inTime'],
-              outTime: booking['outTime'],
-              bookingPurpose: booking['bookingPurpose'],
-              acceptInstructions: '',
-              createdAt: booking['createdAt'],
-              id: booking['id'],
-              roomDetails: RoomDetails(
-                  owner: booking['roomDetails']['owner'],
-                  roomName:booking['roomDetails']['roomName'],
-                  allowedUsers: booking['roomDetails']['allowedUsers'],
-                  roomType: booking['roomDetails']['roomType'],
-                  roomCapacity: booking['roomDetails']['roomCapacity']
-
-              ),
-            )
+            BookingModel.fromJson(booking),
           );
         }
 
@@ -192,62 +174,25 @@ class APIService {
 
       if(res.statusCode == 200){
         var bookingMapList = res.data;
-
         List<BookingModel> currentBooking = [];
         List<BookingModel> pastBooking = [];
         DateTime a =DateTime.now();
         for(var booking in bookingMapList){
-          print("__________________________________");
-          print(booking['roomDetails']);
           DateTime b = DateTime.parse(booking['outTime']);
           if(a.isBefore(b)){
             currentBooking.add(
-                BookingModel(
-                    roomId: await getRoomFromId(booking['roomId']),
-                    user: booking['user'],
-                    status: booking['status'],
-                    inTime: booking['inTime'],
-                    outTime: booking['outTime'],
-                    bookingPurpose: booking['bookingPurpose'],
-                    acceptInstructions: '',
-                    createdAt: booking['createdAt'],
-                    id: booking['id'],
-                  roomDetails: RoomDetails(
-                      owner: booking['roomDetails']['owner'],
-                      roomName:booking['roomDetails']['roomName'],
-                      allowedUsers: booking['roomDetails']['allowedUsers'],
-                      roomType: booking['roomDetails']['roomType'],
-                      roomCapacity: booking['roomDetails']['roomCapacity']
-
-                  ),
-                )
+                BookingModel.fromJson(booking),
             );
           }else{
+            print(booking['outTime']);
             pastBooking.add(
-                BookingModel(
-                    roomId: await getRoomFromId(booking['roomId']),
-                    user: booking['user'],
-                    status: booking['status'],
-                    inTime: booking['inTime'],
-                    outTime: booking['outTime'],
-                    bookingPurpose: booking['bookingPurpose'],
-                    acceptInstructions: '',
-                    createdAt: booking['createdAt'],
-                    id: booking['id'],
-                  roomDetails: RoomDetails(
-                      owner: booking['roomDetails']['owner'],
-                      roomName:booking['roomDetails']['roomName'],
-                      allowedUsers: booking['roomDetails']['allowedUsers'],
-                      roomType: booking['roomDetails']['roomType'],
-                      roomCapacity: booking['roomDetails']['roomCapacity']
-
-                  ),
-                )
+              BookingModel.fromJson(booking),
             );
           }
-
         }
         List<List<BookingModel>> answer = [];
+        sortByParameter(currentBooking, (a, b) => a.inTime.compareTo(b.inTime));
+        sortByParameter(currentBooking, (a, b) => b.outTime.compareTo(a.outTime));
         answer.add(currentBooking);
         answer.add(pastBooking);
         return answer;
@@ -287,4 +232,7 @@ class APIService {
       print('ERROR: $error');
     }
   }
+}
+void sortByParameter<BookingModel>(List<BookingModel> list, int Function(BookingModel a,BookingModel b) compare) {
+  list.sort(compare);
 }

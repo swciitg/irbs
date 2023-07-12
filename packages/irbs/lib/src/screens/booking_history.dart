@@ -53,7 +53,7 @@ class _BookingHistoryState extends State<BookingHistory> {
             return const Text('Error');
           }else{
             List<BookingModel>? currentBooking = snapshot.data?[0];
-            List<BookingModel>? pastBooking = snapshot.data?[0];
+            List<BookingModel>? pastBooking = snapshot.data?[1];
             return  SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,8 +89,8 @@ class _BookingHistoryState extends State<BookingHistory> {
                             endTime: DateFormat("hh:mm a").format(DateTime.parse(ans.outTime)),
                             date: DateFormat("dd MMMM").format(DateTime.parse(ans.inTime)),
                             //current: true,
-                            status: ans.status == 'requested' ? 1 : ans.status == 'accepted' ? 2 : 0,
-                          data: ans.acceptInstructions.isNotEmpty ? ans.acceptInstructions: null,
+                            status: ans.status == 'requested' ? 2 : ans.status == 'accepted' ? 1 : 0,
+                          data: ans.acceptInstructions.trim().isNotEmpty ? ans.acceptInstructions: null,
                         );
                       }
                   ),
@@ -113,7 +113,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                           endTime: DateFormat("hh:mm a").format(DateTime.parse(ans.outTime)),
                           date: DateFormat("dd MMMM").format(DateTime.parse(ans.inTime)),
                           status: ans.status == 'requested' ? 1 : ans.status == 'accepted' ? 2 : 0,
-                          data: ans.acceptInstructions.isNotEmpty ? ans.acceptInstructions: null,
+                          data: ans.acceptInstructions.trim().isNotEmpty ? ans.acceptInstructions: null,
                         );
                       }
                   ),
