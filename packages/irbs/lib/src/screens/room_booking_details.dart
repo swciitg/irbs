@@ -90,9 +90,9 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
             fit: BoxFit.contain,
           )),
       body: FutureBuilder(
-        future: APIService().getMonthWiseRoomBookings(
+        future: APIService().getBookingsForCalendar(
           roomId: widget.room.id,
-          month: DateFormat('MM').format(DateTime.now()),
+          month: DateTime.now().month,
           year: DateTime.now().year.toString()
         ),
         builder: (context, snapshot) {
@@ -161,7 +161,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                   iconColor:const Color.fromRGBO(135, 145, 165, 1),
                   children: latestBookings.map(
                     (e) => UpcomingBookingsWidget(
-                      name: e.userInfo.name!=null?e.userInfo.name! :'',
+                      name: e.userInfo.name ?? '',
                       startTime: DateFormat("hh:mm a").format(DateTime.parse(e.inTime)),
                       endTime: DateFormat("hh:mm a").format(DateTime.parse(e.outTime)),
                       date: DateFormat("dd MMMM").format(DateTime.parse(e.inTime)),

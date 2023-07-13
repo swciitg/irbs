@@ -19,7 +19,7 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   String month = DateFormat('MMMM').format(DateTime.now());
-  String monthDigits = DateFormat('MM').format(DateTime.now());
+  int monthDigits = DateTime.now().month;
   String year = DateTime.now().year.toString();
 
   final _calendarController = CalendarController();
@@ -195,7 +195,7 @@ class _CalendarState extends State<Calendar> {
         ),
         Expanded(
           child: FutureBuilder(
-            future: APIService().getMonthWiseRoomBookings(
+            future: APIService().getBookingsForCalendar(
               roomId: widget.roomId, 
               month: monthDigits, 
               year: year
@@ -215,7 +215,7 @@ class _CalendarState extends State<Calendar> {
                         setState(() {
                         if(datePickerHeight == 0){
                           month = DateFormat('MMMM').format(viewChangedDetails.visibleDates.first);
-                          monthDigits = DateFormat('MM').format(viewChangedDetails.visibleDates.first);
+                          monthDigits = viewChangedDetails.visibleDates.first.month;
                           year = viewChangedDetails.visibleDates.first.year.toString();
                         }
                       });
