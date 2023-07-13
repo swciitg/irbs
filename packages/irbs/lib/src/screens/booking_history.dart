@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:irbs/src/models/booking_model.dart';
 import 'package:irbs/src/services/api.dart';
-import 'package:irbs/src/widgets/bookinghistory/booking_tile.dart';
 import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
 
 import '../globals/colors.dart';
@@ -120,7 +119,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                         return CurrentBookingsWidget(
                           startTime: DateFormat("hh:mm a")
                               .format(DateTime.parse(ans!.inTime)),
-                          roomName: ans.roomId,
+                          roomName: ans.roomDetails.roomName,
                           endTime: DateFormat("hh:mm a")
                               .format(DateTime.parse(ans.outTime)),
                           date: DateFormat("dd MMMM")
