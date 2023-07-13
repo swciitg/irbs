@@ -30,6 +30,7 @@ class _IRBSState extends State<IRBS> {
         debugShowCheckedModeBanner: false,
         initialRoute: '/irbs/home',
         routes: {
+          '/irbs/roomBookingDetails':(context) => RoomBookingDetails(),
           '/irbs/home': (context) => const Home(isAdmin: true),
           '/irbs/RoomBookingDetails': (context) => const RoomBookingDetails(),
           '/irbs/onboarding': (context) => const Onboarding(),

@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:irbs/src/models/booking_model.dart';
 import 'package:irbs/src/models/room_model.dart';
-import 'package:irbs/src/widgets/roomBookingDetails/upcoming_booking_widget.dart';
 import '../functions/auth_helper_functions.dart';
 import '../functions/snackbar.dart';
 import '../globals/endpoints.dart';
@@ -119,7 +118,12 @@ class APIService {
 
   Future<List<BookingModel>> getRoomBookings(String roomId)async{
     try{
-      Response res = await dio.get('${Endpoints.getRoomBookings}/$roomId/all');
+      Response res = await dio.get(
+        Endpoints.getRoomBookings,
+        queryParameters: {
+          'roomId': roomId
+        }
+      );
       
       if(res.statusCode == 200){
         var bookingMapList = res.data;
@@ -127,9 +131,46 @@ class APIService {
         List<BookingModel> bookingList = [];
 
         for(var booking in bookingMapList){
-
           bookingList.add(
-            BookingModel.fromJson(booking),
+            BookingModel.fromJson(booking)
+          );
+        }
+
+        return bookingList;
+      }
+      else{
+        throw Exception(res.statusMessage.toString());
+      }
+    }catch(e){
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
+  
+  Future<List<BookingModel>> getMonthWiseRoomBookings({
+    required String roomId,
+    required String month,
+    required String year
+  })async{
+    try{
+      Response res = await dio.get(
+        Endpoints.baseUrl + Endpoints.getRoomBookings,
+        queryParameters: {
+          'roomId': roomId, 
+          'month': month, 
+          'year': year
+        }        
+      );
+      
+      if(res.statusCode == 200){
+        var bookingMapList = res.data;
+        
+
+        List<BookingModel> bookingList = [];
+
+        for(var booking in bookingMapList){
+          bookingList.add(
+            BookingModel.fromJson(booking)
           );
         }
 
@@ -139,9 +180,11 @@ class APIService {
         throw Exception(res.statusMessage);
       }
     }catch(e){
+      print(e.toString());
       throw Exception(e.toString());
     }
   }
+
   Future<List<RoomModel>> getMyRooms() async {
 
     try{

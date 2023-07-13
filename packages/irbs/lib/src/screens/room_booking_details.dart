@@ -89,7 +89,11 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
             fit: BoxFit.contain,
           )),
       body: FutureBuilder(
-        future: APIService().getRoomBookings(args.room.id),
+        future: APIService().getMonthWiseRoomBookings(
+          roomId: args.room.id,
+          month: DateFormat('MM').format(DateTime.now()),
+          year: DateTime.now().year.toString()
+        ),
         builder: (context, snapshot) {
           if(!snapshot.hasData){
             return const Center(child: CircularProgressIndicator(),);
@@ -156,7 +160,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                   iconColor:const Color.fromRGBO(135, 145, 165, 1),
                   children: latestBookings.map(
                     (e) => UpcomingBookingsWidget(
-                      name: e.user,
+                      name: e.userInfo.name,
                       startTime: DateFormat("hh:mm a").format(DateTime.parse(e.inTime)),
                       endTime: DateFormat("hh:mm a").format(DateTime.parse(e.outTime)),
                       date: DateFormat("dd MMMM").format(DateTime.parse(e.inTime)),
@@ -168,7 +172,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                   height: 0.5,
                   color: Colors.white.withOpacity(0.2),
                 ),
-                Expanded(child: Calendar(bookings: allBookings.map((e) => CalendarData.fromBookingModel(e)).toList(),)),
+                Expanded(child: Calendar(roomId: args.room.id,),),
               ]
             );
           }

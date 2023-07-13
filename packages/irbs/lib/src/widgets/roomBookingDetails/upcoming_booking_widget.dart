@@ -47,6 +47,7 @@ class _UpcomingBookingsWidgetState extends State<UpcomingBookingsWidget> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
           title: Text(
             widget.name,
+            overflow: TextOverflow.ellipsis,
             style: kRequestedRoomStyle,
           ),
           subtitle: RichText(
