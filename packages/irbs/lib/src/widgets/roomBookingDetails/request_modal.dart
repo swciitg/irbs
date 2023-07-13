@@ -5,11 +5,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/data_store.dart';
-import 'package:irbs/src/widgets/roomBookingdetails/datepicker_color.dart';
 import '../../globals/styles.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../models/room_model.dart';
+import 'datepicker_color.dart';
 
 class RequestModal extends StatefulWidget {
   final RoomModel room;
@@ -200,7 +200,7 @@ class _RequestModalState extends State<RequestModal>
                       initialDate: DateTime.now(),
                       firstDate: DateTime(2023),
                       lastDate: DateTime(2024),
-                      builder: (context, child) => CustomDatePicker(
+                      builder: (context, child) => IRBSDatePicker(
                             child: child,
                           ));
                   if (pickedDate != Null) {
@@ -242,7 +242,7 @@ class _RequestModalState extends State<RequestModal>
                       context: context,
                       initialTime: TimeOfDay.now(),
                       helpText: 'SELECT FROM TIME',
-                      builder: (context, child) => CustomDatePicker(
+                      builder: (context, child) => IRBSDatePicker(
                         child: child,
                       ),
                     );
@@ -272,7 +272,7 @@ class _RequestModalState extends State<RequestModal>
                             initialTime: res!,
                             helpText: 'SELECT TO TIME',
                             // routeSettings: RouteSettings(),
-                            builder: (context, child) => CustomDatePicker(
+                            builder: (context, child) => IRBSDatePicker(
                               child: child,
                             ),
                           );
