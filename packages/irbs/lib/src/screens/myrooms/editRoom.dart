@@ -1,13 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:irbs/src/models/room_model.dart';
+import 'package:irbs/src/services/api.dart';
+import 'package:irbs/src/store/data_store.dart';
 import 'package:irbs/src/widgets/myrooms/designationTile.dart';
 
+import '../../functions/snackbar.dart';
 import '../../globals/colors.dart';
 import '../../globals/styles.dart';
+import '../room_details.dart';
 
 class EditRoom extends StatefulWidget {
-  var data;
-  var designations;
-  EditRoom({required this.data, required this.designations});
+  RoomModel data;
+  EditRoom({required this.data});
 
   @override
   State<EditRoom> createState() => _EditRoomState();
@@ -17,12 +23,15 @@ class _EditRoomState extends State<EditRoom> {
   TextEditingController clubNameCtl = TextEditingController();
   TextEditingController capacityCtl = TextEditingController();
   TextEditingController instructionCtl = TextEditingController();
+  final _formkey = GlobalKey<FormState>();
+  bool apiCall = false;
   @override
   void initState() {
     super.initState();
-    clubNameCtl.text = widget.data["name"];
-    capacityCtl.text = widget.data["capacity"];
-    instructionCtl.text = widget.data["instructions"];
+    clubNameCtl.text = widget.data.roomName;
+    capacityCtl.text = widget.data.roomCapacity.toString();
+    instructionCtl.text =
+        widget.data.instructions == null ? '' : widget.data.instructions!;
   }
 
   Widget build(BuildContext context) {
@@ -50,161 +59,121 @@ class _EditRoomState extends State<EditRoom> {
         SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Club Name:",
-                  style: editRoomHeading,
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                TextFormField(
-                  controller: clubNameCtl,
-                  style: editRoomText,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(16, 12, 0, 12),
-                      filled: true,
-                      fillColor: Color.fromRGBO(39, 49, 65, 1),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide:
-                              BorderSide(color: Color.fromRGBO(39, 49, 65, 1))),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide:
-                              BorderSide(color: Color.fromRGBO(39, 49, 65, 1))),
-                      errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide(color: Colors.red)),
-                      focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide(color: Colors.red))),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Text(
-                  "Room Capacity:",
-                  style: editRoomHeading,
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                TextFormField(
-                  controller: capacityCtl,
-                  keyboardType: TextInputType.number,
-                  style: editRoomText,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(16, 12, 0, 12),
-                      filled: true,
-                      fillColor: Color.fromRGBO(39, 49, 65, 1),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide:
-                              BorderSide(color: Color.fromRGBO(39, 49, 65, 1))),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide:
-                              BorderSide(color: Color.fromRGBO(39, 49, 65, 1))),
-                      errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide(color: Colors.red)),
-                      focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide(color: Colors.red))),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Text(
-                  "Instructions:",
-                  style: editRoomHeading,
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                TextFormField(
-                  controller: instructionCtl,
-                  style: editRoomInstrText,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 5,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(12, 12, 19, 16),
-                      filled: true,
-                      fillColor: Color.fromRGBO(39, 49, 65, 1),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide:
-                              BorderSide(color: Color.fromRGBO(39, 49, 65, 1))),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide:
-                              BorderSide(color: Color.fromRGBO(39, 49, 65, 1))),
-                      errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide(color: Colors.red)),
-                      focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide(color: Colors.red))),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Text(
-                  "Designations",
-                  style: editRoomHeading,
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                InkWell(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      border: Border.all(
-                          color: Color.fromRGBO(85, 95, 113, 1), width: 1),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.add,
-                          color: Color.fromRGBO(135, 145, 163, 1),
-                        ),
-                        Text(
-                          'Add More',
-                          style: addmoreStyle,
-                        )
-                      ],
-                    ),
+            child: Form(
+              key: _formkey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Club Name:",
+                    style: editRoomHeading,
                   ),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: widget.designations.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      String key = widget.designations.keys.elementAt(index);
-                      return Column(
-                        children: [
-                          DesignationTile(
-                              isAdmin: widget.designations[key], name: key),
-                          SizedBox(
-                            height: 8,
-                          )
-                        ],
-                      );
-                    }),
-                SizedBox(
-                  height: 108,
-                )
-              ],
+                  SizedBox(
+                    height: 8,
+                  ),
+                  TextFormField(
+                    controller: clubNameCtl,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter Club Name';
+                      }
+                      return null;
+                    },
+                    style: editRoomText,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.fromLTRB(16, 12, 0, 12),
+                        filled: true,
+                        fillColor: Color.fromRGBO(39, 49, 65, 1),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: BorderSide(
+                                color: Color.fromRGBO(39, 49, 65, 1))),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: BorderSide(
+                                color: Color.fromRGBO(39, 49, 65, 1))),
+                        errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: BorderSide(color: Colors.red)),
+                        focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: BorderSide(color: Colors.red))),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    "Room Capacity:",
+                    style: editRoomHeading,
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  TextFormField(
+                    controller: capacityCtl,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter Club Capacity';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.number,
+                    style: editRoomText,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.fromLTRB(16, 12, 0, 12),
+                        filled: true,
+                        fillColor: Color.fromRGBO(39, 49, 65, 1),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: BorderSide(
+                                color: Color.fromRGBO(39, 49, 65, 1))),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: BorderSide(
+                                color: Color.fromRGBO(39, 49, 65, 1))),
+                        errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: BorderSide(color: Colors.red)),
+                        focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: BorderSide(color: Colors.red))),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    "Instructions:",
+                    style: editRoomHeading,
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  TextFormField(
+                    controller: instructionCtl,
+                    style: editRoomInstrText,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.fromLTRB(12, 12, 19, 16),
+                        filled: true,
+                        fillColor: Color.fromRGBO(39, 49, 65, 1),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: BorderSide(
+                                color: Color.fromRGBO(39, 49, 65, 1))),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: BorderSide(
+                                color: Color.fromRGBO(39, 49, 65, 1))),
+                        errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: BorderSide(color: Colors.red)),
+                        focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: BorderSide(color: Colors.red))),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -233,19 +202,51 @@ class _EditRoomState extends State<EditRoom> {
                       color: Color.fromRGBO(118, 172, 255, 1),
                       borderRadius: BorderRadius.all(Radius.circular(4))),
                   child: InkWell(
-                      onTap: () {
+                      onTap: () async {
                         // Navigator.pushNamed(context, '/irbs/roomList');
-                        print(clubNameCtl.text);
-                        print(capacityCtl.text);
-                        print(instructionCtl.text);
-                        Navigator.pop(context);
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => MyRooms(
-                        //       isAdmin: true,
-                        //     ),
-                        //   ),
-                        // );
+                        if (!apiCall) {
+                          if (_formkey.currentState!.validate() == false) {
+                            print('invalid');
+                          } else {
+                            print(clubNameCtl.text);
+                            print(capacityCtl.text);
+                            print(instructionCtl.text);
+                            var details = jsonEncode({
+                              'roomName': clubNameCtl.text,
+                              'roomCapacity': capacityCtl.text,
+                              'instructions': instructionCtl.text
+                            });
+                            setState(() {
+                              apiCall = true;
+                            });
+                            await APIService()
+                                .editRoomDetails(widget.data.id, details)
+                                .then((value) {
+                              print(value);
+                              DataStore.myRooms.removeWhere(
+                                  (element) => element.id == value.id);
+                              DataStore.myRooms.add(value);
+                              if (DataStore.rooms[widget.data.roomType] !=
+                                  null) {
+                                DataStore.rooms[widget.data.roomType]!
+                                    .removeWhere(
+                                        (element) => element.id == value.id);
+                                DataStore.rooms[value.roomType]!.add(value);
+                              }
+                              Navigator.pop(context);
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RoomDetails(
+                                    room: value,
+                                  ),
+                                ),
+                              );
+                            }).catchError((error, stackTrace) {
+                        showSnackBar(error.toString());
+                      });
+                          }
+                        }
                       },
                       child: const Center(
                           child: Text(
@@ -258,7 +259,16 @@ class _EditRoomState extends State<EditRoom> {
                       ))),
                 ),
               ),
-            ]))
+            ])),
+        if (apiCall)
+          const Opacity(
+            opacity: 0.8,
+            child: ModalBarrier(dismissible: false, color: Colors.black),
+          ),
+        if (apiCall)
+          const Center(
+            child: CircularProgressIndicator(),
+          ),
       ]),
     );
   }

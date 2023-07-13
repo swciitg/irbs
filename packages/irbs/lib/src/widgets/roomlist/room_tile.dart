@@ -10,8 +10,7 @@ import '../../globals/colors.dart';
 
 class RoomTile extends StatefulWidget {
   final RoomModel room;
-  const RoomTile({Key? key, required this.room})
-      : super(key: key);
+  const RoomTile({Key? key, required this.room}) : super(key: key);
 
   @override
   State<RoomTile> createState() => _RoomTileState();
@@ -23,7 +22,14 @@ class _RoomTileState extends State<RoomTile> {
     var cs = context.read<CommonStore>();
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/irbs/roomBookingDetails', arguments: RoomDetailArguements(widget.room));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => RoomBookingDetails(
+                    room: widget.room,
+                  )),
+        );
+        // Navigator.pushNamed(context, '/irbs/roomBookingDetails', arguments: widget.room);
       },
       child: Container(
         height: 48,
@@ -62,38 +68,36 @@ class _RoomTileState extends State<RoomTile> {
                 ),
               ],
             ),
-            Observer(
-              builder: (context) {
-                return Row(
-                  children: [
-                    cs.pinnedRooms.keys.contains(widget.room.id)
-                        ? GestureDetector(
-                            child: SvgPicture.asset(
-                              "packages/irbs/assets/images/pinned.svg",
-                              height: 20,
-                              width: 20,
-                            ),
-                            onTap: () async {
-                              await cs.removePinnedRooms(widget.room.id);
-                            },
-                          )
-                        : GestureDetector(
-                            child: SvgPicture.asset(
-                              "packages/irbs/assets/images/unpinned.svg",
-                              height: 20,
-                              width: 20,
-                            ),
-                            onTap: () async {
-                              await cs.addPinnedRooms(widget.room);
-                            },
+            Observer(builder: (context) {
+              return Row(
+                children: [
+                  cs.pinnedRooms.keys.contains(widget.room.id)
+                      ? GestureDetector(
+                          child: SvgPicture.asset(
+                            "packages/irbs/assets/images/pinned.svg",
+                            height: 20,
+                            width: 20,
                           ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                  ],
-                );
-              }
-            )
+                          onTap: () async {
+                            await cs.removePinnedRooms(widget.room.id);
+                          },
+                        )
+                      : GestureDetector(
+                          child: SvgPicture.asset(
+                            "packages/irbs/assets/images/unpinned.svg",
+                            height: 20,
+                            width: 20,
+                          ),
+                          onTap: () async {
+                            await cs.addPinnedRooms(widget.room);
+                          },
+                        ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                ],
+              );
+            })
           ],
         ),
       ),

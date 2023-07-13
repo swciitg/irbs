@@ -3,9 +3,10 @@ import 'package:intl/intl.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/models/calendar_data.dart';
-import 'package:irbs/src/services/api.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+
+import '../../services/api.dart';
 
 class Calendar extends StatefulWidget {
   //final List<CalendarData> bookings;

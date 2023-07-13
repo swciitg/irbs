@@ -19,12 +19,16 @@ class DataStore {
       {
         myRooms = await APIService().getMyRooms();
       }
+    return  myRooms;
+  }
+
+  Future<void> getUserData()
+  async {
     if (userData.isEmpty)
     {
       SharedPreferences instance = await SharedPreferences.getInstance();
       userData = jsonDecode(instance.getString('userInfo')!);
     }
-    return  myRooms;
   }
 
   Future<Map<String,dynamic>> getAllRooms()

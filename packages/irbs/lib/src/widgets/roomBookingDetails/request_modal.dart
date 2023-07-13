@@ -1,12 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:irbs/src/widgets/roomBookingDetails/datepicker_color.dart';
+import 'package:irbs/src/services/api.dart';
+import 'package:irbs/src/store/data_store.dart';
+import 'package:irbs/src/widgets/roomBookingdetails/datepicker_color.dart';
 import '../../globals/styles.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../models/room_model.dart';
+
 class RequestModal extends StatefulWidget {
-  const RequestModal({super.key});
+  final RoomModel room;
+  const RequestModal({super.key,required this.room});
 
   @override
   State<RequestModal> createState() => _RequestModalState();
@@ -16,11 +23,11 @@ class _RequestModalState extends State<RequestModal>
     with SingleTickerProviderStateMixin {
   TextEditingController dateCtl = TextEditingController();
   TextEditingController timeCtl = TextEditingController();
-  TextEditingController contactCtl = TextEditingController();
   TextEditingController purposeCtl = TextEditingController();
   TextEditingController nameCtl = TextEditingController();
-  TextEditingController designationCtl = TextEditingController();
-  bool isExpanded = false;
+  DateTime? pickedDate=null;
+  TimeOfDay? res=null;
+  TimeOfDay? res1=null;
   final _formkey = GlobalKey<FormState>();
   String time24to12Format(String time) {
     int h = int.parse(time.split(":").first);
@@ -40,46 +47,66 @@ class _RequestModalState extends State<RequestModal>
     return send;
   }
 
-  Future<void> _showDialog() async {
+  Future<void> _showDialog(String details) async {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
-          return SimpleDialog(
-            backgroundColor: Color.fromRGBO(39, 49, 65, 1),
-            children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 16.0),
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.white,
+          return FutureBuilder(
+            future: APIService().createBooking(details),
+            builder: (context,snapshot){
+              if(!snapshot.hasData){
+                return Center(child: CircularProgressIndicator(),);
+              }else if(snapshot.hasError){
+                return  SimpleDialog(
+                  backgroundColor: Color.fromRGBO(39, 49, 65, 1),
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Error',
+                        style: sentRequestStyle,
                       ),
-                    )),
-              ),
-              Lottie.asset('packages/irbs/assets/sent_request.json',
-                  height: 100),
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Request Sent',
-                  style: sentRequestStyle,
+                    ),
+                  ],
+                );
+              }
+              return SimpleDialog(
+              backgroundColor: Color.fromRGBO(39, 49, 65, 1),
+              children: [
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: Icon(
+                          Icons.close,
+                          color: Colors.white,
+                        ),
+                      )),
                 ),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Align(
+                Lottie.asset('packages/irbs/assets/sent_request.json',
+                    height: 100),
+                Align(
                   alignment: Alignment.center,
                   child: Text(
-                    'Cancel',
-                    style: cancelButtonStyle,
-                  ))
-            ],
+                    'Request Sent',
+                    style: sentRequestStyle,
+                  ),
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Cancel',
+                      style: cancelButtonStyle,
+                    ))
+              ],
+            );}
           );
         });
   }
@@ -88,8 +115,8 @@ class _RequestModalState extends State<RequestModal>
   void initState() {
     super.initState();
     dateCtl.text = DateFormat.yMMMMd().format(DateTime.now());
-    nameCtl.text = 'NandRaj Mahendaraj';
-    designationCtl.text = 'Design Head Coding Club';
+    nameCtl.text = DataStore.userData["name"] ?? "Name";
+    pickedDate=DateTime.now();
   }
 
   Widget build(BuildContext context) {
@@ -104,39 +131,11 @@ class _RequestModalState extends State<RequestModal>
           key: _formkey,
           child: Column(
             children: [
-              // SizedBox(
-              //   height: 26,
-              // ),
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    isExpanded = !isExpanded;
-                  });
-                },
-                child: Container(
-                  height: 22,
-                  child: Center(
-                    child: isExpanded
-                        ? ImageIcon(
-                            AssetImage(
-                                'packages/irbs/assets/images/collapse_modal.png'),
-                            color: Color.fromRGBO(147, 152, 160, 1),
-                          )
-                        : Container(
-                            height: 2,
-                            width: 72,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Color.fromRGBO(147, 152, 160, 1),
-                            ),
-                          ),
-                  ),
-                ),
-              ),
+              SizedBox(height: 22,),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Yoga Room',
+                  widget.room.roomName,
                   style: roomNameTextStyle,
                 ),
               ),
@@ -153,55 +152,28 @@ class _RequestModalState extends State<RequestModal>
               SizedBox(
                 height: 16,
               ),
-              Visibility(
-                visible: isExpanded,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: nameCtl,
-                      readOnly: true,
-                      style: permanentTextStyle,
-                      decoration: InputDecoration(
-                        labelText: 'Name',
-                        labelStyle: labelTextStyle,
-                        // prefixIconColor: Colors.white,
-                        // prefixIcon: Icon(Icons.local_phone_outlined),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                            borderSide: BorderSide(
-                                color: Color.fromRGBO(147, 152, 160, 1))),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                            borderSide: BorderSide(
-                                color: Color.fromRGBO(147, 152, 160, 1))),
-                      ),
+                  TextFormField(
+                    controller: nameCtl,
+                    readOnly: true,
+                    style: permanentTextStyle,
+                    decoration: InputDecoration(
+                      labelText: 'Name',
+                      labelStyle: labelTextStyle,
+                      // prefixIconColor: Colors.white,
+                      // prefixIcon: Icon(Icons.local_phone_outlined),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: BorderSide(
+                              color: Color.fromRGBO(147, 152, 160, 1))),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: BorderSide(
+                              color: Color.fromRGBO(147, 152, 160, 1))),
                     ),
-                    SizedBox(
-                      height: 12,
-                    ),
-                    TextFormField(
-                      controller: designationCtl,
-                      readOnly: true,
-                      style: permanentTextStyle,
-                      decoration: InputDecoration(
-                        labelText: 'Designation',
-                        labelStyle: labelTextStyle,
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                            borderSide: BorderSide(
-                                color: Color.fromRGBO(147, 152, 160, 1))),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                            borderSide: BorderSide(
-                                color: Color.fromRGBO(147, 152, 160, 1))),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 12,
-                    )
-                  ],
-                ),
-              ),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
               TextFormField(
                 controller: dateCtl,
                 validator: (value) {
@@ -223,7 +195,7 @@ class _RequestModalState extends State<RequestModal>
                 readOnly: true,
                 onTap: () async {
                   FocusScope.of(context).requestFocus(FocusNode());
-                  DateTime? pickedDate = await showDatePicker(
+                  pickedDate = await showDatePicker(
                       context: context,
                       initialDate: DateTime.now(),
                       firstDate: DateTime(2023),
@@ -232,6 +204,8 @@ class _RequestModalState extends State<RequestModal>
                             child: child,
                           ));
                   if (pickedDate != Null) {
+                    print(pickedDate);
+                    print(pickedDate?.toIso8601String());
                     String formattedDate =
                         DateFormat.yMMMMd().format(pickedDate!);
                     setState(() {
@@ -264,7 +238,7 @@ class _RequestModalState extends State<RequestModal>
                   readOnly: true,
                   onTap: () async {
                     String text = '';
-                    TimeOfDay? res = await showTimePicker(
+                    res = await showTimePicker(
                       context: context,
                       initialTime: TimeOfDay.now(),
                       helpText: 'SELECT FROM TIME',
@@ -285,12 +259,13 @@ class _RequestModalState extends State<RequestModal>
                           text = '';
                         });
                       } else {
+                        print(res);
                         setState(() {
                           text = formattedTime;
                         });
                       }
                     }
-                    TimeOfDay? res1 = (text == '')
+                    res1 = (text == '')
                         ? null
                         : await showTimePicker(
                             context: context,
@@ -315,6 +290,8 @@ class _RequestModalState extends State<RequestModal>
                         setState(() {
                           text = '';
                           timeCtl.text = '';
+                          res1=null;
+                          res=null;
                         });
                       } else if (formattedTime.compareTo(text) < 0) {
                         Fluttertoast.showToast(
@@ -322,9 +299,12 @@ class _RequestModalState extends State<RequestModal>
                             backgroundColor: Color.fromRGBO(39, 49, 65, 0.7));
                         setState(() {
                           timeCtl.text = '';
+                          res=null;
+                          res1=null;
                         });
                         print('To time should be after From time');
                       } else {
+                        print(res1);
                         setState(() {
                           timeCtl.text =
                               "${time24to12Format(text)} - ${time24to12Format(formattedTime)}";
@@ -332,30 +312,6 @@ class _RequestModalState extends State<RequestModal>
                       }
                     }
                   }),
-              SizedBox(
-                height: 12,
-              ),
-              TextFormField(
-                  controller: contactCtl,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Enter Contact Number';
-                    }
-                    if (value.length != 10)
-                      return 'Enter a Valid Contant Number';
-                    return null;
-                  },
-                  style: TextFormFieldStyle,
-                  keyboardType: TextInputType.number,
-                  decoration: textFieldDecoration.copyWith(
-                    labelText: 'Contact Number',
-                    labelStyle: labelTextStyle,
-                    prefixIconColor: Colors.white,
-                    prefixIcon: ImageIcon(
-                      AssetImage('packages/irbs/assets/images/phone_icon.png'),
-                      color: Colors.white,
-                    ),
-                  )),
               SizedBox(
                 height: 16,
               ),
@@ -392,14 +348,22 @@ class _RequestModalState extends State<RequestModal>
                     if (_formkey.currentState!.validate() == false) {
                       print('invalid');
                     } else {
+                      var inTime=new DateTime(pickedDate!.year,pickedDate!.month,pickedDate!.day,res!.hour,res!.minute);
+                      print(inTime);
+                      var outTime=new DateTime(pickedDate!.year,pickedDate!.month,pickedDate!.day,res1!.hour,res1!.minute);
+                      print(outTime);
                       print(nameCtl.text);
-                      print(designationCtl.text);
                       print(dateCtl.text);
                       print(timeCtl.text);
-                      print(contactCtl.text);
                       print(purposeCtl.text);
+                      var details=jsonEncode({
+                        "roomId": widget.room.id.toString(),
+                        "inTime": inTime.toIso8601String(),
+                        "outTime": outTime.toIso8601String(),
+                        "bookingPurpose": purposeCtl.text
+                      });
                       Navigator.pop(context);
-                      _showDialog();
+                      _showDialog(details);
                     }
                   },
                   child: Container(

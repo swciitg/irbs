@@ -45,16 +45,16 @@ class _BookingHistoryState extends State<BookingHistory> {
       ),
       body: FutureBuilder(
         future: APIService().getBookingHistory(),
-        builder: (context,snapshot){
-          if(!snapshot.hasData){
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
             return const CircularProgressIndicator();
-          }else if(snapshot.hasError){
+          } else if (snapshot.hasError) {
             print(snapshot.error);
             return const Text('Error');
-          }else{
+          } else {
             List<BookingModel>? currentBooking = snapshot.data?[0];
             List<BookingModel>? pastBooking = snapshot.data?[1];
-            return  SingleChildScrollView(
+            return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -78,22 +78,32 @@ class _BookingHistoryState extends State<BookingHistory> {
                     ),
                   ),
                   ListView.builder(
-                    shrinkWrap: true,
+                      shrinkWrap: true,
                       itemCount: currentBooking?.length,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (BuildContext context , int index){
-                        BookingModel?  ans = currentBooking?[index];
+                      itemBuilder: (BuildContext context, int index) {
+                        BookingModel? ans = currentBooking?[index];
                         return CurrentBookingsWidget(
-                            startTime: DateFormat("hh:mm a").format(DateTime.parse(ans!.inTime)),
-                            roomName: ans.roomId,
-                            endTime: DateFormat("hh:mm a").format(DateTime.parse(ans.outTime)),
-                            date: DateFormat("dd MMMM").format(DateTime.parse(ans.inTime)),
-                            //current: true,
-                            status: ans.status == 'requested' ? 2 : ans.status == 'accepted' ? 1 : 0,
-                          data: ans.acceptInstructions.trim().isNotEmpty ? ans.acceptInstructions: null,
+                          startTime: DateFormat("hh:mm a")
+                              .format(DateTime.parse(ans!.inTime)),
+                          roomName: ans.roomDetails.roomName,
+                          endTime: DateFormat("hh:mm a")
+                              .format(DateTime.parse(ans.outTime)),
+                          date: DateFormat("dd MMMM")
+                              .format(DateTime.parse(ans.inTime)),
+                          //current: true,
+                          status: ans.status == 'requested'
+                              ? 2
+                              : ans.status == 'accepted'
+                                  ? 1
+                                  : 0,
+                          data: ans.acceptInstructions != null
+                              ? ans.acceptInstructions!.trim().isNotEmpty
+                                  ? ans.acceptInstructions
+                                  : null
+                              : null,
                         );
-                      }
-                  ),
+                      }),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                     child: Text(
@@ -105,18 +115,28 @@ class _BookingHistoryState extends State<BookingHistory> {
                       shrinkWrap: true,
                       itemCount: pastBooking?.length,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (BuildContext context , int index){
-                        BookingModel?  ans = pastBooking?[index];
+                      itemBuilder: (BuildContext context, int index) {
+                        BookingModel? ans = pastBooking?[index];
                         return CurrentBookingsWidget(
-                          startTime: DateFormat("hh:mm a").format(DateTime.parse(ans!.inTime)),
+                          startTime: DateFormat("hh:mm a")
+                              .format(DateTime.parse(ans!.inTime)),
                           roomName: ans.roomId,
-                          endTime: DateFormat("hh:mm a").format(DateTime.parse(ans.outTime)),
-                          date: DateFormat("dd MMMM").format(DateTime.parse(ans.inTime)),
-                          status: ans.status == 'requested' ? 1 : ans.status == 'accepted' ? 2 : 0,
-                          data: ans.acceptInstructions.trim().isNotEmpty ? ans.acceptInstructions: null,
+                          endTime: DateFormat("hh:mm a")
+                              .format(DateTime.parse(ans.outTime)),
+                          date: DateFormat("dd MMMM")
+                              .format(DateTime.parse(ans.inTime)),
+                          status: ans.status == 'requested'
+                              ? 1
+                              : ans.status == 'accepted'
+                                  ? 2
+                                  : 0,
+                          data: ans.acceptInstructions != null
+                              ? ans.acceptInstructions!.trim().isNotEmpty
+                                  ? ans.acceptInstructions
+                                  : null
+                              : null,
                         );
-                      }
-                  ),
+                      }),
                 ],
               ),
             );

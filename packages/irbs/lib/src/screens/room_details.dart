@@ -1,37 +1,41 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:irbs/src/functions/snackbar.dart';
 import 'package:irbs/src/models/room_model.dart';
-import 'package:irbs/src/screens/myrooms/member_details.dart';
+import 'package:irbs/src/services/api.dart';
+import 'package:irbs/src/store/data_store.dart';
 import 'package:irbs/src/widgets/myrooms/memberTile.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
 import 'myrooms/editRoom.dart';
 
 class RoomDetails extends StatefulWidget {
-  final RoomModel roomModel;
-  bool isAdmin = false;
-  RoomDetails({required this.isAdmin, required this.roomModel});
+  final RoomModel room;
+  const RoomDetails({super.key, required this.room});
 
   @override
   State<RoomDetails> createState() => _RoomDetailsState();
 }
 
 class _RoomDetailsState extends State<RoomDetails> {
-  var data = {
-    "name": "Coding Club",
-    "capacity": "25",
-    "instructions":
-        "Lorem ipsum dolor sit amet consectetur. Dolor in felis nec aliquam. Mauris sed odio morbi dignissim pulvinar nunc semper eu habitant. Eu at quisque libero ullamcorper. Luctus neque enim cras semper aliquam.",
-  };
-  var members = [
-    {"name": "Kunal Pal", "designation": "Secretary"},
-  ];
-  var designations = {
-    "Secretary": true,
-    "Overall Coordinator": true,
-    "Design Head": false,
-    "App Dev Head": false,
-    "Web Developer": false
-  };
+  bool isAdmin = false;
+  Future<void> addMemberDialog() async {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AddMember(room: widget.room);
+        });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    isAdmin = widget.room.owner.contains(DataStore.userData['outlookEmail']);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,24 +67,24 @@ class _RoomDetailsState extends State<RoomDetails> {
                 children: [
                   Expanded(
                       child: Text(
-                    widget.roomModel.roomName,
+                    widget.room.roomName,
                     style: roomheadingStyle,
                   )),
-                  if (widget.isAdmin)
+                  if (isAdmin)
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => EditRoom(
-                                data: data, designations: designations),
+                              data: widget.room,
+                            ),
                           ),
                         );
                       },
                       child: const ImageIcon(
-                      AssetImage(
-                          'packages/irbs/assets/images/edit.png'),
-                      color: Colors.white,
-                    ),
+                        AssetImage('packages/irbs/assets/images/edit.png'),
+                        color: Colors.white,
+                      ),
                     )
                 ],
               ),
@@ -90,7 +94,7 @@ class _RoomDetailsState extends State<RoomDetails> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Capacity: ${widget.roomModel.roomCapacity}',
+                  'Capacity: ${widget.room.roomCapacity}',
                   style: kRequestedRoomStyle,
                 ),
               ),
@@ -110,17 +114,17 @@ class _RoomDetailsState extends State<RoomDetails> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  '${widget.roomModel.instructions}',
+                  '${widget.room.instructions}',
                   style: instrTextStyle,
                 ),
               ),
-              const Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  "See more",
-                  style: seemoreStyle,
-                ),
-              ),
+              // const Align(
+              //   alignment: Alignment.centerRight,
+              //   child: Text(
+              //     "See more",
+              //     style: seemoreStyle,
+              //   ),
+              // ),
               const SizedBox(
                 height: 16,
               ),
@@ -134,14 +138,15 @@ class _RoomDetailsState extends State<RoomDetails> {
               const SizedBox(
                 height: 12,
               ),
-              if (widget.isAdmin)
+              if (isAdmin)
                 InkWell(
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4),
                       border: Border.all(
-                          color: const Color.fromRGBO(85, 95, 113, 1), width: 1),
+                          color: const Color.fromRGBO(85, 95, 113, 1),
+                          width: 1),
                     ),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -157,10 +162,10 @@ class _RoomDetailsState extends State<RoomDetails> {
                       ],
                     ),
                   ),
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const MemberDetails(isEdit: false),
-                    ));
+                  onTap: () async {
+                    await addMemberDialog();
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => const MemberDetails(isEdit: false),
                   },
                 ),
               const SizedBox(
@@ -169,14 +174,15 @@ class _RoomDetailsState extends State<RoomDetails> {
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: widget.roomModel.owner.length,
+                  itemCount: widget.room.owner.length,
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
                         MemberTile(
-                          isAdmin: widget.isAdmin,
-                          member: widget.roomModel.owner[index],
-                          designations: 'Admin',
+                          isAdmin: isAdmin,
+                          index: index,
+                          room: widget.room,
+                          isPersonAdmin: true,
                         ),
                         const SizedBox(
                           height: 8,
@@ -187,14 +193,15 @@ class _RoomDetailsState extends State<RoomDetails> {
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: widget.roomModel.allowedUsers.length,
+                  itemCount: widget.room.allowedUsers.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Column(
                       children: [
                         MemberTile(
-                          isAdmin: widget.isAdmin,
-                          member: widget.roomModel.allowedUsers[index],
-                          designations: 'Member',
+                          isAdmin: isAdmin,
+                          index: index,
+                          room: widget.room,
+                          isPersonAdmin: false,
                         ),
                         const SizedBox(
                           height: 8,
@@ -207,5 +214,167 @@ class _RoomDetailsState extends State<RoomDetails> {
         ),
       ),
     );
+  }
+}
+
+class AddMember extends StatefulWidget {
+  RoomModel room;
+  AddMember({super.key, required this.room});
+
+  @override
+  State<AddMember> createState() => _AddMemberState();
+}
+
+class _AddMemberState extends State<AddMember> {
+  TextEditingController emailCtl = TextEditingController();
+  final _formkey = GlobalKey<FormState>();
+  bool checkAdmin = true;
+  late bool apiCall;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    apiCall = false;
+  }
+
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formkey,
+      child: SimpleDialog(
+        backgroundColor: Color.fromRGBO(39, 49, 65, 1),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16),
+        children: [
+          SizedBox(
+            height: 12,
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 0.0),
+                  child: Icon(
+                    Icons.close,
+                    color: Colors.white,
+                  ),
+                )),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          SizedBox(
+            height: 24,
+            child: Text(
+              'Add Member',
+              style: appBarStyle.copyWith(
+                  color: Themes.myRoomsFormHeadingColor, fontSize: 18),
+              textAlign: TextAlign.left,
+            ),
+          ),
+          SizedBox(
+            height: 18,
+          ),
+          TextFormField(
+              controller: emailCtl,
+              validator: (value) {
+                if (value == null || value == '') return 'Enter Email';
+                if (!value.endsWith('@iitg.ac.in'))
+                  return 'Email should be IITG Mail Id';
+                if (widget.room.owner.contains(value) ||
+                    widget.room.allowedUsers.contains(value))
+                  return 'Already a Member';
+                return null;
+              },
+              style: permanentTextStyle,
+              keyboardType: TextInputType.emailAddress,
+              decoration: textFieldDecoration.copyWith(
+                  labelText: "Mail ID", labelStyle: labelTextStyle)),
+          const SizedBox(
+            height: 18,
+          ),
+          CheckboxListTile(
+              value: checkAdmin,
+              title: Text(
+                'Admin',
+                style: popupMenuStyle.copyWith(fontSize: 14),
+              ),
+              onChanged: (bool? value) {
+                setState(() {
+                  checkAdmin = value!;
+                  print(checkAdmin);
+                });
+              }),
+          SizedBox(
+            height: 18,
+          ),
+          Container(
+            height: 48,
+            // margin: EdgeInsets.fromLTRB(0, 0, 0, screenWidth * 0.1),
+            decoration: const BoxDecoration(
+                color: Color.fromRGBO(118, 172, 255, 1),
+                borderRadius: BorderRadius.all(Radius.circular(4))),
+            child: InkWell(
+                onTap: () async {
+                  if (_formkey.currentState!.validate() == false) {
+                    print('invalid');
+                  } else {
+                    if (!apiCall) {
+                      setState(() {
+                        apiCall = true;
+                      });
+                      List<String> x = checkAdmin
+                          ? widget.room.owner
+                          : widget.room.allowedUsers;
+                      x.add(emailCtl.text);
+                      String s = checkAdmin ? "owner" : "allowedUsers";
+                      var details = jsonEncode({s: x});
+                      await APIService()
+                          .editRoomDetails(widget.room.id, details)
+                          .then((value) {
+                        print(value);
+                        DataStore.myRooms
+                            .removeWhere((element) => element.id == value.id);
+                        DataStore.myRooms.add(value);
+                        if (DataStore.rooms[widget.room.roomType] != null) {
+                          DataStore.rooms[widget.room.roomType]!
+                              .removeWhere((element) => element.id == value.id);
+                          DataStore.rooms[value.roomType]!.add(value);
+                        }
+                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RoomDetails(
+                              room: value,
+                            ),
+                          ),
+                        );
+                      }).catchError((error, stackTrace) {
+                        showSnackBar(error.toString());
+                      });
+                    }
+                  }
+                },
+                child: Center(
+                    child: (apiCall)
+                        ? CircularProgressIndicator()
+                        : Text(
+                            'Add',
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                package: 'irbs',
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ))),
+          ),
+          SizedBox(
+            height: 18,
+          )
+        ],
+      ),
+    );
+    ;
   }
 }
