@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/models/calendar_data.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/widgets/roomBookingDetails/calendar.dart';
 import 'package:irbs/src/widgets/roomBookingDetails/request_modal.dart';
@@ -11,15 +10,10 @@ import '../widgets/roomBookingDetails/upcoming_booking_widget.dart';
 import '../models/booking_model.dart';
 import '../models/room_model.dart';
 
-// class RoomDetailArguements{
-//   final RoomModel room;
-
-//   RoomDetailArguements(this.room);
-// }
 
 class RoomBookingDetails extends StatefulWidget {
   final RoomModel room;
-  RoomBookingDetails({super.key, required this.room});
+  const RoomBookingDetails({super.key, required this.room});
 
   @override
   State<RoomBookingDetails> createState() => _RoomBookingDetailsState();
@@ -43,8 +37,6 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
   Widget build(BuildContext context) {
     List<BookingModel> allBookings = [];
     List<BookingModel> latestBookings = [];
-    // final RoomDetailArguements args =
-    //     ModalRoute.of(context)!.settings.arguments as RoomDetailArguements;
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
@@ -133,7 +125,9 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                         style: roomheadingStyle,
                       )),
                       GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            
+                          },
                           child: const Padding(
                             padding: EdgeInsets.only(right: 16.0),
                             child: Icon(

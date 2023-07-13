@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/screens/room_details.dart';
+import 'package:irbs/src/screens/room_details/room_details.dart';
 import 'package:irbs/src/store/data_store.dart';
 import '../../models/room_model.dart';
 

@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:irbs/src/functions/snackbar.dart';
 import 'package:irbs/src/models/room_model.dart';
+import 'package:irbs/src/screens/room_details/edit_room_details.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/data_store.dart';
 import 'package:irbs/src/widgets/myrooms/memberTile.dart';
-import '../globals/colors.dart';
-import '../globals/styles.dart';
-import 'myrooms/editRoom.dart';
+import '../../globals/colors.dart';
+import '../../globals/styles.dart';
 
 class RoomDetails extends StatefulWidget {
   final RoomModel room;
@@ -75,7 +75,7 @@ class _RoomDetailsState extends State<RoomDetails> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => EditRoom(
+                            builder: (context) => EditRoomDetails(
                               data: widget.room,
                             ),
                           ),

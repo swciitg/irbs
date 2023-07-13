@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/models/room_model.dart';
-import 'package:irbs/src/screens/myrooms/member_details.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/data_store.dart';
 
 import '../../functions/snackbar.dart';
-import '../../screens/room_details.dart';
+import '../../screens/room_details/room_details.dart';
 
 class MemberTile extends StatefulWidget {
   bool isAdmin = false;
