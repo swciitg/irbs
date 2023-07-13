@@ -166,6 +166,27 @@ class APIService {
     }
   }
 
+  Future<List<BookingModel>> getBookingsForCalendar({
+    required String roomId,
+    required int month,
+    required String year
+  })async{
+    List<BookingModel> bookings = await getMonthWiseRoomBookings(
+      roomId: roomId, 
+      month: month.toString(), 
+      year: year
+    );
+    List<BookingModel> nextMonthBookings = await getMonthWiseRoomBookings(
+      roomId: roomId, 
+      month: (month+1).toString(), 
+      year: year
+    );
+
+    bookings.addAll(nextMonthBookings);
+
+    return bookings;
+  }
+
   Future<List<RoomModel>> getMyRooms() async {
 
     try{
