@@ -228,7 +228,7 @@ class _MemberDetailsState extends State<MemberDetails> {
                               initialDate: startDate,
                               firstDate: DateTime(2000),
                               lastDate: DateTime(2025),
-                              builder: (context, child) => CustomDatePicker(
+                              builder: (context, child) => IRBSDatePicker(
                                 child: DatePickerDialog(
                                   initialDate: startDate,
                                   firstDate: DateTime(2000),
@@ -298,7 +298,7 @@ class _MemberDetailsState extends State<MemberDetails> {
                               initialDate: endDate,
                               firstDate: DateTime(2000),
                               lastDate: DateTime(2025),
-                              builder: (context, child) => CustomDatePicker(
+                              builder: (context, child) => IRBSDatePicker(
                                 child: DatePickerDialog(
                                   initialDate: endDate,
                                   firstDate: DateTime(2000),

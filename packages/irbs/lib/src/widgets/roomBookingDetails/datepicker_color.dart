@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../globals/styles.dart';
 
-class CustomDatePicker extends StatefulWidget {
+class IRBSDatePicker extends StatefulWidget {
   final Widget? child;
-  const CustomDatePicker({super.key, this.child});
+  const IRBSDatePicker({super.key, this.child});
 
   @override
-  State<CustomDatePicker> createState() => _CustomDatePickerState();
+  State<IRBSDatePicker> createState() => _IRBSDatePickerState();
 }
 
-class _CustomDatePickerState extends State<CustomDatePicker> {
+class _IRBSDatePickerState extends State<IRBSDatePicker> {
   @override
   Widget build(BuildContext context) {
     return Theme(
