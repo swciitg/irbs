@@ -3,19 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-<<<<<<< HEAD
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/data_store.dart';
-import 'package:irbs/src/widgets/roomBookingDetails/datepicker_color.dart';
-=======
-<<<<<<<< HEAD:packages/irbs/lib/src/widgets/roomdetails/request_modal.dart
-import 'package:irbs/src/services/api.dart';
-import 'package:irbs/src/store/data_store.dart';
-import 'package:irbs/src/widgets/roomdetails/datepicker_color.dart';
-========
-import 'package:irbs/src/widgets/roomBookingDetails/datepicker_color.dart';
->>>>>>>> d9ed60b4d145e022009a8ebcee427178bc704b02:packages/irbs/lib/src/widgets/roomBookingDetails/request_modal.dart
->>>>>>> d9ed60b4d145e022009a8ebcee427178bc704b02
+import 'package:irbs/src/widgets/roomBookingdetails/datepicker_color.dart';
 import '../../globals/styles.dart';
 import 'package:lottie/lottie.dart';
 
@@ -57,11 +47,7 @@ class _RequestModalState extends State<RequestModal>
     return send;
   }
 
-<<<<<<< HEAD
-  Future<void> _showDialog(String details) async { 
-=======
   Future<void> _showDialog(String details) async {
->>>>>>> d9ed60b4d145e022009a8ebcee427178bc704b02
     return showDialog(
         context: context,
         builder: (BuildContext context) {

@@ -11,14 +11,15 @@ import '../widgets/roomBookingDetails/upcoming_booking_widget.dart';
 import '../models/booking_model.dart';
 import '../models/room_model.dart';
 
-class RoomDetailArguements{
-  final RoomModel room;
+// class RoomDetailArguements{
+//   final RoomModel room;
 
-  RoomDetailArguements(this.room);
-}
+//   RoomDetailArguements(this.room);
+// }
 
 class RoomBookingDetails extends StatefulWidget {
-  const RoomBookingDetails({super.key, required});
+  final RoomModel room;
+  RoomBookingDetails({super.key, required this.room});
 
   @override
   State<RoomBookingDetails> createState() => _RoomBookingDetailsState();
@@ -34,7 +35,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         builder: (BuildContext context) {
-          return RequestModal(room: widget.room,);
+          return RequestModal(room: widget.room);
         });
   }
 
@@ -42,8 +43,8 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
   Widget build(BuildContext context) {
     List<BookingModel> allBookings = [];
     List<BookingModel> latestBookings = [];
-
-    final RoomDetailArguements args = ModalRoute.of(context)!.settings.arguments as RoomDetailArguements;
+    // final RoomDetailArguements args =
+    //     ModalRoute.of(context)!.settings.arguments as RoomDetailArguements;
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
@@ -90,7 +91,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
           )),
       body: FutureBuilder(
         future: APIService().getMonthWiseRoomBookings(
-          roomId: args.room.id,
+          roomId: widget.room.id,
           month: DateFormat('MM').format(DateTime.now()),
           year: DateTime.now().year.toString()
         ),
@@ -128,7 +129,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                     children: [
                       Expanded(
                           child: Text(
-                        args.room.roomName,
+                        widget.room.roomName,
                         style: roomheadingStyle,
                       )),
                       GestureDetector(
@@ -160,7 +161,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                   iconColor:const Color.fromRGBO(135, 145, 165, 1),
                   children: latestBookings.map(
                     (e) => UpcomingBookingsWidget(
-                      name: e.userInfo.name,
+                      name: e.userInfo.name!=null?e.userInfo.name! :'',
                       startTime: DateFormat("hh:mm a").format(DateTime.parse(e.inTime)),
                       endTime: DateFormat("hh:mm a").format(DateTime.parse(e.outTime)),
                       date: DateFormat("dd MMMM").format(DateTime.parse(e.inTime)),
@@ -172,7 +173,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                   height: 0.5,
                   color: Colors.white.withOpacity(0.2),
                 ),
-                Expanded(child: Calendar(roomId: args.room.id,),),
+                Expanded(child: Calendar(roomId: widget.room.id,),),
               ]
             );
           }

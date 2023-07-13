@@ -9,21 +9,23 @@ class BookingModel {
   String inTime = '';
   String outTime = '';
   String bookingPurpose = '';
-  String acceptInstructions = '';
+  String? acceptInstructions;
   String createdAt = '';
   String id = '';
-  late RoomModel roomDetails;
+  late RoomDetails roomDetails;
+  late OwnerInfo userInfo;
   BookingModel(
       {required this.roomId,
-        required this.user,
-        required this.status,
-        required this.inTime,
-        required this.outTime,
-        required this.bookingPurpose,
-        required this.acceptInstructions,
-        required this.createdAt,
-        required this.roomDetails,
-        required this.id});
+      required this.user,
+      required this.status,
+      required this.inTime,
+      required this.outTime,
+      required this.bookingPurpose,
+      this.acceptInstructions,
+      required this.createdAt,
+      required this.roomDetails,
+      required this.id,
+      required this.userInfo});
 
   BookingModel.fromJson(Map<String, dynamic> json) {
     roomId = json['roomId'];
@@ -35,7 +37,8 @@ class BookingModel {
     acceptInstructions = json['acceptInstructions'];
     createdAt = json['createdAt'];
     id = json['id'];
-    roomDetails= new RoomModel.fromJson(json['roomDetails']);
+    roomDetails = RoomDetails.fromJson(json['roomDetails']);
+    userInfo = OwnerInfo.fromJson(json['userInfo']);
   }
 
   Map<String, dynamic> toJson() {
@@ -49,7 +52,41 @@ class BookingModel {
     data['acceptInstructions'] = acceptInstructions;
     data['createdAt'] = createdAt;
     data['id'] = id;
-    data['roomDetails']=roomDetails.toJson();
+    data['roomDetails'] = roomDetails.toJson();
+    data['userInfo'] = userInfo.toJson();
+    return data;
+  }
+}
+
+class RoomDetails {
+  late List<String> owner;
+  late String roomName;
+  late List<String> allowedUsers;
+  late String roomType;
+  late int roomCapacity;
+
+  RoomDetails(
+      {required this.owner,
+      required this.roomName,
+      required this.allowedUsers,
+      required this.roomType,
+      required this.roomCapacity});
+
+  RoomDetails.fromJson(Map<String, dynamic> json) {
+    owner = json['owner'].cast<String>();
+    roomName = json['roomName'];
+    allowedUsers = json['allowedUsers'].cast<String>();
+    roomType = json['roomType'];
+    roomCapacity = json['roomCapacity'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['owner'] = owner;
+    data['roomName'] = roomName;
+    data['allowedUsers'] = allowedUsers;
+    data['roomType'] = roomType;
+    data['roomCapacity'] = roomCapacity;
     return data;
   }
 }
