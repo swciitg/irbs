@@ -227,10 +227,9 @@ class APIService {
   }
   Future<List<List<BookingModel>>> getBookingHistory()async{
     try{
-      Response res = await dio.get(Endpoints.getRoomBookings);
-
-  
-
+      Response res = await dio.get(Endpoints.getRoomBookings, queryParameters: {
+        'isMy': true
+      });
       if(res.statusCode == 200){
         var bookingMapList = res.data;
         List<BookingModel> currentBooking = [];

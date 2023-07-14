@@ -125,9 +125,9 @@ class _BookingHistoryState extends State<BookingHistory> {
                           date: DateFormat("dd MMMM")
                               .format(DateTime.parse(ans.inTime)),
                           status: ans.status == 'requested'
-                              ? 1
+                              ? 2
                               : ans.status == 'accepted'
-                                  ? 2
+                                  ? 1
                                   : 0,
                           data: ans.acceptInstructions != null
                               ? ans.acceptInstructions!.trim().isNotEmpty
