@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:irbs/src/models/booking_model.dart';
 import 'package:irbs/src/services/api.dart';
-import 'package:irbs/src/widgets/bookinghistory/booking_tile.dart';
 import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
-
 import '../globals/colors.dart';
 import '../globals/styles.dart';
 
@@ -52,8 +50,12 @@ class _BookingHistoryState extends State<BookingHistory> {
             print(snapshot.error);
             return const Text('Error');
           }else{
-            List<BookingModel>? currentBooking = snapshot.data?[0];
-            List<BookingModel>? pastBooking = snapshot.data?[1];
+            List<BookingModel> currentBooking=[] ;
+            List<BookingModel> pastBooking =[];
+            if(snapshot.data?.length==2){
+               currentBooking = snapshot.data![0];
+               pastBooking = snapshot.data![1];
+            }
             return  SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,21 +81,27 @@ class _BookingHistoryState extends State<BookingHistory> {
                   ),
                   ListView.builder(
                     shrinkWrap: true,
-                      itemCount: currentBooking?.length,
+                      itemCount: currentBooking.length,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context , int index){
-                        BookingModel?  ans = currentBooking?[index];
+                        BookingModel?  ans = currentBooking[index];
                         return FutureBuilder(
-                            future: APIService().getRoomFromId(ans!.roomId),
+                            future: APIService().getRoomFromId(ans.roomId),
                             builder: (BuildContext context,snapshot){
-                              return CurrentBookingsWidget(
-                                startTime: DateFormat("hh:mm a").format(DateTime.parse(ans!.inTime)),
-                                roomName: snapshot.data!,
+                              if(!snapshot.hasData){
+                                return Container();
+                              }else if(snapshot.hasError){
+                                return const Text('Error');
+                              }else {
+                                return CurrentBookingsWidget(
+                                startTime: DateFormat("hh:mm a").format(DateTime.parse(ans.inTime)),
+                                roomName: snapshot.data ?? ' ',
                                 endTime: DateFormat("hh:mm a").format(DateTime.parse(ans.outTime)),
                                 date: DateFormat("dd MMMM").format(DateTime.parse(ans.inTime)),
                                 status: ans.status == 'requested' ? 1 : ans.status == 'accepted' ? 2 : 0,
                                 data: ans.acceptInstructions.trim().isNotEmpty ? ans.acceptInstructions: null,
                               );
+                              }
                             }
                         );
                       }
@@ -107,21 +115,27 @@ class _BookingHistoryState extends State<BookingHistory> {
                   ),
                   ListView.builder(
                       shrinkWrap: true,
-                      itemCount: pastBooking?.length,
+                      itemCount: pastBooking.length,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context , int index){
-                        BookingModel?  ans = pastBooking?[index];
+                        BookingModel?  ans = pastBooking[index];
                         return FutureBuilder(
-                          future: APIService().getRoomFromId(ans!.roomId),
+                          future: APIService().getRoomFromId(ans.roomId),
                             builder: (BuildContext context,snapshot){
-                          return CurrentBookingsWidget(
-                            startTime: DateFormat("hh:mm a").format(DateTime.parse(ans!.inTime)),
+                            if(!snapshot.hasData){
+                              return Container();
+                            }else if(snapshot.hasError){
+                              return Text('Error');
+                            }else {
+                              return CurrentBookingsWidget(
+                            startTime: DateFormat("hh:mm a").format(DateTime.parse(ans.inTime)),
                             roomName: snapshot.data!,
                             endTime: DateFormat("hh:mm a").format(DateTime.parse(ans.outTime)),
                             date: DateFormat("dd MMMM").format(DateTime.parse(ans.inTime)),
                             status: ans.status == 'requested' ? 1 : ans.status == 'accepted' ? 2 : 0,
                             data: ans.acceptInstructions.trim().isNotEmpty ? ans.acceptInstructions: null,
                           );
+                            }
                         }
                         );
                       }
