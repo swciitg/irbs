@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:irbs/src/models/booking_model.dart';
 import 'package:irbs/src/models/room_model.dart';
-import 'package:irbs/src/widgets/roomBookingDetails/upcoming_booking_widget.dart';
 import '../functions/auth_helper_functions.dart';
 import '../functions/snackbar.dart';
 import '../globals/endpoints.dart';
@@ -171,7 +170,6 @@ class APIService {
   Future<List<List<BookingModel>>> getBookingHistory()async{
     try{
       Response res = await dio.get(Endpoints.getRoomBookings);
-
       if(res.statusCode == 200){
         var bookingMapList = res.data;
         List<BookingModel> currentBooking = [];
@@ -180,14 +178,9 @@ class APIService {
         for(var booking in bookingMapList){
           DateTime b = DateTime.parse(booking['outTime']);
           if(a.isBefore(b)){
-            currentBooking.add(
-                BookingModel.fromJson(booking),
-            );
+            currentBooking.add(BookingModel.fromJson(booking));
           }else{
-            print(booking['outTime']);
-            pastBooking.add(
-              BookingModel.fromJson(booking),
-            );
+            pastBooking.add(BookingModel.fromJson(booking),);
           }
         }
         List<List<BookingModel>> answer = [];
@@ -201,7 +194,6 @@ class APIService {
         throw Exception(res.statusMessage);
       }
     }catch(e){
-      print(e.toString());
       throw Exception(e.toString());
     }
   }

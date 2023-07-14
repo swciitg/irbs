@@ -83,14 +83,18 @@ class _BookingHistoryState extends State<BookingHistory> {
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context , int index){
                         BookingModel?  ans = currentBooking?[index];
-                        return CurrentBookingsWidget(
-                            startTime: DateFormat("hh:mm a").format(DateTime.parse(ans!.inTime)),
-                            roomName: ans.roomId,
-                            endTime: DateFormat("hh:mm a").format(DateTime.parse(ans.outTime)),
-                            date: DateFormat("dd MMMM").format(DateTime.parse(ans.inTime)),
-                            //current: true,
-                            status: ans.status == 'requested' ? 2 : ans.status == 'accepted' ? 1 : 0,
-                          data: ans.acceptInstructions.trim().isNotEmpty ? ans.acceptInstructions: null,
+                        return FutureBuilder(
+                            future: APIService().getRoomFromId(ans!.roomId),
+                            builder: (BuildContext context,snapshot){
+                              return CurrentBookingsWidget(
+                                startTime: DateFormat("hh:mm a").format(DateTime.parse(ans!.inTime)),
+                                roomName: snapshot.data!,
+                                endTime: DateFormat("hh:mm a").format(DateTime.parse(ans.outTime)),
+                                date: DateFormat("dd MMMM").format(DateTime.parse(ans.inTime)),
+                                status: ans.status == 'requested' ? 1 : ans.status == 'accepted' ? 2 : 0,
+                                data: ans.acceptInstructions.trim().isNotEmpty ? ans.acceptInstructions: null,
+                              );
+                            }
                         );
                       }
                   ),
@@ -107,13 +111,18 @@ class _BookingHistoryState extends State<BookingHistory> {
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context , int index){
                         BookingModel?  ans = pastBooking?[index];
-                        return CurrentBookingsWidget(
-                          startTime: DateFormat("hh:mm a").format(DateTime.parse(ans!.inTime)),
-                          roomName: ans.roomId,
-                          endTime: DateFormat("hh:mm a").format(DateTime.parse(ans.outTime)),
-                          date: DateFormat("dd MMMM").format(DateTime.parse(ans.inTime)),
-                          status: ans.status == 'requested' ? 1 : ans.status == 'accepted' ? 2 : 0,
-                          data: ans.acceptInstructions.trim().isNotEmpty ? ans.acceptInstructions: null,
+                        return FutureBuilder(
+                          future: APIService().getRoomFromId(ans!.roomId),
+                            builder: (BuildContext context,snapshot){
+                          return CurrentBookingsWidget(
+                            startTime: DateFormat("hh:mm a").format(DateTime.parse(ans!.inTime)),
+                            roomName: snapshot.data!,
+                            endTime: DateFormat("hh:mm a").format(DateTime.parse(ans.outTime)),
+                            date: DateFormat("dd MMMM").format(DateTime.parse(ans.inTime)),
+                            status: ans.status == 'requested' ? 1 : ans.status == 'accepted' ? 2 : 0,
+                            data: ans.acceptInstructions.trim().isNotEmpty ? ans.acceptInstructions: null,
+                          );
+                        }
                         );
                       }
                   ),
