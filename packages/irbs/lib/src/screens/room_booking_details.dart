@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:irbs/src/screens/room_details/room_details.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/widgets/roomBookingDetails/calendar.dart';
 import 'package:irbs/src/widgets/roomBookingDetails/request_modal.dart';
@@ -126,7 +127,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                       )),
                       GestureDetector(
                           onTap: () {
-                            
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => RoomDetails(room: widget.room,)));
                           },
                           child: const Padding(
                             padding: EdgeInsets.only(right: 16.0),

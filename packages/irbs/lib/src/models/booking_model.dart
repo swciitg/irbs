@@ -12,7 +12,7 @@ class BookingModel {
   String? acceptInstructions;
   String createdAt = '';
   String id = '';
-  late RoomDetails roomDetails;
+  late RoomDetailsModel roomDetails;
   late OwnerInfo userInfo;
   BookingModel(
       {required this.roomId,
@@ -37,7 +37,7 @@ class BookingModel {
     acceptInstructions = json['acceptInstructions'];
     createdAt = json['createdAt'];
     id = json['id'];
-    roomDetails = RoomDetails.fromJson(json['roomDetails']);
+    roomDetails = RoomDetailsModel.fromJson(json['roomDetails']);
     userInfo = OwnerInfo.fromJson(json['userInfo']);
   }
 
@@ -58,21 +58,21 @@ class BookingModel {
   }
 }
 
-class RoomDetails {
+class RoomDetailsModel {
   late List<String> owner;
   late String roomName;
   late List<String> allowedUsers;
   late String roomType;
   late int roomCapacity;
 
-  RoomDetails(
+  RoomDetailsModel(
       {required this.owner,
       required this.roomName,
       required this.allowedUsers,
       required this.roomType,
       required this.roomCapacity});
 
-  RoomDetails.fromJson(Map<String, dynamic> json) {
+  RoomDetailsModel.fromJson(Map<String, dynamic> json) {
     owner = json['owner'].cast<String>();
     roomName = json['roomName'];
     allowedUsers = json['allowedUsers'].cast<String>();
