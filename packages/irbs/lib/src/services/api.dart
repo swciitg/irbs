@@ -43,7 +43,8 @@ class APIService {
       } else if (response != null && response.statusCode == 403) {
         showSnackBar("Access not allowed in guest mode");
       } else if (response != null && response.statusCode == 400) {
-        showSnackBar(response.data["message"]);
+        print(response);
+        //showSnackBar(response.data["message"]);
       }
       // admin user with expired tokens
       return handler.next(error);
@@ -234,7 +235,7 @@ class APIService {
         var bookingMapList = res.data;
         List<BookingModel> currentBooking = [];
         List<BookingModel> pastBooking = [];
-        DateTime a =DateTime.now();
+        DateTime a =DateTime.parse(DateTime.now().toIso8601String()+"Z");
         for(var booking in bookingMapList){
           DateTime b = DateTime.parse(booking['outTime']);
           if(a.isBefore(b)){
@@ -242,7 +243,6 @@ class APIService {
                 BookingModel.fromJson(booking),
             );
           }else{
-            print(booking['outTime']);
             pastBooking.add(
               BookingModel.fromJson(booking),
             );
@@ -263,16 +263,21 @@ class APIService {
       throw Exception(e.toString());
     }
   }
-  Future<void> deleteBooking(String id) async {
+  Future<String> deleteBooking(String id) async {
     try {
-      Response response = await dio.delete('${Endpoints.deleteBooking}/$id');
+      Response response = await dio.delete(Endpoints.deleteBooking, data: {
+        "id": id
+      });
       if (response.statusCode == 200) {
         print('deleted');
+        return "Success";
       } else {
         print('failed___ ${response.statusCode}');
+        return "Failed";
       }
     } catch (error) {
       print('ERROR: $error');
+      return "Failed";
     }
   }
   Future<void> endBooking(String id) async{

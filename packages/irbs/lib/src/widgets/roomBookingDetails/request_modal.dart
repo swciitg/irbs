@@ -356,6 +356,8 @@ class _RequestModalState extends State<RequestModal>
                       print(dateCtl.text);
                       print(timeCtl.text);
                       print(purposeCtl.text);
+                      print(inTime);
+                      print(inTime.toIso8601String());
                       var details=jsonEncode({
                         "roomId": widget.room.id.toString(),
                         "inTime": inTime.toIso8601String(),

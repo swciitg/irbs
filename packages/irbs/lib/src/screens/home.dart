@@ -138,31 +138,6 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
-              const CurrentBookingsWidget(
-                status: 0,
-                startTime: '10:00 AM',
-                endTime: '03:00 PM',
-                date: '21st April',
-                roomName: 'Coding Club Room',
-                data:
-                    'eSports team have to use the room for interIIT practice ',
-              ),
-              const CurrentBookingsWidget(
-                status: 1,
-                startTime: '05:00 AM',
-                endTime: '06:30 AM',
-                date: '22nd April',
-                roomName: 'Finesse Room',
-                data:
-                    'Do no turn off the Server Computer and turn off the AC before leaving.',
-              ),
-              const CurrentBookingsWidget(
-                status: 2,
-                startTime: '05:00 AM',
-                endTime: '06:30 AM',
-                date: '22nd April',
-                roomName: 'Finesse Room',
-              ),
               FutureBuilder(
                 future: cs.initialisePinnedRooms(),
                   builder: (context, snapshot){

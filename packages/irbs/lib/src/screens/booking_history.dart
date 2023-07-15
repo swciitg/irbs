@@ -15,6 +15,14 @@ class BookingHistory extends StatefulWidget {
 }
 
 class _BookingHistoryState extends State<BookingHistory> {
+
+  void refresh()
+  {
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,25 +90,10 @@ class _BookingHistoryState extends State<BookingHistory> {
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
                         BookingModel? ans = currentBooking?[index];
+
                         return CurrentBookingsWidget(
-                          startTime: DateFormat("hh:mm a")
-                              .format(DateTime.parse(ans!.inTime)),
-                          roomName: ans.roomDetails.roomName,
-                          endTime: DateFormat("hh:mm a")
-                              .format(DateTime.parse(ans.outTime)),
-                          date: DateFormat("dd MMMM")
-                              .format(DateTime.parse(ans.inTime)),
-                          //current: true,
-                          status: ans.status == 'requested'
-                              ? 2
-                              : ans.status == 'accepted'
-                                  ? 1
-                                  : 0,
-                          data: ans.acceptInstructions != null
-                              ? ans.acceptInstructions!.trim().isNotEmpty
-                                  ? ans.acceptInstructions
-                                  : null
-                              : null,
+                          refreshHome: refresh,
+                          model: ans!,
                         );
                       }),
                   const Padding(
@@ -117,23 +110,8 @@ class _BookingHistoryState extends State<BookingHistory> {
                       itemBuilder: (BuildContext context, int index) {
                         BookingModel? ans = pastBooking?[index];
                         return CurrentBookingsWidget(
-                          startTime: DateFormat("hh:mm a")
-                              .format(DateTime.parse(ans!.inTime)),
-                          roomName: ans.roomDetails.roomName,
-                          endTime: DateFormat("hh:mm a")
-                              .format(DateTime.parse(ans.outTime)),
-                          date: DateFormat("dd MMMM")
-                              .format(DateTime.parse(ans.inTime)),
-                          status: ans.status == 'requested'
-                              ? 2
-                              : ans.status == 'accepted'
-                                  ? 1
-                                  : 0,
-                          data: ans.acceptInstructions != null
-                              ? ans.acceptInstructions!.trim().isNotEmpty
-                                  ? ans.acceptInstructions
-                                  : null
-                              : null,
+                          refreshHome: refresh,
+                          model: ans!,
                         );
                       }),
                 ],
