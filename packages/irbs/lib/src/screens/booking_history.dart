@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:irbs/src/models/booking_model.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
+
 import '../globals/colors.dart';
 import '../globals/styles.dart';
 
@@ -14,6 +15,14 @@ class BookingHistory extends StatefulWidget {
 }
 
 class _BookingHistoryState extends State<BookingHistory> {
+
+  void refresh()
+  {
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,20 +52,16 @@ class _BookingHistoryState extends State<BookingHistory> {
       ),
       body: FutureBuilder(
         future: APIService().getBookingHistory(),
-        builder: (context,snapshot){
-          if(!snapshot.hasData){
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
             return const CircularProgressIndicator();
-          }else if(snapshot.hasError){
+          } else if (snapshot.hasError) {
             print(snapshot.error);
             return const Text('Error');
-          }else{
-            List<BookingModel> currentBooking=[] ;
-            List<BookingModel> pastBooking =[];
-            if(snapshot.data?.length==2){
-               currentBooking = snapshot.data![0];
-               pastBooking = snapshot.data![1];
-            }
-            return  SingleChildScrollView(
+          } else {
+            List<BookingModel>? currentBooking = snapshot.data?[0];
+            List<BookingModel>? pastBooking = snapshot.data?[1];
+            return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -80,32 +85,17 @@ class _BookingHistoryState extends State<BookingHistory> {
                     ),
                   ),
                   ListView.builder(
-                    shrinkWrap: true,
-                      itemCount: currentBooking.length,
+                      shrinkWrap: true,
+                      itemCount: currentBooking?.length,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (BuildContext context , int index){
-                        BookingModel?  ans = currentBooking[index];
-                        return FutureBuilder(
-                            future: APIService().getRoomFromId(ans.roomId),
-                            builder: (BuildContext context,snapshot){
-                              if(!snapshot.hasData){
-                                return Container();
-                              }else if(snapshot.hasError){
-                                return const Text('Error');
-                              }else {
-                                return CurrentBookingsWidget(
-                                startTime: DateFormat("hh:mm a").format(DateTime.parse(ans.inTime)),
-                                roomName: snapshot.data ?? ' ',
-                                endTime: DateFormat("hh:mm a").format(DateTime.parse(ans.outTime)),
-                                date: DateFormat("dd MMMM").format(DateTime.parse(ans.inTime)),
-                                status: ans.status == 'requested' ? 1 : ans.status == 'accepted' ? 2 : 0,
-                                data: ans.acceptInstructions.trim().isNotEmpty ? ans.acceptInstructions: null,
-                              );
-                              }
-                            }
+                      itemBuilder: (BuildContext context, int index) {
+                        BookingModel? ans = currentBooking?[index];
+
+                        return CurrentBookingsWidget(
+                          refreshHome: refresh,
+                          model: ans!,
                         );
-                      }
-                  ),
+                      }),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                     child: Text(
@@ -115,31 +105,15 @@ class _BookingHistoryState extends State<BookingHistory> {
                   ),
                   ListView.builder(
                       shrinkWrap: true,
-                      itemCount: pastBooking.length,
+                      itemCount: pastBooking?.length,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (BuildContext context , int index){
-                        BookingModel?  ans = pastBooking[index];
-                        return FutureBuilder(
-                          future: APIService().getRoomFromId(ans.roomId),
-                            builder: (BuildContext context,snapshot){
-                            if(!snapshot.hasData){
-                              return Container();
-                            }else if(snapshot.hasError){
-                              return Text('Error');
-                            }else {
-                              return CurrentBookingsWidget(
-                            startTime: DateFormat("hh:mm a").format(DateTime.parse(ans.inTime)),
-                            roomName: snapshot.data!,
-                            endTime: DateFormat("hh:mm a").format(DateTime.parse(ans.outTime)),
-                            date: DateFormat("dd MMMM").format(DateTime.parse(ans.inTime)),
-                            status: ans.status == 'requested' ? 1 : ans.status == 'accepted' ? 2 : 0,
-                            data: ans.acceptInstructions.trim().isNotEmpty ? ans.acceptInstructions: null,
-                          );
-                            }
-                        }
+                      itemBuilder: (BuildContext context, int index) {
+                        BookingModel? ans = pastBooking?[index];
+                        return CurrentBookingsWidget(
+                          refreshHome: refresh,
+                          model: ans!,
                         );
-                      }
-                  ),
+                      }),
                 ],
               ),
             );

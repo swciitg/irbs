@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:irbs/src/models/room_model.dart';
 import 'package:irbs/src/screens/booking_history.dart';
 import 'package:irbs/src/screens/home.dart';
-import 'package:irbs/src/screens/room_details.dart';
+import 'package:irbs/src/screens/room_details/room_details.dart';
 import 'package:irbs/src/screens/onboarding.dart';
 import 'package:irbs/src/screens/room_booking_details.dart';
 import 'package:irbs/src/screens/room_list.dart';
 import 'package:irbs/src/store/common_store.dart';
 import 'package:provider/provider.dart';
 
-final GlobalKey<ScaffoldMessengerState> irbsRootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+final GlobalKey<ScaffoldMessengerState> irbsRootScaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
 
 class IRBS extends StatefulWidget {
   const IRBS({Key? key}) : super(key: key);
@@ -31,7 +33,6 @@ class _IRBSState extends State<IRBS> {
         initialRoute: '/irbs/home',
         routes: {
           '/irbs/home': (context) => const Home(isAdmin: true),
-          '/irbs/RoomBookingDetails': (context) => const RoomBookingDetails(),
           '/irbs/onboarding': (context) => const Onboarding(),
           '/irbs/roomList': (context) => const RoomList(),
           '/irbs/bookingHistory': (context) => const BookingHistory(),

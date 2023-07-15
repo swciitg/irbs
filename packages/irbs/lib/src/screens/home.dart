@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/screens/all_request.sdart.dart';
 import 'package:irbs/src/store/common_store.dart';
+import 'package:irbs/src/store/data_store.dart';
 import 'package:irbs/src/widgets/home/common_rooms.dart';
 import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
 import 'package:irbs/src/widgets/home/drawer.dart';
 import 'package:irbs/src/widgets/home/request_list.dart';
 import 'package:irbs/src/widgets/roomlist/list_display.dart';
 import 'package:provider/provider.dart';
+
+import 'all_requests.dart';
 
 class Home extends StatefulWidget {
   final bool isAdmin;
@@ -21,6 +23,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    DataStore().getUserData();
+  }
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -129,31 +137,6 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-              ),
-              const CurrentBookingsWidget(
-                status: 0,
-                startTime: '10:00 AM',
-                endTime: '03:00 PM',
-                date: '21st April',
-                roomName: 'Coding Club Room',
-                data:
-                    'eSports team have to use the room for interIIT practice ',
-              ),
-              const CurrentBookingsWidget(
-                status: 1,
-                startTime: '05:00 AM',
-                endTime: '06:30 AM',
-                date: '22nd April',
-                roomName: 'Finesse Room',
-                data:
-                    'Do no turn off the Server Computer and turn off the AC before leaving.',
-              ),
-              const CurrentBookingsWidget(
-                status: 2,
-                startTime: '05:00 AM',
-                endTime: '06:30 AM',
-                date: '22nd April',
-                roomName: 'Finesse Room',
               ),
               FutureBuilder(
                 future: cs.initialisePinnedRooms(),
