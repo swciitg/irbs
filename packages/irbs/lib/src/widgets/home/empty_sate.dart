@@ -12,7 +12,7 @@ class EmptyState extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16),
       child: DottedBorder(
         borderType: BorderType.RRect,
-        color: Themes.white,
+        color: Themes.blueGrey,
         strokeWidth: 1.2,
         dashPattern: const [5.5],
         radius: const Radius.circular(4),
@@ -21,7 +21,7 @@ class EmptyState extends StatelessWidget {
           height: 18,
           width: MediaQuery.of(context).size.width,
           child:  Center(child: Text( text,
-            style: textStyle)),
+            style: subHeadingStyle)),
         ),
       ),
     )

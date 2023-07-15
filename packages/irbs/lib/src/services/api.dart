@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:irbs/src/models/booking_model.dart';
+import 'package:irbs/src/models/owned_room_booking.dart';
 import 'package:irbs/src/models/room_model.dart';
 import '../functions/auth_helper_functions.dart';
 import '../functions/snackbar.dart';
@@ -49,6 +50,29 @@ class APIService {
       // admin user with expired tokens
       return handler.next(error);
     }));
+  }
+
+  Future<List<OwnedRoomBooking>> getOwnedRoomBookings()async{
+    try {
+      Response res = await dio.get(
+        '${Endpoints.baseUrl}${Endpoints.getOwnedRoomBookings}',
+        queryParameters: {
+          'status': 'requested'
+        }
+      );
+
+      if(res.statusCode == 200){
+        List<OwnedRoomBooking> bookings = [];
+        for(var booking in res.data){
+          bookings.add(OwnedRoomBooking.fromJson(booking));
+        }
+        return bookings;
+      }else{
+        throw Exception(res.statusMessage);
+      }
+    }catch(e){
+      throw Exception(e.toString());
+    }
   }
 
   Future<Map<String, List<RoomModel>>> getAllRooms() async {
@@ -226,6 +250,47 @@ class APIService {
       throw Exception(e.toString());
     }
   }
+  
+  Future rejectBooking(String bookingId, String rejectionReason)async{
+    try {
+      Response res = await dio.post(
+        Endpoints.baseUrl+Endpoints.rejectBooking,
+        data: {
+          'id': bookingId,
+          'reasonRejection': rejectionReason
+        }
+      );
+
+      if(res.statusCode == 200){
+        print('Booking rejected');
+      }else{
+        throw Exception(res.statusMessage);
+      }
+    }catch(e){
+      throw Exception(e.toString());
+    }
+  }
+
+  Future acceptBooking(String bookingId, String instructions)async{
+    try {
+      Response res = await dio.post(
+        Endpoints.baseUrl+Endpoints.acceptBooking,
+        data: {
+          'id': bookingId,
+          'acceptInstructions': instructions
+        }
+      );
+
+      if(res.statusCode == 200){
+        print('Booking accepted');
+      }else{
+        throw Exception(res.statusMessage);
+      }
+    }catch(e){
+      throw Exception(e.toString());
+    }
+  }
+
   Future<List<List<BookingModel>>> getBookingHistory()async{
     try{
       Response res = await dio.get(Endpoints.getRoomBookings, queryParameters: {
@@ -263,6 +328,7 @@ class APIService {
       throw Exception(e.toString());
     }
   }
+  
   Future<String> deleteBooking(String id) async {
     try {
       Response response = await dio.delete(Endpoints.deleteBooking, data: {
@@ -280,6 +346,7 @@ class APIService {
       return "Failed";
     }
   }
+  
   Future<void> endBooking(String id) async{
     try {
       Response response = await dio.patch('${Endpoints.deleteBooking}/$id', data: {
@@ -295,6 +362,7 @@ class APIService {
       print('ERROR: $error');
     }
   }
+  
   Future<RoomModel> editRoomDetails(String roomId, String details) async {
     try {
       var response =

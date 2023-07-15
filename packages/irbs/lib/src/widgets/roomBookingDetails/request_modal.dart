@@ -203,7 +203,7 @@ class _RequestModalState extends State<RequestModal>
                       builder: (context, child) => IRBSDatePicker(
                             child: child,
                           ));
-                  if (pickedDate != Null) {
+                  if (pickedDate != null) {
                     print(pickedDate);
                     print(pickedDate?.toIso8601String());
                     String formattedDate =
@@ -348,9 +348,21 @@ class _RequestModalState extends State<RequestModal>
                     if (_formkey.currentState!.validate() == false) {
                       print('invalid');
                     } else {
-                      var inTime=new DateTime(pickedDate!.year,pickedDate!.month,pickedDate!.day,res!.hour,res!.minute);
+                      var inTime= DateTime(
+                        pickedDate!.year,
+                        pickedDate!.month,
+                        pickedDate!.day,
+                        res!.hour,
+                        res!.minute
+                      );
                       print(inTime);
-                      var outTime=new DateTime(pickedDate!.year,pickedDate!.month,pickedDate!.day,res1!.hour,res1!.minute);
+                      var outTime= DateTime(
+                        pickedDate!.year,
+                        pickedDate!.month,
+                        pickedDate!.day,
+                        res1!.hour,
+                        res1!.minute
+                      );
                       print(outTime);
                       print(nameCtl.text);
                       print(dateCtl.text);

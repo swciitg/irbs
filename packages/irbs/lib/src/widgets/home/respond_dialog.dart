@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
-
+import 'package:irbs/src/models/owned_room_booking.dart';
+import 'package:irbs/src/services/api.dart';
 import 'approved_dialog.dart';
+import 'package:intl/intl.dart';
 
 class RespondDialog extends StatefulWidget {
-  const RespondDialog({Key? key}) : super(key: key);
+  final OwnedRoomBooking bookingData;
+  const RespondDialog({required this.bookingData, super.key});
 
   @override
   State<RespondDialog> createState() => _RespondDialogState();
 }
 
 class _RespondDialogState extends State<RespondDialog> {
+  final TextEditingController textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,7 +34,7 @@ class _RespondDialogState extends State<RespondDialog> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(
+            child: const Icon(
               Icons.clear,
               size: 20,
               color: Colors.white,
@@ -57,14 +61,14 @@ class _RespondDialogState extends State<RespondDialog> {
                       TextSpan(text: 'Requested by  ', style: kHeading3Style),
                       TextSpan(style: kHeading3DescStyle, children: [
                         TextSpan(
-                          text: 'Aarya',
+                          text: widget.bookingData.user,
                         ),
-                        TextSpan(
-                          text: ' · ',
-                        ),
-                        TextSpan(
-                          text: 'Design Head',
-                        )
+                        // TextSpan(
+                        //   text: ' · ',
+                        // ),
+                        // TextSpan(
+                        //   text: 'Design Head',
+                        // )
                       ]),
                     ]),
                   ),
@@ -73,14 +77,17 @@ class _RespondDialogState extends State<RespondDialog> {
                     maxLines: 1,
                     text: TextSpan(children: [
                       TextSpan(
-                        text: 'Exibition Hall',
+                        text: widget.bookingData.roomDetails.roomName,
                         style: kDialogRoomStyle,
                       ),
-                      TextSpan(text: '  ', style: kDialogRoomStyle),
-                      TextSpan(text: 'Common Room', style: kDialogSubRoomStyle)
+                      const TextSpan(text: '  ', style: kDialogRoomStyle),
+                      TextSpan(text: widget.bookingData.roomDetails.roomType == 'club'
+                        ? 'Club Room'
+                        : widget.bookingData.roomDetails.roomName == 'board' ? 'Board Room' : 'Common Room',
+                      style: kDialogSubRoomStyle)
                     ])),
                 GridView.count(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   childAspectRatio: 5,
                   shrinkWrap: true,
                   // primary: false,
@@ -92,8 +99,8 @@ class _RespondDialogState extends State<RespondDialog> {
                   children: <Widget>[
                     Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 7.33),
+                        const Padding(
+                          padding: EdgeInsets.only(right: 7.33),
                           child: Icon(
                             Icons.access_time,
                             color: Color.fromRGBO(162, 172, 192, 1),
@@ -103,13 +110,13 @@ class _RespondDialogState extends State<RespondDialog> {
                         RichText(
                           text: TextSpan(style: kDialogTimeStyle, children: [
                             TextSpan(
-                              text: '10:00 AM',
+                              text: DateFormat('hh:mm a').format(DateTime.parse(widget.bookingData.inTime)),
                             ),
-                            TextSpan(
+                            const TextSpan(
                               text: ' - ',
                             ),
                             TextSpan(
-                              text: '2:00 PM',
+                              text: DateFormat('hh:mm a').format(DateTime.parse(widget.bookingData.outTime)),
                             )
                           ]),
                         ),
@@ -117,8 +124,8 @@ class _RespondDialogState extends State<RespondDialog> {
                     ),
                     Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 7.33),
+                        const Padding(
+                          padding: EdgeInsets.only(right: 7.33),
                           child: Icon(
                             Icons.calendar_today_outlined,
                             color: Color.fromRGBO(162, 172, 192, 1),
@@ -126,7 +133,7 @@ class _RespondDialogState extends State<RespondDialog> {
                           ),
                         ),
                         Text(
-                          'Apr 24, 2023',
+                          DateFormat('MMM dd, yyyy').format(DateTime.parse(widget.bookingData.inTime)),
                           style: kDialogTimeStyle,
                         ),
                       ],
@@ -135,12 +142,15 @@ class _RespondDialogState extends State<RespondDialog> {
                 ),
                 RichText(
                   text: TextSpan(children: [
-                    TextSpan(text: 'Purpose - ', style: kDialogPurposeStyle),
-                    TextSpan(text: 'Club Meeting', style: kDialogTimeStyle)
+                    const TextSpan(text: 'Purpose - ', style: kDialogPurposeStyle),
+                    TextSpan(
+                      text: widget.bookingData.bookingPurpose, 
+                      style: kDialogTimeStyle
+                    ),
                   ]),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
+                const Padding(
+                  padding: EdgeInsets.only(
                       top: 12, bottom: 8, left: 0, right: 0),
                   child: Text(
                     'Instruction/Reason to reject -',
@@ -155,6 +165,7 @@ class _RespondDialogState extends State<RespondDialog> {
                     width: double.maxFinite,
                     child: TextField(
                       maxLines: 3,
+                      controller: textEditingController,
                       style: editRoomText,
                       decoration: InputDecoration(
                         hintText: 'Type Here...',
@@ -175,7 +186,7 @@ class _RespondDialogState extends State<RespondDialog> {
                   ),
                 ),
                 GridView.count(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   childAspectRatio: 2.75,
                   shrinkWrap: true,
                   // primary: false,
@@ -190,7 +201,7 @@ class _RespondDialogState extends State<RespondDialog> {
                           height: 24,
                           width: double.maxFinite,
                           decoration: BoxDecoration(
-                              color: Color.fromRGBO(62, 71, 88, 1),
+                              color: const Color.fromRGBO(62, 71, 88, 1),
                               borderRadius: BorderRadius.circular(4)),
                           child: Center(
                             child: Text(
@@ -200,7 +211,10 @@ class _RespondDialogState extends State<RespondDialog> {
                             ),
                           ),
                         ),
-                        onTap: () {},
+                        onTap: ()async{
+                          Navigator.pop(context);
+                          await APIService().rejectBooking(widget.bookingData.id, textEditingController.text);
+                        },
                       ),
                     ),
                     Padding(
@@ -210,26 +224,28 @@ class _RespondDialogState extends State<RespondDialog> {
                           height: 24,
                           width: double.maxFinite,
                           decoration: BoxDecoration(
-                              color: Color.fromRGBO(118, 172, 255, 1),
+                              color: const Color.fromRGBO(118, 172, 255, 1),
                               borderRadius: BorderRadius.circular(4)),
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               'Approve',
                               style: kApproveStyle,
                             ),
                           ),
                         ),
-                        onTap: () {
-                          Navigator.pop(context);
-                          showDialog(
+                        onTap: () async{
+                          // Navigator.pop(context);
+                          await APIService().acceptBooking(widget.bookingData.id, textEditingController.text);
+                          await showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return AlertDialog(
+                              return const AlertDialog(
                                 contentPadding: EdgeInsets.zero,
                                 content: ApprovedDialog(),
                               );
                             },
                           );
+                          Navigator.pop(context);
                         },
                       ),
                     ),

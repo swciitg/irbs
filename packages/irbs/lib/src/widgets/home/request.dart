@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/widgets/home/respond_dialog.dart';
+import 'package:irbs/src/models/owned_room_booking.dart';
 
-class Request extends StatefulWidget {
-  const Request({super.key});
+class Request extends StatelessWidget {
+  final OwnedRoomBooking bookingData;
+  const Request({required this.bookingData, super.key});
 
-  @override
-  State<Request> createState() => _RequestState();
-}
-
-class _RequestState extends State<Request> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -31,7 +29,7 @@ class _RequestState extends State<Request> {
               alignment: Alignment.centerLeft,
               height: screenWidth*24/360,
               child: Text(
-                'Coding Club Room',
+                bookingData.roomDetails.roomName,
                 style: permanentTextStyle.copyWith(color: Colors.white, fontSize: 14*screenWidth/360),
               ),
             ),
@@ -60,7 +58,7 @@ class _RequestState extends State<Request> {
                     height: 12*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Aarya · Design Head',
+                      bookingData.user,
                       style: labelTextStyle.copyWith(
                         fontSize: 10*screenWidth/360, color: Colors.white,
                         height: 1
@@ -95,7 +93,7 @@ class _RequestState extends State<Request> {
                     height: 12*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Club Meeting',
+                      bookingData.bookingPurpose,
                       style: labelTextStyle.copyWith(
                         fontSize: 10*screenWidth/360, color: Colors.white,
                         height: 1
@@ -130,7 +128,8 @@ class _RequestState extends State<Request> {
                     height: 16*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      '10:00 AM - 02:00 PM',
+                      '${DateFormat('hh:mm a').format(DateTime.parse(bookingData.inTime))} - ${DateFormat('hh:mm a').format(DateTime.parse(bookingData.outTime))}',
+                      // '10:00 AM - 02:00 PM',
                       style: labelTextStyle.copyWith(
                         fontSize: 10*screenWidth/360, color: Colors.white,
                         height: 1
@@ -165,7 +164,7 @@ class _RequestState extends State<Request> {
                     height: 16*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'April 24, 2023',
+                      DateFormat('MMMM dd, yyyy').format(DateTime.parse(bookingData.inTime)),
                       style: labelTextStyle.copyWith(
                         fontSize: 10*screenWidth/360, color: Colors.white,
                         height: 1
@@ -187,16 +186,20 @@ class _RequestState extends State<Request> {
                   showDialog(
                     context: context,
                     builder: (BuildContext context){
-                      return const AlertDialog(
+                      return AlertDialog(
                         contentPadding: EdgeInsets.zero,
-                        insetPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-                        content: RespondDialog(),
+                        insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                        content: RespondDialog(bookingData: bookingData,),
                       );
                     },
                   );
                 },
                 style: elevatedButtonStyle.copyWith(
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)))
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4)
+                    ),
+                  ),
                 ),
                 child: const Text('Respond')
               ),

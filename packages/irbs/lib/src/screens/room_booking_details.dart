@@ -22,16 +22,36 @@ class RoomBookingDetails extends StatefulWidget {
 
 class _RoomBookingDetailsState extends State<RoomBookingDetails> {
   CalendarView view = CalendarView.month;
+  late Future getRoomBookings;
 
   TextEditingController dateCtl = TextEditingController();
-  _showModal(context) {
-    showModalBottomSheet<dynamic>(
+  _showModal(context)async {
+    await showModalBottomSheet<dynamic>(
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         builder: (BuildContext context) {
           return RequestModal(room: widget.room);
         });
+
+    setState(() {
+      getRoomBookings = APIService().getBookingsForCalendar(
+        roomId: widget.room.id,
+        month: DateTime.now().month,
+        year: DateTime.now().year.toString()
+      );      
+    });    
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getRoomBookings = APIService().getBookingsForCalendar(
+      roomId: widget.room.id,
+      month: DateTime.now().month,
+      year: DateTime.now().year.toString()
+    );
   }
 
   @override
@@ -83,12 +103,9 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
             fit: BoxFit.contain,
           )),
       body: FutureBuilder(
-        future: APIService().getBookingsForCalendar(
-          roomId: widget.room.id,
-          month: DateTime.now().month,
-          year: DateTime.now().year.toString()
-        ),
+        future: getRoomBookings,
         builder: (context, snapshot) {
+          print('INSIDE BUILDER');
           if(!snapshot.hasData){
             return const Center(child: CircularProgressIndicator(),);
           }
@@ -99,7 +116,8 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
             allBookings = [];
             latestBookings = [];
             for(var booking in snapshot.data!){
-              if(DateTime.parse(booking.outTime).toIso8601String().compareTo(DateTime.now().toLocal().toIso8601String()) == 1){
+              if(DateTime.parse(booking.outTime).toIso8601String().compareTo(
+                DateTime.now().toLocal().toIso8601String()) == 1){
                 allBookings.add(booking);
               }
             }
@@ -126,16 +144,19 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                         style: roomheadingStyle,
                       )),
                       GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => RoomDetails(room: widget.room,)));
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.only(right: 16.0),
-                            child: Icon(
-                              Icons.more_vert,
-                              color: Colors.white,
-                            ),
-                          ))
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => RoomDetails(room: widget.room,)),
+                          );
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.only(right: 16.0),
+                          child: Icon(
+                            Icons.more_vert,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
