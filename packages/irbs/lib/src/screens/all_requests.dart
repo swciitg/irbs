@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/widgets/home/request.dart';
-import 'package:irbs/src/models/owned_room_booking.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
+import '../models/booking_model.dart';
 class ViewAllRequests extends StatelessWidget {
-  final List<OwnedRoomBooking> requestedBookings;
+  final List<BookingModel> requestedBookings;
   const ViewAllRequests({required this.requestedBookings, super.key});
 
   @override

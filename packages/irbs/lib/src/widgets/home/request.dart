@@ -3,10 +3,10 @@ import 'package:intl/intl.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/widgets/home/respond_dialog.dart';
-import 'package:irbs/src/models/owned_room_booking.dart';
+import '../../models/booking_model.dart';
 
 class Request extends StatelessWidget {
-  final OwnedRoomBooking bookingData;
+  final BookingModel bookingData;
   const Request({required this.bookingData, super.key});
 
   @override

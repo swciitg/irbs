@@ -4,8 +4,6 @@ class BookingModel {
   String roomId = '';
   String user = '';
   String status = '';
-
-  //TODO convert this string to datetime approriately
   String inTime = '';
   String outTime = '';
   String bookingPurpose = '';

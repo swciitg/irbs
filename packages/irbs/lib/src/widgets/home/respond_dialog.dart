@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:irbs/src/functions/snackbar.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/models/owned_room_booking.dart';
 import 'package:irbs/src/services/api.dart';
+import '../../models/booking_model.dart';
 import 'approved_dialog.dart';
 import 'package:intl/intl.dart';
 
 class RespondDialog extends StatefulWidget {
-  final OwnedRoomBooking bookingData;
+  final BookingModel bookingData;
   const RespondDialog({required this.bookingData, super.key});
 
   @override
@@ -234,7 +235,7 @@ class _RespondDialogState extends State<RespondDialog> {
                           ),
                         ),
                         onTap: () async{
-                          // Navigator.pop(context);
+                          try{
                           await APIService().acceptBooking(widget.bookingData.id, textEditingController.text);
                           await showDialog(
                             context: context,
@@ -245,7 +246,10 @@ class _RespondDialogState extends State<RespondDialog> {
                               );
                             },
                           );
-                          Navigator.pop(context);
+                          Navigator.pop(context);}
+                              catch(e){
+                            showSnackBar(e.toString());
+                              }
                         },
                       ),
                     ),

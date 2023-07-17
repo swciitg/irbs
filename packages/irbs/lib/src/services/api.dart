@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:irbs/src/models/booking_model.dart';
-import 'package:irbs/src/models/owned_room_booking.dart';
 import 'package:irbs/src/models/room_model.dart';
 import '../functions/auth_helper_functions.dart';
 import '../functions/snackbar.dart';
@@ -52,7 +51,7 @@ class APIService {
     }));
   }
 
-  Future<List<OwnedRoomBooking>> getOwnedRoomBookings()async{
+  Future<List<BookingModel>> getOwnedRoomBookings()async{
     try {
       Response res = await dio.get(
         '${Endpoints.baseUrl}${Endpoints.getOwnedRoomBookings}',
@@ -62,9 +61,9 @@ class APIService {
       );
 
       if(res.statusCode == 200){
-        List<OwnedRoomBooking> bookings = [];
+        List<BookingModel> bookings = [];
         for(var booking in res.data){
-          bookings.add(OwnedRoomBooking.fromJson(booking));
+          bookings.add(BookingModel.fromJson(booking));
         }
         return bookings;
       }else{
@@ -314,8 +313,8 @@ class APIService {
           }
         }
         List<List<BookingModel>> answer = [];
-        sortByParameter(currentBooking, (a, b) => a.inTime.compareTo(b.inTime));
-        sortByParameter(currentBooking, (a, b) => b.outTime.compareTo(a.outTime));
+        sortByParameter(currentBooking, (a, b) => b.inTime.compareTo(a.inTime));
+        sortByParameter(currentBooking, (a, b) => a.outTime.compareTo(b.outTime));
         answer.add(currentBooking);
         answer.add(pastBooking);
         return answer;
