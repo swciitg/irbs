@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:irbs/src/functions/launch_phone.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/models/room_model.dart';
 import 'package:irbs/src/services/api.dart';
@@ -53,6 +54,7 @@ class _MemberTileState extends State<MemberTile> {
   }
 
   String name = '';
+  int? phone;
   bool foundName = false;
   bool isMyself = false;
   @override
@@ -63,6 +65,7 @@ class _MemberTileState extends State<MemberTile> {
       for (var element in widget.room.ownerInfo) {
         if (element.email == widget.room.owner[widget.index]) {
           name = element.name!;
+          phone = element.phoneNumber;
           foundName = true;
           break;
         }
@@ -74,6 +77,7 @@ class _MemberTileState extends State<MemberTile> {
       for (var element in widget.room.allowedUserInfo) {
         if (element.email == widget.room.allowedUsers[widget.index]) {
           name = element.name!;
+          phone = element.phoneNumber;
           foundName = true;
           break;
         }
@@ -124,13 +128,16 @@ class _MemberTileState extends State<MemberTile> {
           //     ],
           //   ),
           GestureDetector(
-            // padding: EdgeInsets.all(0),
-            onTap: () {},
-            // iconSize: 20,
+            onTap: () async {
+              if(phone != null)
+                {
+                  await makePhoneCall(phone!.toString());
+                }
+            },
             child: ImageIcon(
               AssetImage('packages/irbs/assets/images/phone_icon.png'),
               size: 20,
-              color: Colors.white,
+              color: phone != null ? Colors.white : Colors.grey,
             ),
           ),
           if (widget.isAdmin && !isMyself)
