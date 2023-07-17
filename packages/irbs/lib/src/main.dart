@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/models/room_model.dart';
 import 'package:irbs/src/screens/booking_history.dart';
 import 'package:irbs/src/screens/home.dart';
-import 'package:irbs/src/screens/room_details/room_details.dart';
 import 'package:irbs/src/screens/onboarding.dart';
-import 'package:irbs/src/screens/room_booking_details.dart';
 import 'package:irbs/src/screens/room_list.dart';
 import 'package:irbs/src/store/common_store.dart';
 import 'package:provider/provider.dart';

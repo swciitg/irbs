@@ -7,6 +7,7 @@ import 'package:irbs/src/store/common_store.dart';
 import 'package:irbs/src/store/data_store.dart';
 import 'package:irbs/src/widgets/home/common_rooms.dart';
 import 'package:irbs/src/widgets/home/drawer.dart';
+import 'package:irbs/src/widgets/home/empty_sate.dart';
 import 'package:irbs/src/widgets/home/request_list.dart';
 import 'package:irbs/src/widgets/roomlist/list_display.dart';
 import 'package:provider/provider.dart';
@@ -117,6 +118,7 @@ class _HomeState extends State<Home> {
                         ],
                       ),
                     ),
+                    EmptyState(text: "No Bookings"),
                     FutureBuilder(
                       future: cs.initialisePinnedRooms(),
                         builder: (context, snapshot){

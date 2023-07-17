@@ -6,6 +6,7 @@ import 'package:irbs/src/widgets/home/empty_sate.dart';
 import 'package:irbs/src/widgets/home/request.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/globals/colors.dart';
+import 'package:irbs/src/widgets/shimmer/pending_requests_shimmer.dart';
 
 class RequestList extends StatelessWidget {
   const RequestList({super.key});
@@ -17,7 +18,7 @@ class RequestList extends StatelessWidget {
       future: APIService().getOwnedRoomBookings(),
       builder: (context, snapshot) {
         if(!snapshot.hasData){
-          return const Center(child: CircularProgressIndicator(),);
+          return const PendingRequestShimmer();
         }else if(snapshot.hasError){
           return const Center(child: Text('Error'),);
         }
