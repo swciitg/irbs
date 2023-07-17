@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/widgets/home/request.dart';
-
+import 'package:irbs/src/models/owned_room_booking.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
 class ViewAllRequests extends StatelessWidget {
-  const ViewAllRequests({Key? key}) : super(key: key);
+  final List<OwnedRoomBooking> requestedBookings;
+  const ViewAllRequests({required this.requestedBookings, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,39 +30,17 @@ class ViewAllRequests extends StatelessWidget {
 
         backgroundColor: Themes.kCommonBoxBackground,
       ),
-      body: const SafeArea(
-          child:SingleChildScrollView(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Center(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 32,vertical: 12),
-                  child: Request(),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 32,vertical: 12),
-                  child: Request(),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 32,vertical: 12),
-                  child: Request(),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 32,vertical: 12),
-                  child: Request(),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 32,vertical: 12),
-                  child: Request(),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 32,vertical: 12),
-                  child: Request(),
-                ),
-              ],
+              children: requestedBookings.map((booking) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Request(bookingData: booking),
+              )).toList()
             ),
-          )
+          ),
+        ),
       ),
     );
   }
