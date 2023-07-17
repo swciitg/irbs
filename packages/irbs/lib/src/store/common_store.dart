@@ -69,5 +69,5 @@ abstract class _CommonStore with Store {
     searchText = '';
   }
   @observable
-  int delete = 0;
+  int delete = 1;
 }

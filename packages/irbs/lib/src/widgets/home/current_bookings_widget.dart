@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/common_store.dart';
-import 'package:irbs/src/widgets/booking_end_delete_dailogue.dart';
 import 'package:provider/provider.dart';
-import '../../functions/snackbar.dart';
 import '../../globals/styles.dart';
-
 import '../../globals/colors.dart';
 import '../../models/booking_model.dart';
 
 class CurrentBookingsWidget extends StatefulWidget {
   final BookingModel model;
-  final refreshHome;
-  const CurrentBookingsWidget(
-      {Key? key, required this.model, this.refreshHome,
-      })
-      : super(key: key);
+  const CurrentBookingsWidget({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
 
   @override
   State<CurrentBookingsWidget> createState() => _CurrentBookingsWidgetState();
@@ -26,34 +21,35 @@ class CurrentBookingsWidget extends StatefulWidget {
 class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
   Offset _tapPosition = Offset.zero;
 
-  int isUpcoming()
-  {
-      DateTime d = DateTime.now();
-      DateTime dt1 = DateTime.parse( DateTime(d.year, d.month, d.day,d.hour,d.minute).toIso8601String()+"Z");
-      DateTime dt2 = DateTime.parse(widget.model.inTime);
-      DateTime dt3 = DateTime.parse(widget.model.outTime);
-      if(dt1.compareTo(dt3) > 0){
-        print("Booking period is over");
-        return 0;
-      }
-      if(dt1.compareTo(dt2) < 0){
-        print("Booking period aint started");
-        return 1;
-      }
-      print("Booking period is active");
-      return 2;
+  int isUpcoming() {
+    DateTime d = DateTime.now();
+    DateTime dt1 = DateTime.parse(
+        "${DateTime(d.year, d.month, d.day, d.hour, d.minute).toIso8601String()}Z");
+    DateTime dt2 = DateTime.parse(widget.model.inTime);
+    DateTime dt3 = DateTime.parse(widget.model.outTime);
+    if (dt1.compareTo(dt3) > 0) {
+      //print("Booking period is over");
+      return 0;
+    }
+    if (dt1.compareTo(dt2) < 0) {
+      //print("Booking period aint started");
+      return 1;
+    }
+    //print("Booking period is active");
+    return 2;
   }
-  bool flag = false;
+
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
-    isUpcoming();
+    var rootContext = context;
     var store = context.read<CommonStore>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       child: Container(
         width: double.maxFinite,
         decoration: BoxDecoration(
-            gradient: LinearGradient(stops: [
+            gradient: LinearGradient(stops: const [
               0.0125,
               0.0125
             ], colors: [
@@ -92,12 +88,11 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                     text: ' · ',
                   ),
                   TextSpan(
-                    text: DateFormat("dd MMMM")
-                        .format(DateTime.parse(widget.model.inTime))
-                  )
+                      text: DateFormat("dd MMMM")
+                          .format(DateTime.parse(widget.model.inTime)))
                 ]),
               ),
-              trailing: Container(
+              trailing: SizedBox(
                 width: 88,
                 height: 24,
                 child: Center(
@@ -116,7 +111,9 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                                 ? kApprovedStyle
                                 : kPendingStyle,
                       ),
-                      widget.model.status == 'rejected' || (widget.model.status == 'accepted' && (isUpcoming() == 0))
+                      widget.model.status == 'rejected' ||
+                              (widget.model.status == 'accepted' &&
+                                  (isUpcoming() == 0))
                           ? Container()
                           : InkWell(
                               onTapDown: (TapDownDetails tapDownDetails) {
@@ -136,56 +133,81 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                                         _tapPosition & const Size(0, 0),
                                         overlay.size),
                                     items: [
-                                      widget.model.status == 'requested' || isUpcoming() == 1
+                                      widget.model.status == 'requested' ||
+                                              isUpcoming() == 1
                                           ? const PopupMenuItem(
                                               value: "delete",
                                               child: Text(
                                                 "Delete booking",
                                                 style: popupMenuStyle,
                                               ))
-                                          :
-                                      const PopupMenuItem(
+                                          : const PopupMenuItem(
                                               value: "end",
                                               child: Text(
                                                 "End Booking",
                                                 style: popupMenuStyle,
                                               ))
                                     ]);
-                                switch (result) {
-                                  case "delete":
-                                    showDialog(
-                                        context: context,
-                                        barrierDismissible: true,
-                                        builder: (BuildContext context) {
-                                          return BookingDailogueBox(
-                                            bookingId: widget.model.id,
-                                            purpose: "delete",
-                                            delete: store.delete,
-                                            );
-                                        });
-
-                                    break;
-                                  case "end":
-                                    showDialog(
-                                        context: context,
-                                        barrierDismissible: true,
-                                        builder: (BuildContext context) {
-                                          return BookingDailogueBox(
-                                            bookingId: widget.model.id,
-                                            purpose: "end",
-                                            delete: store.delete,
-                                            );
-                                        });
-                                    break;
-                                  default:
-                                    print("nothing");
-                                    break;
+                                if (result == "delete") {
+                                  if(loading)
+                                    {
+                                      return;
+                                    }
+                                  loading = true;
+                                  String res = await APIService()
+                                      .deleteBooking(widget.model.id);
+                                  if (res == "Success") {
+                                    var snackBar = const SnackBar(
+                                      content: Text('Booking deleted'),
+                                      duration: Duration(seconds: 2),
+                                    );
+                                    ScaffoldMessenger.of(rootContext)
+                                        .showSnackBar(snackBar);
+                                    loading = false;
+                                    store.delete = store.delete + 1;
+                                    Navigator.of(context).pop();
+                                  } else {
+                                    var snackBar = SnackBar(
+                                      content: Text(res),
+                                      duration: const Duration(seconds: 2),
+                                    );
+                                    ScaffoldMessenger.of(rootContext)
+                                        .showSnackBar(snackBar);
+                                    loading = false;
+                                    store.delete = store.delete + 1;
+                                  }
+                                } else if (result == "end") {
+                                  if(loading){return;}
+                                  loading = true;
+                                  String res = await APIService()
+                                      .endBooking(widget.model.id);
+                                  if (res == "Success") {
+                                    var snackBar = const SnackBar(
+                                      content: Text('Booking ended'),
+                                      duration: Duration(seconds: 2),
+                                    );
+                                    ScaffoldMessenger.of(rootContext)
+                                        .showSnackBar(snackBar);
+                                    loading = false;
+                                    store.delete = store.delete + 1;
+                                  } else {
+                                    var snackBar = SnackBar(
+                                      content: Text(res),
+                                      duration: const Duration(seconds: 2),
+                                    );
+                                    ScaffoldMessenger.of(rootContext)
+                                        .showSnackBar(snackBar);
+                                    loading = false;
+                                    store.delete = store.delete + 1;
+                                  }
+                                } else {
+                                  print("nothing");
                                 }
                               },
                               child: const Icon(
                                 Icons.more_vert,
                                 color: Colors.white,
-                                size: 20,
+                                size: 10,
                               ),
                             ),
                     ],
@@ -198,23 +220,21 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                 : Padding(
                     padding: const EdgeInsets.only(
                         left: 16, right: 16, top: 0, bottom: 12),
-                    child: Container(
-                      // padding: EdgeInsets.only(left: 16, right: 16, top: 18, bottom: 12),
-                      child: InputDecorator(
-                        decoration: InputDecoration(
-                            // contentPadding: EdgeInsets.zero,
-                            labelText:
-                                widget.model.status == 'rejected' ? 'Reason' : 'Instructions',
-                            labelStyle: kLabelStyle,
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    width: 0.56,
-                                    color: Color.fromRGBO(85, 95, 113, 1)),
-                                borderRadius: BorderRadius.circular(4.46))),
-                        child: Text(
-                          widget.model.acceptInstructions ?? '',
-                          style: kReasonStyle,
-                        ),
+                    child: InputDecorator(
+                      decoration: InputDecoration(
+                          // contentPadding: EdgeInsets.zero,
+                          labelText: widget.model.status == 'rejected'
+                              ? 'Reason'
+                              : 'Instructions',
+                          labelStyle: kLabelStyle,
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  width: 0.56,
+                                  color: Color.fromRGBO(85, 95, 113, 1)),
+                              borderRadius: BorderRadius.circular(4.46))),
+                      child: Text(
+                        widget.model.acceptInstructions ?? '',
+                        style: kReasonStyle,
                       ),
                     ),
                   )

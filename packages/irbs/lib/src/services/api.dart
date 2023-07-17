@@ -280,7 +280,7 @@ class APIService {
       return "Failed";
     }
   }
-  Future<void> endBooking(String id) async{
+  Future<String> endBooking(String id) async{
     try {
       Response response = await dio.patch('${Endpoints.deleteBooking}/$id', data: {
         "outTime": DateTime.now().toString(),
@@ -288,11 +288,14 @@ class APIService {
       );
       if (response.statusCode == 200) {
         print('updated');
+        return "Success";
       } else {
         print('failed___ ${response.statusCode}');
+        return response.statusMessage.toString();
       }
     } catch (error) {
       print('ERROR: $error');
+      return error.toString();
     }
   }
   Future<RoomModel> editRoomDetails(String roomId, String details) async {
