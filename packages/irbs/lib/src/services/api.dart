@@ -19,7 +19,7 @@ class APIService {
       print(await AuthUserHelpers.getAccessToken());
       print(options.path);
       options.headers["Authorization"] =
-          "Bearer ${await AuthUserHelpers.getAccessToken()}";
+      "Bearer ${await AuthUserHelpers.getAccessToken()}";
       handler.next(options);
     }, onError: (error, handler) async {
       var response = error.response;
@@ -29,7 +29,7 @@ class APIService {
         } else {
           print(response.requestOptions.path);
           bool couldRegenerate =
-              await AuthUserHelpers().regenerateAccessToken();
+          await AuthUserHelpers().regenerateAccessToken();
           print(couldRegenerate);
           // ignore: use_build_context_synchronously
           if (couldRegenerate) {
@@ -101,12 +101,12 @@ class APIService {
   Future<List<BookingModel>> getRoomBookings(String roomId)async{
     try{
       Response res = await dio.get(
-        Endpoints.getRoomBookings,
-        queryParameters: {
-          'roomId': roomId
-        }
+          Endpoints.getRoomBookings,
+          queryParameters: {
+            'roomId': roomId
+          }
       );
-      
+
       if(res.statusCode == 200){
         var bookingMapList = res.data;
 
@@ -114,7 +114,7 @@ class APIService {
 
         for(var booking in bookingMapList){
           bookingList.add(
-            BookingModel.fromJson(booking)
+              BookingModel.fromJson(booking)
           );
         }
 
@@ -128,7 +128,7 @@ class APIService {
       throw Exception(e.toString());
     }
   }
-  
+
   Future<List<BookingModel>> getMonthWiseRoomBookings({
     required String roomId,
     required String month,
@@ -136,23 +136,23 @@ class APIService {
   })async{
     try{
       Response res = await dio.get(
-        Endpoints.baseUrl + Endpoints.getRoomBookings,
-        queryParameters: {
-          'roomId': roomId, 
-          'month': month, 
-          'year': year
-        }        
+          Endpoints.baseUrl + Endpoints.getRoomBookings,
+          queryParameters: {
+            'roomId': roomId,
+            'month': month,
+            'year': year
+          }
       );
-      
+
       if(res.statusCode == 200){
         var bookingMapList = res.data;
-        
+
 
         List<BookingModel> bookingList = [];
 
         for(var booking in bookingMapList){
           bookingList.add(
-            BookingModel.fromJson(booking)
+              BookingModel.fromJson(booking)
           );
         }
 
@@ -173,14 +173,14 @@ class APIService {
     required String year
   })async{
     List<BookingModel> bookings = await getMonthWiseRoomBookings(
-      roomId: roomId, 
-      month: month.toString(), 
-      year: year
+        roomId: roomId,
+        month: month.toString(),
+        year: year
     );
     List<BookingModel> nextMonthBookings = await getMonthWiseRoomBookings(
-      roomId: roomId, 
-      month: (month+1).toString(), 
-      year: year
+        roomId: roomId,
+        month: (month+1).toString(),
+        year: year
     );
 
     bookings.addAll(nextMonthBookings);
@@ -240,7 +240,7 @@ class APIService {
           DateTime b = DateTime.parse(booking['outTime']);
           if(a.isBefore(b)){
             currentBooking.add(
-                BookingModel.fromJson(booking),
+              BookingModel.fromJson(booking),
             );
           }else{
             pastBooking.add(
@@ -298,7 +298,7 @@ class APIService {
   Future<RoomModel> editRoomDetails(String roomId, String details) async {
     try {
       var response =
-          await dio.patch('${Endpoints.editRoom}/$roomId', data: details);
+      await dio.patch('${Endpoints.editRoom}/$roomId', data: details);
       print(response.statusCode);
       print(response.data);
       print(response.statusMessage);
@@ -329,4 +329,3 @@ class APIService {
 void sortByParameter<BookingModel>(List<BookingModel> list, int Function(BookingModel a,BookingModel b) compare) {
   list.sort(compare);
 }
-  

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../globals/styles.dart';
 import '../services/api.dart';
@@ -6,13 +7,15 @@ import '../services/api.dart';
 class BookingDailogueBox extends StatefulWidget {
   final String purpose;
   final String bookingId;
-  const BookingDailogueBox({super.key, required this.bookingId, required this.purpose});
+  int delete;
+    BookingDailogueBox({super.key, required this.bookingId, required this.purpose, required this.delete});
 
   @override
   State<BookingDailogueBox> createState() => _BookingDailogueBoxState();
 }
 
 class _BookingDailogueBoxState extends State<BookingDailogueBox> {
+  bool loading =false;
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
@@ -86,17 +89,29 @@ class _BookingDailogueBoxState extends State<BookingDailogueBox> {
                           ))),
                 ),
                 onTap: () async {
-                  if(widget.purpose == "delete")
+                  if(widget.purpose == "delete"&&!loading)
                     {
+                      loading =true;
                       String res = await APIService().deleteBooking(widget.bookingId);
+                      print("res: $res");
                       if(res == "Success")
                       {
                         Navigator.of(context).pop();
+                      }else{
+                        loading = false;
                       }
                     }
-                  else
+                  else if(widget.purpose=="end"&&!loading)
                     {
 
+                      loading = true;
+                      String res = await APIService().endBooking(widget.bookingId);
+                      if(res == "Success")
+                      {
+                        Navigator.of(context).pop();
+                      }else{
+                        loading = true;
+                      }
                     }
 
                 }),
