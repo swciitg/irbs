@@ -41,6 +41,21 @@ mixin _$CommonStore on _CommonStore, Store {
     });
   }
 
+  late final _$deleteAtom = Atom(name: '_CommonStore.delete', context: context);
+
+  @override
+  int get delete {
+    _$deleteAtom.reportRead();
+    return super.delete;
+  }
+
+  @override
+  set delete(int value) {
+    _$deleteAtom.reportWrite(value, super.delete, () {
+      super.delete = value;
+    });
+  }
+
   late final _$initialisePinnedRoomsAsyncAction =
       AsyncAction('_CommonStore.initialisePinnedRooms', context: context);
 
@@ -96,7 +111,8 @@ mixin _$CommonStore on _CommonStore, Store {
   String toString() {
     return '''
 searchText: ${searchText},
-pinnedRooms: ${pinnedRooms}
+pinnedRooms: ${pinnedRooms},
+delete: ${delete}
     ''';
   }
 }
