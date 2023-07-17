@@ -5,6 +5,7 @@ import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/room_model.dart';
+import '../services/api.dart';
 part 'common_store.g.dart';
 
 class CommonStore = _CommonStore with _$CommonStore;
@@ -67,5 +68,6 @@ abstract class _CommonStore with Store {
   {
     searchText = '';
   }
-
+  @observable
+  int delete = 1;
 }
