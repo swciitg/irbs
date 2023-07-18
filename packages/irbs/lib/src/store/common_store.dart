@@ -30,25 +30,11 @@ abstract class _CommonStore with Store {
     year = y;
   }
 
-
   @observable
   String searchText = '';
 
   @observable
   ObservableMap<String, RoomModel> pinnedRooms = ObservableMap<String, RoomModel>.of({});
-
-  @observable
-  List<BookingModel> requestList = [];
-
-  @action
-  void setRequestList(List<BookingModel> requests){
-    requestList = requests;
-  }
-
-  @action
-  void removeRequestFromList(String bookingId){
-    requestList.removeWhere((element) => element.id == bookingId);
-  }
 
   @action
   initialisePinnedRooms()
@@ -102,4 +88,7 @@ abstract class _CommonStore with Store {
   }
   @observable
   int delete = 1;
+
+  @observable
+  int pending = 1;
 }

@@ -234,10 +234,10 @@ class _RespondDialogState extends State<RespondDialog> {
                             );
 
                             if(mounted){
-                              widget.commonStore.removeRequestFromList(widget.bookingData.id);
                               setState(() {
                                 isLoading = false;
                               });
+                              widget.commonStore.pending = widget.commonStore.pending+1;
                               if(status)showSnackBar('Booking rejected');
                             }
 
@@ -279,15 +279,15 @@ class _RespondDialogState extends State<RespondDialog> {
                             );
 
                             if(mounted){
-                              widget.commonStore.removeRequestFromList(widget.bookingData.id);
-                              print(widget.commonStore.requestList);
                               setState(() {
                                 isLoading = false;
                               });
                             }
 
                             if(status){
+
                               if(context.mounted){
+                                widget.commonStore.pending = widget.commonStore.pending+1;
                                 print('hey');
                                 final nav = Navigator.of(context);
                                 await showDialog(
@@ -304,6 +304,7 @@ class _RespondDialogState extends State<RespondDialog> {
                             }
                             
                           }catch(e){
+                            widget.commonStore.pending = widget.commonStore.pending+1;
                             showSnackBar(e.toString());
                           }
                         },

@@ -63,6 +63,8 @@ class APIService {
       if(res.statusCode == 200){
         List<BookingModel> bookings = [];
         for(var booking in res.data){
+          print("PAPAPA");
+          print(booking);
           bookings.add(BookingModel.fromJson(booking));
         }
         return bookings;

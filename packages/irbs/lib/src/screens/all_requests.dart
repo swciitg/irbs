@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:irbs/src/store/common_store.dart';
 import 'package:irbs/src/widgets/home/request.dart';
+import 'package:provider/provider.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
 import '../models/booking_model.dart';
 class ViewAllRequests extends StatelessWidget {
   final List<BookingModel> requestedBookings;
-  final CommonStore commonStore;
-  const ViewAllRequests({required this.commonStore, required this.requestedBookings, super.key});
+  const ViewAllRequests({required this.requestedBookings, super.key});
 
   @override
   Widget build(BuildContext context) {
+    var cs = context.read<CommonStore>();
     return Scaffold(
       backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
       appBar: AppBar(
@@ -37,7 +38,7 @@ class ViewAllRequests extends StatelessWidget {
             child: Column(
               children: requestedBookings.map((booking) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
-                child: Request(bookingData: booking, commonStore: commonStore,),
+                child: Request(bookingData: booking, commonStore: cs,),
               )).toList()
             ),
           ),

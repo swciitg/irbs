@@ -21,7 +21,7 @@ class RequestList extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     return Observer(
       builder: (context) {
-        return FutureBuilder(
+        return cs.pending > 0 ? FutureBuilder(
           future: APIService().getOwnedRoomBookings(),
           builder: (context, snapshot){
             if(!snapshot.hasData){
@@ -31,7 +31,6 @@ class RequestList extends StatelessWidget {
             }
             else{
               if(snapshot.data!.isEmpty)return const EmptyState(text: 'No new requests');
-              cs.setRequestList(snapshot.data!);
               return Column(
                 children: [
                   SizedBox(
@@ -40,7 +39,7 @@ class RequestList extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
                         CarouselSlider(
-                          items: cs.requestList.map((booking) => Request(bookingData: booking, commonStore: cs,)).toList(),
+                          items: snapshot.data!.map((booking) => Request(bookingData: booking, commonStore: cs,)).toList(),
                           options: CarouselOptions(
                             height: (167 * screenWidth) / 360,
                             padEnds: true,
@@ -78,7 +77,6 @@ class RequestList extends StatelessWidget {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context)=> ViewAllRequests(
-                            commonStore: cs,
                             requestedBookings: snapshot.data ?? [],
                           ),
                         ),
@@ -89,7 +87,7 @@ class RequestList extends StatelessWidget {
               );
             }
           },
-        );
+        ) : Container();
       }
     );
   }
