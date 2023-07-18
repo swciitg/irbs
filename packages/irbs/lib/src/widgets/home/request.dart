@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
+import 'package:irbs/src/store/common_store.dart';
 import 'package:irbs/src/widgets/home/respond_dialog.dart';
 import '../../models/booking_model.dart';
 
-class Request extends StatelessWidget {
+class Request extends StatefulWidget {
   final BookingModel bookingData;
-  const Request({required this.bookingData, super.key});
+  final CommonStore commonStore;
+  const Request({required this.bookingData, required this.commonStore, super.key});
 
+  @override
+  State<Request> createState() => _RequestState();
+}
+
+class _RequestState extends State<Request> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -29,7 +36,7 @@ class Request extends StatelessWidget {
               alignment: Alignment.centerLeft,
               height: screenWidth*24/360,
               child: Text(
-                bookingData.roomDetails.roomName,
+                widget.bookingData.roomDetails.roomName,
                 style: permanentTextStyle.copyWith(color: Colors.white, fontSize: 14*screenWidth/360),
               ),
             ),
@@ -58,7 +65,7 @@ class Request extends StatelessWidget {
                     height: 12*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      bookingData.user,
+                      widget.bookingData.userInfo.name.toString(),
                       style: labelTextStyle.copyWith(
                         fontSize: 10*screenWidth/360, color: Colors.white,
                         height: 1
@@ -93,7 +100,7 @@ class Request extends StatelessWidget {
                     height: 12*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      bookingData.bookingPurpose,
+                      widget.bookingData.bookingPurpose,
                       style: labelTextStyle.copyWith(
                         fontSize: 10*screenWidth/360, color: Colors.white,
                         height: 1
@@ -128,7 +135,7 @@ class Request extends StatelessWidget {
                     height: 16*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      '${DateFormat('hh:mm a').format(DateTime.parse(bookingData.inTime))} - ${DateFormat('hh:mm a').format(DateTime.parse(bookingData.outTime))}',
+                      '${DateFormat('hh:mm a').format(DateTime.parse(widget.bookingData.inTime))} - ${DateFormat('hh:mm a').format(DateTime.parse(widget.bookingData.outTime))}',
                       // '10:00 AM - 02:00 PM',
                       style: labelTextStyle.copyWith(
                         fontSize: 10*screenWidth/360, color: Colors.white,
@@ -164,7 +171,7 @@ class Request extends StatelessWidget {
                     height: 16*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      DateFormat('MMMM dd, yyyy').format(DateTime.parse(bookingData.inTime)),
+                      DateFormat('MMMM dd, yyyy').format(DateTime.parse(widget.bookingData.inTime)),
                       style: labelTextStyle.copyWith(
                         fontSize: 10*screenWidth/360, color: Colors.white,
                         height: 1
@@ -189,7 +196,7 @@ class Request extends StatelessWidget {
                       return AlertDialog(
                         contentPadding: EdgeInsets.zero,
                         insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-                        content: RespondDialog(bookingData: bookingData,),
+                        content: RespondDialog(bookingData: widget.bookingData, commonStore: widget.commonStore),
                       );
                     },
                   );

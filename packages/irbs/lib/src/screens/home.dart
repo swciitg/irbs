@@ -12,6 +12,7 @@ import 'package:irbs/src/widgets/home/empty_sate.dart';
 import 'package:irbs/src/widgets/home/request_list.dart';
 import 'package:irbs/src/widgets/roomlist/list_display.dart';
 import 'package:irbs/src/widgets/shimmer/current_booking_shimmer.dart';
+import 'package:irbs/src/widgets/shimmer/home_shimmer.dart';
 import 'package:provider/provider.dart';
 
 import '../models/booking_model.dart';
@@ -41,9 +42,7 @@ class _HomeState extends State<Home> {
       future: APIService().getMyRooms(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const HomeShimmer();
         } else if (snapshot.hasError) {
           return Center(
             child: Text(snapshot.error.toString()),

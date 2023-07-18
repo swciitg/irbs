@@ -71,6 +71,22 @@ mixin _$CommonStore on _CommonStore, Store {
     });
   }
 
+  late final _$requestListAtom =
+      Atom(name: '_CommonStore.requestList', context: context);
+
+  @override
+  List<BookingModel> get requestList {
+    _$requestListAtom.reportRead();
+    return super.requestList;
+  }
+
+  @override
+  set requestList(List<BookingModel> value) {
+    _$requestListAtom.reportWrite(value, super.requestList, () {
+      super.requestList = value;
+    });
+  }
+
   late final _$deleteAtom = Atom(name: '_CommonStore.delete', context: context);
 
   @override
@@ -138,6 +154,28 @@ mixin _$CommonStore on _CommonStore, Store {
   }
 
   @override
+  void setRequestList(List<BookingModel> requests) {
+    final _$actionInfo = _$_CommonStoreActionController.startAction(
+        name: '_CommonStore.setRequestList');
+    try {
+      return super.setRequestList(requests);
+    } finally {
+      _$_CommonStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeRequestFromList(String bookingId) {
+    final _$actionInfo = _$_CommonStoreActionController.startAction(
+        name: '_CommonStore.removeRequestFromList');
+    try {
+      return super.removeRequestFromList(bookingId);
+    } finally {
+      _$_CommonStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setSearchText(String txt) {
     final _$actionInfo = _$_CommonStoreActionController.startAction(
         name: '_CommonStore.setSearchText');
@@ -166,6 +204,7 @@ month: ${month},
 year: ${year},
 searchText: ${searchText},
 pinnedRooms: ${pinnedRooms},
+requestList: ${requestList},
 delete: ${delete}
     ''';
   }

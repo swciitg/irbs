@@ -3,6 +3,7 @@ import 'package:irbs/src/screens/room_details/room_details.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/widgets/roomBookingDetails/calendar.dart';
 import 'package:irbs/src/widgets/roomBookingDetails/request_modal.dart';
+import 'package:irbs/src/widgets/shimmer/room_booking_details_shimmer.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
@@ -107,7 +108,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
         builder: (context, snapshot) {
           print('INSIDE BUILDER');
           if(!snapshot.hasData){
-            return const Center(child: CircularProgressIndicator(),);
+            return const RoomBookingDetailsShimmer();
           }
           else if(snapshot.hasError){
             return const Text('Error');

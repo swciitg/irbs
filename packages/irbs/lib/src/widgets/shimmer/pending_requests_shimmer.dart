@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:irbs/src/models/booking_model.dart';
 import 'package:irbs/src/models/room_model.dart';
+import 'package:irbs/src/store/common_store.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../home/request.dart';
@@ -26,6 +27,7 @@ class _PendingRequestShimmerState extends State<PendingRequestShimmer> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
                 child: Request(
+                  commonStore: CommonStore(),
                   bookingData: BookingModel(
                       roomId: 'roomId',
                       user: 'user',
@@ -48,6 +50,7 @@ class _PendingRequestShimmerState extends State<PendingRequestShimmer> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
                 child: Request(
+                  commonStore: CommonStore(),
                   bookingData: BookingModel(
                       roomId: 'roomId',
                       user: 'user',

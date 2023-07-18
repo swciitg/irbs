@@ -246,7 +246,7 @@ class APIService {
     }
   }
   
-  Future rejectBooking(String bookingId, String rejectionReason)async{
+  Future<bool> rejectBooking(String bookingId, String rejectionReason)async{
     try {
       Response res = await dio.post(
         Endpoints.baseUrl+Endpoints.rejectBooking,
@@ -258,6 +258,7 @@ class APIService {
 
       if(res.statusCode == 200){
         print('Booking rejected');
+        return true;
       }else{
         throw Exception(res.statusMessage);
       }
@@ -266,7 +267,7 @@ class APIService {
     }
   }
 
-  Future acceptBooking(String bookingId, String instructions)async{
+  Future<bool> acceptBooking(String bookingId, String instructions)async{
     try {
       Response res = await dio.post(
         Endpoints.baseUrl+Endpoints.acceptBooking,
@@ -278,6 +279,7 @@ class APIService {
 
       if(res.statusCode == 200){
         print('Booking accepted');
+        return true;
       }else{
         throw Exception(res.statusMessage);
       }

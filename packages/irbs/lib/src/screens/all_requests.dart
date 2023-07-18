@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/services/api.dart';
+import 'package:irbs/src/store/common_store.dart';
 import 'package:irbs/src/widgets/home/request.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
 import '../models/booking_model.dart';
 class ViewAllRequests extends StatelessWidget {
   final List<BookingModel> requestedBookings;
-  const ViewAllRequests({required this.requestedBookings, super.key});
+  final CommonStore commonStore;
+  const ViewAllRequests({required this.commonStore, required this.requestedBookings, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class ViewAllRequests extends StatelessWidget {
             child: Column(
               children: requestedBookings.map((booking) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
-                child: Request(bookingData: booking),
+                child: Request(bookingData: booking, commonStore: commonStore,),
               )).toList()
             ),
           ),
