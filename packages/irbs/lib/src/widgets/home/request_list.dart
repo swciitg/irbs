@@ -31,10 +31,7 @@ class RequestList extends StatelessWidget {
             }
             else{
               if(snapshot.data!.isEmpty)return const EmptyState(text: 'No new requests');
-              print('sfhsjhs');
               cs.setRequestList(snapshot.data!);
-              print(cs.requestList);
-              print('returning');
               return Column(
                 children: [
                   SizedBox(

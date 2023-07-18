@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     var cs = context.read<CommonStore>();
     return FutureBuilder(
-      future: APIService().getMyRooms(),
+      future: DataStore().initialiseData(cs),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const HomeShimmer();
@@ -142,8 +142,9 @@ class _HomeState extends State<Home> {
                                 } else {
                                   List<BookingModel> currentBooking =
                                       snapshot.data!;
-                                  if(currentBooking.length == 0){
-                                    return EmptyState(text: 'No Upcoming Bookings');
+                                  if (currentBooking.length == 0) {
+                                    return EmptyState(
+                                        text: 'No Upcoming Bookings');
                                   }
                                   return SingleChildScrollView(
                                     child: Column(
@@ -152,7 +153,9 @@ class _HomeState extends State<Home> {
                                       children: [
                                         ListView.builder(
                                             shrinkWrap: true,
-                                            itemCount: currentBooking.length > 3 ? 3 : currentBooking.length,
+                                            itemCount: currentBooking.length > 3
+                                                ? 3
+                                                : currentBooking.length,
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             itemBuilder: (BuildContext context,
@@ -164,31 +167,43 @@ class _HomeState extends State<Home> {
                                                 model: ans,
                                               );
                                             }),
-                                        currentBooking.length > 3 ? GestureDetector(
-                                          child: Padding(
-                                            padding:
-                                            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                                            child: Container(
-                                              height: 40,
-                                              width: double.maxFinite,
-                                              decoration: BoxDecoration(
-                                                  color: snapshot.data!.isEmpty
-                                                      ? Themes.disabledButtonBackground
-                                                      : Themes.kCommonBoxBackground,
-                                                  borderRadius: BorderRadius.circular(4)),
-                                              child: const Center(
-                                                child: Text(
-                                                  'View all upcoming bookings',
-                                                  style: kRequestedRoomStyle,
+                                        currentBooking.length > 3
+                                            ? GestureDetector(
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 16,
+                                                      vertical: 12),
+                                                  child: Container(
+                                                    height: 40,
+                                                    width: double.maxFinite,
+                                                    decoration: BoxDecoration(
+                                                        color: snapshot
+                                                                .data!.isEmpty
+                                                            ? Themes
+                                                                .disabledButtonBackground
+                                                            : Themes
+                                                                .kCommonBoxBackground,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(4)),
+                                                    child: const Center(
+                                                      child: Text(
+                                                        'View all upcoming bookings',
+                                                        style:
+                                                            kRequestedRoomStyle,
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
-                                          ),
-                                          onTap: (){
-                                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => UpcomingBookingsPage()));
-                                          },
-                                        ) : Container(),
-
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              UpcomingBookingsPage()));
+                                                },
+                                              )
+                                            : Container(),
                                       ],
                                     ),
                                   );
@@ -197,18 +212,11 @@ class _HomeState extends State<Home> {
                             )
                           : Container();
                     }),
-                    FutureBuilder(
-                        future: cs.initialisePinnedRooms(),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return SizedBox();
-                          }
-                          return Observer(builder: (context) {
-                            return ListDisplay(
-                                roomList: cs.pinnedRooms.values.toList(),
-                                type: 'Pinned Rooms');
-                          });
-                        }),
+                    Observer(builder: (context) {
+                      return ListDisplay(
+                          roomList: cs.pinnedRooms.values.toList(),
+                          type: 'Pinned Rooms');
+                    }),
                     const CommonRooms(),
                     const SizedBox(
                       height: 108,
