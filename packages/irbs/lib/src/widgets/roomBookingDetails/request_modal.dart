@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:irbs/src/services/api.dart';
+import 'package:irbs/src/store/common_store.dart';
 import 'package:irbs/src/store/data_store.dart';
+import 'package:provider/provider.dart';
 import '../../globals/styles.dart';
 import 'package:lottie/lottie.dart';
 
@@ -378,6 +380,8 @@ class _RequestModalState extends State<RequestModal>
                       });
                       Navigator.pop(context);
                       _showDialog(details);
+                      var x = context.read<CommonStore>();
+                      x.delete = x.delete+1;
                     }
                   },
                   child: Container(

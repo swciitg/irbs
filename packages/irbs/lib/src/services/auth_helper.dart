@@ -6,13 +6,14 @@ import 'package:dio/dio.dart';
 class AuthUserHelpers{
 
   Future<Response<dynamic>> retryRequest(Response response) async {
+    print(response);
     print("INSIDE RETRY REQUEST");
     RequestOptions requestOptions = response.requestOptions;
-    response.requestOptions.headers[BackendHelper.authorization] =
-    "Bearer ${await AuthUserHelpers.getAccessToken()}";
+    response.requestOptions.headers[BackendHelper.authorization] = "Bearer ${await AuthUserHelpers.getAccessToken()}";
+    try{
     final options = Options(method: requestOptions.method, headers: requestOptions.headers);
     Dio retryDio = Dio(BaseOptions(
-        baseUrl: Endpoints.baseUrl,
+        baseUrl: Endpoints.oneStopbaseURL,
         connectTimeout: const Duration(seconds: 5),
         receiveTimeout: const Duration(seconds: 5),
         headers: {
@@ -28,6 +29,12 @@ class AuthUserHelpers{
           options: options);
     }
   }
+  catch(e){
+      print("error adarahooo");
+      print(e);
+      throw Exception(e);
+  }
+  }
 
   Future<bool> regenerateAccessToken() async {
     String refreshToken = await AuthUserHelpers.getRefreshToken();
@@ -35,7 +42,7 @@ class AuthUserHelpers{
     print(refreshToken);
     try {
       Dio regenDio = Dio(BaseOptions(
-          baseUrl: Endpoints.baseUrl,
+          baseUrl: Endpoints.oneStopbaseURL,
           connectTimeout: const Duration(seconds: 5),
           receiveTimeout: const Duration(seconds: 5)));
       Response resp = await regenDio.post(

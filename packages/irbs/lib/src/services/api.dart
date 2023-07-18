@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:irbs/src/models/booking_model.dart';
 import 'package:irbs/src/models/room_model.dart';
-import '../functions/auth_helper_functions.dart';
 import '../functions/snackbar.dart';
 import '../globals/endpoints.dart';
+import 'auth_helper.dart';
 
 class APIService {
   final dio = Dio(BaseOptions(
@@ -333,8 +333,7 @@ class APIService {
               BookingModel.fromJson(booking),
             );}
         }
-        sortByParameter(bookings, (a, b) => b.inTime.compareTo(a.inTime));
-        sortByParameter(bookings, (a, b) => a.outTime.compareTo(b.outTime));
+        sortByParameter(bookings, (a1, b1) => b1.outTime.compareTo(a1.outTime));
         return bookings;
       }
       else{
@@ -359,7 +358,7 @@ class APIService {
         return "Failed";
       }
     } catch (error) {
-      print('ERROR: $error');
+      return 'ERROR: $error';
       return "Failed";
     }
   }

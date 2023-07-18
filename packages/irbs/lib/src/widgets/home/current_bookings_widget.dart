@@ -165,7 +165,6 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                                         .showSnackBar(snackBar);
                                     loading = false;
                                     store.delete = store.delete + 1;
-                                    Navigator.of(context).pop();
                                   } else {
                                     var snackBar = SnackBar(
                                       content: Text(res),
