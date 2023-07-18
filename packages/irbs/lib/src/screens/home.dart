@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
+import 'package:irbs/src/screens/upcoming_bookings.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/common_store.dart';
 import 'package:irbs/src/store/data_store.dart';
@@ -185,7 +186,7 @@ class _HomeState extends State<Home> {
                                             ),
                                           ),
                                           onTap: (){
-
+                                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => UpcomingBookingsPage()));
                                           },
                                         ) : Container(),
 

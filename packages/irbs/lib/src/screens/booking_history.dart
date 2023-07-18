@@ -19,7 +19,6 @@ class BookingHistory extends StatefulWidget {
 }
 
 class _BookingHistoryState extends State<BookingHistory> {
-
   @override
   Widget build(BuildContext context) {
     var store = context.read<CommonStore>();
@@ -33,63 +32,61 @@ class _BookingHistoryState extends State<BookingHistory> {
         ),
         backgroundColor: Themes.tileColor,
       ),
-      body: Observer(
-        builder: (context) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  //Add dropdown here
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: SingleChildScrollView(
+          child: Column(
             children: [
-              SizedBox(width: 130,child: CustomDropDown( hintText: 'Month')),
-              SizedBox(width: 130,child: CustomDropDown(hintText: 'Year')),
+              //Add dropdown here
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                        width: 130, child: CustomDropDown(hintText: 'Month')),
+                    SizedBox(
+                        width: 130, child: CustomDropDown(hintText: 'Year')),
+                  ],
+                ),
+              ),
 
+              Observer(builder: (context) {
+                return FutureBuilder(
+                  future: APIService()
+                      .getBookingHistory(month: store.month, year: store.year),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const UpcomingBookingShimmer(number: 8);
+                    } else if (snapshot.hasError) {
+                      return const Text('Error');
+                    } else {
+                      List<BookingModel> currentBooking = snapshot.data!;
+                      if (currentBooking.isEmpty) {
+                        return const EmptyState(text: 'No bookings');
+                      }
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: currentBooking.length,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) {
+                                BookingModel? ans = currentBooking[index];
+                                return CurrentBookingsWidget(
+                                  model: ans,
+                                );
+                              }),
+                        ],
+                      );
+                    }
+                  },
+                );
+              }),
             ],
           ),
         ),
-
-                  FutureBuilder(
-                    future: APIService().getBookingHistory(month: store.month, year: store.year),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return const UpcomingBookingShimmer(number: 8);
-                      } else if (snapshot.hasError) {
-                        print(snapshot.error);
-                        return const Text('Error');
-                      } else {
-                        List<BookingModel> currentBooking = snapshot.data!;
-                        if(currentBooking.isEmpty)
-                          {
-                            return EmptyState(text: 'No bookings');
-                          }
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: currentBooking.length,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (BuildContext context, int index) {
-                                  BookingModel? ans = currentBooking[index];
-                                  return CurrentBookingsWidget(
-                                    model: ans,
-                                  );
-                                }),
-                          ],
-                        );
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        }
       ),
     );
   }
