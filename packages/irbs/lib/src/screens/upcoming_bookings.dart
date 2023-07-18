@@ -36,7 +36,7 @@ class _UpcomingBookingsPageState extends State<UpcomingBookingsPage> {
         padding: const EdgeInsets.only(top: 16),
         child: SingleChildScrollView(
           child: Observer(builder: (context) {
-            return FutureBuilder(
+            return store.delete > 0? FutureBuilder(
               future: APIService()
                   .getUpcomingBokings(),
               builder: (context, snapshot) {
@@ -66,7 +66,7 @@ class _UpcomingBookingsPageState extends State<UpcomingBookingsPage> {
                   );
                 }
               },
-            );
+            ) : Container();
           }),
         ),
       ),
