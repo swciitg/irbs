@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:irbs/src/models/booking_model.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/common_store.dart';
+import 'package:irbs/src/widgets/drop_down.dart';
 import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
 import 'package:irbs/src/widgets/home/empty_sate.dart';
 import 'package:irbs/src/widgets/shimmer/current_booking_shimmer.dart';
@@ -30,21 +31,6 @@ class _BookingHistoryState extends State<BookingHistory> {
           'Booking History',
           style: appBarStyle,
         ),
-        // actions: [
-        //   GestureDetector(
-        //       onTap: () {
-        //         Navigator.pushReplacementNamed(context, '/irbs/onboarding');
-        //       },
-        //       child: Padding(
-        //         padding: const EdgeInsets.only(right: 11.0),
-        //         child: Image.asset(
-        //           'assets/question_circle.png',
-        //           package: 'irbs',
-        //           height: 24,
-        //           width: 24,
-        //         ),
-        //       ))
-        // ],
         backgroundColor: Themes.tileColor,
       ),
       body: Observer(
@@ -55,6 +41,18 @@ class _BookingHistoryState extends State<BookingHistory> {
               child: Column(
                 children: [
                   //Add dropdown here
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(width: 130,child: CustomDropDown( hintText: 'Month')),
+              SizedBox(width: 130,child: CustomDropDown(hintText: 'Year')),
+
+            ],
+          ),
+        ),
+
                   FutureBuilder(
                     future: APIService().getBookingHistory(month: store.month, year: store.year),
                     builder: (context, snapshot) {
