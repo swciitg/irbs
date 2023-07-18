@@ -56,60 +56,60 @@ class SideDrawer extends StatelessWidget {
                             const SizedBox(
                               height: 28,
                             ),
-                            ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              itemCount: rooms?.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                String roomName = rooms![index].roomName;
-                                return Column(
-                                  children: [
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Container(
-                                      height: 0.5,
-                                      color: Colors.white.withOpacity(0.2),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          width: 112,
-                                          child: Text(
-                                            roomName,
-                                            style: dialogCancelStyle.copyWith(
-                                                color: Colors.white
-                                                    .withOpacity(0.5)),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        Container(
-                                            width: 80,
-                                            child: Text(
-                                              'Admin',
-                                              style:
-                                                  dialogCancelStyle.copyWith(
-                                                      color: Colors.white
-                                                          .withOpacity(0.5)),
-                                            ))
-                                      ],
-                                    )
-                                  ],
-                                );
-                              },
-                            ),
-                            const SizedBox(
-                              height: 12,
-                            ),
+                            // ListView.builder(
+                            //   physics: const NeverScrollableScrollPhysics(),
+                            //   shrinkWrap: true,
+                            //   padding:
+                            //       const EdgeInsets.symmetric(horizontal: 20),
+                            //   itemCount: rooms?.length,
+                            //   itemBuilder: (BuildContext context, int index) {
+                            //     String roomName = rooms![index].roomName;
+                            //     return Column(
+                            //       children: [
+                            //         const SizedBox(
+                            //           height: 8,
+                            //         ),
+                            //         Container(
+                            //           height: 0.5,
+                            //           color: Colors.white.withOpacity(0.2),
+                            //         ),
+                            //         const SizedBox(
+                            //           height: 8,
+                            //         ),
+                            //         Row(
+                            //           crossAxisAlignment:
+                            //               CrossAxisAlignment.start,
+                            //           children: [
+                            //             Container(
+                            //               width: 112,
+                            //               child: Text(
+                            //                 roomName,
+                            //                 style: dialogCancelStyle.copyWith(
+                            //                     color: Colors.white
+                            //                         .withOpacity(0.5)),
+                            //               ),
+                            //             ),
+                            //             const SizedBox(
+                            //               width: 8,
+                            //             ),
+                            //             Container(
+                            //                 width: 80,
+                            //                 child: Text(
+                            //                   'Admin',
+                            //                   style:
+                            //                       dialogCancelStyle.copyWith(
+                            //                           color: Colors.white
+                            //                               .withOpacity(0.5)),
+                            //                 ))
+                            //           ],
+                            //         )
+                            //       ],
+                            //     );
+                            //   },
+                            // ),
+                            // const SizedBox(
+                            //   height: 12,
+                            // ),
                           ],
                         ),
                       ),
@@ -123,10 +123,15 @@ class SideDrawer extends StatelessWidget {
                               const SizedBox(
                                 height: 16,
                               ),
-                              Text(
-                                "My Rooms",
-                                style: addmemberStyle.copyWith(
-                                    color: Colors.white.withOpacity(0.5)),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "My Rooms",
+                                    style: addmemberStyle.copyWith(
+                                        color: Colors.white.withOpacity(0.5)),
+                                  ),
+                                ],
                               ),
           // SizedBox(height: 14,),
                               ListView.builder(
