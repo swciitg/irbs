@@ -207,7 +207,7 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                               child: const Icon(
                                 Icons.more_vert,
                                 color: Colors.white,
-                                size: 10,
+                                size: 20,
                               ),
                             ),
                     ],

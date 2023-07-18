@@ -5,12 +5,30 @@ import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/room_model.dart';
-import '../services/api.dart';
 part 'common_store.g.dart';
 
 class CommonStore = _CommonStore with _$CommonStore;
 
 abstract class _CommonStore with Store {
+
+  @observable
+  int month = DateTime.now().month;
+
+  @observable
+  int year = DateTime.now().year;
+
+  @action
+  void setMonth(int m)
+  {
+    month = m;
+  }
+
+  @action
+  void setYear(int y)
+  {
+    year = y;
+  }
+
 
   @observable
   String searchText = '';

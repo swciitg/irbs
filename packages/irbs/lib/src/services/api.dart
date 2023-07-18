@@ -77,15 +77,12 @@ class APIService {
   Future<Map<String, List<RoomModel>>> getAllRooms() async {
     try {
       var response = await dio.get(Endpoints.getAllRooms);
-      print(response.statusCode);
       if (response.statusCode == 200) {
         List<RoomModel> clubRooms = [];
         List<RoomModel> commonRooms = [];
         List<RoomModel> boardRooms = [];
         var roomList = response.data;
-        print(roomList);
         for (var room in roomList) {
-          print(room);
           if (room['roomType'] == 'club') {
             clubRooms.add(RoomModel.fromJson(room));
           } else if (room['roomType'] == 'common') {
@@ -94,7 +91,6 @@ class APIService {
             boardRooms.add(RoomModel.fromJson(room));
           }
         }
-        print('exiting successfully');
         return {'club': clubRooms, 'common': commonRooms, 'board': boardRooms};
       } else {
         showSnackBar(response.statusMessage.toString());
@@ -300,10 +296,9 @@ class APIService {
         var bookingMapList = res.data;
         List<BookingModel> currentBooking = [];
         for(var booking in bookingMapList){
-          print(booking);
-            currentBooking.add(
-              BookingModel.fromJson(booking),
-            );
+          currentBooking.add(
+            BookingModel.fromJson(booking),
+              );
         }
         sortByParameter(currentBooking, (a, b) => b.inTime.compareTo(a.inTime));
         sortByParameter(currentBooking, (a, b) => a.outTime.compareTo(b.outTime));
@@ -322,18 +317,22 @@ class APIService {
     try{
       Response res = await dio.get(Endpoints.getRoomBookings, queryParameters: {
         'isMy': true,
+        'upcoming': false,
         'month': month,
         'year': year
       });
       if(res.statusCode == 200){
         var bookingMapList = res.data;
         List<BookingModel> bookings = [];
+        DateTime a =DateTime.parse(DateTime.now().toIso8601String()+"Z");
         for(var booking in bookingMapList){
+          DateTime b = DateTime.parse(booking['outTime']);
+          if(a.isAfter(b))
+          {
             bookings.add(
               BookingModel.fromJson(booking),
-            );
+            );}
         }
-        List<List<BookingModel>> answer = [];
         sortByParameter(bookings, (a, b) => b.inTime.compareTo(a.inTime));
         sortByParameter(bookings, (a, b) => a.outTime.compareTo(b.outTime));
         return bookings;
@@ -389,18 +388,14 @@ class APIService {
     try {
       var response =
       await dio.patch('${Endpoints.editRoom}/$roomId', data: details);
-      print(response.statusCode);
-      print(response.data);
-      print(response.statusMessage);
+
       if (response.statusCode == 201 || response.statusCode == 200) {
         var room = response.data;
-        print(room);
         print(room.runtimeType);
         if (room['errors'] != null) {
           print("exc");
           throw Exception('Email doesn\'t Exist');
         }
-        print('hi');
         return RoomModel.fromJson(room);
       } else if (response.statusCode == 404) {
         print("exception");
