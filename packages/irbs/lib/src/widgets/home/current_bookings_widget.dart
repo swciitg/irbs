@@ -225,6 +225,7 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                               ? 'Reason'
                               : 'Instructions',
                           labelStyle: kLabelStyle,
+                          isDense: true,
                           enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   width: 0.56,
