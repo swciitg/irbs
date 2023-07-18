@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/common_store.dart';
 import 'package:irbs/src/widgets/home/request.dart';
+import 'package:irbs/src/widgets/shimmer/all_requests_shimmer.dart';
 import 'package:provider/provider.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
@@ -33,15 +36,27 @@ class ViewAllRequests extends StatelessWidget {
         backgroundColor: Themes.kCommonBoxBackground,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: requestedBookings.map((booking) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                child: Request(bookingData: booking, commonStore: cs,),
-              )).toList()
-            ),
-          ),
+        child: Observer(
+          builder: (context) {
+            return cs.pending > 0 ? FutureBuilder(
+              future: APIService().getOwnedRoomBookings(),
+              builder: (context, snapshot) {
+                if(!snapshot.hasData)return const AllRequestsShimmer();
+                if(snapshot.hasError)return const Center(child: Text('Error'));
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: Request(bookingData: snapshot.data![index], commonStore: cs,),
+                      ),
+                    );
+                  },
+                );
+              }
+            ) : Container();
+          }
         ),
       ),
     );

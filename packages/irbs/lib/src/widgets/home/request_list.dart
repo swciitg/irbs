@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:irbs/src/models/booking_model.dart';
 import 'package:irbs/src/screens/all_requests.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/common_store.dart';
@@ -39,7 +38,10 @@ class RequestList extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
                         CarouselSlider(
-                          items: snapshot.data!.map((booking) => Request(bookingData: booking, commonStore: cs,)).toList(),
+                          items: snapshot.data!.map((booking) => Request(
+                            bookingData: booking, 
+                            commonStore: cs,
+                          )).toList(),
                           options: CarouselOptions(
                             height: (167 * screenWidth) / 360,
                             padEnds: true,

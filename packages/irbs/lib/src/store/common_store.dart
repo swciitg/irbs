@@ -1,10 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 import 'dart:convert';
-
-import 'package:irbs/src/models/booking_model.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../models/room_model.dart';
 part 'common_store.g.dart';
 
