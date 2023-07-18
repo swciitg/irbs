@@ -3,13 +3,15 @@ import 'package:irbs/src/functions/snackbar.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/services/api.dart';
+import 'package:irbs/src/store/common_store.dart';
 import '../../models/booking_model.dart';
 import 'approved_dialog.dart';
 import 'package:intl/intl.dart';
 
 class RespondDialog extends StatefulWidget {
   final BookingModel bookingData;
-  const RespondDialog({required this.bookingData, super.key});
+  final CommonStore commonStore;
+  const RespondDialog({required this.commonStore, required this.bookingData, super.key});
 
   @override
   State<RespondDialog> createState() => _RespondDialogState();
@@ -17,9 +19,15 @@ class RespondDialog extends StatefulWidget {
 
 class _RespondDialogState extends State<RespondDialog> {
   final TextEditingController textEditingController = TextEditingController();
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    
+    return isLoading ? Container(
+      color: Themes.kCommonBoxBackground,
+      height: 280,
+      child: const Center(child: CircularProgressIndicator(),)
+    ) : Container(
       padding: EdgeInsets.zero,
       color: Themes.kCommonBoxBackground,
       width: double.maxFinite,
@@ -62,7 +70,7 @@ class _RespondDialogState extends State<RespondDialog> {
                       TextSpan(text: 'Requested by  ', style: kHeading3Style),
                       TextSpan(style: kHeading3DescStyle, children: [
                         TextSpan(
-                          text: widget.bookingData.user,
+                          text: widget.bookingData.userInfo.name,
                         ),
                         // TextSpan(
                         //   text: ' · ',
@@ -213,8 +221,31 @@ class _RespondDialogState extends State<RespondDialog> {
                           ),
                         ),
                         onTap: ()async{
-                          Navigator.pop(context);
-                          await APIService().rejectBooking(widget.bookingData.id, textEditingController.text);
+                          final navigator = Navigator.of(context);
+                          if(mounted){
+                            setState(() {
+                              isLoading = true;
+                            });
+                          }
+                          try {
+                            bool status = await APIService().rejectBooking(
+                              widget.bookingData.id, 
+                              textEditingController.text
+                            );
+
+                            if(mounted){
+                              widget.commonStore.removeRequestFromList(widget.bookingData.id);
+                              setState(() {
+                                isLoading = false;
+                              });
+                              if(status)showSnackBar('Booking rejected');
+                            }
+
+                            navigator.pop();
+                          } catch (e) {
+                            navigator.pop();
+                            showSnackBar(e.toString());
+                          }
                         },
                       ),
                     ),
@@ -236,20 +267,45 @@ class _RespondDialogState extends State<RespondDialog> {
                         ),
                         onTap: () async{
                           try{
-                          await APIService().acceptBooking(widget.bookingData.id, textEditingController.text);
-                          await showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return const AlertDialog(
-                                contentPadding: EdgeInsets.zero,
-                                content: ApprovedDialog(),
-                              );
-                            },
-                          );
-                          Navigator.pop(context);}
-                              catch(e){
-                            showSnackBar(e.toString());
+                            FocusScope.of(context).unfocus();
+                            if(mounted){
+                              setState(() {
+                                isLoading = true;
+                              });
+                            }
+                            bool status = await APIService().acceptBooking(
+                              widget.bookingData.id, 
+                              textEditingController.text
+                            );
+
+                            if(mounted){
+                              widget.commonStore.removeRequestFromList(widget.bookingData.id);
+                              print(widget.commonStore.requestList);
+                              setState(() {
+                                isLoading = false;
+                              });
+                            }
+
+                            if(status){
+                              if(context.mounted){
+                                print('hey');
+                                final nav = Navigator.of(context);
+                                await showDialog(
+                                  context: context, 
+                                  builder: (BuildContext context){
+                                    return const AlertDialog(
+                                      contentPadding: EdgeInsets.zero,
+                                      content: ApprovedDialog(),
+                                    );
+                                  }
+                                );
+                                nav.pop();
                               }
+                            }
+                            
+                          }catch(e){
+                            showSnackBar(e.toString());
+                          }
                         },
                       ),
                     ),

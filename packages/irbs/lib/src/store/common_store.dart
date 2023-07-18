@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 import 'dart:convert';
 
+import 'package:irbs/src/models/booking_model.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,6 +36,19 @@ abstract class _CommonStore with Store {
 
   @observable
   ObservableMap<String, RoomModel> pinnedRooms = ObservableMap<String, RoomModel>.of({});
+
+  @observable
+  List<BookingModel> requestList = [];
+
+  @action
+  void setRequestList(List<BookingModel> requests){
+    requestList = requests;
+  }
+
+  @action
+  void removeRequestFromList(String bookingId){
+    requestList.removeWhere((element) => element.id == bookingId);
+  }
 
   @action
   initialisePinnedRooms()

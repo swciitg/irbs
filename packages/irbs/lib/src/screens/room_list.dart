@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:irbs/src/widgets/shimmer/room_list_shimmer.dart';
 import 'package:provider/provider.dart';
 import '../functions/filter_rooms.dart';
 import '../globals/colors.dart';
@@ -55,33 +56,38 @@ class _RoomListState extends State<RoomList> {
           builder: (context, snapshot) {
             commonStore.setSearchText('');
             if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
+              return const RoomListShimmer();
             } else if (snapshot.hasError) {
               return const Text('Error');
             }
             return Observer(builder: (context) {
               return SafeArea(
                 child: SingleChildScrollView(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                      RoomSearchBar(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const RoomSearchBar(),
                       ListDisplay(
                         type: 'Club Rooms',
                         roomList: filterRooms(
-                            snapshot.data!['club']!, commonStore.searchText),
+                          snapshot.data!['club']!, commonStore.searchText
+                        ),
                       ),
                       ListDisplay(
                         type: 'Common Rooms',
                         roomList: filterRooms(
-                            snapshot.data!['common']!, commonStore.searchText),
+                          snapshot.data!['common']!, commonStore.searchText
+                        ),
                       ),
-                          ListDisplay(
-                            type: 'Board Rooms',
-                            roomList: filterRooms(
-                                snapshot.data!['board']!, commonStore.searchText),
-                          )
-                    ])),
+                      ListDisplay(
+                        type: 'Board Rooms',
+                        roomList: filterRooms(
+                          snapshot.data!['board']!, commonStore.searchText
+                        ),
+                      )
+                    ]
+                  ),
+                ),
               );
             });
           }),

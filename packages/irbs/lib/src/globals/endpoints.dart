@@ -1,7 +1,7 @@
 class Endpoints {
-  static const baseUrl = const String.fromEnvironment('IRBS-SERVER-URL');
-  static const oneStopbaseURL = const String.fromEnvironment('SERVER-URL');
-  static const apiSecurityKey = const String.fromEnvironment('SECURITY-KEY');
+  static const baseUrl = String.fromEnvironment('IRBS-SERVER-URL');
+  static const oneStopbaseURL = String.fromEnvironment('SERVER-URL');
+  static const apiSecurityKey = String.fromEnvironment('SECURITY-KEY');
   static const getAllRooms = '/api/room';
   static const getRoomBookings = '/api/booking';
   static const getOwnedRoomBookings = '/api/booking/rooms-owned';
