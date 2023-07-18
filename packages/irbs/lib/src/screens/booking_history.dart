@@ -4,6 +4,7 @@ import 'package:irbs/src/models/booking_model.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/common_store.dart';
 import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
+import 'package:irbs/src/widgets/shimmer/current_booking_shimmer.dart';
 import 'package:provider/provider.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
@@ -25,7 +26,7 @@ class _BookingHistoryState extends State<BookingHistory> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          'IRBS',
+          'Booking History',
           style: appBarStyle,
         ),
         actions: [
@@ -47,66 +48,28 @@ class _BookingHistoryState extends State<BookingHistory> {
       ),
       body: Observer(
         builder: (context) {
-          return store.delete > 0? FutureBuilder(
+          return FutureBuilder(
             future: APIService().getBookingHistory(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-                return const CircularProgressIndicator();
+                return UpcomingBookingShimmer(number: 8);
               } else if (snapshot.hasError) {
                 print(snapshot.error);
                 return const Text('Error');
               } else {
-                List<BookingModel>? currentBooking = snapshot.data?[0];
-                List<BookingModel>? pastBooking = snapshot.data?[1];
+                List<BookingModel> currentBooking = snapshot.data!;
                 return SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(16, 20, 16, 10),
-                        child: Text(
-                          'Booking History',
-                          style: TextStyle(
-                              package: 'irbs',
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 24,
-                              color: Themes.white),
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                        child: Text(
-                          'Current Bookings',
-                          style: roomTypeStyle,
-                        ),
-                      ),
                       ListView.builder(
                           shrinkWrap: true,
-                          itemCount: currentBooking?.length,
+                          itemCount: currentBooking.length,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (BuildContext context, int index) {
-                            BookingModel? ans = currentBooking?[index];
-
+                            BookingModel? ans = currentBooking[index];
                             return CurrentBookingsWidget(
-                              model: ans!,
-                            );
-                          }),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                        child: Text(
-                          'Past Bookings',
-                          style: roomTypeStyle,
-                        ),
-                      ),
-                      ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: pastBooking?.length,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (BuildContext context, int index) {
-                            BookingModel? ans = pastBooking?[index];
-                            return CurrentBookingsWidget(
-                              model: ans!,
+                              model: ans,
                             );
                           }),
                     ],
@@ -114,7 +77,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                 );
               }
             },
-          ) : Container();
+          );
         }
       ),
     );

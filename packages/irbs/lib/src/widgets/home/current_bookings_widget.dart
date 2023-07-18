@@ -215,14 +215,13 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                 ),
               ),
             ),
-            widget.model.acceptInstructions == null
+            widget.model.acceptInstructions == null && widget.model.reasonRejection == null
                 ? Container()
                 : Padding(
                     padding: const EdgeInsets.only(
                         left: 16, right: 16, top: 0, bottom: 12),
                     child: InputDecorator(
                       decoration: InputDecoration(
-                          // contentPadding: EdgeInsets.zero,
                           labelText: widget.model.status == 'rejected'
                               ? 'Reason'
                               : 'Instructions',
@@ -233,7 +232,7 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                                   color: Color.fromRGBO(85, 95, 113, 1)),
                               borderRadius: BorderRadius.circular(4.46))),
                       child: Text(
-                        widget.model.acceptInstructions ?? '',
+                        widget.model.acceptInstructions ?? widget.model.reasonRejection!,
                         style: kReasonStyle,
                       ),
                     ),

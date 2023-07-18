@@ -10,7 +10,11 @@ import 'package:irbs/src/widgets/home/drawer.dart';
 import 'package:irbs/src/widgets/home/empty_sate.dart';
 import 'package:irbs/src/widgets/home/request_list.dart';
 import 'package:irbs/src/widgets/roomlist/list_display.dart';
+import 'package:irbs/src/widgets/shimmer/current_booking_shimmer.dart';
 import 'package:provider/provider.dart';
+
+import '../models/booking_model.dart';
+import '../widgets/home/current_bookings_widget.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -28,18 +32,23 @@ class _HomeState extends State<Home> {
     super.initState();
     DataStore().getUserData();
   }
+
   @override
   Widget build(BuildContext context) {
     var cs = context.read<CommonStore>();
     return FutureBuilder(
       future: APIService().getMyRooms(),
       builder: (context, snapshot) {
-        if(!snapshot.hasData){
-          return const Center(child: CircularProgressIndicator(),);
-        }else if(snapshot.hasError){
-          return Center(child: Text(snapshot.error.toString()),);
-        }else{
-          if(snapshot.data!.isNotEmpty){
+        if (!snapshot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text(snapshot.error.toString()),
+          );
+        } else {
+          if (snapshot.data!.isNotEmpty) {
             isAdmin = true;
           }
           return Scaffold(
@@ -69,7 +78,7 @@ class _HomeState extends State<Home> {
                                 context, '/irbs/onboarding');
                           },
                           child: Padding(
-                            padding: const EdgeInsets.only(right:11.0),
+                            padding: const EdgeInsets.only(right: 11.0),
                             child: Image.asset(
                               'assets/question_circle.png',
                               package: 'irbs',
@@ -87,14 +96,15 @@ class _HomeState extends State<Home> {
                   children: [
                     if (isAdmin)
                       Padding(
-                        padding: const EdgeInsets.only(top: 18, left: 16, bottom: 10),
+                        padding: const EdgeInsets.only(
+                            top: 18, left: 16, bottom: 10),
                         child: Text(
                           'Requests',
-                          style:
-                              kSubHeadingStyle.copyWith(fontWeight: FontWeight.w600),
+                          style: kSubHeadingStyle.copyWith(
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
-                    if(isAdmin)const RequestList(),
+                    if (isAdmin) const RequestList(),
                     Padding(
                       padding: const EdgeInsets.only(
                           top: 10, left: 16, bottom: 7, right: 16),
@@ -108,7 +118,8 @@ class _HomeState extends State<Home> {
                           ),
                           TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/irbs/bookingHistory');
+                              Navigator.pushNamed(
+                                  context, '/irbs/bookingHistory');
                             },
                             child: const Text(
                               'View History',
@@ -118,17 +129,86 @@ class _HomeState extends State<Home> {
                         ],
                       ),
                     ),
-                    EmptyState(text: "No Bookings"),
-                    FutureBuilder(
-                      future: cs.initialisePinnedRooms(),
-                        builder: (context, snapshot){
-                      if(!snapshot.hasData){return SizedBox();}
-                      return Observer(
-                        builder: (context) {
-                          return ListDisplay(roomList: cs.pinnedRooms.values.toList(), type: 'Pinned Rooms');
-                        }
-                      );
+                    Observer(builder: (context) {
+                      return cs.delete > 0
+                          ? FutureBuilder(
+                              future: APIService().getUpcomingBokings(),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return UpcomingBookingShimmer(number: 3);
+                                } else if (snapshot.hasError) {
+                                  print(snapshot.error);
+                                  return const Text('Error');
+                                } else {
+                                  List<BookingModel> currentBooking =
+                                      snapshot.data!;
+                                  if(currentBooking.length == 0){
+                                    return EmptyState(text: 'No Upcoming Bookings');
+                                  }
+                                  return SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        ListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount: currentBooking.length > 3 ? 3 : currentBooking.length,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              BookingModel ans =
+                                                  currentBooking[index];
+
+                                              return CurrentBookingsWidget(
+                                                model: ans,
+                                              );
+                                            }),
+                                        currentBooking.length > 3 ? GestureDetector(
+                                          child: Padding(
+                                            padding:
+                                            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                            child: Container(
+                                              height: 40,
+                                              width: double.maxFinite,
+                                              decoration: BoxDecoration(
+                                                  color: snapshot.data!.isEmpty
+                                                      ? Themes.disabledButtonBackground
+                                                      : Themes.kCommonBoxBackground,
+                                                  borderRadius: BorderRadius.circular(4)),
+                                              child: const Center(
+                                                child: Text(
+                                                  'View all upcoming bookings',
+                                                  style: kRequestedRoomStyle,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          onTap: (){
+
+                                          },
+                                        ) : Container(),
+
+                                      ],
+                                    ),
+                                  );
+                                }
+                              },
+                            )
+                          : Container();
                     }),
+                    FutureBuilder(
+                        future: cs.initialisePinnedRooms(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return SizedBox();
+                          }
+                          return Observer(builder: (context) {
+                            return ListDisplay(
+                                roomList: cs.pinnedRooms.values.toList(),
+                                type: 'Pinned Rooms');
+                          });
+                        }),
                     const CommonRooms(),
                     const SizedBox(
                       height: 108,

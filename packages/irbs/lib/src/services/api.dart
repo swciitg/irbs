@@ -290,34 +290,53 @@ class APIService {
     }
   }
 
-  Future<List<List<BookingModel>>> getBookingHistory()async{
+  Future<List<BookingModel>> getUpcomingBokings()async{
     try{
       Response res = await dio.get(Endpoints.getRoomBookings, queryParameters: {
-        'isMy': true
+        'isMy': true,
+        'upcoming': true
       });
       if(res.statusCode == 200){
         var bookingMapList = res.data;
         List<BookingModel> currentBooking = [];
-        List<BookingModel> pastBooking = [];
-        DateTime a =DateTime.parse(DateTime.now().toIso8601String()+"Z");
         for(var booking in bookingMapList){
-          DateTime b = DateTime.parse(booking['outTime']);
-          if(a.isBefore(b)){
+          print(booking);
             currentBooking.add(
               BookingModel.fromJson(booking),
             );
-          }else{
-            pastBooking.add(
-              BookingModel.fromJson(booking),
-            );
-          }
         }
-        List<List<BookingModel>> answer = [];
         sortByParameter(currentBooking, (a, b) => b.inTime.compareTo(a.inTime));
         sortByParameter(currentBooking, (a, b) => a.outTime.compareTo(b.outTime));
-        answer.add(currentBooking);
-        answer.add(pastBooking);
-        return answer;
+        return currentBooking;
+      }
+      else{
+        throw Exception(res.statusMessage);
+      }
+    }catch(e){
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<List<BookingModel>> getBookingHistory({int month = 1, int year = 2023})async{
+    try{
+      Response res = await dio.get(Endpoints.getRoomBookings, queryParameters: {
+        'isMy': true,
+        'month': month,
+        'year': year
+      });
+      if(res.statusCode == 200){
+        var bookingMapList = res.data;
+        List<BookingModel> bookings = [];
+        for(var booking in bookingMapList){
+            bookings.add(
+              BookingModel.fromJson(booking),
+            );
+        }
+        List<List<BookingModel>> answer = [];
+        sortByParameter(bookings, (a, b) => b.inTime.compareTo(a.inTime));
+        sortByParameter(bookings, (a, b) => a.outTime.compareTo(b.outTime));
+        return bookings;
       }
       else{
         throw Exception(res.statusMessage);

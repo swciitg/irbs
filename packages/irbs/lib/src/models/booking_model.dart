@@ -8,6 +8,7 @@ class BookingModel {
   String outTime = '';
   String bookingPurpose = '';
   String? acceptInstructions;
+  String? reasonRejection;
   String createdAt = '';
   String id = '';
   late RoomDetailsModel roomDetails;
@@ -20,6 +21,7 @@ class BookingModel {
       required this.outTime,
       required this.bookingPurpose,
       this.acceptInstructions,
+        this.reasonRejection,
       required this.createdAt,
       required this.roomDetails,
       required this.id,
@@ -33,6 +35,7 @@ class BookingModel {
     outTime = json['outTime'];
     bookingPurpose = json['bookingPurpose'];
     acceptInstructions = json['acceptInstructions'];
+    reasonRejection = json['reasonRejection'];
     createdAt = json['createdAt'];
     id = json['id'];
     roomDetails = RoomDetailsModel.fromJson(json['roomDetails']);
@@ -48,6 +51,7 @@ class BookingModel {
     data['outTime'] = outTime;
     data['bookingPurpose'] = bookingPurpose;
     data['acceptInstructions'] = acceptInstructions;
+    data['reasonRejection'] = reasonRejection;
     data['createdAt'] = createdAt;
     data['id'] = id;
     data['roomDetails'] = roomDetails.toJson();
