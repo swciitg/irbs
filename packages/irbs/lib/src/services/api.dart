@@ -64,8 +64,6 @@ class APIService {
       if(res.statusCode == 200){
         List<BookingModel> bookings = [];
         for(var booking in res.data){
-          print("PAPAPA");
-          print(booking);
           bookings.add(BookingModel.fromJson(booking));
         }
         return bookings;
@@ -206,7 +204,11 @@ class APIService {
     );
 
     bookings.addAll(nextMonthBookings);
-
+    for(var a in bookings)
+      {
+        print("BBAASS");
+        print(a.status);
+      }
     return bookings;
   }
 
@@ -305,10 +307,16 @@ class APIService {
       if(res.statusCode == 200){
         var bookingMapList = res.data;
         List<BookingModel> currentBooking = [];
+        DateTime a =DateTime.parse(DateTime.now().toIso8601String()+"Z");
         for(var booking in bookingMapList){
-          currentBooking.add(
-            BookingModel.fromJson(booking),
+          DateTime b = DateTime.parse(booking['outTime']);
+          if(!a.isAfter(b))
+            {
+              currentBooking.add(
+                BookingModel.fromJson(booking),
               );
+            }
+
         }
         sortByParameter(currentBooking, (a, b) => b.inTime.compareTo(a.inTime));
         sortByParameter(currentBooking, (a, b) => a.outTime.compareTo(b.outTime));

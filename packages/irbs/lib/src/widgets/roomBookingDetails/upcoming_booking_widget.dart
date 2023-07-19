@@ -30,15 +30,15 @@ class _UpcomingBookingsWidgetState extends State<UpcomingBookingsWidget> {
       child: Container(
         width: double.maxFinite,
         decoration: BoxDecoration(
-            gradient: LinearGradient(stops: [
+            gradient: LinearGradient(stops: const [
               0.0125,
               0.0125
             ], colors: [
               (widget.status == 0)
-                  ? Color.fromRGBO(217, 114, 108, 1)
+                  ? const Color.fromRGBO(217, 114, 108, 1)
                   : (widget.status == 1)
-                      ? Color.fromRGBO(147, 144, 148, 1)
-                      : Color.fromRGBO(53, 118, 42, 1),
+                      ? const Color.fromRGBO(147, 144, 148, 1)
+                      : const Color.fromRGBO(53, 118, 42, 1),
               Themes.kCommonBoxBackground
             ]),
             borderRadius: BorderRadius.circular(4)),
@@ -55,13 +55,13 @@ class _UpcomingBookingsWidgetState extends State<UpcomingBookingsWidget> {
               TextSpan(
                 text: widget.startTime,
               ),
-              TextSpan(
+              const TextSpan(
                 text: ' - ',
               ),
               TextSpan(
                 text: widget.endTime,
               ),
-              TextSpan(
+              const TextSpan(
                 text: ' · ',
               ),
               TextSpan(
@@ -71,7 +71,7 @@ class _UpcomingBookingsWidgetState extends State<UpcomingBookingsWidget> {
           ),
           trailing: InkWell(
             onTap: () {},
-            child: Container(
+            child: SizedBox(
               width: 88,
               height: 24,
               child: Center(

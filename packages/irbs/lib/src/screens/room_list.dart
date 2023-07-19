@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:irbs/src/widgets/shimmer/room_list_shimmer.dart';
 import 'package:provider/provider.dart';
 import '../functions/filter_rooms.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
 import '../store/common_store.dart';
 import '../store/data_store.dart';
+import '../widgets/home/empty_sate.dart';
 import '../widgets/roomlist/list_display.dart';
 import '../widgets/roomlist/search_bar.dart';
+import '../widgets/shimmer/room_list_shimmer.dart';
 
 class RoomList extends StatefulWidget {
   const RoomList({Key? key}) : super(key: key);
@@ -43,11 +44,6 @@ class _RoomListState extends State<RoomList> {
                   width: 24,
                 ),
               ))
-          // const [
-          //   Padding(
-          //     padding: EdgeInsets.only(right: 8),
-          //     child: Icon(Icons.help_outline),
-          //   ),
         ],
         backgroundColor: Themes.tileColor,
       ),
@@ -58,7 +54,7 @@ class _RoomListState extends State<RoomList> {
             if (!snapshot.hasData) {
               return const RoomListShimmer();
             } else if (snapshot.hasError) {
-              return const Text('Error');
+              return EmptyState(text: 'Some error occured, try again');
             }
             return Observer(builder: (context) {
               return SafeArea(

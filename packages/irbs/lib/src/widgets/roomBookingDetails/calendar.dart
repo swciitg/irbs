@@ -47,7 +47,6 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    // MeetingDataSource dataSource = MeetingDataSource(_getDataSource(widget.bookings));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

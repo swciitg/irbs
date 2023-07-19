@@ -106,7 +106,6 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
       body: FutureBuilder(
         future: getRoomBookings,
         builder: (context, snapshot) {
-          print('INSIDE BUILDER');
           if(!snapshot.hasData){
             return const RoomBookingDetailsShimmer();
           }
