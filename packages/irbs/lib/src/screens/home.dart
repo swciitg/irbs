@@ -29,13 +29,6 @@ class _HomeState extends State<Home> {
   bool isAdmin = false;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    DataStore().getUserData();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var cs = context.read<CommonStore>();
     return FutureBuilder(
@@ -91,6 +84,7 @@ class _HomeState extends State<Home> {
             ),
             body: RefreshIndicator(
               onRefresh: (){
+                print("hello world");
                 return DataStore().initialiseData(cs);
               },
               child: Stack(fit: StackFit.expand, children: [
