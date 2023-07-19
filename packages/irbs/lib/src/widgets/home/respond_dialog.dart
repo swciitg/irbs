@@ -5,7 +5,6 @@ import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/common_store.dart';
 import '../../models/booking_model.dart';
-import 'approved_dialog.dart';
 import 'package:intl/intl.dart';
 
 class RespondDialog extends StatefulWidget {
@@ -20,6 +19,7 @@ class RespondDialog extends StatefulWidget {
 class _RespondDialogState extends State<RespondDialog> {
   final TextEditingController textEditingController = TextEditingController();
   bool isLoading = false;
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     
@@ -172,24 +172,33 @@ class _RespondDialogState extends State<RespondDialog> {
                   child: SizedBox(
                     height: 64,
                     width: double.maxFinite,
-                    child: TextField(
-                      maxLines: 3,
-                      controller: textEditingController,
-                      style: editRoomText,
-                      decoration: InputDecoration(
-                        hintText: 'Type Here...',
-                        hintStyle: kDialogHintStyle,
-                        // contentPadding: EdgeInsets.zero,
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Colors.white.withOpacity(0.5)),
-                            borderRadius: BorderRadius.circular(4)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Colors.white.withOpacity(0.5)),
-                            borderRadius: BorderRadius.circular(4)),
+                    child: Form(
+                      key: formKey,
+                      child: TextFormField(
+                        validator: (value){
+                          if (value == null || value.isEmpty) {
+                            return 'Reject reason cannot be empty';
+                          }
+                          return null;
+                        },
+                        maxLines: 3,
+                        controller: textEditingController,
+                        style: editRoomText,
+                        decoration: InputDecoration(
+                          hintText: 'Type Here...',
+                          hintStyle: kDialogHintStyle,
+                          // contentPadding: EdgeInsets.zero,
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 0.5,
+                                  color: Colors.white.withOpacity(0.5)),
+                              borderRadius: BorderRadius.circular(4)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 0.5,
+                                  color: Colors.white.withOpacity(0.5)),
+                              borderRadius: BorderRadius.circular(4)),
+                        ),
                       ),
                     ),
                   ),
@@ -221,30 +230,38 @@ class _RespondDialogState extends State<RespondDialog> {
                           ),
                         ),
                         onTap: ()async{
-                          final navigator = Navigator.of(context);
-                          if(mounted){
-                            setState(() {
-                              isLoading = true;
-                            });
+                          if(isLoading)
+                            {
+                              return;
+                            }
+                          if (!formKey.currentState!.validate()) {
+                            print("Form not validated");
+                            return;
                           }
+                          setState(() {
+                            isLoading = true;
+                          });
+
                           try {
                             bool status = await APIService().rejectBooking(
-                              widget.bookingData.id, 
-                              textEditingController.text
+                                widget.bookingData.id,
+                                textEditingController.text
                             );
-
-                            if(mounted){
-                              setState(() {
-                                isLoading = false;
-                              });
-                              widget.commonStore.pending = widget.commonStore.pending+1;
-                              if(status)showSnackBar('Booking rejected');
-                            }
-
-                            navigator.pop();
-                          } catch (e) {
-                            navigator.pop();
-                            showSnackBar(e.toString());
+                            widget.commonStore.pending = widget.commonStore.pending + 1;
+                            if (status)
+                              {
+                                showSnackBar('Booking rejected');
+                              }
+                            setState(() {
+                              isLoading = false;
+                            });
+                            Navigator.of(context).pop();
+                          }catch(e){
+                            widget.commonStore.pending = widget.commonStore.pending + 1;
+                            setState(() {
+                              isLoading = false;
+                            });
+                            print(e);
                           }
                         },
                       ),
@@ -266,46 +283,34 @@ class _RespondDialogState extends State<RespondDialog> {
                           ),
                         ),
                         onTap: () async{
-                          try{
-                            FocusScope.of(context).unfocus();
-                            if(mounted){
-                              setState(() {
-                                isLoading = true;
-                              });
-                            }
+                          if(isLoading)
+                          {
+                            return;
+                          }
+                          setState(() {
+                            isLoading = true;
+                          });
+
+                          try {
                             bool status = await APIService().acceptBooking(
-                              widget.bookingData.id, 
-                              textEditingController.text
+                                widget.bookingData.id,
+                                textEditingController.text ?? " "
                             );
-
-                            if(mounted){
-                              setState(() {
-                                isLoading = false;
-                              });
+                            widget.commonStore.pending = widget.commonStore.pending + 1;
+                            if (status)
+                            {
+                              showSnackBar('Booking rejected');
                             }
-
-                            if(status){
-
-                              if(context.mounted){
-                                widget.commonStore.pending = widget.commonStore.pending+1;
-                                print('hey');
-                                final nav = Navigator.of(context);
-                                await showDialog(
-                                  context: context, 
-                                  builder: (BuildContext context){
-                                    return const AlertDialog(
-                                      contentPadding: EdgeInsets.zero,
-                                      content: ApprovedDialog(),
-                                    );
-                                  }
-                                );
-                                nav.pop();
-                              }
-                            }
-                            
+                            setState(() {
+                              isLoading = false;
+                            });
+                            Navigator.of(context).pop();
                           }catch(e){
-                            widget.commonStore.pending = widget.commonStore.pending+1;
-                            showSnackBar(e.toString());
+                            widget.commonStore.pending = widget.commonStore.pending + 1;
+                            setState(() {
+                              isLoading = false;
+                            });
+                            print(e);
                           }
                         },
                       ),
