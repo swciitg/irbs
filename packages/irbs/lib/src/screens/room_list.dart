@@ -54,7 +54,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
             if (!snapshot.hasData) {
               return const RoomListShimmer();
             } else if (snapshot.hasError) {
-              return const EmptyState(text: 'Some error occured, try again');
+              return const EmptyListPlaceholder(text: 'Some error occured, try again');
             }
             return Observer(builder: (context) {
               return SafeArea(

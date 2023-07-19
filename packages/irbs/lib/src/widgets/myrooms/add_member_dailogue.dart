@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
 import '../../functions/snackbar.dart';
 import '../../globals/colors.dart';
 import '../../globals/styles.dart';

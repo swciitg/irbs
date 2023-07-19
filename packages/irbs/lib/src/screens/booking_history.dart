@@ -62,7 +62,7 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
                     } else {
                       List<BookingModel> currentBooking = snapshot.data!;
                       if (currentBooking.isEmpty) {
-                        return const EmptyState(text: 'No bookings');
+                        return const EmptyListPlaceholder(text: 'No bookings');
                       }
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

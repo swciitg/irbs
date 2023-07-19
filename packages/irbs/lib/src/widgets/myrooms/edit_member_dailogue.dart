@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
 import '../../functions/snackbar.dart';
 import '../../globals/styles.dart';
 import '../../models/room_model.dart';
@@ -9,40 +7,36 @@ import '../../screens/room_details/room_details.dart';
 import '../../services/api.dart';
 import '../../store/data_store.dart';
 
-Future<void> showRemoveDialogue({required BuildContext context, required RoomModel room, required bool isPersonAdmin, required int index}) async {
+Future<void> showEditMemberDialogue({required BuildContext context, required RoomModel room, required bool isPersonAdmin, required int index, required String type}) async {
   return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return RemoveDialogue(
-          room: room,
-          isPersonAdmin: isPersonAdmin,
-          index: index,
-        );
+        return EditMemberDailogue(
+            room: room,
+            type: type,
+            isPersonAdmin: isPersonAdmin,
+            index: index);
       });
 }
 
-class RemoveDialogue extends StatefulWidget {
+class EditMemberDailogue extends StatefulWidget {
   final RoomModel room;
   final int index;
   final bool isPersonAdmin;
-  const RemoveDialogue(
+  final String type;
+  const EditMemberDailogue(
       {super.key,
         required this.index,
         required this.isPersonAdmin,
-        required this.room});
+        required this.room, required this.type});
 
   @override
-  State<RemoveDialogue> createState() => _RemoveDialogueState();
+  State<EditMemberDailogue> createState() => _EditMemberDailogueState();
 }
 
-class _RemoveDialogueState extends State<RemoveDialogue> {
-  late bool removeCall;
-  @override
-  void initState() {
-    super.initState();
-    removeCall = false;
-  }
+class _EditMemberDailogueState extends State<EditMemberDailogue> {
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +45,10 @@ class _RemoveDialogueState extends State<RemoveDialogue> {
       contentPadding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
       backgroundColor: const Color.fromRGBO(39, 49, 65, 1),
       children: [
-        const Align(
+        Align(
           alignment: Alignment.center,
           child: Text(
-            'Remove memeber?',
+            widget.type == "change" ? (widget.isPersonAdmin ? 'Change to Member?' : 'Change to Admin?') : 'Remove memeber?',
             style: sentRequestStyle,
           ),
         ),
@@ -72,7 +66,7 @@ class _RemoveDialogueState extends State<RemoveDialogue> {
                     color: const Color.fromRGBO(62, 71, 88, 1),
                     borderRadius: BorderRadius.circular(4)),
                 child: Center(
-                  child: removeCall
+                  child: isLoading
                       ? const SizedBox(
                       height: 20,
                       width: 20,
@@ -84,7 +78,7 @@ class _RemoveDialogueState extends State<RemoveDialogue> {
                 ),
               ),
               onTap: () {
-                if (!removeCall) Navigator.pop(context);
+                if (!isLoading) Navigator.pop(context);
               },
             ),
             InkWell(
@@ -95,7 +89,7 @@ class _RemoveDialogueState extends State<RemoveDialogue> {
                     color: const Color.fromRGBO(118, 172, 255, 1),
                     borderRadius: BorderRadius.circular(4)),
                 child: Center(
-                  child: removeCall
+                  child: isLoading
                       ? const SizedBox(
                       height: 20,
                       width: 20,
@@ -107,9 +101,54 @@ class _RemoveDialogueState extends State<RemoveDialogue> {
                 ),
               ),
               onTap: () async {
-                if (!removeCall) {
+
+                if(widget.type == "change"){
+                if (!isLoading) {
                   setState(() {
-                    removeCall = true;
+                    isLoading = true;
+                  });
+                  List<String> owner = widget.room.owner;
+                  List<String> allowed = widget.room.allowedUsers;
+                  String user = widget.isPersonAdmin
+                      ? owner[widget.index]
+                      : allowed[widget.index];
+                  if (widget.isPersonAdmin) {
+                    owner.remove(user);
+                    allowed.add(user);
+                  } else {
+                    allowed.remove(user);
+                    owner.add(user);
+                  }
+                  String details =
+                  jsonEncode({'owner': owner, 'allowedUsers': allowed});
+                  await APIService()
+                      .editRoomDetails(widget.room.id, details)
+                      .then((value) {
+                    DataStore.myRooms
+                        .removeWhere((element) => element.id == value.id);
+                    DataStore.myRooms.add(value);
+                    if (DataStore.rooms[widget.room.roomType] != null) {
+                      DataStore.rooms[widget.room.roomType]!
+                          .removeWhere((element) => element.id == value.id);
+                      DataStore.rooms[value.roomType]!.add(value);
+                    }
+                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RoomDetailsScreen(
+                          room: value,
+                        ),
+                      ),
+                    );
+                  }).catchError((error, stackTrace) {
+                    showSnackBar(error.toString());
+                  });
+                }}
+                else{
+                if (!isLoading) {
+                  setState(() {
+                    isLoading = true;
                   });
                   List<String> x;
                   String user = widget.isPersonAdmin
@@ -144,7 +183,7 @@ class _RemoveDialogueState extends State<RemoveDialogue> {
                   }).catchError((error, stackTrace) {
                     showSnackBar(error.toString());
                   });
-                }
+                }}
               },
             ),
           ],

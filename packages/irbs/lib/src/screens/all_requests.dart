@@ -6,7 +6,7 @@ import '../globals/styles.dart';
 import '../models/booking_model.dart';
 import '../services/api.dart';
 import '../store/common_store.dart';
-import '../widgets/home/request.dart';
+import '../widgets/home/request_tile.dart';
 import '../widgets/shimmer/all_requests_shimmer.dart';
 
 class PendingRequestsScreen extends StatelessWidget {
@@ -51,7 +51,7 @@ class PendingRequestsScreen extends StatelessWidget {
                         return Center(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Request(
+                            child: RequestTile(
                               bookingData: snapshot.data![index],
                               commonStore: cs,
                             ),

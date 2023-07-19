@@ -5,7 +5,7 @@ import 'package:irbs/src/models/room_model.dart';
 import 'package:irbs/src/store/common_store.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../home/request.dart';
+import '../home/request_tile.dart';
 
 class PendingRequestShimmer extends StatefulWidget {
   const PendingRequestShimmer({Key? key}) : super(key: key);
@@ -26,7 +26,7 @@ class _PendingRequestShimmerState extends State<PendingRequestShimmer> {
             items: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: Request(
+                child: RequestTile(
                   commonStore: CommonStore(),
                   bookingData: BookingModel(
                       roomId: 'roomId',
@@ -49,7 +49,7 @@ class _PendingRequestShimmerState extends State<PendingRequestShimmer> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: Request(
+                child: RequestTile(
                   commonStore: CommonStore(),
                   bookingData: BookingModel(
                       roomId: 'roomId',

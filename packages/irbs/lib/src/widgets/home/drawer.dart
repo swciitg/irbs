@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/screens/room_details/room_details.dart';
-import 'package:irbs/src/store/data_store.dart';
+import '../../globals/styles.dart';
 import '../../models/room_model.dart';
+import '../../screens/room_details/room_details.dart';
+import '../../store/data_store.dart';
 
 class SideDrawer extends StatelessWidget {
-  SideDrawer({Key? key}) : super(key: key);
+  const SideDrawer({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,7 +20,6 @@ class SideDrawer extends StatelessWidget {
             future: DataStore().getMyRooms(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-                print(snapshot.data);
                 return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return const Text('Error');
@@ -56,60 +55,6 @@ class SideDrawer extends StatelessWidget {
                             const SizedBox(
                               height: 28,
                             ),
-                            // ListView.builder(
-                            //   physics: const NeverScrollableScrollPhysics(),
-                            //   shrinkWrap: true,
-                            //   padding:
-                            //       const EdgeInsets.symmetric(horizontal: 20),
-                            //   itemCount: rooms?.length,
-                            //   itemBuilder: (BuildContext context, int index) {
-                            //     String roomName = rooms![index].roomName;
-                            //     return Column(
-                            //       children: [
-                            //         const SizedBox(
-                            //           height: 8,
-                            //         ),
-                            //         Container(
-                            //           height: 0.5,
-                            //           color: Colors.white.withOpacity(0.2),
-                            //         ),
-                            //         const SizedBox(
-                            //           height: 8,
-                            //         ),
-                            //         Row(
-                            //           crossAxisAlignment:
-                            //               CrossAxisAlignment.start,
-                            //           children: [
-                            //             Container(
-                            //               width: 112,
-                            //               child: Text(
-                            //                 roomName,
-                            //                 style: dialogCancelStyle.copyWith(
-                            //                     color: Colors.white
-                            //                         .withOpacity(0.5)),
-                            //               ),
-                            //             ),
-                            //             const SizedBox(
-                            //               width: 8,
-                            //             ),
-                            //             Container(
-                            //                 width: 80,
-                            //                 child: Text(
-                            //                   'Admin',
-                            //                   style:
-                            //                       dialogCancelStyle.copyWith(
-                            //                           color: Colors.white
-                            //                               .withOpacity(0.5)),
-                            //                 ))
-                            //           ],
-                            //         )
-                            //       ],
-                            //     );
-                            //   },
-                            // ),
-                            // const SizedBox(
-                            //   height: 12,
-                            // ),
                           ],
                         ),
                       ),
@@ -133,7 +78,6 @@ class SideDrawer extends StatelessWidget {
                                   ),
                                 ],
                               ),
-          // SizedBox(height: 14,),
                               ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,

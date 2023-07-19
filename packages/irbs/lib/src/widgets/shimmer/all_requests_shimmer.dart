@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:irbs/src/models/booking_model.dart';
 import 'package:irbs/src/models/room_model.dart';
 import 'package:irbs/src/store/common_store.dart';
-import 'package:irbs/src/widgets/home/request.dart';
+import 'package:irbs/src/widgets/home/request_tile.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AllRequestsShimmer extends StatefulWidget {
@@ -49,7 +49,7 @@ class _AllRequestsShimmerState extends State<AllRequestsShimmer> {
           return Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Request(bookingData: booking, commonStore: CommonStore(),),
+              child: RequestTile(bookingData: booking, commonStore: CommonStore(),),
             ),
           );
         }

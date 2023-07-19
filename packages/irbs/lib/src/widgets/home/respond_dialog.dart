@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/functions/snackbar.dart';
-import 'package:irbs/src/globals/colors.dart';
-import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/services/api.dart';
-import 'package:irbs/src/store/common_store.dart';
-import '../../models/booking_model.dart';
 import 'package:intl/intl.dart';
+import '../../functions/snackbar.dart';
+import '../../globals/colors.dart';
+import '../../globals/styles.dart';
+import '../../models/booking_model.dart';
+import '../../services/api.dart';
+import '../../store/common_store.dart';
 
-class RespondDialog extends StatefulWidget {
+class RespondDialogue extends StatefulWidget {
   final BookingModel bookingData;
   final CommonStore commonStore;
-  const RespondDialog({required this.commonStore, required this.bookingData, super.key});
+  const RespondDialogue({required this.commonStore, required this.bookingData, super.key});
 
   @override
-  State<RespondDialog> createState() => _RespondDialogState();
+  State<RespondDialogue> createState() => _RespondDialogueState();
 }
 
-class _RespondDialogState extends State<RespondDialog> {
+class _RespondDialogueState extends State<RespondDialogue> {
   final TextEditingController textEditingController = TextEditingController();
   bool isLoading = false;
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    
     return isLoading ? Container(
       color: Themes.kCommonBoxBackground,
       height: 280,
@@ -294,7 +293,7 @@ class _RespondDialogState extends State<RespondDialog> {
                           try {
                             bool status = await APIService().acceptBooking(
                                 widget.bookingData.id,
-                                textEditingController.text ?? " "
+                                textEditingController.text
                             );
                             widget.commonStore.pending = widget.commonStore.pending + 1;
                             if (status)

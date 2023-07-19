@@ -109,25 +109,21 @@ class _BookingTileState extends State<BookingTile> {
           widget.data==null ? Container()
               : Padding(
             padding: const EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 12),
-            child: Container(
-              // padding: EdgeInsets.only(left: 16, right: 16, top: 18, bottom: 12),
-              child: InputDecorator(
-                decoration: InputDecoration(
-                  // contentPadding: EdgeInsets.zero,
-                    labelText: widget.status==0 ? 'Reason' : 'Instructions',
-                    labelStyle: kLabelStyle,
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 0.56,
-                            color: Color.fromRGBO(85, 95, 113, 1)
-                        ),
-                        borderRadius: BorderRadius.circular(4.46)
-                    )
-                ),
-                child: Text(
-                  widget.data ?? '',
-                  style: kReasonStyle,
-                ),
+            child: InputDecorator(
+              decoration: InputDecoration(
+                  labelText: widget.status==0 ? 'Reason' : 'Instructions',
+                  labelStyle: kLabelStyle,
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          width: 0.56,
+                          color: Color.fromRGBO(85, 95, 113, 1)
+                      ),
+                      borderRadius: BorderRadius.circular(4.46)
+                  )
+              ),
+              child: Text(
+                widget.data ?? '',
+                style: kReasonStyle,
               ),
             ),
           )

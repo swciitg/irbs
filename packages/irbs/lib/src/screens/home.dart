@@ -10,7 +10,7 @@ import '../widgets/home/common_rooms.dart';
 import '../widgets/home/current_bookings_widget.dart';
 import '../widgets/home/drawer.dart';
 import '../widgets/home/empty_sate.dart';
-import '../widgets/home/request_list.dart';
+import '../widgets/home/pending_request_carousel.dart';
 import '../widgets/roomlist/list_display.dart';
 import '../widgets/shimmer/current_booking_shimmer.dart';
 import '../widgets/shimmer/home_shimmer.dart';
@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontWeight: FontWeight.w600),
                       ),
                     ),
-                  if (isAdmin) const RequestList(),
+                  if (isAdmin) const PendingRequestCarousel(),
                   Padding(
                     padding: const EdgeInsets.only(
                         top: 10, left: 16, bottom: 7, right: 16),
@@ -132,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 List<BookingModel> currentBooking =
                                     snapshot.data!;
                                 if (currentBooking.isEmpty) {
-                                  return const EmptyState(
+                                  return const EmptyListPlaceholder(
                                       text: 'No Upcoming Bookings');
                                 }
                                 return SingleChildScrollView(

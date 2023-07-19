@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../globals/styles.dart';
 
 class EditRoomTextField extends StatefulWidget {

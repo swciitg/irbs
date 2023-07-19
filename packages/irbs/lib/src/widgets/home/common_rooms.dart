@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/globals/styles.dart';
+
+import '../../globals/styles.dart';
 
 class CommonRooms extends StatefulWidget {
   const CommonRooms({super.key});
@@ -16,7 +17,7 @@ class _CommonRoomsState extends State<CommonRooms> {
         Align(
           alignment: Alignment.centerLeft,
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: const Text(
               'Common Rooms',
               style: subHeadingStyle,
@@ -24,7 +25,7 @@ class _CommonRoomsState extends State<CommonRooms> {
           ),
         ),
         GridView.count(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           crossAxisCount: 3,
           crossAxisSpacing: 16,
@@ -35,7 +36,7 @@ class _CommonRoomsState extends State<CommonRooms> {
             InkWell(
               child: Container(
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Color.fromRGBO(39, 49, 65, 1),
                     borderRadius: BorderRadius.all(Radius.circular(4))),
                 child: const Center(
@@ -50,11 +51,11 @@ class _CommonRoomsState extends State<CommonRooms> {
             InkWell(
               child: Container(
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Color.fromRGBO(39, 49, 65, 1),
                     borderRadius: BorderRadius.all(Radius.circular(4))),
-                child: Center(
-                    child: const Text(
+                child: const Center(
+                    child: Text(
                   "TechBoard Room",
                   textAlign: TextAlign.center,
                   style: textStyle,
@@ -65,11 +66,11 @@ class _CommonRoomsState extends State<CommonRooms> {
             InkWell(
               child: Container(
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Color.fromRGBO(39, 49, 65, 1),
                     borderRadius: BorderRadius.all(Radius.circular(4))),
-                child: Center(
-                    child: const Text(
+                child: const Center(
+                    child: Text(
                   "Yoga Room",
                   textAlign: TextAlign.center,
                   style: textStyle,
@@ -80,11 +81,11 @@ class _CommonRoomsState extends State<CommonRooms> {
             InkWell(
               child: Container(
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Color.fromRGBO(39, 49, 65, 1),
                     borderRadius: BorderRadius.all(Radius.circular(4))),
-                child: Center(
-                    child: const Text(
+                child: const Center(
+                    child: Text(
                   "Alcher Room",
                   textAlign: TextAlign.center,
                   style: textStyle,
@@ -95,11 +96,11 @@ class _CommonRoomsState extends State<CommonRooms> {
             InkWell(
               child: Container(
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Color.fromRGBO(39, 49, 65, 1),
                     borderRadius: BorderRadius.all(Radius.circular(4))),
-                child: Center(
-                    child: const Text(
+                child: const Center(
+                    child: Text(
                   "Board Room",
                   textAlign: TextAlign.center,
                   style: textStyle,
@@ -110,11 +111,11 @@ class _CommonRoomsState extends State<CommonRooms> {
             InkWell(
               child: Container(
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Color.fromRGBO(39, 49, 65, 1),
                     borderRadius: BorderRadius.all(Radius.circular(4))),
-                child: Center(
-                    child: const Text(
+                child: const Center(
+                    child: Text(
                   "View All",
                   textAlign: TextAlign.center,
                   style: TextStyle(

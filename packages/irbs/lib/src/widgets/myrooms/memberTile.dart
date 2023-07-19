@@ -4,8 +4,7 @@ import '../../functions/launch_phone.dart';
 import '../../globals/styles.dart';
 import '../../models/room_model.dart';
 import '../../store/data_store.dart';
-import 'change_designation_dailogue.dart';
-import 'remove_member_dailogue.dart';
+import 'edit_member_dailogue.dart';
 
 class MemberTile extends StatefulWidget {
   final bool isAdmin;
@@ -25,9 +24,6 @@ class MemberTile extends StatefulWidget {
 
 class _MemberTileState extends State<MemberTile> {
   late bool removeCall;
-
-
-
 
   String name = '';
   int? phone;
@@ -128,11 +124,12 @@ class _MemberTileState extends State<MemberTile> {
                       'packages/irbs/assets/images/removeCross.svg', 2)
                 ],
                 onSelected: (value) async {
-                  if (value == 1) {
-                    showChangeDialogue(context: context, room: widget.room, index: widget.index, isPersonAdmin: widget.isPersonAdmin);
-                  } else if (value == 2) {
-                    showRemoveDialogue(context: context, room: widget.room, index: widget.index, isPersonAdmin: widget.isPersonAdmin);
-                  }
+                    showEditMemberDialogue(
+                        context: context,
+                        room: widget.room,
+                        index: widget.index,
+                        isPersonAdmin: widget.isPersonAdmin,
+                        type: value == 1? "change": "remove");
                 },
               ),
             ),
@@ -165,7 +162,3 @@ PopupMenuItem buildPopupMenuItem(String title, String iconAddress, int val) {
     ),
   );
 }
-
-
-
-
