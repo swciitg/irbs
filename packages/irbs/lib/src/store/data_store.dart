@@ -3,22 +3,34 @@ import 'package:irbs/src/models/room_model.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/booking_model.dart';
 import 'common_store.dart';
 
 class DataStore {
   static Map<String, dynamic> userData = {};
   static List<RoomModel> myRooms = [];
   static Map<String, List<RoomModel>> rooms = {};
+  static List<BookingModel> upcoming = [];
+  static bool upcomingFlag = true;
 
   Future initialiseData(CommonStore store) async {
     final results = await Future.wait([
       getMyRooms(),
       getUserData(),
       getAllRooms(),
+      getUpcomingBookings(),
       store.initialisePinnedRooms(),
       ]
     );
     return results[0];
+  }
+
+  Future<List<BookingModel>> getUpcomingBookings() async {
+      if(!upcomingFlag)
+      {
+        upcoming = await APIService().getUpcomingBokings();
+      }
+      return  upcoming;
   }
 
   Future<List<RoomModel>> getMyRooms()

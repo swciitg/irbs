@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/common_store.dart';
+import 'package:irbs/src/store/data_store.dart';
 import 'package:provider/provider.dart';
 import '../../globals/styles.dart';
 import '../../globals/colors.dart';
@@ -164,6 +165,7 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                                     ScaffoldMessenger.of(rootContext)
                                         .showSnackBar(snackBar);
                                     loading = false;
+                                    DataStore.upcomingFlag = false;
                                     store.delete = store.delete + 1;
                                   } else {
                                     var snackBar = SnackBar(
@@ -173,6 +175,7 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                                     ScaffoldMessenger.of(rootContext)
                                         .showSnackBar(snackBar);
                                     loading = false;
+                                    DataStore.upcomingFlag = false;
                                     store.delete = store.delete + 1;
                                   }
                                 } else if (result == "end") {
@@ -188,6 +191,7 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                                     ScaffoldMessenger.of(rootContext)
                                         .showSnackBar(snackBar);
                                     loading = false;
+                                    DataStore.upcomingFlag = false;
                                     store.delete = store.delete + 1;
                                   } else {
                                     var snackBar = SnackBar(
@@ -197,6 +201,7 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                                     ScaffoldMessenger.of(rootContext)
                                         .showSnackBar(snackBar);
                                     loading = false;
+                                    DataStore.upcomingFlag = false;
                                     store.delete = store.delete + 1;
                                   }
                                 } else {

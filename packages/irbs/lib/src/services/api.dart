@@ -44,6 +44,7 @@ class APIService {
         showSnackBar("Access not allowed in guest mode");
       } else if (response != null && response.statusCode == 400) {
         print(response);
+        print("HEllo worldo");
         //showSnackBar(response.data["message"]);
       }
       // admin user with expired tokens
@@ -232,19 +233,24 @@ class APIService {
     }
   }
 
-  Future<Map<String, dynamic>> createBooking(String details) async {
+  Future<String> createBooking(String details) async {
+    Response? response;
     try {
-      var response = await dio.post(Endpoints.createBooking, data: details);
+      response = await dio.post(Endpoints.createBooking, data: details);
       if (response.statusCode == 201) {
-        var booking = response.data;
-        print(booking);
-        return booking;
+        return "Success";
         // return BookingModel.fromJson(booking);
       } else {
-        throw Exception(response.statusMessage);
+        if(response.statusCode == 400)
+          {
+            return "Invalid Slot";
+          }
+        return "Some error occured";
       }
     } catch (e) {
-      throw Exception(e.toString());
+      print("Inside catch");
+      return e.toString();
+      //throw Exception(e.toString());
     }
   }
   

@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:irbs/src/models/booking_model.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/common_store.dart';
-import 'package:irbs/src/widgets/drop_down.dart';
+import 'package:irbs/src/store/data_store.dart';
 import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
 import 'package:irbs/src/widgets/home/empty_sate.dart';
 import 'package:irbs/src/widgets/shimmer/current_booking_shimmer.dart';
@@ -37,8 +37,7 @@ class _UpcomingBookingsPageState extends State<UpcomingBookingsPage> {
         child: SingleChildScrollView(
           child: Observer(builder: (context) {
             return store.delete > 0? FutureBuilder(
-              future: APIService()
-                  .getUpcomingBokings(),
+              future: DataStore().getUpcomingBookings(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const UpcomingBookingShimmer(number: 8);
