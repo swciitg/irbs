@@ -156,7 +156,7 @@ class SideDrawer extends StatelessWidget {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              RoomDetails(room: rooms![index],),
+                                              RoomDetailsScreen(room: rooms![index],),
                                         ),
                                       );
                                     },

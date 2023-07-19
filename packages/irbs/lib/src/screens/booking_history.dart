@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:irbs/src/models/booking_model.dart';
-import 'package:irbs/src/services/api.dart';
-import 'package:irbs/src/store/common_store.dart';
-import 'package:irbs/src/widgets/drop_down.dart';
-import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
-import 'package:irbs/src/widgets/home/empty_sate.dart';
-import 'package:irbs/src/widgets/shimmer/current_booking_shimmer.dart';
 import 'package:provider/provider.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
+import '../models/booking_model.dart';
+import '../services/api.dart';
+import '../store/common_store.dart';
+import '../widgets/drop_down.dart';
+import '../widgets/home/current_bookings_widget.dart';
+import '../widgets/home/empty_sate.dart';
+import '../widgets/shimmer/current_booking_shimmer.dart';
 
-class BookingHistory extends StatefulWidget {
-  const BookingHistory({Key? key}) : super(key: key);
+class BookingHistoryScreen extends StatefulWidget {
+  const BookingHistoryScreen({Key? key}) : super(key: key);
 
   @override
-  State<BookingHistory> createState() => _BookingHistoryState();
+  State<BookingHistoryScreen> createState() => _BookingHistoryScreenState();
 }
 
-class _BookingHistoryState extends State<BookingHistory> {
+class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     var store = context.read<CommonStore>();
@@ -37,7 +37,6 @@ class _BookingHistoryState extends State<BookingHistory> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              //Add dropdown here
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Row(

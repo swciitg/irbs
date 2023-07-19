@@ -78,7 +78,7 @@ class RequestList extends StatelessWidget {
                       if(snapshot.data!.isEmpty)return;
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context)=> ViewAllRequests(
+                          builder: (context)=> PendingRequestsScreen(
                             requestedBookings: snapshot.data ?? [],
                           ),
                         ),

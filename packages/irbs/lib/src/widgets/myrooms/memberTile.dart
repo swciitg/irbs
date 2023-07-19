@@ -328,7 +328,7 @@ class _ChangeDialogState extends State<ChangeDialog> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => RoomDetails(
+                        builder: (context) => RoomDetailsScreen(
                           room: value,
                         ),
                       ),
@@ -463,7 +463,7 @@ class _RemoveDialogState extends State<RemoveDialog> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => RoomDetails(
+                        builder: (context) => RoomDetailsScreen(
                           room: value,
                         ),
                       ),
