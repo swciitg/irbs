@@ -32,15 +32,17 @@ class _CalendarState extends State<Calendar> {
     final List<Meeting> meetings = <Meeting>[];
 
     for(int i = 0; i < data.length; i++){
-      meetings.add(
-        Meeting(
-          eventName: data[i].eventName,
-          from: data[i].startTime,
-          to: data[i].endTime,
-          background: Colors.red,
-          isAllDay: false
-        )
-      );
+      if(data[i].status == 'requested' || data[i].status == 'accepted'){
+        meetings.add(
+          Meeting(
+            eventName: data[i].eventName,
+            from: data[i].startTime,
+            to: data[i].endTime,
+            background: data[i].color,
+            isAllDay: false
+          )
+        );
+      }
     }
     return meetings;
   }
@@ -221,6 +223,11 @@ class _CalendarState extends State<Calendar> {
                       });
                       }
                     });
+                  },
+                  onTap: (calendarTapDetails) {
+                    print(calendarTapDetails.appointments?[0].eventName);
+                    print(calendarTapDetails.appointments?[0].from);
+                    print(calendarTapDetails.appointments?[0].to);
                   },
                   showDatePickerButton: true,
                   initialDisplayDate: DateTime.now(),
