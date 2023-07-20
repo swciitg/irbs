@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../functions/snackbar.dart';
 import '../../globals/colors.dart';
 import '../../globals/styles.dart';
@@ -130,29 +131,48 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
                       x.add(emailCtl.text);
                       String s = checkAdmin ? "owner" : "allowedUsers";
                       var details = jsonEncode({s: x});
-                      await APIService()
-                          .editRoomDetails(widget.room.id, details)
-                          .then((value) {
-                        DataStore.myRooms
-                            .removeWhere((element) => element.id == value.id);
-                        DataStore.myRooms.add(value);
-                        if (DataStore.rooms[widget.room.roomType] != null) {
-                          DataStore.rooms[widget.room.roomType]!
-                              .removeWhere((element) => element.id == value.id);
-                          DataStore.rooms[value.roomType]!.add(value);
-                        }
-                        Navigator.pop(context);
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RoomDetailsScreen(
-                              room: value,
-                            ),
-                          ),
-                        );
-                      }).catchError((error, stackTrace) {
-                        showSnackBar(error.toString());
-                      });
+
+                      try{
+                     var res = await APIService().editRoomDetails(widget.room.id, details);
+                     DataStore.myRooms.removeWhere((element) => element.id == res.id);
+                     DataStore.myRooms.add(res);
+                     if (DataStore.rooms[widget.room.roomType] != null)
+                     {
+                       print("HEHOHA");
+                       DataStore.rooms[widget.room.roomType]!
+                           .removeWhere((element) => element.id == res.id);
+                       DataStore.rooms[res.roomType]!.add(res);
+                     }
+                     Navigator.pop(context);
+                     Navigator.pushReplacement(
+                       context,
+                       MaterialPageRoute(
+                         builder: (context) => RoomDetailsScreen(
+                           room: res,
+                         ),
+                       ),
+                     );
+                      }
+                  catch(e){
+                    setState(() {
+                      apiCall = false;
+                    });
+                    print("THIS WAS THE ERROR");
+                    Fluttertoast.showToast(msg: 'Email Invalid');
+                    print(widget.room.owner);
+                    print(widget.room.allowedUsers);
+                    print(DataStore.myRooms.where((element) => element.id == widget.room.id).toList()[0].owner);
+                    print(DataStore.rooms['club']!.where((element) => element.id == widget.room.id).toList()[0].allowedUsers);
+                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RoomDetailsScreen(
+                          room: widget.room,
+                        ),
+                      ),
+                    );
+                  }
                     }
                   }
                 },
