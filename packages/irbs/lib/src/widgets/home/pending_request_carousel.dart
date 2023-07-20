@@ -5,14 +5,14 @@ import 'package:irbs/src/screens/all_requests.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/common_store.dart';
 import 'package:irbs/src/widgets/home/empty_sate.dart';
-import 'package:irbs/src/widgets/home/request.dart';
+import 'package:irbs/src/widgets/home/request_tile.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/widgets/shimmer/pending_requests_shimmer.dart';
 import 'package:provider/provider.dart';
 
-class RequestList extends StatelessWidget {
-  const RequestList({super.key});
+class PendingRequestCarousel extends StatelessWidget {
+  const PendingRequestCarousel({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class RequestList extends StatelessWidget {
               return const Center(child: Text('Error'),);
             }
             else{
-              if(snapshot.data!.isEmpty)return const EmptyState(text: 'No new requests');
+              if(snapshot.data!.isEmpty)return const EmptyListPlaceholder(text: 'No new requests');
               return Column(
                 children: [
                   SizedBox(
@@ -38,7 +38,7 @@ class RequestList extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
                         CarouselSlider(
-                          items: snapshot.data!.map((booking) => Request(
+                          items: snapshot.data!.map((booking) => RequestTile(
                             bookingData: booking, 
                             commonStore: cs,
                           )).toList(),
@@ -78,7 +78,7 @@ class RequestList extends StatelessWidget {
                       if(snapshot.data!.isEmpty)return;
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context)=> ViewAllRequests(
+                          builder: (context)=> PendingRequestsScreen(
                             requestedBookings: snapshot.data ?? [],
                           ),
                         ),

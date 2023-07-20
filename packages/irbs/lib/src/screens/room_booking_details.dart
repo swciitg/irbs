@@ -146,7 +146,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => RoomDetails(room: widget.room,)),
+                            MaterialPageRoute(builder: (context) => RoomDetailsScreen(room: widget.room,)),
                           );
                         },
                         child: const Padding(

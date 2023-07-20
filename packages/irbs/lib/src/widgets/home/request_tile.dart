@@ -6,16 +6,16 @@ import 'package:irbs/src/store/common_store.dart';
 import 'package:irbs/src/widgets/home/respond_dialog.dart';
 import '../../models/booking_model.dart';
 
-class Request extends StatefulWidget {
+class RequestTile extends StatefulWidget {
   final BookingModel bookingData;
   final CommonStore commonStore;
-  const Request({required this.bookingData, required this.commonStore, super.key});
+  const RequestTile({required this.bookingData, required this.commonStore, super.key});
 
   @override
-  State<Request> createState() => _RequestState();
+  State<RequestTile> createState() => _RequestTileState();
 }
 
-class _RequestState extends State<Request> {
+class _RequestTileState extends State<RequestTile> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -196,7 +196,7 @@ class _RequestState extends State<Request> {
                       return AlertDialog(
                         contentPadding: EdgeInsets.zero,
                         insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-                        content: RespondDialog(bookingData: widget.bookingData, commonStore: widget.commonStore),
+                        content: RespondDialogue(bookingData: widget.bookingData, commonStore: widget.commonStore),
                       );
                     },
                   );

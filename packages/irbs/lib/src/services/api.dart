@@ -279,11 +279,12 @@ class APIService {
 
   Future<bool> acceptBooking(String bookingId, String instructions)async{
     try {
+      print(instructions);
       Response res = await dio.post(
         Endpoints.baseUrl+Endpoints.acceptBooking,
         data: {
           'id': bookingId,
-          'acceptInstructions': instructions
+          'acceptInstructions': instructions == ""? "NONE": instructions
         }
       );
 

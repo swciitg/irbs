@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:irbs/src/services/api.dart';
-import 'package:irbs/src/store/common_store.dart';
-import 'package:irbs/src/store/data_store.dart';
 import 'package:provider/provider.dart';
 import '../../globals/styles.dart';
 import '../../globals/colors.dart';
 import '../../models/booking_model.dart';
+import '../../services/api.dart';
+import '../../store/common_store.dart';
+import '../../store/data_store.dart';
 
-class CurrentBookingsWidget extends StatefulWidget {
+class BookingTile extends StatefulWidget {
   final BookingModel model;
-  const CurrentBookingsWidget({
+  const BookingTile({
     Key? key,
     required this.model,
   }) : super(key: key);
 
   @override
-  State<CurrentBookingsWidget> createState() => _CurrentBookingsWidgetState();
+  State<BookingTile> createState() => _BookingTileState();
 }
 
-class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
+class _BookingTileState extends State<BookingTile> {
   Offset _tapPosition = Offset.zero;
 
   int isUpcoming() {
@@ -150,10 +150,9 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                                               ))
                                     ]);
                                 if (result == "delete") {
-                                  if(loading)
-                                    {
-                                      return;
-                                    }
+                                  if (loading) {
+                                    return;
+                                  }
                                   loading = true;
                                   String res = await APIService()
                                       .deleteBooking(widget.model.id);
@@ -179,7 +178,9 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                                     store.delete = store.delete + 1;
                                   }
                                 } else if (result == "end") {
-                                  if(loading){return;}
+                                  if (loading) {
+                                    return;
+                                  }
                                   loading = true;
                                   String res = await APIService()
                                       .endBooking(widget.model.id);
@@ -219,7 +220,8 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                 ),
               ),
             ),
-            widget.model.acceptInstructions == null && widget.model.reasonRejection == null
+            (widget.model.acceptInstructions == null || widget.model.acceptInstructions == "NONE") &&
+                    widget.model.reasonRejection == null
                 ? Container()
                 : Padding(
                     padding: const EdgeInsets.only(
@@ -237,7 +239,8 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                                   color: Color.fromRGBO(85, 95, 113, 1)),
                               borderRadius: BorderRadius.circular(4.46))),
                       child: Text(
-                        widget.model.acceptInstructions ?? widget.model.reasonRejection!,
+                        widget.model.acceptInstructions ??
+                            widget.model.reasonRejection!,
                         style: kReasonStyle,
                       ),
                     ),

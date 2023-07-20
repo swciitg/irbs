@@ -11,14 +11,14 @@ import '../widgets/roomlist/list_display.dart';
 import '../widgets/roomlist/search_bar.dart';
 import '../widgets/shimmer/room_list_shimmer.dart';
 
-class RoomList extends StatefulWidget {
-  const RoomList({Key? key}) : super(key: key);
+class RoomListScreen extends StatefulWidget {
+  const RoomListScreen({Key? key}) : super(key: key);
 
   @override
-  State<RoomList> createState() => _RoomListState();
+  State<RoomListScreen> createState() => _RoomListScreenState();
 }
 
-class _RoomListState extends State<RoomList> {
+class _RoomListScreenState extends State<RoomListScreen> {
   @override
   Widget build(BuildContext context) {
     var commonStore = context.read<CommonStore>();
@@ -54,35 +54,31 @@ class _RoomListState extends State<RoomList> {
             if (!snapshot.hasData) {
               return const RoomListShimmer();
             } else if (snapshot.hasError) {
-              return EmptyState(text: 'Some error occured, try again');
+              return const EmptyListPlaceholder(text: 'Some error occured, try again');
             }
             return Observer(builder: (context) {
               return SafeArea(
                 child: SingleChildScrollView(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const RoomSearchBar(),
-                      ListDisplay(
-                        type: 'Club Rooms',
-                        roomList: filterRooms(
-                          snapshot.data!['club']!, commonStore.searchText
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const RoomSearchBar(),
+                        ListDisplay(
+                          type: 'Club Rooms',
+                          roomList: filterRooms(
+                              snapshot.data!['club']!, commonStore.searchText),
                         ),
-                      ),
-                      ListDisplay(
-                        type: 'Common Rooms',
-                        roomList: filterRooms(
-                          snapshot.data!['common']!, commonStore.searchText
+                        ListDisplay(
+                          type: 'Common Rooms',
+                          roomList: filterRooms(snapshot.data!['common']!,
+                              commonStore.searchText),
                         ),
-                      ),
-                      ListDisplay(
-                        type: 'Board Rooms',
-                        roomList: filterRooms(
-                          snapshot.data!['board']!, commonStore.searchText
-                        ),
-                      )
-                    ]
-                  ),
+                        ListDisplay(
+                          type: 'Board Rooms',
+                          roomList: filterRooms(
+                              snapshot.data!['board']!, commonStore.searchText),
+                        )
+                      ]),
                 ),
               );
             });

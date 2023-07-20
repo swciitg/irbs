@@ -1,29 +1,28 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:irbs/src/screens/room_details/edit_room_text_field.dart';
-
 import '../../functions/snackbar.dart';
 import '../../globals/colors.dart';
 import '../../globals/styles.dart';
 import '../../models/room_model.dart';
 import '../../services/api.dart';
 import '../../store/data_store.dart';
+import '../../widgets/myrooms/edit_room_text_field.dart';
 import 'room_details.dart';
 
-class EditRoomDetails extends StatefulWidget {
-  RoomModel data;
-  EditRoomDetails({super.key, required this.data});
+class EditRoomScreen extends StatefulWidget {
+  final RoomModel data;
+  const EditRoomScreen({super.key, required this.data});
 
   @override
-  State<EditRoomDetails> createState() => _EditRoomDetailsState();
+  State<EditRoomScreen> createState() => _EditRoomScreenState();
 }
 
-class _EditRoomDetailsState extends State<EditRoomDetails> {
+class _EditRoomScreenState extends State<EditRoomScreen> {
   TextEditingController roomNameCtl = TextEditingController();
   TextEditingController capacityCtl = TextEditingController();
   TextEditingController instructionCtl = TextEditingController();
-  final _formkey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   bool apiCall = false;
   @override
   void initState() {
@@ -34,6 +33,7 @@ class _EditRoomDetailsState extends State<EditRoomDetails> {
         widget.data.instructions == null ? '' : widget.data.instructions!;
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
@@ -60,15 +60,22 @@ class _EditRoomDetailsState extends State<EditRoomDetails> {
           child: Container(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
             child: Form(
-              key: _formkey,
+              key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  EditRoomTextField(title: 'Room Name', controller: roomNameCtl),
-                  const SizedBox(height: 16,),
-                  EditRoomTextField(title: 'Room Capacity', controller: capacityCtl),
-                  const SizedBox(height: 16,),
-                  EditRoomTextField(title: "Instructions", controller: instructionCtl),
+                  EditRoomTextField(
+                      title: 'Room Name', controller: roomNameCtl),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  EditRoomTextField(
+                      title: 'Room Capacity', controller: capacityCtl),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  EditRoomTextField(
+                      title: "Instructions", controller: instructionCtl),
                 ],
               ),
             ),
@@ -101,12 +108,9 @@ class _EditRoomDetailsState extends State<EditRoomDetails> {
                   child: InkWell(
                       onTap: () async {
                         if (!apiCall) {
-                          if (_formkey.currentState!.validate() == false) {
-                            print('invalid');
+                          if (_formKey.currentState!.validate() == false) {
+                            return;
                           } else {
-                            print(roomNameCtl.text);
-                            print(capacityCtl.text);
-                            print(instructionCtl.text);
                             var details = jsonEncode({
                               'roomName': roomNameCtl.text,
                               'roomCapacity': capacityCtl.text,
@@ -118,7 +122,6 @@ class _EditRoomDetailsState extends State<EditRoomDetails> {
                             await APIService()
                                 .editRoomDetails(widget.data.id, details)
                                 .then((value) {
-                              print(value);
                               DataStore.myRooms.removeWhere(
                                   (element) => element.id == value.id);
                               DataStore.myRooms.add(value);
@@ -133,17 +136,17 @@ class _EditRoomDetailsState extends State<EditRoomDetails> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => RoomDetails(
+                                  builder: (context) => RoomDetailsScreen(
                                     room: value,
                                   ),
                                 ),
                               );
                             }).catchError((error, stackTrace) {
-                        showSnackBar(error.toString());
-                        setState(() {
-                          apiCall = false;
-                        });
-                      });
+                              showSnackBar(error.toString());
+                              setState(() {
+                                apiCall = false;
+                              });
+                            });
                           }
                         }
                       },

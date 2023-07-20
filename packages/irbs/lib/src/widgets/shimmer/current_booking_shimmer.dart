@@ -33,7 +33,7 @@ class _UpcomingBookingShimmerState extends State<UpcomingBookingShimmer> {
                 const NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context,
                     int index) {
-                  return CurrentBookingsWidget(
+                  return BookingTile(
                     model: BookingModel(
                         roomId: 'roomId',
                         user: 'user',
