@@ -25,6 +25,16 @@ class DataStore {
     return results[0];
   }
 
+  clearAll(){
+    upcomingFlag = false;
+    userData = {};
+    myRooms = [];
+    rooms = {};
+  }
+  clear(){
+    upcomingFlag = false;
+  }
+
   Future<List<BookingModel>> getUpcomingBookings() async {
       if(!upcomingFlag)
       {
