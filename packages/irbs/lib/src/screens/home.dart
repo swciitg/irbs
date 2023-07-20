@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             BookingModel ans =
                                                 currentBooking[index];
 
-                                            return CurrentBookingsWidget(
+                                            return BookingTile(
                                               model: ans,
                                             );
                                           }),

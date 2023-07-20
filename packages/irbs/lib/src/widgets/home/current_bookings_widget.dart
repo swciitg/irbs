@@ -8,18 +8,18 @@ import '../../services/api.dart';
 import '../../store/common_store.dart';
 import '../../store/data_store.dart';
 
-class CurrentBookingsWidget extends StatefulWidget {
+class BookingTile extends StatefulWidget {
   final BookingModel model;
-  const CurrentBookingsWidget({
+  const BookingTile({
     Key? key,
     required this.model,
   }) : super(key: key);
 
   @override
-  State<CurrentBookingsWidget> createState() => _CurrentBookingsWidgetState();
+  State<BookingTile> createState() => _BookingTileState();
 }
 
-class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
+class _BookingTileState extends State<BookingTile> {
   Offset _tapPosition = Offset.zero;
 
   int isUpcoming() {
@@ -220,7 +220,7 @@ class _CurrentBookingsWidgetState extends State<CurrentBookingsWidget> {
                 ),
               ),
             ),
-            widget.model.acceptInstructions == null &&
+            (widget.model.acceptInstructions == null || widget.model.acceptInstructions == "NONE") &&
                     widget.model.reasonRejection == null
                 ? Container()
                 : Padding(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../functions/launch_phone.dart';
 import '../../globals/styles.dart';
 import '../../models/room_model.dart';
 import '../../screens/room_details/room_details.dart';
@@ -137,7 +138,9 @@ class SideDrawer extends StatelessWidget {
                                     width: 8,
                                   ),
                                   GestureDetector(
-                                    onTap: () {},
+                                    onTap: () async {
+                                      await launchEmail("swc@iitg.ac.in");
+                                    },
                                     child: Text(
                                       'Contact Us',
                                       style: cancelButtonStyle.copyWith(

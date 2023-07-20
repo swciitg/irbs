@@ -57,7 +57,7 @@ class _UpcomingBookingsScreenState extends State<UpcomingBookingsScreen> {
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (BuildContext context, int index) {
                                   BookingModel? ans = currentBooking[index];
-                                  return CurrentBookingsWidget(
+                                  return BookingTile(
                                     model: ans,
                                   );
                                 }),

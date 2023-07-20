@@ -75,7 +75,7 @@ class HomeShimmer extends StatelessWidget {
                         physics:
                             const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index){
-                          return CurrentBookingsWidget(
+                          return BookingTile(
                             model: BookingModel(
                               roomId: 'roomId',
                               user: 'user',

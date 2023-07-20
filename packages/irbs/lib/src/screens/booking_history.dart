@@ -73,7 +73,7 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (BuildContext context, int index) {
                                 BookingModel? ans = currentBooking[index];
-                                return CurrentBookingsWidget(
+                                return BookingTile(
                                   model: ans,
                                 );
                               }),
