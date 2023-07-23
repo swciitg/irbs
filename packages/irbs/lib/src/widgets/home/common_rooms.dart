@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:irbs/src/models/room_model.dart';
+import 'package:provider/provider.dart';
 
+import '../../functions/filter_rooms.dart';
 import '../../globals/styles.dart';
+import '../../screens/room_booking_details.dart';
+import '../../store/common_store.dart';
+import '../../store/data_store.dart';
+import '../shimmer/room_list_shimmer.dart';
+import 'empty_sate.dart';
 
 class CommonRooms extends StatefulWidget {
   const CommonRooms({super.key});
@@ -10,6 +19,7 @@ class CommonRooms extends StatefulWidget {
 }
 
 class _CommonRoomsState extends State<CommonRooms> {
+  int count = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,113 +34,105 @@ class _CommonRoomsState extends State<CommonRooms> {
             ),
           ),
         ),
-        GridView.count(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          crossAxisCount: 3,
-          crossAxisSpacing: 16,
-          childAspectRatio: 99 / 72,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          mainAxisSpacing: 12,
-          children: [
-            InkWell(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                    color: Color.fromRGBO(39, 49, 65, 1),
-                    borderRadius: BorderRadius.all(Radius.circular(4))),
-                child: const Center(
-                    child: Text(
-                  "Conf. Room",
-                  textAlign: TextAlign.center,
-                  style: textStyle,
-                )),
-              ),
-              onTap: () {},
-            ),
-            InkWell(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                    color: Color.fromRGBO(39, 49, 65, 1),
-                    borderRadius: BorderRadius.all(Radius.circular(4))),
-                child: const Center(
-                    child: Text(
-                  "TechBoard Room",
-                  textAlign: TextAlign.center,
-                  style: textStyle,
-                )),
-              ),
-              onTap: () {},
-            ),
-            InkWell(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                    color: Color.fromRGBO(39, 49, 65, 1),
-                    borderRadius: BorderRadius.all(Radius.circular(4))),
-                child: const Center(
-                    child: Text(
-                  "Yoga Room",
-                  textAlign: TextAlign.center,
-                  style: textStyle,
-                )),
-              ),
-              onTap: () {},
-            ),
-            InkWell(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                    color: Color.fromRGBO(39, 49, 65, 1),
-                    borderRadius: BorderRadius.all(Radius.circular(4))),
-                child: const Center(
-                    child: Text(
-                  "Alcher Room",
-                  textAlign: TextAlign.center,
-                  style: textStyle,
-                )),
-              ),
-              onTap: () {},
-            ),
-            InkWell(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                    color: Color.fromRGBO(39, 49, 65, 1),
-                    borderRadius: BorderRadius.all(Radius.circular(4))),
-                child: const Center(
-                    child: Text(
-                  "Board Room",
-                  textAlign: TextAlign.center,
-                  style: textStyle,
-                )),
-              ),
-              onTap: () {},
-            ),
-            InkWell(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                    color: Color.fromRGBO(39, 49, 65, 1),
-                    borderRadius: BorderRadius.all(Radius.circular(4))),
-                child: const Center(
-                    child: Text(
-                  "View All",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      package: 'irbs',
-                      color: Colors.white,
-                      fontSize: 14,
-                      decoration: TextDecoration.underline),
-                )),
-              ),
-              onTap: () {},
-            )
-          ],
+
+        FutureBuilder(
+            future: DataStore().getAllRooms(),
+            builder: (context, snapshot) {
+              var commonStore = context.read<CommonStore>();
+              if (!snapshot.hasData) {
+                return const RoomListShimmer();
+              } else if (snapshot.hasError) {
+                return const EmptyListPlaceholder(text: 'Some error occured, try again');
+              }
+              return Observer(builder: (context) {
+                commonStore.setSearchText('');
+                List<RoomModel> commonRooms = filterRooms(
+                    snapshot.data!['club']!, commonStore.searchText);
+                count =commonRooms.length;
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: GridView.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3, // Number of columns in the grid
+                          crossAxisSpacing: 16,
+                          childAspectRatio: 99 / 72,
+                          mainAxisSpacing: 12),
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: commonRooms.length>6 ? 6: commonRooms.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        if(index==6) return const GridWidget(name: "View All");
+                        return  GridWidget(name: commonRooms[index].roomName,room: commonRooms[index],);
+                      },
+                    ),
+                  ),
+                );
+              });
+            }
         ),
       ],
+    );
+  }
+}
+
+class CommonRoomGrid extends StatefulWidget {
+  final List<RoomModel> commonRooms;
+  const CommonRoomGrid({Key? key, required this.commonRooms}) : super(key: key);
+
+  @override
+  State<CommonRoomGrid> createState() => _CommonRoomGridState();
+}
+
+class _CommonRoomGridState extends State<CommonRoomGrid> {
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3, // Number of columns in the grid
+          crossAxisSpacing: 16,
+          childAspectRatio: 99 / 72,
+          mainAxisSpacing: 12),
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: widget.commonRooms.length,
+      itemBuilder: (BuildContext context, int index) {
+        return  GridWidget(name: widget.commonRooms[index].roomName);
+      },
+    );
+  }
+}
+
+class GridWidget extends StatelessWidget {
+  final String name;
+  final RoomModel? room ;
+  const GridWidget({Key? key, required this.name, this.room}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: const BoxDecoration(
+            color: Color.fromRGBO(39, 49, 65, 1),
+            borderRadius: BorderRadius.all(Radius.circular(4))),
+        child: Center(
+            child: Text(
+              name,
+              textAlign: TextAlign.center,
+              style: textStyle,
+            )),
+      ),
+      onTap: () {
+        if(room != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => RoomBookingDetails(
+                  room: room!,
+                )),
+          );
+        }
+      },
     );
   }
 }
