@@ -17,6 +17,7 @@ import '../widgets/shimmer/home_shimmer.dart';
 import 'upcoming_bookings.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const id = "/irbs/home";
   const HomeScreen({super.key});
 
   @override
@@ -84,12 +85,11 @@ class _HomeScreenState extends State<HomeScreen> {
             body: RefreshIndicator(
               onRefresh: () async {
                 await DataStore().clear();
-                setState(() {
-
-                });
+                setState(() {});
                 return DataStore().initialiseData(cs);
                 },
               child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

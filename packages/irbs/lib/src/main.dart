@@ -27,9 +27,9 @@ class _IRBSState extends State<IRBS> {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: '/irbs/home',
+        initialRoute: HomeScreen.id,
         routes: {
-          '/irbs/home': (context) => const HomeScreen(),
+          HomeScreen.id: (context) => const HomeScreen(),
           '/irbs/onboarding': (context) => const OnboardingScreen(),
           '/irbs/roomList': (context) => const RoomListScreen(),
           '/irbs/bookingHistory': (context) => const BookingHistoryScreen(),

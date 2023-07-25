@@ -97,12 +97,13 @@ class SideDrawer extends StatelessWidget {
                                     ),
                                   ),
                                   onTap: () {
+                                    print(rooms![index]);
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             RoomDetailsScreen(room: rooms![index],),
                                       ),
-                                    );
+                                    ).then((value) => Navigator.of(context).pop());
                                   },
                                 );
                               },

@@ -70,4 +70,8 @@ class DataStore {
     return rooms;
   }
 
+  void clearMyRooms(){
+    myRooms.clear();
+  }
+
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:irbs/src/screens/home.dart';
 import '../../functions/snackbar.dart';
 import '../../globals/colors.dart';
 import '../../globals/styles.dart';
@@ -16,7 +17,7 @@ Future<void> addMemberDialog(BuildContext context, RoomModel room) async {
       context: context,
       builder: (context) {
         return AddMemberDailogue(room: room);
-      });
+      }).then((value) => Navigator.of(context).pop());
 }
 
 class AddMemberDailogue extends StatefulWidget {
@@ -143,15 +144,8 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
                            .removeWhere((element) => element.id == res.id);
                        DataStore.rooms[res.roomType]!.add(res);
                      }
-                     Navigator.pop(context);
-                     Navigator.pushReplacement(
-                       context,
-                       MaterialPageRoute(
-                         builder: (context) => RoomDetailsScreen(
-                           room: res,
-                         ),
-                       ),
-                     );
+                     DataStore().clearMyRooms();
+                     Navigator.popUntil(context, ModalRoute.withName(HomeScreen.id));
                       }
                   catch(e){
                     setState(() {
@@ -162,16 +156,8 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
                     print(widget.room.owner);
                     print(widget.room.allowedUsers);
                     print(DataStore.myRooms.where((element) => element.id == widget.room.id).toList()[0].owner);
-                    print(DataStore.rooms['club']!.where((element) => element.id == widget.room.id).toList()[0].allowedUsers);
+                    DataStore().clearMyRooms();
                     Navigator.pop(context);
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RoomDetailsScreen(
-                          room: widget.room,
-                        ),
-                      ),
-                    );
                   }
                     }
                   }
