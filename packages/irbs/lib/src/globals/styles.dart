@@ -14,7 +14,14 @@ const textStyle = TextStyle(
   color: Themes.white,
   fontSize: 14,
 );
-
+const kBookingDetailStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  package: 'irbs',
+  fontSize: 14.0,
+  fontWeight: FontWeight.w500,
+  letterSpacing: 0.5,
+  color: Colors.white,
+);
 const subHeadingStyle = TextStyle(
     fontFamily: 'Montserrat',
     package: 'irbs',
