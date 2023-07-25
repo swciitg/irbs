@@ -28,7 +28,7 @@ class SideDrawer extends StatelessWidget {
               List<RoomModel>? rooms = snapshot.data;
               return Stack(
                 children: [
-                  Column(
+                  ListView(
                     children: [
                       Container(
                         width: 240,
@@ -59,57 +59,55 @@ class SideDrawer extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Expanded(
-                        child: Container(
-                          width: 240,
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "My Rooms",
-                                    style: addmemberStyle.copyWith(
-                                        color: Colors.white.withOpacity(0.5)),
-                                  ),
-                                ],
-                              ),
-                              ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: rooms?.length,
-                                itemBuilder:
-                                    (BuildContext context, int index) {
-                                  String? roomName = rooms?[index].roomName;
-                                  return InkWell(
-                                    child: Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 8),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 6),
-                                      child: Text(
-                                        roomName!,
-                                        style: sideDrawerRoomStyle,
-                                      ),
+                      Container(
+                        width: 240,
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "My Rooms",
+                                  style: addmemberStyle.copyWith(
+                                      color: Colors.white.withOpacity(0.5)),
+                                ),
+                              ],
+                            ),
+                            ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: rooms?.length,
+                              itemBuilder:
+                                  (BuildContext context, int index) {
+                                String? roomName = rooms?[index].roomName;
+                                return InkWell(
+                                  child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 8),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 6),
+                                    child: Text(
+                                      roomName!,
+                                      style: sideDrawerRoomStyle,
                                     ),
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              RoomDetailsScreen(room: rooms![index],),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
+                                  ),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            RoomDetailsScreen(room: rooms![index],),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ),
                       Align(
