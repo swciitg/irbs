@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/widgets/onboarding/nav_dots.dart';
@@ -66,9 +67,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.52,
-            child: Image(
-              image: ResizeImage(img,height: (MediaQuery.of(context).size.height * 0.52).toInt(),),
-            ),
+            // child: Image(
+            //   image: ResizeImage(img,height: (MediaQuery.of(context).size.height * 0.52).toInt(),),
+            // ),
+            child: SvgPicture.asset('assets/onboarding_${activeIndex + 1}.svg', package: 'irbs'),
           ),
           SizedBox(
             height: 0.04 * MediaQuery.of(context).size.height,

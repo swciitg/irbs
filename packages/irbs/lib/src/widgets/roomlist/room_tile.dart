@@ -42,8 +42,8 @@ class _RoomTileState extends State<RoomTile> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
+            // Row(
+            //   children: [
                 // Container(
                 //   margin:
                 //       const EdgeInsets.symmetric(vertical: 9, horizontal: 16),
@@ -55,19 +55,23 @@ class _RoomTileState extends State<RoomTile> {
                 //         BorderRadius.circular(4), // Set the radius here
                 //   ),
                 // ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 15, bottom: 16, left: 15),
-                  child: Text(
-                    widget.room.roomName,
-                    style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w500),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width*0.75,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 15, bottom: 16, left: 15),
+                    child: Text(
+                      widget.room.roomName,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
-              ],
-            ),
+            //   ],
+            // ),
             Observer(builder: (context) {
               return Row(
                 children: [
