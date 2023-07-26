@@ -23,6 +23,7 @@ class RoomSearchBar extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: 32,
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 8, horizontal: 11),
@@ -33,13 +34,14 @@ class RoomSearchBar extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 2),
+                // height: 20,
+                // margin: const EdgeInsets.only(top: 2),
                 width: MediaQuery.of(context).size.width - 80,
                 child: TextField(
                   onChanged: (value) {
                     commonStore.setSearchText(value);
                   },
-                  style: editRoomText,
+                  style: editRoomInstrText,
                   maxLines: 1,
                   scrollPhysics: const ClampingScrollPhysics(),
                   cursorColor: Themes.comet,
