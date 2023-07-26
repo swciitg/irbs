@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
@@ -65,7 +67,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.52,
             child: Image(
-              image: img,
+              image: ResizeImage(img,height: (MediaQuery.of(context).size.height * 0.52).toInt(),),
             ),
           ),
           SizedBox(
