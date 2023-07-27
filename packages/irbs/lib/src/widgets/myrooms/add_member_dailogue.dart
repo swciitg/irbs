@@ -135,16 +135,16 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
 
                       try{
                      var res = await APIService().editRoomDetails(widget.room.id, details);
-                     DataStore.myRooms.removeWhere((element) => element.id == res.id);
-                     DataStore.myRooms.add(res);
-                     if (DataStore.rooms[widget.room.roomType] != null)
-                     {
-                       print("HEHOHA");
-                       DataStore.rooms[widget.room.roomType]!
-                           .removeWhere((element) => element.id == res.id);
-                       DataStore.rooms[res.roomType]!.add(res);
-                     }
-                     DataStore().clearMyRooms();
+                     // DataStore.myRooms.removeWhere((element) => element.id == res.id);
+                     // DataStore.myRooms.add(res);
+                     // if (DataStore.rooms[widget.room.roomType] != null)
+                     // {
+                     //   print("HEHOHA");
+                     //   // DataStore.rooms[widget.room.roomType]!
+                     //   //     .removeWhere((element) => element.id == res.id);
+                     //   // DataStore.rooms[res.roomType]!.add(res);
+                     // }
+                     //DataStore().clearMyRooms();
                      Navigator.popUntil(context, ModalRoute.withName(HomeScreen.id));
                       }
                   catch(e){
@@ -155,8 +155,8 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
                     Fluttertoast.showToast(msg: 'Email Invalid');
                     print(widget.room.owner);
                     print(widget.room.allowedUsers);
-                    print(DataStore.myRooms.where((element) => element.id == widget.room.id).toList()[0].owner);
-                    DataStore().clearMyRooms();
+                    // print(DataStore.myRooms.where((element) => element.id == widget.room.id).toList()[0].owner);
+                    // DataStore().clearMyRooms();
                     Navigator.pop(context);
                   }
                     }

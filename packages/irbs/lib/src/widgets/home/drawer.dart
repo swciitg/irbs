@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import '../../functions/launch_phone.dart';
 import '../../globals/styles.dart';
 import '../../models/room_model.dart';
 import '../../screens/room_details/room_details.dart';
 import '../../store/data_store.dart';
+import '../../store/room_detail_store.dart';
 
 class SideDrawer extends StatelessWidget {
   const SideDrawer({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var rd = context.read<RoomDetailStore>();
     return SafeArea(
       child: Container(
         width: 240,
@@ -18,7 +21,7 @@ class SideDrawer extends StatelessWidget {
           borderRadius: BorderRadius.circular(4)
         ),
         child: FutureBuilder(
-            future: DataStore().getMyRooms(),
+            future: rd.getMyrooms(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return const Center(child: CircularProgressIndicator());

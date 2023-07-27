@@ -6,6 +6,7 @@ import '../globals/styles.dart';
 import '../models/booking_model.dart';
 import '../store/common_store.dart';
 import '../store/data_store.dart';
+import '../store/room_detail_store.dart';
 import '../widgets/home/current_bookings_widget.dart';
 import '../widgets/home/empty_sate.dart';
 import '../widgets/shimmer/current_booking_shimmer.dart';
@@ -21,6 +22,8 @@ class _UpcomingBookingsScreenState extends State<UpcomingBookingsScreen> {
   @override
   Widget build(BuildContext context) {
     var store = context.read<CommonStore>();
+    var rd = context.read<RoomDetailStore>();
+
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
@@ -37,7 +40,7 @@ class _UpcomingBookingsScreenState extends State<UpcomingBookingsScreen> {
           child: Observer(builder: (context) {
             return store.delete > 0
                 ? FutureBuilder(
-                    future: DataStore().getUpcomingBookings(),
+                    future: rd.getBookings(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
                         return const UpcomingBookingShimmer(number: 8);

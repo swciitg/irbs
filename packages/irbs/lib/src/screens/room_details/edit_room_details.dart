@@ -122,16 +122,16 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
                             await APIService()
                                 .editRoomDetails(widget.data.id, details)
                                 .then((value) {
-                              DataStore.myRooms.removeWhere(
-                                  (element) => element.id == value.id);
-                              DataStore.myRooms.add(value);
-                              if (DataStore.rooms[widget.data.roomType] !=
-                                  null) {
-                                DataStore.rooms[widget.data.roomType]!
-                                    .removeWhere(
-                                        (element) => element.id == value.id);
-                                DataStore.rooms[value.roomType]!.add(value);
-                              }
+                              // DataStore.myRooms.removeWhere(
+                              //     (element) => element.id == value.id);
+                              // DataStore.myRooms.add(value);
+                              // if (DataStore.rooms[widget.data.roomType] !=
+                              //     null) {
+                              //   DataStore.rooms[widget.data.roomType]!
+                              //       .removeWhere(
+                              //           (element) => element.id == value.id);
+                              //   DataStore.rooms[value.roomType]!.add(value);
+                              // }
                               Navigator.pop(context);
                               Navigator.pushReplacement(
                                 context,

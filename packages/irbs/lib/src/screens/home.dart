@@ -6,6 +6,7 @@ import '../globals/styles.dart';
 import '../models/booking_model.dart';
 import '../store/common_store.dart';
 import '../store/data_store.dart';
+import '../store/room_detail_store.dart';
 import '../widgets/home/common_rooms.dart';
 import '../widgets/home/current_bookings_widget.dart';
 import '../widgets/home/drawer.dart';
@@ -30,8 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var cs = context.read<CommonStore>();
+    var rd = context.read<RoomDetailStore>();
+
     return FutureBuilder(
-      future: DataStore().initialiseData(cs),
+      future: DataStore().initialiseData(context),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const HomeShimmer();
@@ -86,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onRefresh: () async {
                 await DataStore().clear();
                 setState(() {});
-                return DataStore().initialiseData(cs);
+                return DataStore().initialiseData(context);
                 },
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -131,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Observer(builder: (context) {
                       return cs.delete > 0
                           ? FutureBuilder(
-                              future: DataStore().getUpcomingBookings(),
+                              future: rd.getBookings(),
                               builder: (context, snapshot) {
                                 if (!snapshot.hasData) {
                                   return const UpcomingBookingShimmer(number: 3);

@@ -124,14 +124,14 @@ class _EditMemberDailogueState extends State<EditMemberDailogue> {
                   await APIService()
                       .editRoomDetails(widget.room.id, details)
                       .then((value) {
-                    DataStore.myRooms
-                        .removeWhere((element) => element.id == value.id);
-                    DataStore.myRooms.add(value);
-                    if (DataStore.rooms[widget.room.roomType] != null) {
-                      DataStore.rooms[widget.room.roomType]!
-                          .removeWhere((element) => element.id == value.id);
-                      DataStore.rooms[value.roomType]!.add(value);
-                    }
+                    // DataStore.myRooms
+                    //     .removeWhere((element) => element.id == value.id);
+                    // DataStore.myRooms.add(value);
+                    // if (DataStore.rooms[widget.room.roomType] != null) {
+                    //   DataStore.rooms[widget.room.roomType]!
+                    //       .removeWhere((element) => element.id == value.id);
+                    //   DataStore.rooms[value.roomType]!.add(value);
+                    // }
                     Navigator.pop(context);
                     Navigator.pushReplacement(
                       context,
@@ -163,14 +163,14 @@ class _EditMemberDailogueState extends State<EditMemberDailogue> {
                   await APIService()
                       .editRoomDetails(widget.room.id, details)
                       .then((value) {
-                    DataStore.myRooms
-                        .removeWhere((element) => element.id == value.id);
-                    DataStore.myRooms.add(value);
-                    if (DataStore.rooms[widget.room.roomType] != null) {
-                      DataStore.rooms[widget.room.roomType]!
-                          .removeWhere((element) => element.id == value.id);
-                      DataStore.rooms[value.roomType]!.add(value);
-                    }
+                    // DataStore.myRooms
+                    //     .removeWhere((element) => element.id == value.id);
+                    // DataStore.myRooms.add(value);
+                    // if (DataStore.rooms[widget.room.roomType] != null) {
+                    //   DataStore.rooms[widget.room.roomType]!
+                    //       .removeWhere((element) => element.id == value.id);
+                    //   DataStore.rooms[value.roomType]!.add(value);
+                    // }
                     Navigator.pop(context);
                     Navigator.pushReplacement(
                       context,
@@ -192,3 +192,4 @@ class _EditMemberDailogueState extends State<EditMemberDailogue> {
     );
   }
 }
+
