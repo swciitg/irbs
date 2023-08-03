@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:irbs/src/store/room_detail_store.dart';
 import 'package:provider/provider.dart';
 import '../../globals/styles.dart';
 import '../../globals/colors.dart';
@@ -44,7 +45,7 @@ class _BookingTileState extends State<BookingTile> {
   @override
   Widget build(BuildContext context) {
     var rootContext = context;
-    var store = context.read<CommonStore>();
+    var store = rootContext.read<RoomDetailStore>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       child: Container(
@@ -165,7 +166,7 @@ class _BookingTileState extends State<BookingTile> {
                                         .showSnackBar(snackBar);
                                     loading = false;
                                     DataStore.upcomingFlag = false;
-                                    store.delete = store.delete + 1;
+                                    await store.setUpcomingBookings();
                                   } else {
                                     var snackBar = SnackBar(
                                       content: Text(res),
@@ -175,7 +176,7 @@ class _BookingTileState extends State<BookingTile> {
                                         .showSnackBar(snackBar);
                                     loading = false;
                                     DataStore.upcomingFlag = false;
-                                    store.delete = store.delete + 1;
+                                    await store.setUpcomingBookings();
                                   }
                                 } else if (result == "end") {
                                   if (loading) {
@@ -193,7 +194,7 @@ class _BookingTileState extends State<BookingTile> {
                                         .showSnackBar(snackBar);
                                     loading = false;
                                     DataStore.upcomingFlag = false;
-                                    store.delete = store.delete + 1;
+                                    await store.setUpcomingBookings();
                                   } else {
                                     var snackBar = SnackBar(
                                       content: Text(res),
@@ -203,7 +204,7 @@ class _BookingTileState extends State<BookingTile> {
                                         .showSnackBar(snackBar);
                                     loading = false;
                                     DataStore.upcomingFlag = false;
-                                    store.delete = store.delete + 1;
+                                    await store.setUpcomingBookings();
                                   }
                                 } else {
                                   print("nothing");

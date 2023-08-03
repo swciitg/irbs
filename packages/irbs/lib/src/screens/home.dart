@@ -13,7 +13,6 @@ import '../widgets/home/drawer.dart';
 import '../widgets/home/empty_sate.dart';
 import '../widgets/home/pending_request_carousel.dart';
 import '../widgets/roomlist/list_display.dart';
-import '../widgets/shimmer/current_booking_shimmer.dart';
 import '../widgets/shimmer/home_shimmer.dart';
 import 'upcoming_bookings.dart';
 
@@ -90,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 await DataStore().clear();
                 setState(() {});
                 return DataStore().initialiseData(context);
-                },
+              },
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
@@ -98,8 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     if (isAdmin)
                       Padding(
-                        padding:
-                            const EdgeInsets.only(top: 18, left: 16, bottom: 10),
+                        padding: const EdgeInsets.only(
+                            top: 18, left: 16, bottom: 10),
                         child: Text(
                           'Requests',
                           style: kSubHeadingStyle.copyWith(
@@ -132,86 +131,64 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Observer(builder: (context) {
-                      return cs.delete > 0
-                          ? FutureBuilder(
-                              future: rd.getBookings(),
-                              builder: (context, snapshot) {
-                                if (!snapshot.hasData) {
-                                  return const UpcomingBookingShimmer(number: 3);
-                                } else if (snapshot.hasError) {
-                                  return const Text('Error');
-                                } else {
-                                  List<BookingModel> currentBooking =
-                                      snapshot.data!;
-                                  if (currentBooking.isEmpty) {
-                                    return const EmptyListPlaceholder(
-                                        text: 'No Upcoming Bookings');
-                                  }
-                                  return SingleChildScrollView(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: currentBooking.length > 3
-                                                ? 3
-                                                : currentBooking.length,
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              BookingModel ans =
-                                                  currentBooking[index];
+                      return rd.upcomingBookings.isEmpty
+                          ? const EmptyListPlaceholder(
+                              text: 'No Upcoming Bookings')
+                          : SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: rd.upcomingBookings.length > 3
+                                          ? 3
+                                          : rd.upcomingBookings.length,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        BookingModel ans =
+                                            rd.upcomingBookings[index];
 
-                                              return BookingTile(
-                                                model: ans,
-                                              );
-                                            }),
-                                        currentBooking.length > 3
-                                            ? GestureDetector(
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                          horizontal: 16,
-                                                          vertical: 12),
-                                                  child: Container(
-                                                    height: 40,
-                                                    width: double.maxFinite,
-                                                    decoration: BoxDecoration(
-                                                        color: snapshot
-                                                                .data!.isEmpty
-                                                            ? Themes
-                                                                .disabledButtonBackground
-                                                            : Themes
-                                                                .kCommonBoxBackground,
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                4)),
-                                                    child: const Center(
-                                                      child: Text(
-                                                        'View all upcoming bookings',
-                                                        style:
-                                                            kRequestedRoomStyle,
-                                                      ),
-                                                    ),
-                                                  ),
+                                        return BookingTile(
+                                          model: ans,
+                                        );
+                                      }),
+                                  rd.upcomingBookings.length > 3
+                                      ? GestureDetector(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 16, vertical: 12),
+                                            child: Container(
+                                              height: 40,
+                                              width: double.maxFinite,
+                                              decoration: BoxDecoration(
+                                                  color: snapshot.data!.isEmpty
+                                                      ? Themes
+                                                          .disabledButtonBackground
+                                                      : Themes
+                                                          .kCommonBoxBackground,
+                                                  borderRadius:
+                                                      BorderRadius.circular(4)),
+                                              child: const Center(
+                                                child: Text(
+                                                  'View all upcoming bookings',
+                                                  style: kRequestedRoomStyle,
                                                 ),
-                                                onTap: () {
-                                                  Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const UpcomingBookingsScreen()));
-                                                },
-                                              )
-                                            : Container(),
-                                      ],
-                                    ),
-                                  );
-                                }
-                              },
-                            )
-                          : Container();
+                                              ),
+                                            ),
+                                          ),
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const UpcomingBookingsScreen()));
+                                          },
+                                        )
+                                      : Container(),
+                                ],
+                              ),
+                            );
                     }),
                     Observer(builder: (context) {
                       return ListDisplay(

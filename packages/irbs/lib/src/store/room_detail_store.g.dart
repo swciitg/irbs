@@ -25,6 +25,22 @@ mixin _$RoomDetailStore on _RoomDetailStore, Store {
     });
   }
 
+  late final _$currentRoomAtom =
+      Atom(name: '_RoomDetailStore.currentRoom', context: context);
+
+  @override
+  RoomModel get currentRoom {
+    _$currentRoomAtom.reportRead();
+    return super.currentRoom;
+  }
+
+  @override
+  set currentRoom(RoomModel value) {
+    _$currentRoomAtom.reportWrite(value, super.currentRoom, () {
+      super.currentRoom = value;
+    });
+  }
+
   late final _$myRoomsAtom =
       Atom(name: '_RoomDetailStore.myRooms', context: context);
 
@@ -81,37 +97,51 @@ mixin _$RoomDetailStore on _RoomDetailStore, Store {
     return _$getAllRoomsAsyncAction.run(() => super.getAllRooms());
   }
 
+  late final _$setMyroomsAsyncAction =
+      AsyncAction('_RoomDetailStore.setMyrooms', context: context);
+
+  @override
+  Future setMyrooms() {
+    return _$setMyroomsAsyncAction.run(() => super.setMyrooms());
+  }
+
+  late final _$setRoomsAsyncAction =
+      AsyncAction('_RoomDetailStore.setRooms', context: context);
+
+  @override
+  Future setRooms() {
+    return _$setRoomsAsyncAction.run(() => super.setRooms());
+  }
+
+  late final _$setUpcomingBookingsAsyncAction =
+      AsyncAction('_RoomDetailStore.setUpcomingBookings', context: context);
+
+  @override
+  Future setUpcomingBookings() {
+    return _$setUpcomingBookingsAsyncAction
+        .run(() => super.setUpcomingBookings());
+  }
+
   late final _$_RoomDetailStoreActionController =
       ActionController(name: '_RoomDetailStore', context: context);
 
   @override
-  dynamic setMyrooms(List<RoomModel> input) {
+  dynamic setSelectedRoom(RoomModel room) {
     final _$actionInfo = _$_RoomDetailStoreActionController.startAction(
-        name: '_RoomDetailStore.setMyrooms');
+        name: '_RoomDetailStore.setSelectedRoom');
     try {
-      return super.setMyrooms(input);
+      return super.setSelectedRoom(room);
     } finally {
       _$_RoomDetailStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  dynamic setRooms(Map<String, List<RoomModel>> input) {
+  dynamic updateRoom(RoomModel room) {
     final _$actionInfo = _$_RoomDetailStoreActionController.startAction(
-        name: '_RoomDetailStore.setRooms');
+        name: '_RoomDetailStore.updateRoom');
     try {
-      return super.setRooms(input);
-    } finally {
-      _$_RoomDetailStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic setUpcomingBookings(List<BookingModel> input) {
-    final _$actionInfo = _$_RoomDetailStoreActionController.startAction(
-        name: '_RoomDetailStore.setUpcomingBookings');
-    try {
-      return super.setUpcomingBookings(input);
+      return super.updateRoom(room);
     } finally {
       _$_RoomDetailStoreActionController.endAction(_$actionInfo);
     }
@@ -121,6 +151,7 @@ mixin _$RoomDetailStore on _RoomDetailStore, Store {
   String toString() {
     return '''
 rooms: ${rooms},
+currentRoom: ${currentRoom},
 myRooms: ${myRooms},
 upcomingBookings: ${upcomingBookings}
     ''';

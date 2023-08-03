@@ -1,5 +1,4 @@
 // ignore_for_file: library_private_types_in_public_api
-import 'dart:convert';
 import 'package:irbs/src/models/booking_model.dart';
 import 'package:mobx/mobx.dart';
 import '../models/room_model.dart';
@@ -14,6 +13,9 @@ abstract class _RoomDetailStore with Store {
   ObservableMap<String, List<RoomModel>> rooms = ObservableMap<String, List<RoomModel>>.of({});
 
   @observable
+  RoomModel currentRoom = RoomModel(owner: ['owner'], roomName: 'roomName', allowedUsers: [], roomType: 'common', roomCapacity: 1, id: 'id', ownerInfo: [], allowedUserInfo: []);
+
+  @observable
   ObservableList<RoomModel> myRooms = ObservableList<RoomModel>.of({});
 
   @observable
@@ -22,49 +24,55 @@ abstract class _RoomDetailStore with Store {
   @action
   Future<List<RoomModel>> getMyrooms()
   async {
-    if(myRooms.isEmpty)
-    {
       myRooms = ObservableList<RoomModel>.of(await APIService().getMyRooms());
-    }
     return  myRooms;
   }
 
   @action
   Future<List<BookingModel>> getBookings()
   async {
-    if(myRooms.isEmpty)
-    {
       upcomingBookings = ObservableList<BookingModel>.of(await APIService().getUpcomingBokings());
-    }
     return upcomingBookings;
   }
 
   @action
   Future<Map<String, List<RoomModel>>> getAllRooms()
   async {
-    if(rooms.isEmpty)
-    {
       rooms = ObservableMap<String, List<RoomModel>>.of(await APIService().getAllRooms());
-    }
     return rooms;
   }
 
   @action
-  setMyrooms(List<RoomModel> input)
-  {
-    myRooms = ObservableList<RoomModel>.of(input);
+  setMyrooms()
+  async {
+     await getMyrooms();
   }
 
   @action
-  setRooms(Map<String, List<RoomModel>> input)
-  {
-    rooms = ObservableMap<String, List<RoomModel>>.of(input);
+  setRooms()
+  async {
+    await getAllRooms();
   }
 
   @action
-  setUpcomingBookings(List<BookingModel> input)
-  {
-    upcomingBookings = ObservableList<BookingModel>.of(input);
+  setUpcomingBookings()
+  async {
+    await getBookings();
   }
 
+  @action
+  setSelectedRoom(RoomModel room)
+  {
+    currentRoom = room;
+  }
+
+  @action
+  updateRoom(RoomModel room)
+  {
+    setSelectedRoom(room);
+    rooms[room.roomType]!.removeWhere((element) => element.id == room.id);
+    myRooms.removeWhere((element) => element.id == room.id);
+    myRooms.add(room);
+    rooms[room.roomType]!.add(room);
+  }
 }

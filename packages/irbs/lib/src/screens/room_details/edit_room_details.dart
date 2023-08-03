@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:irbs/src/store/room_detail_store.dart';
+import 'package:provider/provider.dart';
 import '../../functions/snackbar.dart';
 import '../../globals/colors.dart';
 import '../../globals/styles.dart';
@@ -35,6 +37,7 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var rd = context.read<RoomDetailStore>();
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
@@ -122,25 +125,8 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
                             await APIService()
                                 .editRoomDetails(widget.data.id, details)
                                 .then((value) {
-                              // DataStore.myRooms.removeWhere(
-                              //     (element) => element.id == value.id);
-                              // DataStore.myRooms.add(value);
-                              // if (DataStore.rooms[widget.data.roomType] !=
-                              //     null) {
-                              //   DataStore.rooms[widget.data.roomType]!
-                              //       .removeWhere(
-                              //           (element) => element.id == value.id);
-                              //   DataStore.rooms[value.roomType]!.add(value);
-                              // }
+                              rd.updateRoom(value);
                               Navigator.pop(context);
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => RoomDetailsScreen(
-                                    room: value,
-                                  ),
-                                ),
-                              );
                             }).catchError((error, stackTrace) {
                               showSnackBar(error.toString());
                               setState(() {
