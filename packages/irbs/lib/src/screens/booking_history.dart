@@ -68,6 +68,8 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ListView.builder(
+                              padding: EdgeInsets.all(0),
+
                               shrinkWrap: true,
                               itemCount: currentBooking.length,
                               physics: const NeverScrollableScrollPhysics(),

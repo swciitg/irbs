@@ -75,6 +75,7 @@ class SideDrawer extends StatelessWidget {
                             ],
                           ),
                           ListView.builder(
+                            padding: EdgeInsets.all(0),
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: rd.myRooms.length,

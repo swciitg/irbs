@@ -46,6 +46,8 @@ class PendingRequestsScreen extends StatelessWidget {
                       return const Center(child: Text('Error'));
                     }
                     return ListView.builder(
+                      padding: EdgeInsets.all(0),
+
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         return Center(

@@ -150,12 +150,12 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                     height: 12,
                   ),
                   ListView.builder(
+                      padding: EdgeInsets.all(0),
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: rd.currentRoom.owner.length,
                       itemBuilder: (context, index) {
                         return Column(
-                          mainAxisSize: MainAxisSize.min,
                           children: [
                             MemberTile(
                               isAdmin: isAdmin,
@@ -170,12 +170,12 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                         );
                       }),
                   ListView.builder(
+                    padding: EdgeInsets.all(0),
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: rd.currentRoom.allowedUsers.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Column(
-                          mainAxisSize: MainAxisSize.min,
                           children: [
                             MemberTile(
                               isAdmin: isAdmin,

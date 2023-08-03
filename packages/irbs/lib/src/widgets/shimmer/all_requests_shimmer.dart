@@ -44,7 +44,9 @@ class _AllRequestsShimmerState extends State<AllRequestsShimmer> {
       highlightColor: const Color.fromRGBO(68, 71, 79, 1),
       baseColor: const Color.fromRGBO(47, 48, 51, 1),
       child: ListView.builder(
-        itemCount: 5,
+          padding: EdgeInsets.all(0),
+
+          itemCount: 5,
         itemBuilder: (context, index) {
           return Center(
             child: Padding(

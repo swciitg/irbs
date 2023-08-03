@@ -10,6 +10,7 @@ class DataStore {
   static bool upcomingFlag = true;
 
   Future initialiseData(BuildContext context) async {
+    userData = {};
     var cs = context.read<CommonStore>();
     var rd = context.read<RoomDetailStore>();
     final results = await Future.wait([

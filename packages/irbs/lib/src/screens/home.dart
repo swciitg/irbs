@@ -139,6 +139,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   ListView.builder(
+                                      padding: EdgeInsets.all(0),
+
                                       shrinkWrap: true,
                                       itemCount: rd.upcomingBookings.length > 3
                                           ? 3

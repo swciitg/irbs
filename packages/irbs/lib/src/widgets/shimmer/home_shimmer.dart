@@ -70,7 +70,8 @@ class HomeShimmer extends StatelessWidget {
                         CrossAxisAlignment.start,
                     children: [
                       ListView.builder(
-                        shrinkWrap: true,
+                          padding: EdgeInsets.all(0),
+                          shrinkWrap: true,
                         itemCount: 3,
                         physics:
                             const NeverScrollableScrollPhysics(),
