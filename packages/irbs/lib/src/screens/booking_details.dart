@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:irbs/src/models/booking_model.dart';
 import 'package:irbs/src/services/api.dart';
+import 'package:irbs/src/store/common_store.dart';
+import 'package:irbs/src/store/data_store.dart';
+import 'package:irbs/src/store/room_detail_store.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../globals/colors.dart';
@@ -11,6 +16,13 @@ class BookingDetails extends StatelessWidget {
   BookingDetails({Key? key, required this.booking}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var store = context.read<RoomDetailStore>();
+    var cs = context.read<CommonStore>();
+    bool isAdmin = false;
+    if( store.getRoomById(booking.roomId).owner.contains(DataStore.userData['outlookEmail']))
+      {
+        isAdmin = true;
+      }
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
@@ -25,7 +37,7 @@ class BookingDetails extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        title:  Text(
+        title:  const Text(
           "Booking Details",
           style: kAppBarTextStyle,
         ),
@@ -54,7 +66,7 @@ class BookingDetails extends StatelessWidget {
             child: Text('Room Name:',style: subHeadingStyle,),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 3,horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 3,horizontal: 16),
             child: Text(booking.roomDetails.roomName,
               style: kBookingDetailStyle,
             ),
@@ -165,6 +177,38 @@ class BookingDetails extends StatelessWidget {
               style: kBookingDetailStyle,
             ),
           ),
+
+          isAdmin ?
+          Center(
+            child: GestureDetector(
+              onTap: () async {
+                try {
+                  await APIService().deleteBooking(booking.id);
+                  Fluttertoast.showToast(msg: 'Booking Deleted');
+                  cs.pending = cs.pending + 1;
+                  Navigator.of(context).pop();
+                }
+                catch(e)
+                {
+                  Fluttertoast.showToast(msg: 'Some Error Occured');
+                }
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                child: Text('Delete Booking',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    package: 'irbs',
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.5,
+                    color: Colors.red,
+                  )
+                ),
+              ),
+            ),
+          ):Container(),
+
         ],
       ),
     );

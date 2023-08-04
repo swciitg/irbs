@@ -75,4 +75,18 @@ abstract class _RoomDetailStore with Store {
     myRooms.add(room);
     rooms[room.roomType]!.add(room);
   }
+
+  @action
+  RoomModel getRoomById(String id)
+  {
+    for(String key in rooms.keys) {
+      for (RoomModel room in rooms[key]!) {
+        if(room.id == id)
+          {
+            return room;
+          }
+      }
+    }
+    return RoomModel(owner: ['owner'], roomName: 'roomName', allowedUsers: [], roomType: 'common', roomCapacity: 1, id: 'id', ownerInfo: [], allowedUserInfo: []);
+  }
 }
