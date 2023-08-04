@@ -54,26 +54,20 @@ class HomePage extends StatelessWidget {
 
                 await user.setString("userInfo", jsonEncode({
                   "_id": "64a9bf9aac3eab0197b5b67e",
-                  "name": "Hareesh Nandigrama",
-                  "outlookEmail": "h.nandigrama@iitg.ac.in",
+                  "name": "Kunal Pal",
+                  "outlookEmail": "k.pal@iitg.ac.in",
                   "rollNo": "200101071",
                   "__v": 0
                 }));
 
-                await user.setString("accessToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDlkOTk2NzA2MmNmOTBmYzljMjMwNjAiLCJpYXQiOjE2ODk2NzA4NjksImV4cCI6MTY5MDUzNDg2OX0.V1tZsJIYivxmhbz4eEtzPRWnzWCqTvcuP1B_-kT77SU");
-                await user.setString("refreshToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDlkOTk2NzA2MmNmOTBmYzljMjMwNjAiLCJpYXQiOjE2ODk2NzA4NjksImV4cCI6MTY5MjI2Mjg2OX0.Dyegn9DHB3Qf_V3lA3kh59qU_K5QTzTkOd9lEKocSv4");
+                await user.setString("accessToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGMyNDMxZjRhYTU5ZGM4OTQzYzgyNWUiLCJpYXQiOjE2OTEwNjIzMDYsImV4cCI6MTY5MTkyNjMwNn0.iFog7su3j5r25URlhEmuc8Qr7Ur49_zMvVnbkXHU7DA");
+                await user.setString("refreshToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGMyNDMxZjRhYTU5ZGM4OTQzYzgyNWUiLCJpYXQiOjE2OTEwNjIzMDYsImV4cCI6MTY5MzY1NDMwNn0.PNQXBR1Bi0D681Yxp863dELFSXCRNicYbcj9QDM8Vts");
 
-                // await user.setString("userInfo", jsonEncode({
-                //   "_id": "64a9bf9aac3eab0197b5b67e",
-                //   "name": "Hardik Roongta",
-                //   "outlookEmail": "r.hardik@iitg.ac.in",
-                //   "rollNo": "210102036",
-                //   "__v": 0
-                // }));
-                //
-                // await user.setString("accessToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGE5YmY5YWFjM2VhYjAxOTdiNWI2N2UiLCJpYXQiOjE2ODk2NzA1MjYsImV4cCI6MTY5MDUzNDUyNn0.n81Mu0bO0wnasxlKZrE9eRd1uLpnsd3ETp71xBP63Ew");
-                // await user.setString("refreshToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGE5YmY5YWFjM2VhYjAxOTdiNWI2N2UiLCJpYXQiOjE2ODk2NzA1MjYsImV4cCI6MTY5MjI2MjUyNn0.Jn71fi6NRaRdNxu5-k8sjU0cD32ea62VtZ2snTZgrcY");
-                //
+                // await user.setString("accessToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGMyNDhiYTRhYTU5ZGM4OTQzYzgyYTQiLCJpYXQiOjE2OTEwODE0NDMsImV4cCI6MTY5MTk0NTQ0M30.uS-DEjw6DRM7XIswE0_NE8ZqP8rycuqUJ3VOWNuUlRo");
+                // await user.setString("refreshToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGMyNDhiYTRhYTU5ZGM4OTQzYzgyYTQiLCJpYXQiOjE2OTEwODE0NDMsImV4cCI6MTY5MzY3MzQ0M30.7mERLPNqYYIHaKjtrhmqiMNJicEik5S9TbT7mAyeUho");
+
+                // await user.setString("accessToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGMyNDcyZmY0NTE0MzA1YTlkMmE4MzkiLCJpYXQiOjE2OTEwODEyNDIsImV4cCI6MTY5MTk0NTI0Mn0.zQOh-aBPoUck3fW7O04Wej5olQOdKgQXPVz9aLZL0LQ");
+                // await user.setString("refreshToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGMyNDcyZmY0NTE0MzA1YTlkMmE4MzkiLCJpYXQiOjE2OTEwODEyNDIsImV4cCI6MTY5MzY3MzI0Mn0.PHrCal_5KKnIIasgvmbAQL3vfdyMfZU-oiU0SMxqZQ0");
 
                 Navigator.of(context).push(
                     MaterialPageRoute(

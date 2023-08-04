@@ -4,6 +4,7 @@ import 'package:irbs/src/screens/home.dart';
 import 'package:irbs/src/screens/onboarding.dart';
 import 'package:irbs/src/screens/room_list.dart';
 import 'package:irbs/src/store/common_store.dart';
+import 'package:irbs/src/store/room_detail_store.dart';
 import 'package:provider/provider.dart';
 
 final GlobalKey<ScaffoldMessengerState> irbsRootScaffoldMessengerKey =
@@ -23,6 +24,9 @@ class _IRBSState extends State<IRBS> {
       providers: [
         Provider<CommonStore>(
           create: (_) => CommonStore(),
+        ),
+        Provider<RoomDetailStore>(
+          create: (_) => RoomDetailStore(),
         ),
       ],
       child: MaterialApp(

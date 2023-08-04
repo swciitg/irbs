@@ -39,6 +39,22 @@ mixin _$CommonStore on _CommonStore, Store {
     });
   }
 
+  late final _$pendingAtom =
+      Atom(name: '_CommonStore.pending', context: context);
+
+  @override
+  int get pending {
+    _$pendingAtom.reportRead();
+    return super.pending;
+  }
+
+  @override
+  set pending(int value) {
+    _$pendingAtom.reportWrite(value, super.pending, () {
+      super.pending = value;
+    });
+  }
+
   late final _$searchTextAtom =
       Atom(name: '_CommonStore.searchText', context: context);
 
@@ -68,37 +84,6 @@ mixin _$CommonStore on _CommonStore, Store {
   set pinnedRooms(ObservableMap<String, RoomModel> value) {
     _$pinnedRoomsAtom.reportWrite(value, super.pinnedRooms, () {
       super.pinnedRooms = value;
-    });
-  }
-
-  late final _$deleteAtom = Atom(name: '_CommonStore.delete', context: context);
-
-  @override
-  int get delete {
-    _$deleteAtom.reportRead();
-    return super.delete;
-  }
-
-  @override
-  set delete(int value) {
-    _$deleteAtom.reportWrite(value, super.delete, () {
-      super.delete = value;
-    });
-  }
-
-  late final _$pendingAtom =
-      Atom(name: '_CommonStore.pending', context: context);
-
-  @override
-  int get pending {
-    _$pendingAtom.reportRead();
-    return super.pending;
-  }
-
-  @override
-  set pending(int value) {
-    _$pendingAtom.reportWrite(value, super.pending, () {
-      super.pending = value;
     });
   }
 
@@ -180,10 +165,9 @@ mixin _$CommonStore on _CommonStore, Store {
     return '''
 month: ${month},
 year: ${year},
+pending: ${pending},
 searchText: ${searchText},
-pinnedRooms: ${pinnedRooms},
-delete: ${delete},
-pending: ${pending}
+pinnedRooms: ${pinnedRooms}
     ''';
   }
 }

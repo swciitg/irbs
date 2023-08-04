@@ -27,6 +27,7 @@ class _UpcomingBookingShimmerState extends State<UpcomingBookingShimmer> {
           CrossAxisAlignment.start,
           children: [
             ListView.builder(
+                padding: EdgeInsets.all(0),
                 shrinkWrap: true,
                 itemCount: widget.number,
                 physics:

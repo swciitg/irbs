@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:irbs/src/screens/room_details/room_details.dart';
 import 'package:irbs/src/services/api.dart';
+import 'package:irbs/src/store/room_detail_store.dart';
 import 'package:irbs/src/widgets/roomBookingDetails/calendar.dart';
 import 'package:irbs/src/widgets/roomBookingDetails/request_modal.dart';
 import 'package:irbs/src/widgets/shimmer/room_booking_details_shimmer.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
@@ -26,13 +28,13 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
   late Future getRoomBookings;
 
   TextEditingController dateCtl = TextEditingController();
-  _showModal(context)async {
+  _showModal(contexto)async {
     await showModalBottomSheet<dynamic>(
-        context: context,
+        context: contexto,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         builder: (BuildContext context) {
-          return RequestModal(room: widget.room);
+          return RequestModal(room: widget.room, rootContext: contexto,);
         });
 
     setState(() {
@@ -59,6 +61,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
   Widget build(BuildContext context) {
     List<BookingModel> allBookings = [];
     List<BookingModel> latestBookings = [];
+    var rd = context.read<RoomDetailStore>();
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
@@ -145,8 +148,9 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                       )),
                       GestureDetector(
                         onTap: () {
+                          rd.setSelectedRoom(widget.room);
                           Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => RoomDetailsScreen(room: widget.room,)),
+                            MaterialPageRoute(builder: (context) => RoomDetailsScreen()),
                           );
                         },
                         child: const Padding(

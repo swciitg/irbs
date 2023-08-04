@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:irbs/src/globals/colors.dart';
 import 'package:irbs/src/globals/styles.dart';
 import 'package:irbs/src/models/calendar_data.dart';
+import 'package:irbs/src/store/common_store.dart';
 import 'package:irbs/src/widgets/shimmer/calendar_shimmer.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -50,7 +53,7 @@ class _CalendarState extends State<Calendar> {
   }
   @override
   Widget build(BuildContext context) {
-
+    var cs = context.read<CommonStore>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -197,77 +200,81 @@ class _CalendarState extends State<Calendar> {
             )
         ),
         Expanded(
-          child: FutureBuilder(
-            future: APIService().getBookingsForCalendar(
-                roomId: widget.roomId,
-                month: monthDigits,
-                year: year
-            ),
-            builder: (context, snapshot) {
-              if(!snapshot.hasData){
-                return const CalendarShimmer();
-              }else if(snapshot.hasError){
-                return Center(child: Text(snapshot.error.toString()),);
-              }else{
-                print(snapshot.data!);
-                return SfCalendar(
-                  onViewChanged: (viewChangedDetails)async{
-                    WidgetsBinding.instance.addPostFrameCallback((timeStamp){
+          child: Observer(
+            builder: (context) {
+              return cs.pending > 0 ? FutureBuilder(
+                future: APIService().getBookingsForCalendar(
+                    roomId: widget.roomId,
+                    month: monthDigits,
+                    year: year
+                ),
+                builder: (context, snapshot) {
+                  if(!snapshot.hasData){
+                    return const CalendarShimmer();
+                  }else if(snapshot.hasError){
+                    return Center(child: Text(snapshot.error.toString()),);
+                  }else{
+                    print(snapshot.data!);
+                    return SfCalendar(
+                      onViewChanged: (viewChangedDetails)async{
+                        WidgetsBinding.instance.addPostFrameCallback((timeStamp){
 
-                      if(mounted) {
-                        setState(() {
-                          if(datePickerHeight == 0){
-                            month = DateFormat('MMMM').format(viewChangedDetails.visibleDates.first);
-                            monthDigits = viewChangedDetails.visibleDates.first.month;
-                            year = viewChangedDetails.visibleDates.first.year.toString();
+                          if(mounted) {
+                            setState(() {
+                              if(datePickerHeight == 0){
+                                month = DateFormat('MMMM').format(viewChangedDetails.visibleDates.first);
+                                monthDigits = viewChangedDetails.visibleDates.first.month;
+                                year = viewChangedDetails.visibleDates.first.year.toString();
+                              }
+                            });
                           }
                         });
-                      }
-                    });
-                  },
-                  onTap: (calendarTapDetails) {
-                    print(calendarTapDetails.appointments?[0].eventName);
-                    print(calendarTapDetails.appointments?[0].from);
-                    if(calendarTapDetails.appointments?[0]!=null) {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context)=>   BookingDetails(
-                            booking: calendarTapDetails.appointments?[0].booking,
-                          )
-                          ));
-                    }
-                  },
-                  showDatePickerButton: true,
-                  initialDisplayDate: DateTime.now(),
-                  firstDayOfWeek: 1,
-                  view: CalendarView.week,
-                  controller: _calendarController,
-                  backgroundColor: const Color.fromRGBO(35, 35, 35, 1),
-                  cellBorderColor: const Color.fromRGBO(135, 145, 165, 1),
-                  viewHeaderStyle: const ViewHeaderStyle(
-                    backgroundColor: Color.fromRGBO(35, 35, 35, 1),
-                    dateTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
-                    dayTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
-                  ),
-                  todayHighlightColor: Themes.primaryColor,
-                  headerDateFormat: 'MMMM',
-                  headerHeight: 0,
-                  headerStyle: const CalendarHeaderStyle(
-                    backgroundColor: Themes.backgroundColor,
-                    textStyle: appBarStyle,
+                      },
+                      onTap: (calendarTapDetails) {
+                        print(calendarTapDetails.appointments?[0].eventName);
+                        print(calendarTapDetails.appointments?[0].from);
+                        if(calendarTapDetails.appointments?[0]!=null) {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context)=>   BookingDetails(
+                                booking: calendarTapDetails.appointments?[0].booking,
+                              )
+                              ));
+                        }
+                      },
+                      showDatePickerButton: true,
+                      initialDisplayDate: DateTime.now(),
+                      firstDayOfWeek: 1,
+                      view: CalendarView.week,
+                      controller: _calendarController,
+                      backgroundColor: const Color.fromRGBO(35, 35, 35, 1),
+                      cellBorderColor: const Color.fromRGBO(135, 145, 165, 1),
+                      viewHeaderStyle: const ViewHeaderStyle(
+                        backgroundColor: Color.fromRGBO(35, 35, 35, 1),
+                        dateTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
+                        dayTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
+                      ),
+                      todayHighlightColor: Themes.primaryColor,
+                      headerDateFormat: 'MMMM',
+                      headerHeight: 0,
+                      headerStyle: const CalendarHeaderStyle(
+                        backgroundColor: Themes.backgroundColor,
+                        textStyle: appBarStyle,
 
-                  ),
-                  timeSlotViewSettings: const TimeSlotViewSettings(
-                    timeTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
-                  ),
-                  allowDragAndDrop: false,
-                  dataSource: MeetingDataSource(_getDataSource(
-                      snapshot.data!.map(
-                              (e) => CalendarData.fromBookingModel(e)
-                      ).toList())
-                  ),
-                );
-              }
-            },
+                      ),
+                      timeSlotViewSettings: const TimeSlotViewSettings(
+                        timeTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
+                      ),
+                      allowDragAndDrop: false,
+                      dataSource: MeetingDataSource(_getDataSource(
+                          snapshot.data!.map(
+                                  (e) => CalendarData.fromBookingModel(e)
+                          ).toList())
+                      ),
+                    );
+                  }
+                },
+              ) : Container();
+            }
           ),
         ),
       ],

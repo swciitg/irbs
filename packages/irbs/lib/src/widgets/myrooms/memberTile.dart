@@ -125,7 +125,7 @@ class _MemberTileState extends State<MemberTile> {
                 ],
                 onSelected: (value) async {
                     showEditMemberDialogue(
-                        context: context,
+                        rootContext: context,
                         room: widget.room,
                         index: widget.index,
                         isPersonAdmin: widget.isPersonAdmin,

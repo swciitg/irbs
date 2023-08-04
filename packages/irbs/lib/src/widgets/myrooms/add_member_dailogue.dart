@@ -1,28 +1,26 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:irbs/src/screens/home.dart';
-import '../../functions/snackbar.dart';
+import 'package:irbs/src/store/room_detail_store.dart';
+import 'package:provider/provider.dart';
 import '../../globals/colors.dart';
 import '../../globals/styles.dart';
-import '../../models/room_model.dart';
-import '../../screens/room_details/room_details.dart';
 import '../../services/api.dart';
-import '../../store/data_store.dart';
 
 
-Future<void> addMemberDialog(BuildContext context, RoomModel room) async {
+
+Future<void> addMemberDialog(BuildContext rootContext) async {
   return showDialog(
       barrierDismissible: false,
-      context: context,
+      context: rootContext,
       builder: (context) {
-        return AddMemberDailogue(room: room);
-      }).then((value) => Navigator.of(context).pop());
+        return AddMemberDailogue(rootContext: rootContext);
+      });
 }
 
 class AddMemberDailogue extends StatefulWidget {
-  final RoomModel room;
-  const AddMemberDailogue({super.key, required this.room});
+  final BuildContext rootContext;
+  const AddMemberDailogue({super.key,required this.rootContext});
 
   @override
   State<AddMemberDailogue> createState() => _AddMemberDailogueState();
@@ -40,6 +38,7 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
 
   @override
   Widget build(BuildContext context) {
+    var rd = widget.rootContext.read<RoomDetailStore>();
     return Form(
       key: _formkey,
       child: SimpleDialog(
@@ -85,8 +84,8 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
                 if (!value.endsWith('@iitg.ac.in')) {
                   return 'Email should be IITG Mail Id';
                 }
-                if (widget.room.owner.contains(value) ||
-                    widget.room.allowedUsers.contains(value)) {
+                if (rd.currentRoom.owner.contains(value) ||
+                    rd.currentRoom.allowedUsers.contains(value)) {
                   return 'Already a Member';
                 }
                 return null;
@@ -127,25 +126,17 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
                         apiCall = true;
                       });
                       List<String> x = checkAdmin
-                          ? widget.room.owner
-                          : widget.room.allowedUsers;
+                          ? List<String>.of(rd.currentRoom.owner)
+                          : List<String>.of(rd.currentRoom.allowedUsers);
                       x.add(emailCtl.text);
                       String s = checkAdmin ? "owner" : "allowedUsers";
                       var details = jsonEncode({s: x});
 
                       try{
-                     var res = await APIService().editRoomDetails(widget.room.id, details);
-                     DataStore.myRooms.removeWhere((element) => element.id == res.id);
-                     DataStore.myRooms.add(res);
-                     if (DataStore.rooms[widget.room.roomType] != null)
-                     {
-                       print("HEHOHA");
-                       DataStore.rooms[widget.room.roomType]!
-                           .removeWhere((element) => element.id == res.id);
-                       DataStore.rooms[res.roomType]!.add(res);
-                     }
-                     DataStore().clearMyRooms();
-                     Navigator.popUntil(context, ModalRoute.withName(HomeScreen.id));
+                     var res = await APIService().editRoomDetails(rd.currentRoom.id, details);
+                     print(res);
+                     rd.updateRoom(res);
+                     Navigator.pop(context);
                       }
                   catch(e){
                     setState(() {
@@ -153,10 +144,8 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
                     });
                     print("THIS WAS THE ERROR");
                     Fluttertoast.showToast(msg: 'Email Invalid');
-                    print(widget.room.owner);
-                    print(widget.room.allowedUsers);
-                    print(DataStore.myRooms.where((element) => element.id == widget.room.id).toList()[0].owner);
-                    DataStore().clearMyRooms();
+                    print(rd.currentRoom.owner);
+                    print(rd.currentRoom.allowedUsers);
                     Navigator.pop(context);
                   }
                     }

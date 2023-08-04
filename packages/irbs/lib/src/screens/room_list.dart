@@ -5,7 +5,7 @@ import '../functions/filter_rooms.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
 import '../store/common_store.dart';
-import '../store/data_store.dart';
+import '../store/room_detail_store.dart';
 import '../widgets/home/empty_sate.dart';
 import '../widgets/roomlist/list_display.dart';
 import '../widgets/roomlist/search_bar.dart';
@@ -22,6 +22,8 @@ class _RoomListScreenState extends State<RoomListScreen> {
   @override
   Widget build(BuildContext context) {
     var commonStore = context.read<CommonStore>();
+    var rd = context.read<RoomDetailStore>();
+
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
@@ -48,7 +50,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
         backgroundColor: Themes.tileColor,
       ),
       body: FutureBuilder(
-          future: DataStore().getAllRooms(),
+          future: rd.getAllRooms(),
           builder: (context, snapshot) {
             commonStore.setSearchText('');
             if (!snapshot.hasData) {

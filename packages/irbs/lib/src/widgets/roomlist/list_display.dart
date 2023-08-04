@@ -35,6 +35,7 @@ class _ListDisplayState extends State<ListDisplay> {
                         )
                       ])),
               ListView.builder(
+                  padding: EdgeInsets.all(0),
                   physics: const ClampingScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: widget.roomList.length,

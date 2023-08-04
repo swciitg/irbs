@@ -1,18 +1,21 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../functions/snackbar.dart';
 import '../../globals/styles.dart';
 import '../../models/room_model.dart';
 import '../../screens/room_details/room_details.dart';
 import '../../services/api.dart';
 import '../../store/data_store.dart';
+import '../../store/room_detail_store.dart';
 
-Future<void> showEditMemberDialogue({required BuildContext context, required RoomModel room, required bool isPersonAdmin, required int index, required String type}) async {
+Future<void> showEditMemberDialogue({required BuildContext rootContext, required RoomModel room, required bool isPersonAdmin, required int index, required String type}) async {
   return showDialog(
-      context: context,
+      context: rootContext,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return EditMemberDailogue(
+          rootContext: rootContext,
             room: room,
             type: type,
             isPersonAdmin: isPersonAdmin,
@@ -21,6 +24,7 @@ Future<void> showEditMemberDialogue({required BuildContext context, required Roo
 }
 
 class EditMemberDailogue extends StatefulWidget {
+  final BuildContext rootContext;
   final RoomModel room;
   final int index;
   final bool isPersonAdmin;
@@ -29,7 +33,7 @@ class EditMemberDailogue extends StatefulWidget {
       {super.key,
         required this.index,
         required this.isPersonAdmin,
-        required this.room, required this.type});
+        required this.room, required this.type, required this.rootContext});
 
   @override
   State<EditMemberDailogue> createState() => _EditMemberDailogueState();
@@ -40,6 +44,7 @@ class _EditMemberDailogueState extends State<EditMemberDailogue> {
 
   @override
   Widget build(BuildContext context) {
+    var rd = widget.rootContext.read<RoomDetailStore>();
     return SimpleDialog(
       insetPadding: EdgeInsets.zero,
       contentPadding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
@@ -124,23 +129,8 @@ class _EditMemberDailogueState extends State<EditMemberDailogue> {
                   await APIService()
                       .editRoomDetails(widget.room.id, details)
                       .then((value) {
-                    DataStore.myRooms
-                        .removeWhere((element) => element.id == value.id);
-                    DataStore.myRooms.add(value);
-                    if (DataStore.rooms[widget.room.roomType] != null) {
-                      DataStore.rooms[widget.room.roomType]!
-                          .removeWhere((element) => element.id == value.id);
-                      DataStore.rooms[value.roomType]!.add(value);
-                    }
+                    rd.updateRoom(value);
                     Navigator.pop(context);
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RoomDetailsScreen(
-                          room: value,
-                        ),
-                      ),
-                    );
                   }).catchError((error, stackTrace) {
                     showSnackBar(error.toString());
                   });
@@ -163,23 +153,8 @@ class _EditMemberDailogueState extends State<EditMemberDailogue> {
                   await APIService()
                       .editRoomDetails(widget.room.id, details)
                       .then((value) {
-                    DataStore.myRooms
-                        .removeWhere((element) => element.id == value.id);
-                    DataStore.myRooms.add(value);
-                    if (DataStore.rooms[widget.room.roomType] != null) {
-                      DataStore.rooms[widget.room.roomType]!
-                          .removeWhere((element) => element.id == value.id);
-                      DataStore.rooms[value.roomType]!.add(value);
-                    }
+                    rd.updateRoom(value);
                     Navigator.pop(context);
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RoomDetailsScreen(
-                          room: value,
-                        ),
-                      ),
-                    );
                   }).catchError((error, stackTrace) {
                     showSnackBar(error.toString());
                   });
@@ -192,3 +167,4 @@ class _EditMemberDailogueState extends State<EditMemberDailogue> {
     );
   }
 }
+

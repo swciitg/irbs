@@ -15,6 +15,9 @@ abstract class _CommonStore with Store {
   @observable
   int year = DateTime.now().year;
 
+  @observable
+  int pending = 1;
+
   @action
   void setMonth(int m)
   {
@@ -83,9 +86,5 @@ abstract class _CommonStore with Store {
   {
     searchText = '';
   }
-  @observable
-  int delete = 1;
 
-  @observable
-  int pending = 1;
 }

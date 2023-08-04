@@ -7,7 +7,7 @@ import '../../functions/filter_rooms.dart';
 import '../../globals/styles.dart';
 import '../../screens/room_booking_details.dart';
 import '../../store/common_store.dart';
-import '../../store/data_store.dart';
+import '../../store/room_detail_store.dart';
 import '../shimmer/room_list_shimmer.dart';
 import 'empty_sate.dart';
 
@@ -22,6 +22,7 @@ class _CommonRoomsState extends State<CommonRooms> {
   int count = 0;
   @override
   Widget build(BuildContext context) {
+    var rd = context.read<RoomDetailStore>();
     return Column(
       children: [
         Align(
@@ -36,7 +37,7 @@ class _CommonRoomsState extends State<CommonRooms> {
         ),
 
         FutureBuilder(
-            future: DataStore().getAllRooms(),
+            future: rd.getAllRooms(),
             builder: (context, snapshot) {
               var commonStore = context.read<CommonStore>();
               if (!snapshot.hasData) {

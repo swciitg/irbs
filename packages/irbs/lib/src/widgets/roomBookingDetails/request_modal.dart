@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/common_store.dart';
 import 'package:irbs/src/store/data_store.dart';
+import 'package:irbs/src/store/room_detail_store.dart';
 import 'package:irbs/src/widgets/roomBookingDetails/booking_success_dailogue.dart';
 import 'package:provider/provider.dart';
 import '../../functions/format_time.dart';
@@ -15,7 +16,8 @@ import 'datepicker_color.dart';
 
 class RequestModal extends StatefulWidget {
   final RoomModel room;
-  const RequestModal({super.key, required this.room});
+  final BuildContext rootContext;
+  const RequestModal({super.key, required this.room, required this.rootContext});
 
   @override
   State<RequestModal> createState() => _RequestModalState();
@@ -283,10 +285,9 @@ class _RequestModalState extends State<RequestModal>
 
                       var response = await APIService().createBooking(details);
                       if (response == "Success") {
+                        var x = widget.rootContext.read<RoomDetailStore>();
+                        await x.setUpcomingBookings();
                         showDialogue(context);
-                        var x = context.read<CommonStore>();
-                        DataStore.upcomingFlag = false;
-                        x.delete = x.delete + 1;
                       } else {
                         if (response ==
                             'DioException [bad response]: The request returned an invalid status code of 400.') {
