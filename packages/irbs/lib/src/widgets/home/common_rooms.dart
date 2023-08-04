@@ -46,9 +46,7 @@ class _CommonRoomsState extends State<CommonRooms> {
                 return const EmptyListPlaceholder(text: 'Some error occured, try again');
               }
               return Observer(builder: (context) {
-                commonStore.setSearchText('');
-                List<RoomModel> commonRooms = filterRooms(
-                    snapshot.data!['club']!, commonStore.searchText);
+                List<RoomModel> commonRooms = snapshot.data!['common']!;
                 count =commonRooms.length;
                 return SingleChildScrollView(
                   child: Padding(

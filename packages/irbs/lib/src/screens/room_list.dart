@@ -52,7 +52,6 @@ class _RoomListScreenState extends State<RoomListScreen> {
       body: FutureBuilder(
           future: rd.getAllRooms(),
           builder: (context, snapshot) {
-            commonStore.setSearchText('');
             if (!snapshot.hasData) {
               return const RoomListShimmer();
             } else if (snapshot.hasError) {
