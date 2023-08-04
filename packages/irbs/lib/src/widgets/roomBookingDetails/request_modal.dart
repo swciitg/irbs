@@ -275,7 +275,10 @@ class _RequestModalState extends State<RequestModal>
                           pickedDate!.day,
                           res1!.hour,
                           res1!.minute);
-
+                      if(inTime.isBefore(DateTime.now())){
+                        Fluttertoast.showToast(msg: "Start time has passed");
+                        return;
+                      }
                       var details = jsonEncode({
                         "roomId": widget.room.id.toString(),
                         "inTime": inTime.toIso8601String(),
