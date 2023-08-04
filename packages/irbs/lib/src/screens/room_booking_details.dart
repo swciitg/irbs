@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:irbs/src/screens/booking_details.dart';
 import 'package:irbs/src/screens/room_details/room_details.dart';
 import 'package:irbs/src/services/api.dart';
 import 'package:irbs/src/store/room_detail_store.dart';
@@ -180,12 +181,21 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                   collapsedIconColor:const Color.fromRGBO(135, 145, 165, 1),
                   iconColor:const Color.fromRGBO(135, 145, 165, 1),
                   children: latestBookings.map(
-                    (e) => UpcomingBookingsWidget(
-                      name: e.userInfo.name ?? '',
-                      startTime: DateFormat("hh:mm a").format(DateTime.parse(e.inTime)),
-                      endTime: DateFormat("hh:mm a").format(DateTime.parse(e.outTime)),
-                      date: DateFormat("dd MMMM").format(DateTime.parse(e.inTime)),
-                      status: e.status == 'requested' ? 1 : e.status == 'accepted' ? 2 : 0,
+                    (e) => GestureDetector(
+                      onTap: (){
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context)=>   BookingDetails(
+                              booking: e
+                            )
+                            ));
+                      },
+                      child: UpcomingBookingsWidget(
+                        name: e.userInfo.name ?? '',
+                        startTime: DateFormat("hh:mm a").format(DateTime.parse(e.inTime)),
+                        endTime: DateFormat("hh:mm a").format(DateTime.parse(e.outTime)),
+                        date: DateFormat("dd MMMM").format(DateTime.parse(e.inTime)),
+                        status: e.status == 'requested' ? 1 : e.status == 'accepted' ? 2 : 0,
+                      ),
                     )
                   ).toList(),
                 ),
