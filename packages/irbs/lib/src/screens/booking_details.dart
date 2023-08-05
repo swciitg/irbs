@@ -184,13 +184,13 @@ class BookingDetails extends StatelessWidget {
               onTap: () async {
                 try {
                   await APIService().deleteBooking(booking.id);
-                  Fluttertoast.showToast(msg: 'Booking Deleted');
+                  Fluttertoast.showToast(msg: 'Booking Deleted', backgroundColor: Colors.white, textColor: Colors.black);
                   cs.pending = cs.pending + 1;
                   Navigator.of(context).pop();
                 }
                 catch(e)
                 {
-                  Fluttertoast.showToast(msg: 'Some Error Occured');
+                  Fluttertoast.showToast(msg: 'Some Error Occured', backgroundColor: Colors.white, textColor: Colors.black);
                 }
               },
               child: const Padding(

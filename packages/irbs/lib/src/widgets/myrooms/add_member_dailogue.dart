@@ -143,7 +143,7 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
                       apiCall = false;
                     });
                     print("THIS WAS THE ERROR");
-                    Fluttertoast.showToast(msg: 'Email Invalid');
+                    Fluttertoast.showToast(msg: 'Email Invalid', backgroundColor: Colors.white, textColor: Colors.black);
                     print(rd.currentRoom.owner);
                     print(rd.currentRoom.allowedUsers);
                     Navigator.pop(context);

@@ -276,7 +276,7 @@ class _RequestModalState extends State<RequestModal>
                           res1!.hour,
                           res1!.minute);
                       if(inTime.isBefore(DateTime.now())){
-                        Fluttertoast.showToast(msg: "Start time has passed");
+                        Fluttertoast.showToast(msg: "Start time has passed", backgroundColor: Colors.white, textColor: Colors.black);
                         return;
                       }
                       var details = jsonEncode({
@@ -294,10 +294,10 @@ class _RequestModalState extends State<RequestModal>
                       } else {
                         if (response ==
                             'DioException [bad response]: The request returned an invalid status code of 400.') {
-                          Fluttertoast.showToast(msg: "Slot already booked");
+                          Fluttertoast.showToast(msg: "Slot already booked", backgroundColor: Colors.white, textColor: Colors.black);
                         } else {
                           Fluttertoast.showToast(
-                              msg: "Some error occured, try again later");
+                              msg: "Some error occured, try again later", backgroundColor: Colors.white, textColor: Colors.black);
                         }
                       }
                       Navigator.pop(context);
