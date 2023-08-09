@@ -99,7 +99,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
         ],
         backgroundColor: Themes.kCommonBoxBackground,
       ),
-      floatingActionButton: DataStore.userData["name"] == "Guest" ? FloatingActionButton(
+      floatingActionButton: DataStore.isGuest() ? Container(): FloatingActionButton(
           backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
           onPressed: () {
             _showModal(context);
@@ -107,7 +107,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
           child: Image.asset(
             'packages/irbs/assets/images/add.png',
             fit: BoxFit.contain,
-          )): Container(),
+          )),
       body: FutureBuilder(
         future: getRoomBookings,
         builder: (context, snapshot) {

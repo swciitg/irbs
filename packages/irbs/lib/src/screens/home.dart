@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     if (isAdmin) const PendingRequestCarousel(),
-                   DataStore.isGuest() ? Padding(
+                   !DataStore.isGuest() ? Padding(
                       padding: const EdgeInsets.only(
                           top: 10, left: 16, bottom: 7, right: 16),
                       child: Row(
@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ): Container(),
-                    DataStore.isGuest() ? Observer(builder: (context) {
+                    !DataStore.isGuest() ? Observer(builder: (context) {
                       return rd.upcomingBookings.isEmpty
                           ? const EmptyListPlaceholder(
                               text: 'No Upcoming Bookings')
