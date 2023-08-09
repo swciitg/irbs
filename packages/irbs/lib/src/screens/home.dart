@@ -42,6 +42,21 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Text(snapshot.error.toString()),
           );
         } else {
+          if(DataStore.userData["name"] == "Guest")
+            {
+              return const Scaffold(
+                body: Center(
+                    child: Text(
+                      'Please sign in to use this feature',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        package: 'irbs',
+                        color: Themes.white,
+                        fontSize: 14,
+                      )
+                    )),
+              );
+            }
           if (snapshot.data!.isNotEmpty) {
             isAdmin = true;
           }
