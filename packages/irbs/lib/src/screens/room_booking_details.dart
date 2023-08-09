@@ -43,7 +43,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
         roomId: widget.room.id,
         month: DateTime.now().month,
         year: DateTime.now().year.toString()
-      );      
+      );
     });    
   }
 
@@ -127,6 +127,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
             }
 
             allBookings.sort((a, b) => a.inTime.compareTo(b.inTime),);
+            allBookings.retainWhere((element) => element.status == "accepted");
             if(allBookings.length <= 2){
               latestBookings = allBookings;
             }

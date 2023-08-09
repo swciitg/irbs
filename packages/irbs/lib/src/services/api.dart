@@ -204,11 +204,7 @@ class APIService {
     );
 
     bookings.addAll(nextMonthBookings);
-    for(var a in bookings)
-      {
-        print("BBAASS");
-        print(a.status);
-      }
+    bookings.removeWhere((element) => element.status == "requested");
     return bookings;
   }
 
