@@ -9,6 +9,14 @@ class DataStore {
   static Map<String, dynamic> userData = {};
   static bool upcomingFlag = true;
 
+  static bool isGuest(){
+    if(userData["name"] == "Guest")
+      {
+        return true;
+      }
+    return false;
+  }
+
   Future initialiseData(BuildContext context) async {
     userData = {};
     var cs = context.read<CommonStore>();

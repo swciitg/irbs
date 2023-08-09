@@ -42,22 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Text(snapshot.error.toString()),
           );
         } else {
-          if(DataStore.userData["name"] == "Guest")
-            {
-              return const Scaffold(
-                backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
-                body: Center(
-                    child: Text(
-                      'Please sign in to use this feature',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        package: 'irbs',
-                        color: Themes.white,
-                        fontSize: 14,
-                      )
-                    )),
-              );
-            }
           if (snapshot.data!.isNotEmpty) {
             isAdmin = true;
           }
@@ -122,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     if (isAdmin) const PendingRequestCarousel(),
-                    Padding(
+                   DataStore.isGuest() ? Padding(
                       padding: const EdgeInsets.only(
                           top: 10, left: 16, bottom: 7, right: 16),
                       child: Row(
@@ -145,8 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
-                    ),
-                    Observer(builder: (context) {
+                    ): Container(),
+                    DataStore.isGuest() ? Observer(builder: (context) {
                       return rd.upcomingBookings.isEmpty
                           ? const EmptyListPlaceholder(
                               text: 'No Upcoming Bookings')
@@ -207,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                             );
-                    }),
+                    }) : Container(),
                     Observer(builder: (context) {
                       return ListDisplay(
                           roomList: cs.pinnedRooms.values.toList(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:irbs/src/screens/booking_details.dart';
 import 'package:irbs/src/screens/room_details/room_details.dart';
 import 'package:irbs/src/services/api.dart';
+import 'package:irbs/src/store/data_store.dart';
 import 'package:irbs/src/store/room_detail_store.dart';
 import 'package:irbs/src/widgets/roomBookingDetails/calendar.dart';
 import 'package:irbs/src/widgets/roomBookingDetails/request_modal.dart';
@@ -98,7 +99,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
         ],
         backgroundColor: Themes.kCommonBoxBackground,
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: DataStore.userData["name"] == "Guest" ? FloatingActionButton(
           backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
           onPressed: () {
             _showModal(context);
@@ -106,7 +107,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
           child: Image.asset(
             'packages/irbs/assets/images/add.png',
             fit: BoxFit.contain,
-          )),
+          )): Container(),
       body: FutureBuilder(
         future: getRoomBookings,
         builder: (context, snapshot) {
