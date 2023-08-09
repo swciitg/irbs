@@ -45,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if(DataStore.userData["name"] == "Guest")
             {
               return const Scaffold(
+                backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
                 body: Center(
                     child: Text(
                       'Please sign in to use this feature',
