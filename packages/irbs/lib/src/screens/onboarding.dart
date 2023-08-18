@@ -1,10 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:irbs/src/globals/colors.dart';
-import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/widgets/onboarding/nav_dots.dart';
+import 'package:irbs/src/globals/my_fonts.dart';
+import '../globals/colors.dart';
+import '../globals/styles.dart';
+import '../widgets/onboarding/nav_dots.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -33,8 +32,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ImageProvider img =
-        AssetImage('assets/onboarding_${activeIndex + 1}.png', package: 'irbs');
 
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
@@ -51,7 +48,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: Text(
                     headingList[activeIndex],
                     textAlign: TextAlign.center,
-                    style: headingStyle,
+                    style: MyFonts.w700.size(28).setColor(Themes.white),
                   ),
                 ),
                 Padding(
@@ -59,7 +56,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: Text(
                     textList[activeIndex],
                     textAlign: TextAlign.center,
-                    style: textStyle,
+                    style: MyFonts.w400.size(14).setColor(Themes.white),
                   ),
                 ),
               ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:irbs/src/globals/my_fonts.dart';
 import 'package:provider/provider.dart';
 import '../globals/colors.dart';
-import '../globals/styles.dart';
 import '../models/booking_model.dart';
 import '../store/common_store.dart';
 import '../store/data_store.dart';
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           return Scaffold(
             backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
-            endDrawer: (!isAdmin) ? null : SideDrawer(),
+            endDrawer: (!isAdmin) ? null : const SideDrawer(),
             appBar: AppBar(
               centerTitle: true,
               leading: GestureDetector(
@@ -57,12 +57,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: const Icon(
                   Icons.arrow_back_sharp,
-                  color: Colors.white,
+                  color: Themes.white,
                 ),
               ),
-              title: const Text(
+              title: Text(
                 "IRBS",
-                style: kAppBarTextStyle,
+                style: MyFonts.w500.size(20).setColor(Themes.white),
               ),
               actions: isAdmin
                   ? []
@@ -101,8 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             top: 18, left: 16, bottom: 10),
                         child: Text(
                           'Requests',
-                          style: kSubHeadingStyle.copyWith(
-                              fontWeight: FontWeight.w600),
+                          style: MyFonts.w600.setColor(Themes.kSubHeading).size(14).letterSpace(0.5),
                         ),
                       ),
                     if (isAdmin) const PendingRequestCarousel(),
@@ -114,17 +113,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Text(
                             'Current Bookings',
-                            style: kSubHeadingStyle.copyWith(
-                                fontWeight: FontWeight.w600),
+                            style:  MyFonts.w600.setColor(Themes.kSubHeading).size(14).letterSpace(0.5),
                           ),
                           TextButton(
                             onPressed: () {
                               Navigator.pushNamed(
                                   context, '/irbs/bookingHistory');
                             },
-                            child: const Text(
+                            child: Text(
                               'View History',
-                              style: kTextButtonStyle,
+                              style:MyFonts.w400.size(12).letterSpace(0.5).underline().setColor(Themes.kTextButtonColor),
                             ),
                           ),
                         ],
@@ -139,8 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   ListView.builder(
-                                      padding: EdgeInsets.all(0),
-
+                                      padding: const EdgeInsets.all(0),
                                       shrinkWrap: true,
                                       itemCount: rd.upcomingBookings.length > 3
                                           ? 3
@@ -172,10 +169,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           .kCommonBoxBackground,
                                                   borderRadius:
                                                       BorderRadius.circular(4)),
-                                              child: const Center(
+                                              child: Center(
                                                 child: Text(
                                                   'View all upcoming bookings',
-                                                  style: kRequestedRoomStyle,
+                                                  style: MyFonts.w500.size(15).letterSpace(0.5).setColor(Themes.white),
                                                 ),
                                               ),
                                             ),
@@ -217,14 +214,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       Navigator.pushNamed(context, '/irbs/roomList');
                     },
-                    child: const Center(
+                    child: Center(
                         child: Text(
                       'Book a Room',
-                      style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          package: 'irbs',
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                      style: MyFonts.w700.size(16),
                     ))),
               ),
             ),
