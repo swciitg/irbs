@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:irbs/src/widgets/shimmer/room_list_shimmer.dart';
 import 'package:provider/provider.dart';
 import '../screens/room_list.dart';
 import '../globals/colors.dart';
@@ -231,9 +232,31 @@ class _HomeScreenState extends State<HomeScreen> {
                           })
                         : Container(),
                     Observer(builder: (context) {
-                      return ListDisplay(
-                          roomList: cs.pinnedRooms.values.toList(),
-                          type: 'Pinned Rooms');
+                      return (cs.pinnedRooms.isEmpty)
+                          ? Container(
+                              height: 0,
+                            )
+                          : FutureBuilder(
+                              future:
+                                  CommonStore().initialisePinnedRooms(context),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return const RoomListShimmer();
+                                } else if (snapshot.hasError) {
+                                  return Center(
+                                    child: Text(snapshot.error.toString()),
+                                  );
+                                } else {
+                                  if (snapshot.data!.isNotEmpty) {
+                                    isAdmin = true;
+                                  }
+                                  return 
+                                  ListDisplay(
+                                      roomList: cs.pinnedRooms.values.toList(),
+                                      type: 'Pinned Rooms');
+                                }
+                              });
+                      // );
                     }),
                     const CommonRooms(),
                     const SizedBox(

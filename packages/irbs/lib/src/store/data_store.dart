@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'room_detail_store.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'common_store.dart';
 
 class DataStore {
   static Map<String, dynamic> userData = {};
@@ -19,14 +18,13 @@ class DataStore {
 
   Future initialiseData(BuildContext context) async {
     userData = {};
-    var cs = context.read<CommonStore>();
     var rd = context.read<RoomDetailStore>();
     final results = await Future.wait([
       rd.getMyrooms(),
       getUserData(),
       rd.getAllRooms(),
       rd.getBookings(),
-      cs.initialisePinnedRooms(),
+      // cs.initialisePinnedRooms(),
       ]
     );
     return results[0];

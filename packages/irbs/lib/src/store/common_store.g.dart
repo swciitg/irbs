@@ -91,9 +91,9 @@ mixin _$CommonStore on _CommonStore, Store {
       AsyncAction('_CommonStore.initialisePinnedRooms', context: context);
 
   @override
-  Future initialisePinnedRooms() {
+  Future initialisePinnedRooms(BuildContext context) {
     return _$initialisePinnedRoomsAsyncAction
-        .run(() => super.initialisePinnedRooms());
+        .run(() => super.initialisePinnedRooms(context));
   }
 
   late final _$addPinnedRoomsAsyncAction =

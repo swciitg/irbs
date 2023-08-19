@@ -24,6 +24,7 @@ class _RequestTileState extends State<RequestTile> {
     return Container(
       height: screenWidth*167/360,
       width: screenWidth*304/360,
+      // padding: ,
       decoration: BoxDecoration(
         color: Themes.requestTile,
         borderRadius: BorderRadius.circular(screenWidth*4/360)
@@ -67,7 +68,7 @@ class _RequestTileState extends State<RequestTile> {
                     height: 12*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      widget.bookingData.userInfo.name.toString(),
+                      widget.bookingData.userInfo.email.toString(),
                       style: MyFonts.w400.size(12).setColor(Themes.permanentTextColor).setHeight(1.33).letterSpace(0.4).copyWith(
                           fontSize: 10*screenWidth/360, color: Themes.white,
                           height: 1
