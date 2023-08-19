@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:irbs/src/screens/onboarding.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,10 +21,12 @@ class BookingDetails extends StatelessWidget {
     var store = context.read<RoomDetailStore>();
     var cs = context.read<CommonStore>();
     bool isAdmin = false;
-    if( store.getRoomById(booking.roomId).owner.contains(DataStore.userData['outlookEmail']))
-      {
-        isAdmin = true;
-      }
+    if (store
+        .getRoomById(booking.roomId)
+        .owner
+        .contains(DataStore.userData['outlookEmail'])) {
+      isAdmin = true;
+    }
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
@@ -38,7 +41,7 @@ class BookingDetails extends StatelessWidget {
             color: Themes.white,
           ),
         ),
-        title:  Text(
+        title: Text(
           "Booking Details",
           // style: kAppBarTextStyle,
           style: MyFonts.w500.size(20).setColor(Themes.white),
@@ -46,7 +49,12 @@ class BookingDetails extends StatelessWidget {
         actions: [
           GestureDetector(
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/irbs/onboarding');
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const OnboardingScreen()));
+                // Navigator.pushReplacementNamed(context, '/irbs/onboarding');
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 11.0),
@@ -64,22 +72,26 @@ class BookingDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('Room Name:',
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Text(
+              'Room Name:',
               // style: subHeadingStyle,
               style: MyFonts.w400.setColor(Themes.kSubHeading),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 3,horizontal: 16),
-            child: Text(booking.roomDetails.roomName,
+            padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
+            child: Text(
+              booking.roomDetails.roomName,
               // style: kBookingDetailStyle,
-              style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+              style:
+                  MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('Start Time:',
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Text(
+              'Start Time:',
               // style: subHeadingStyle,
               style: MyFonts.w400.setColor(Themes.kSubHeading),
             ),
@@ -89,7 +101,10 @@ class BookingDetails extends StatelessWidget {
             child: RichText(
               text: TextSpan(
                 // style: kBookingDetailStyle,
-                style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+                style: MyFonts.w500
+                    .size(14)
+                    .setColor(Themes.white)
+                    .letterSpace(0.5),
                 children: [
                   TextSpan(
                     text: DateFormat("hh:mm a")
@@ -106,8 +121,9 @@ class BookingDetails extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('End Time:',
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Text(
+              'End Time:',
               // style: subHeadingStyle,
               style: MyFonts.w400.setColor(Themes.kSubHeading),
             ),
@@ -117,7 +133,10 @@ class BookingDetails extends StatelessWidget {
             child: RichText(
               text: TextSpan(
                 // style: kBookingDetailStyle,
-                style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+                style: MyFonts.w500
+                    .size(14)
+                    .setColor(Themes.white)
+                    .letterSpace(0.5),
                 children: [
                   TextSpan(
                     text: DateFormat("hh:mm a")
@@ -134,36 +153,43 @@ class BookingDetails extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('Booker Name:',
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Text(
+              'Booker Name:',
               // style: subHeadingStyle,
               style: MyFonts.w400.setColor(Themes.kSubHeading),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(booking.userInfo.name!,
+            child: Text(
+              booking.userInfo.name!,
               // style: kBookingDetailStyle,
-              style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+              style:
+                  MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('Booker Email:',
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Text(
+              'Booker Email:',
               // style: subHeadingStyle,
               style: MyFonts.w400.setColor(Themes.kSubHeading),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(booking.userInfo.email!,
+            child: Text(
+              booking.userInfo.email!,
               // style: kBookingDetailStyle,
-              style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+              style:
+                  MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('Booker Phone:',
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Text(
+              'Booker Phone:',
               // style: subHeadingStyle,
               style: MyFonts.w400.setColor(Themes.kSubHeading),
             ),
@@ -172,15 +198,23 @@ class BookingDetails extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               children: [
-                Text("${booking.userInfo.phoneNumber!}",
+                Text(
+                  "${booking.userInfo.phoneNumber!}",
                   // style: kBookingDetailStyle,
-                  style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+                  style: MyFonts.w500
+                      .size(14)
+                      .setColor(Themes.white)
+                      .letterSpace(0.5),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16),
                   child: GestureDetector(
-                    child: const Icon(Icons.call,color: Themes.regentGrey, size: 16,),
-                    onTap: () async{
+                    child: const Icon(
+                      Icons.call,
+                      color: Themes.regentGrey,
+                      size: 16,
+                    ),
+                    onTap: () async {
                       final url = 'tel:${booking.userInfo.phoneNumber!}';
                       await launchUrl(Uri.parse(url));
                     },
@@ -190,66 +224,75 @@ class BookingDetails extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('Booking Purpose:',
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Text(
+              'Booking Purpose:',
               // style: subHeadingStyle,
               style: MyFonts.w400.setColor(Themes.kSubHeading),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(booking.bookingPurpose,
+            child: Text(
+              booking.bookingPurpose,
               // style: kBookingDetailStyle,
-              style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+              style:
+                  MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('Status:',
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Text(
+              'Status:',
               // style: subHeadingStyle,
               style: MyFonts.w400.setColor(Themes.kSubHeading),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(booking.status,
+            child: Text(
+              booking.status,
               // style: kBookingDetailStyle,
-              style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+              style:
+                  MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
             ),
           ),
-
-          isAdmin ?
-          Center(
-            child: GestureDetector(
-              onTap: () async {
-                try {
-                  await APIService().deleteBooking(booking.id);
-                  Fluttertoast.showToast(msg: 'Booking Deleted', backgroundColor: Themes.white, textColor: Themes.black);
-                  cs.pending = cs.pending + 1;
-                  if(!context.mounted)return;
-                  Navigator.of(context).pop();
-                }
-                catch(e)
-                {
-                  Fluttertoast.showToast(msg: 'Some Error Occured', backgroundColor: Themes.white, textColor: Themes.black);
-                }
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                child: Text('Delete Booking',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    package: 'irbs',
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.5,
-                    color: Themes.red,
-                  )
-                ),
-              ),
-            ),
-          ):Container(),
-
+          isAdmin
+              ? Center(
+                  child: GestureDetector(
+                    onTap: () async {
+                      try {
+                        await APIService().deleteBooking(booking.id);
+                        Fluttertoast.showToast(
+                            msg: 'Booking Deleted',
+                            backgroundColor: Themes.white,
+                            textColor: Themes.black);
+                        cs.pending = cs.pending + 1;
+                        if (!context.mounted) return;
+                        Navigator.of(context).pop();
+                      } catch (e) {
+                        Fluttertoast.showToast(
+                            msg: 'Some Error Occured',
+                            backgroundColor: Themes.white,
+                            textColor: Themes.black);
+                      }
+                    },
+                    child: const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      child: Text('Delete Booking',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            package: 'irbs',
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 0.5,
+                            color: Themes.red,
+                          )),
+                    ),
+                  ),
+                )
+              : Container(),
         ],
       ),
     );

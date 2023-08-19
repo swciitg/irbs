@@ -15,6 +15,7 @@ import 'package:intl/intl.dart';
 import '../widgets/roomBookingDetails/upcoming_booking_widget.dart';
 import '../models/booking_model.dart';
 import '../models/room_model.dart';
+import 'onboarding.dart';
 
 
 class RoomBookingDetails extends StatefulWidget {
@@ -84,7 +85,12 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
         actions: [
           GestureDetector(
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/irbs/onboarding');
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const OnboardingScreen()));
+                // Navigator.pushReplacementNamed(context, '/irbs/onboarding');
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 11.0),

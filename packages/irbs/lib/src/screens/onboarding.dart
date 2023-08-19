@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:irbs/src/globals/my_fonts.dart';
+import 'package:irbs/src/screens/home.dart';
 import '../globals/colors.dart';
 import '../globals/styles.dart';
 import '../widgets/onboarding/nav_dots.dart';
@@ -122,8 +123,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       height: double.infinity,
                       child: ElevatedButton(
                           onPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, '/irbs/home');
+                            Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const HomeScreen()));
+                            // Navigator.pushReplacementNamed(
+                            //     context, '/irbs/home');
                           },
                           style: elevatedButtonStyle,
                           child: Text(

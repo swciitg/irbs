@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:irbs/src/globals/my_fonts.dart';
+import 'package:irbs/src/screens/booking_history.dart';
 import '../../globals/colors.dart';
 import '../../models/booking_model.dart';
 import '../../models/room_model.dart';
@@ -52,8 +53,13 @@ class HomeShimmer extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(
-                              context, '/irbs/bookingHistory');
+                          Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const BookingHistoryScreen()));
+                          // Navigator.pushNamed(
+                          //     context, '/irbs/bookingHistory');
                         },
                         child: Text(
                           'View History',

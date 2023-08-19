@@ -26,6 +26,7 @@ class SideDrawer extends StatelessWidget {
             return Stack(
               children: [
                 ListView(
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     Container(
                       width: 240,

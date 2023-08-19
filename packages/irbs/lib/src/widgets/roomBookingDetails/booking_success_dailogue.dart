@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:irbs/src/globals/my_fonts.dart';
-import 'package:lottie/lottie.dart';
+// import 'package:lottie/lottie.dart';
 import '../../globals/colors.dart';
 
 Future<void> showDialogue(BuildContext context) async {
@@ -10,22 +11,26 @@ Future<void> showDialogue(BuildContext context) async {
         return SimpleDialog(
           backgroundColor: Themes.darkSlateGrey,
           children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.only(right: 16.0),
-                    child: Icon(
-                      Icons.close,
-                      color: Themes.white,
-                    ),
-                  )),
-            ),
-            Lottie.asset('packages/irbs/assets/sent_request.json',
-                height: 100),
+            // Align(
+            //   alignment: Alignment.centerRight,
+            //   child: GestureDetector(
+            //       onTap: () {
+            //         Navigator.pop(context);
+            //       },
+            //       child: const Padding(
+            //         padding: EdgeInsets.only(right: 16.0),
+            //         child: Icon(
+            //           Icons.close,
+            //           color: Themes.white,
+            //         ),
+            //       )),
+            // ),
+            const SizedBox(height: 20,),
+
+            SvgPicture.asset('packages/irbs/assets/approved.svg',height: 50,),
+            const SizedBox(height: 15,),
+            // Lottie.asset('packages/irbs/assets/sent_request.json',
+            //     height: 100),
             Align(
               alignment: Alignment.center,
               child: Text(

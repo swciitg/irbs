@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:irbs/src/globals/my_fonts.dart';
+import 'package:irbs/src/screens/booking_history.dart';
+import 'package:irbs/src/screens/room_list.dart';
 import 'package:provider/provider.dart';
 import '../globals/colors.dart';
 import '../models/booking_model.dart';
@@ -14,6 +16,7 @@ import '../widgets/home/empty_sate.dart';
 import '../widgets/home/pending_request_carousel.dart';
 import '../widgets/roomlist/list_display.dart';
 import '../widgets/shimmer/home_shimmer.dart';
+import 'onboarding.dart';
 import 'upcoming_bookings.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -69,8 +72,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   : [
                       GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacementNamed(
-                                context, '/irbs/onboarding');
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        const OnboardingScreen()));
+                            // Navigator.pushReplacementNamed(
+                            //     context, '/irbs/onboarding');
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(right: 11.0),
@@ -87,7 +95,9 @@ class _HomeScreenState extends State<HomeScreen> {
             body: RefreshIndicator(
               onRefresh: () async {
                 await DataStore().clear();
-                setState(() {});
+                setState(() {
+                  cs.pending++;
+                });
                 if (!mounted) return;
                 return DataStore().initialiseData(context);
               },
@@ -125,8 +135,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, '/irbs/bookingHistory');
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                const BookingHistoryScreen()));
+                                    // Navigator.pushNamed(
+                                    //     context, '/irbs/bookingHistory');
                                   },
                                   child: Text(
                                     'View History',
@@ -238,7 +253,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(4))),
                 child: InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, '/irbs/roomList');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const RoomListScreen()));
+                      // Navigator.pushNamed(context, '/irbs/roomList');
                     },
                     child: Center(
                         child: Text(
