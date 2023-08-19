@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/globals/my_fonts.dart';
 import '../../globals/colors.dart';
+import '../../globals/my_fonts.dart';
 
 class IRBSDatePicker extends StatefulWidget {
   final Widget? child;

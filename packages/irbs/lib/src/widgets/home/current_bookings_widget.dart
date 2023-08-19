@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:irbs/src/store/room_detail_store.dart';
 import 'package:provider/provider.dart';
 import '../../globals/colors.dart';
 import '../../globals/my_fonts.dart';
 import '../../models/booking_model.dart';
 import '../../services/api.dart';
 import '../../store/data_store.dart';
+import '../../store/room_detail_store.dart';
 
 class BookingTile extends StatefulWidget {
   final BookingModel model;
@@ -70,12 +70,10 @@ class _BookingTileState extends State<BookingTile> {
                   borderRadius: BorderRadius.circular(4)),
               title: Text(
                 widget.model.roomDetails.roomName,
-                // style: kRequestedRoomStyle,
                 style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
               ),
               subtitle: RichText(
                 text: TextSpan(
-                  // style: kHeading3DescStyle,
                   style: MyFonts.w500.size(10).setColor(Themes.white).letterSpace(0.5),
                   children: [
                   TextSpan(
@@ -111,12 +109,9 @@ class _BookingTileState extends State<BookingTile> {
                                 ? 'Approved'
                                 : 'Pending',
                         style: widget.model.status == 'rejected'
-                            // ? kRejectedStyle
                             ? MyFonts.w500.size(12).setColor(Themes.rejectedBooking).letterSpace(0.5)
                             : widget.model.status == 'accepted'
-                                // ? kApprovedStyle
                                 ? MyFonts.w500.size(12).setColor(Themes.approvedGreenColor).letterSpace(0.5)
-                                // : kPendingStyle,
                                 : MyFonts.w500.size(12).setColor(Themes.pendingColor).letterSpace(0.5),
                       ),
                       widget.model.status == 'rejected' ||
@@ -147,14 +142,12 @@ class _BookingTileState extends State<BookingTile> {
                                               value: "delete",
                                               child: Text(
                                                 "Delete booking",
-                                                // style: popupMenuStyle,
                                                 style: MyFonts.w400.size(12).setColor(Themes.white).setHeight(1.219).letterSpace(0.1),
                                               ))
                                           : PopupMenuItem(
                                               value: "end",
                                               child: Text(
                                                 "End Booking",
-                                                // style: popupMenuStyle,
                                                 style: MyFonts.w400.size(12).setColor(Themes.white).setHeight(1.219).letterSpace(0.1),
                                               ))
                                     ]);
@@ -244,7 +237,6 @@ class _BookingTileState extends State<BookingTile> {
                           labelText: widget.model.status == 'rejected'
                               ? 'Reason'
                               : 'Instructions',
-                          // labelStyle: kLabelStyle,
                           labelStyle: MyFonts.w500.size(8).setColor(Themes.white).letterSpace(0.5),
                           isDense: true,
                           enabledBorder: OutlineInputBorder(
@@ -255,7 +247,6 @@ class _BookingTileState extends State<BookingTile> {
                       child: Text(
                         widget.model.acceptInstructions ??
                             widget.model.reasonRejection!,
-                        // style: kReasonStyle,
                         style: MyFonts.w500.size(8).setColor(Themes.reasonColor).letterSpace(0.5),
                       ),
                     ),

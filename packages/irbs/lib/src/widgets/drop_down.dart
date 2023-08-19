@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:irbs/src/store/common_store.dart';
 import 'package:provider/provider.dart';
 
 import '../globals/colors.dart';
 import '../globals/my_fonts.dart';
+import '../store/common_store.dart';
 
 class CustomDropDown extends StatelessWidget {
   final String hintText;
@@ -76,27 +76,15 @@ class CustomDropDown extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: hintText,
-                    // style: const TextStyle(
-                    //     fontFamily: 'Montserrat',
-                    //     package: 'irbs',
-                    //     fontWeight: FontWeight.w500, fontSize: 14, color: Themes.hintText),
                     style: MyFonts.w500.size(14).setColor(Themes.hintText),
                   ),
                   TextSpan(
                     text: ' * ',
-                    // style: TextStyle(
-                    //     fontFamily: 'Montserrat',
-                    //     package: 'irbs',
-                    //     fontWeight: FontWeight.w500, fontSize: 16, color: Themes.starColor),
                     style: MyFonts.w500.size(16).setColor(Themes.starColor),
                   ),
                 ],
               ),
             ),
-            // labelStyle: const TextStyle(
-            //     fontFamily: 'Montserrat',
-            //     package: 'irbs',
-            //     fontWeight: FontWeight.w500, fontSize: 14, color: Themes.hintText),
             labelStyle: MyFonts.w500.size(14).setColor(Themes.hintText),
             contentPadding:
              const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
@@ -132,10 +120,6 @@ class CustomDropDown extends StatelessWidget {
             size: 28,
           ),
           elevation: 16,
-          // style: const TextStyle(
-          //     fontFamily: 'Montserrat',
-          //     package: 'irbs',
-          //     fontWeight: FontWeight.w500, fontSize: 14, color: Themes.white),
           style: MyFonts.w500.size(14).setColor(Themes.white),
           onChanged: (String? value) {
             // print(value);

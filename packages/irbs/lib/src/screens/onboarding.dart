@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:irbs/src/globals/my_fonts.dart';
-import 'package:irbs/src/screens/home.dart';
 import '../globals/colors.dart';
+import '../globals/my_fonts.dart';
 import '../globals/styles.dart';
 import '../widgets/onboarding/nav_dots.dart';
+import 'home.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

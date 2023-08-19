@@ -5,7 +5,7 @@ String time24to12Format(String time) {
   if (h > 12) {
     var temp = h - 12;
     send =
-        "0$temp:${m.toString().length == 1 ? "0$m" : m.toString()} PM";
+        "$temp:${m.toString().length == 1 ? "0$m" : m.toString()} PM";
   } else {
     send =
         "$h:${m.toString().length == 1 ? "0$m" : m.toString()} AM";

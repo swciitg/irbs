@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:irbs/src/globals/my_fonts.dart';
-// import 'package:lottie/lottie.dart';
 import '../../globals/colors.dart';
+import '../../globals/my_fonts.dart';
 
 Future<void> showDialogue(BuildContext context) async {
   return showDialog(

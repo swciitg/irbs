@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../globals/my_fonts.dart';
+import 'package:irbs/src/globals/my_fonts.dart';
 import '../../models/room_model.dart';
 import '../../screens/room_booking_details.dart';
 import '../../store/common_store.dart';

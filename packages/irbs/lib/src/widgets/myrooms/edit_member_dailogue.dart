@@ -53,7 +53,6 @@ class _EditMemberDailogueState extends State<EditMemberDailogue> {
           alignment: Alignment.center,
           child: Text(
             widget.type == "change" ? (widget.isPersonAdmin ? 'Change to Member?' : 'Change to Admin?') : 'Remove memeber?',
-            // style: sentRequestStyle,
             style: MyFonts.w600.size(16).setColor(Themes.white),
           ),
         ),
@@ -78,7 +77,6 @@ class _EditMemberDailogueState extends State<EditMemberDailogue> {
                       child: CircularProgressIndicator())
                       : Text(
                     "Cancel",
-                    // style: dialogCancelStyle,
                     style: MyFonts.w600.size(12).setColor(Themes.white).setHeight(1.666).letterSpace(0.1),
                   ),
                 ),
@@ -102,7 +100,6 @@ class _EditMemberDailogueState extends State<EditMemberDailogue> {
                       child: CircularProgressIndicator())
                       : Text(
                     "Confirm",
-                    // style: dialogConfirmStyle,
                     style: MyFonts.w600.size(12).setColor(Themes.onPrimaryColor).setHeight(1.666).letterSpace(0.1),
                   ),
                 ),

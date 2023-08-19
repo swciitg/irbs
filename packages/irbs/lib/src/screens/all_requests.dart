@@ -31,7 +31,6 @@ class PendingRequestsScreen extends StatelessWidget {
         ),
         title: Text(
           "Pending Requests",
-          // style: kAppBarTextStyle,
           style: MyFonts.w500.size(20).setColor(Themes.white),
         ),
         backgroundColor: Themes.tileColor,

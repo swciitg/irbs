@@ -28,7 +28,6 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
         centerTitle: true,
         title: Text(
           'Booking History',
-          // style: appBarStyle,
           style: MyFonts.w500.size(20).setColor(Themes.white),
         ),
         backgroundColor: Themes.tileColor,

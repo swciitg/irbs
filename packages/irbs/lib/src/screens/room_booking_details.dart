@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/globals/my_fonts.dart';
+import '../globals/my_fonts.dart';
 import './booking_details.dart';
 import './room_details/room_details.dart';
 import '../services/api.dart';

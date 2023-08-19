@@ -1,7 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
-import 'package:irbs/src/models/booking_model.dart';
 import 'package:mobx/mobx.dart';
 import '../models/room_model.dart';
+import '../models/booking_model.dart';
 import '../services/api.dart';
 part 'room_detail_store.g.dart';
 

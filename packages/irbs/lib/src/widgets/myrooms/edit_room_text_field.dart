@@ -18,7 +18,6 @@ class _EditRoomTextFieldState extends State<EditRoomTextField> {
       children: [
          Text(
           "${widget.title}:",
-          // style: editRoomHeading,
            style: MyFonts.w500.size(16).setColor(Themes.myRoomsFormHeadingColor).setHeight(1.5).letterSpace(0.1),
         ),
         const SizedBox(
@@ -35,8 +34,6 @@ class _EditRoomTextFieldState extends State<EditRoomTextField> {
           maxLines: widget.title == "Instructions" ? 5 : 1,
           keyboardType: widget.title == "Room Capacity" ? TextInputType.number: widget.title == "Room Name" ? TextInputType.text : TextInputType.multiline,
           style: widget.title != "Instructions" ?
-          // editRoomText :
-          // editRoomInstrText,
             MyFonts.w400.size(16).setColor(Themes.white).setHeight(1.5).letterSpace(0.1) :
             MyFonts.w400.size(12).setColor(Themes.white).setHeight(1.333),
           decoration: InputDecoration(

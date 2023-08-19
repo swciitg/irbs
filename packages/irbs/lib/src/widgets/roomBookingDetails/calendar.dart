@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
-import 'package:irbs/src/globals/my_fonts.dart';
 import '../../globals/colors.dart';
+import '../../globals/my_fonts.dart';
 import '../../models/calendar_data.dart';
 import '../../store/common_store.dart';
 import '../shimmer/calendar_shimmer.dart';

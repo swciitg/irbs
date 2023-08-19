@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:irbs/src/globals/my_fonts.dart';
-import 'package:irbs/src/screens/booking_history.dart';
-import 'package:irbs/src/screens/room_list.dart';
 import 'package:provider/provider.dart';
+import '../screens/room_list.dart';
 import '../globals/colors.dart';
+import '../globals/my_fonts.dart';
 import '../models/booking_model.dart';
 import '../store/common_store.dart';
 import '../store/data_store.dart';
@@ -16,6 +15,7 @@ import '../widgets/home/empty_sate.dart';
 import '../widgets/home/pending_request_carousel.dart';
 import '../widgets/roomlist/list_display.dart';
 import '../widgets/shimmer/home_shimmer.dart';
+import 'booking_history.dart';
 import 'onboarding.dart';
 import 'upcoming_bookings.dart';
 

@@ -41,7 +41,6 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
             ),
             title: Text(
               "IRBS",
-              // style: kAppBarTextStyle,
               style: MyFonts.w500.size(20).setColor(Themes.white),
             ),
             backgroundColor: Themes.tileColor,
@@ -56,7 +55,6 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                       Expanded(
                         child: Text(
                           rd.currentRoom.roomName,
-                          // style: roomheadingStyle,
                           style: MyFonts.w600.size(24).setColor(Themes.myRoomsFormHeadingColor),
                         )
                       ),
@@ -85,7 +83,6 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Capacity: ${rd.currentRoom.roomCapacity}',
-                      // style: kRequestedRoomStyle,
                       style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
                     ),
                   ),
@@ -96,7 +93,6 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Instructions',
-                      // style: instrHeadingStyle,
                       style: MyFonts.w600.size(14).setColor(Themes.kSubHeading),
                     ),
                   ),
@@ -107,7 +103,6 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       '${rd.currentRoom.instructions}',
-                      // style: instrTextStyle,
                       style: MyFonts.w500.size(11).setColor(Themes.myRoomsFormHeadingColor).setHeight(1.4545),
                     ),
                   ),
@@ -118,7 +113,6 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Members',
-                      // style: instrHeadingStyle,
                       style: MyFonts.w600.size(14).setColor(Themes.kSubHeading),
                     ),
                   ),
@@ -144,7 +138,6 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                             ),
                             Text(
                               'Add Member',
-                              // style: addmemberStyle,
                               style: MyFonts.w500.size(14).setColor(Themes.primaryColor),
                             )
                           ],

@@ -45,12 +45,10 @@ class SideDrawer extends StatelessWidget {
                           ),
                           Text(
                             DataStore.userData["name"] ?? "Name",
-                            // style: sideDrawerStyle,
                             style: MyFonts.w600.size(14).setColor(Themes.white).setHeight(1.715).letterSpace(0.1),
                           ),
                           Text(
                             DataStore.userData["rollNo"] ?? "RollNumber",
-                            // style: sideDrawerStyle,
                             style: MyFonts.w600.size(14).setColor(Themes.white).setHeight(1.715).letterSpace(0.1),
                           ),
                           const SizedBox(
@@ -73,9 +71,6 @@ class SideDrawer extends StatelessWidget {
                             children: [
                               Text(
                                 "My Rooms",
-                              //   style: addmemberStyle.copyWith(
-                              //       color: Themes.white.withOpacity(0.5)),
-                              // ),
                                 style: MyFonts.w500.size(14).setColor(Themes.primaryColor).copyWith(
                                     color: Themes.white.withOpacity(0.5)),
                               ),
@@ -97,7 +92,6 @@ class SideDrawer extends StatelessWidget {
                                       vertical: 6),
                                   child: Text(
                                     roomName,
-                                    // style: sideDrawerRoomStyle,
                                     style: MyFonts.w600.size(15).setColor(Themes.white).setHeight(1.333).letterSpace(0.1),
                                   ),
                                 ),
@@ -135,8 +129,6 @@ class SideDrawer extends StatelessWidget {
                                 ),
                                 Text(
                                   "Need Help?",
-                                  // style: cancelButtonStyle.copyWith(
-                                  //     color: Themes.white, height: 2),
                                   style: MyFonts.w500.size(12).setColor(Themes.cancelButtonColor).copyWith(
                                       color: Themes.white, height: 2),
                                 ),
@@ -149,11 +141,6 @@ class SideDrawer extends StatelessWidget {
                                   },
                                   child: Text(
                                     'Contact Us',
-                                    // style: cancelButtonStyle.copyWith(
-                                    //     color: Themes.white,
-                                    //     height: 2,
-                                    //     decoration:
-                                    //     TextDecoration.underline),
                                     style: MyFonts.w500.size(12).setColor(Themes.cancelButtonColor).copyWith(
                                         color: Themes.white,
                                         height: 2,

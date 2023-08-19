@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../globals/my_fonts.dart';
+import 'package:irbs/src/globals/my_fonts.dart';
 import 'room_tile.dart';
 import '../../globals/colors.dart';
 import '../../models/room_model.dart';

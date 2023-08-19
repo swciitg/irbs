@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:irbs/src/models/room_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../globals/colors.dart';
 import '../../globals/my_fonts.dart';
+import '../../models/room_model.dart';
 import '../../screens/room_booking_details.dart';
 import '../../store/room_detail_store.dart';
 import '../shimmer/room_list_shimmer.dart';
@@ -30,7 +30,6 @@ class _CommonRoomsState extends State<CommonRooms> {
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Text(
               'Common Rooms',
-              // style: subHeadingStyle,
               style: MyFonts.w400.size(14).setColor(Themes.kSubHeading).letterSpace(0.5),
             ),
           ),
@@ -117,7 +116,6 @@ class GridWidget extends StatelessWidget {
             child: Text(
               name,
               textAlign: TextAlign.center,
-              // style: textStyle,
               style: MyFonts.w400.size(14).setColor(Themes.white),
             )),
       ),

@@ -52,7 +52,6 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
         ),
         title: Text(
           "IRBS",
-          // style: kAppBarTextStyle,
           style: MyFonts.w500.size(20).setColor(Themes.white),
         ),
         backgroundColor: Themes.tileColor,
@@ -135,14 +134,10 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
                           }
                         }
                       },
-                      child: const Center(
+                      child: Center(
                           child: Text(
                         'Save Details',
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            package: 'irbs',
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
+                            style: MyFonts.w700.size(16),
                       ))),
                 ),
               ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/globals/my_fonts.dart';
-import 'package:irbs/src/screens/booking_history.dart';
 import '../../globals/colors.dart';
+import '../../globals/my_fonts.dart';
 import '../../models/booking_model.dart';
 import '../../models/room_model.dart';
+import '../../screens/booking_history.dart';
 import '../../widgets/home/common_rooms.dart';
 import '../../widgets/home/current_bookings_widget.dart';
 import '../../widgets/roomlist/list_display.dart';

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../functions/launch_phone.dart';
 import '../../globals/colors.dart';
-// import '../../globals/styles.dart';
 import '../../globals/my_fonts.dart';
 import '../../models/room_model.dart';
 import '../../store/data_store.dart';
@@ -82,12 +81,10 @@ class _MemberTileState extends State<MemberTile> {
             children: [
               Text(
                 name,
-                // style: TextFormFieldStyle,
                 style: MyFonts.w500.size(14).setColor(Themes.white),
               ),
               Text(
                 widget.isPersonAdmin ? 'Admin' : 'Member',
-                // style: designationStyle,
                 style: MyFonts.w400.size(10).setColor(Themes.white).setHeight(1.2).letterSpace(0.1),
               )
             ],
@@ -160,7 +157,6 @@ PopupMenuItem buildPopupMenuItem(String title, String iconAddress, int val) {
         ),
         Text(
           title,
-          // style: popupMenuStyle,
           style: MyFonts.w400.size(12).setColor(Themes.white).setHeight(1.219).letterSpace(0.1),
         ),
       ],

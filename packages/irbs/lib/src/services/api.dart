@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:irbs/src/models/booking_model.dart';
-import 'package:irbs/src/models/room_model.dart';
 import '../functions/snackbar.dart';
 import '../globals/endpoints.dart';
+import '../models/booking_model.dart';
+import '../models/room_model.dart';
 import 'auth_helper.dart';
 
 class APIService {

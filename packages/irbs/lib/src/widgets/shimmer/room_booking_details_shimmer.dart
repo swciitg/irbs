@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:irbs/src/globals/my_fonts.dart';
 import '../../globals/colors.dart';
+import '../../globals/my_fonts.dart';
 import '../roomBookingDetails/upcoming_booking_widget.dart';
 import 'package:shimmer/shimmer.dart';
 

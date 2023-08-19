@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/globals/colors.dart';
 
+import 'colors.dart';
 import 'my_fonts.dart';
 
 final elevatedButtonStyle = ButtonStyle(

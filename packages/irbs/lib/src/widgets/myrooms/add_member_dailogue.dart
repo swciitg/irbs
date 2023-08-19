@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:irbs/src/store/room_detail_store.dart';
 import 'package:provider/provider.dart';
 import '../../globals/colors.dart';
 import '../../globals/my_fonts.dart';
 import '../../globals/styles.dart';
 import '../../services/api.dart';
+import '../../store/room_detail_store.dart';
 
 
 
@@ -70,8 +70,6 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
             height: 24,
             child: Text(
               'Add Member',
-              // style: appBarStyle.copyWith(
-              //     color: Themes.myRoomsFormHeadingColor, fontSize: 18),
               style: MyFonts.w500.size(20).setColor(Themes.white).copyWith(
                   color: Themes.myRoomsFormHeadingColor, fontSize: 18),
               textAlign: TextAlign.left,
@@ -93,12 +91,10 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
                 }
                 return null;
               },
-              // style: permanentTextStyle,
               style: MyFonts.w500.size(14).setColor(Themes.permanentTextColor),
               keyboardType: TextInputType.emailAddress,
               decoration: textFieldDecoration.copyWith(
                   labelText: "Mail ID",
-                  // labelStyle: labelTextStyle
                   labelStyle: MyFonts.w400.size(12).setColor(Themes.permanentTextColor).letterSpace(0.4).setHeight(1.33),
               )),
           const SizedBox(
@@ -108,7 +104,6 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
               value: checkAdmin,
               title: Text(
                 'Admin',
-                // style: popupMenuStyle.copyWith(fontSize: 14),
                 style: MyFonts.w400.size(12).setColor(Themes.white).setHeight(1.219).letterSpace(0.1).copyWith(fontSize: 14),
               ),
               onChanged: (bool? value) {
@@ -165,11 +160,6 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
                         ? const CircularProgressIndicator()
                         : Text(
                       'Add',
-                      // style: TextStyle(
-                      //     fontFamily: 'Montserrat',
-                      //     package: 'irbs',
-                      //     fontSize: 16,
-                      //     fontWeight: FontWeight.bold),
                       style: MyFonts.w500.size(16),
                     ))),
           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../globals/my_fonts.dart';
+import 'package:irbs/src/globals/my_fonts.dart';
 import '../../globals/styles.dart';
 import 'package:provider/provider.dart';
 import '../../globals/colors.dart';

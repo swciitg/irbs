@@ -25,7 +25,6 @@ class EmptyListPlaceholder extends StatelessWidget {
           child: Center(
               child: Text(
                 text,
-                // style: subHeadingStyle
                 style: MyFonts.w400.setColor(Themes.subHeadingColor),
               )
           ),
