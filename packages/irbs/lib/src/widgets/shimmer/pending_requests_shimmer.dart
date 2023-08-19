@@ -1,8 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:irbs/src/models/booking_model.dart';
-import 'package:irbs/src/models/room_model.dart';
-import 'package:irbs/src/store/common_store.dart';
+import 'package:irbs/src/globals/colors.dart';
+import '../../models/booking_model.dart';
+import '../../models/room_model.dart';
+import '../../store/common_store.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../home/request_tile.dart';
@@ -18,8 +19,8 @@ class _PendingRequestShimmerState extends State<PendingRequestShimmer> {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Color.fromRGBO(47, 48, 51, 1),
-      highlightColor: Color.fromRGBO(68, 71, 79, 1),
+      baseColor: Themes.allRequestShimmerBase,
+      highlightColor: Themes.allRequestShimmerHighlight,
       child: Column(
         children: [
           CarouselSlider(

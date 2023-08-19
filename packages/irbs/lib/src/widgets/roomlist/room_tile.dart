@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:irbs/src/models/room_model.dart';
-import 'package:irbs/src/screens/room_booking_details.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:irbs/src/store/common_store.dart';
+import 'package:irbs/src/globals/my_fonts.dart';
+import '../../models/room_model.dart';
+import '../../screens/room_booking_details.dart';
+import '../../store/common_store.dart';
 import 'package:provider/provider.dart';
 import '../../globals/colors.dart';
 
@@ -42,19 +42,6 @@ class _RoomTileState extends State<RoomTile> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Row(
-            //   children: [
-                // Container(
-                //   margin:
-                //       const EdgeInsets.symmetric(vertical: 9, horizontal: 16),
-                //   height: 30,
-                //   width: 30,
-                //   decoration: BoxDecoration(
-                //     color: Colors.white,
-                //     borderRadius:
-                //         BorderRadius.circular(4), // Set the radius here
-                //   ),
-                // ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width*0.75,
                   child: Padding(
@@ -62,11 +49,7 @@ class _RoomTileState extends State<RoomTile> {
                     child: Text(
                       widget.room.roomName,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.white,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w500),
+                      style: MyFonts.w500.size(14).setColor(Themes.white),
                     ),
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/widgets/roomlist/room_tile.dart';
-import '../../globals/styles.dart';
+import 'package:irbs/src/globals/my_fonts.dart';
+import 'room_tile.dart';
+import '../../globals/colors.dart';
 import '../../models/room_model.dart';
 
 class ListDisplay extends StatefulWidget {
@@ -31,11 +32,11 @@ class _ListDisplayState extends State<ListDisplay> {
                       children: [
                         Text(
                           widget.type,
-                          style: roomTypeStyle,
+                          style: MyFonts.w400.size(14).setColor(Themes.regentGrey),
                         )
                       ])),
               ListView.builder(
-                  padding: EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(0),
                   physics: const ClampingScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: widget.roomList.length,

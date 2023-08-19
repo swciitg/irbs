@@ -6,8 +6,8 @@ import 'package:dio/dio.dart';
 class AuthUserHelpers{
 
   Future<Response<dynamic>> retryRequest(Response response) async {
-    print(response);
-    print("INSIDE RETRY REQUEST");
+    // print(response);
+    // print("INSIDE RETRY REQUEST");
     RequestOptions requestOptions = response.requestOptions;
     response.requestOptions.headers[BackendHelper.authorization] = "Bearer ${await AuthUserHelpers.getAccessToken()}";
     try{
@@ -30,16 +30,16 @@ class AuthUserHelpers{
     }
   }
   catch(e){
-      print("error adarahooo");
-      print(e);
+      // print("error adarahooo");
+      // print(e);
       throw Exception(e);
   }
   }
 
   Future<bool> regenerateAccessToken() async {
     String refreshToken = await AuthUserHelpers.getRefreshToken();
-    print("REFRESH TOKEN");
-    print(refreshToken);
+    // print("REFRESH TOKEN");
+    // print(refreshToken);
     try {
       Dio regenDio = Dio(BaseOptions(
           baseUrl: Endpoints.oneStopbaseURL,
@@ -48,15 +48,15 @@ class AuthUserHelpers{
       Response resp = await regenDio.post(
           "/user/accesstoken",
           options: Options(headers: {'Security-Key': Endpoints.apiSecurityKey,"authorization": "Bearer $refreshToken"}));
-      print(resp);
+      // print(resp);
       var data = resp.data!;
-      print(data);
-      print("REGENRATED ACCESS TOKEN");
+      // print(data);
+      // print("REGENRATED ACCESS TOKEN");
       await AuthUserHelpers.setAccessToken(data[BackendHelper.accesstoken]);
       return true;
     } catch (err) {
-      print("ERROR OCCURED");
-      print(err.toString());
+      // print("ERROR OCCURED");
+      // print(err.toString());
       return false;
     }
   }
@@ -67,7 +67,7 @@ class AuthUserHelpers{
   }
 
   static Future<void> setAccessToken(String value) async {
-    print(value);
+    // print(value);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(BackendHelper.accesstoken, value);
   }

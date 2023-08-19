@@ -88,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onRefresh: () async {
                 await DataStore().clear();
                 setState(() {});
+                if (!mounted) return;
                 return DataStore().initialiseData(context);
               },
               child: SingleChildScrollView(
@@ -101,94 +102,119 @@ class _HomeScreenState extends State<HomeScreen> {
                             top: 18, left: 16, bottom: 10),
                         child: Text(
                           'Requests',
-                          style: MyFonts.w600.setColor(Themes.kSubHeading).size(14).letterSpace(0.5),
+                          style: MyFonts.w600
+                              .setColor(Themes.kSubHeading)
+                              .size(14)
+                              .letterSpace(0.5),
                         ),
                       ),
                     if (isAdmin) const PendingRequestCarousel(),
-                   !DataStore.isGuest() ? Padding(
-                      padding: const EdgeInsets.only(
-                          top: 10, left: 16, bottom: 7, right: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Current Bookings',
-                            style:  MyFonts.w600.setColor(Themes.kSubHeading).size(14).letterSpace(0.5),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                  context, '/irbs/bookingHistory');
-                            },
-                            child: Text(
-                              'View History',
-                              style:MyFonts.w400.size(12).letterSpace(0.5).underline().setColor(Themes.kTextButtonColor),
+                    !DataStore.isGuest()
+                        ? Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 16, bottom: 7, right: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Current Bookings',
+                                  style: MyFonts.w600
+                                      .setColor(Themes.kSubHeading)
+                                      .size(14)
+                                      .letterSpace(0.5),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context, '/irbs/bookingHistory');
+                                  },
+                                  child: Text(
+                                    'View History',
+                                    style: MyFonts.w400
+                                        .size(12)
+                                        .letterSpace(0.5)
+                                        .underline()
+                                        .setColor(Themes.kTextButtonColor),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ): Container(),
-                    !DataStore.isGuest() ? Observer(builder: (context) {
-                      return rd.upcomingBookings.isEmpty
-                          ? const EmptyListPlaceholder(
-                              text: 'No Upcoming Bookings')
-                          : SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ListView.builder(
-                                      padding: const EdgeInsets.all(0),
-                                      shrinkWrap: true,
-                                      itemCount: rd.upcomingBookings.length > 3
-                                          ? 3
-                                          : rd.upcomingBookings.length,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        BookingModel ans =
-                                            rd.upcomingBookings[index];
+                          )
+                        : Container(),
+                    !DataStore.isGuest()
+                        ? Observer(builder: (context) {
+                            return rd.upcomingBookings.isEmpty
+                                ? const EmptyListPlaceholder(
+                                    text: 'No Upcoming Bookings')
+                                : SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        ListView.builder(
+                                            padding: const EdgeInsets.all(0),
+                                            shrinkWrap: true,
+                                            itemCount:
+                                                rd.upcomingBookings.length > 3
+                                                    ? 3
+                                                    : rd.upcomingBookings
+                                                        .length,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              BookingModel ans =
+                                                  rd.upcomingBookings[index];
 
-                                        return BookingTile(
-                                          model: ans,
-                                        );
-                                      }),
-                                  rd.upcomingBookings.length > 3
-                                      ? GestureDetector(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 16, vertical: 12),
-                                            child: Container(
-                                              height: 40,
-                                              width: double.maxFinite,
-                                              decoration: BoxDecoration(
-                                                  color: snapshot.data!.isEmpty
-                                                      ? Themes
-                                                          .disabledButtonBackground
-                                                      : Themes
-                                                          .kCommonBoxBackground,
-                                                  borderRadius:
-                                                      BorderRadius.circular(4)),
-                                              child: Center(
-                                                child: Text(
-                                                  'View all upcoming bookings',
-                                                  style: MyFonts.w500.size(15).letterSpace(0.5).setColor(Themes.white),
+                                              return BookingTile(
+                                                model: ans,
+                                              );
+                                            }),
+                                        rd.upcomingBookings.length > 3
+                                            ? GestureDetector(
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 16,
+                                                      vertical: 12),
+                                                  child: Container(
+                                                    height: 40,
+                                                    width: double.maxFinite,
+                                                    decoration: BoxDecoration(
+                                                        color: snapshot
+                                                                .data!.isEmpty
+                                                            ? Themes
+                                                                .disabledButtonBackground
+                                                            : Themes
+                                                                .kCommonBoxBackground,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(4)),
+                                                    child: Center(
+                                                      child: Text(
+                                                        'View all upcoming bookings',
+                                                        style: MyFonts.w500
+                                                            .size(15)
+                                                            .letterSpace(0.5)
+                                                            .setColor(
+                                                                Themes.white),
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
-                                          ),
-                                          onTap: () {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const UpcomingBookingsScreen()));
-                                          },
-                                        )
-                                      : Container(),
-                                ],
-                              ),
-                            );
-                    }) : Container(),
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const UpcomingBookingsScreen()));
+                                                },
+                                              )
+                                            : Container(),
+                                      ],
+                                    ),
+                                  );
+                          })
+                        : Container(),
                     Observer(builder: (context) {
                       return ListDisplay(
                           roomList: cs.pinnedRooms.values.toList(),

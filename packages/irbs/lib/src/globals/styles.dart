@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:irbs/src/globals/colors.dart';
 
+import 'my_fonts.dart';
+
 const headingStyle = TextStyle(
     color: Themes.white,
     fontSize: 28,
@@ -467,10 +469,12 @@ const addmoreStyle = TextStyle(
 var textFieldDecoration = InputDecoration(
     enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(4.0),
-        borderSide: const BorderSide(color: Color.fromRGBO(255, 255, 255, 0.5))),
+        borderSide:
+            const BorderSide(color: Color.fromRGBO(255, 255, 255, 0.5))),
     focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(4.0),
-        borderSide: const BorderSide(color: Color.fromRGBO(255, 255, 255, 0.5))),
+        borderSide:
+            const BorderSide(color: Color.fromRGBO(255, 255, 255, 0.5))),
     errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(4.0),
         borderSide: const BorderSide(color: Colors.red)),
@@ -485,7 +489,7 @@ const sideDrawerStyle = TextStyle(
     color: Colors.white,
     height: 1.715,
     letterSpacing: 0.1);
-const sideDrawerRoomStyle=TextStyle(
+const sideDrawerRoomStyle = TextStyle(
     fontFamily: 'Montserrat',
     package: 'irbs',
     fontSize: 15,
@@ -493,3 +497,18 @@ const sideDrawerRoomStyle=TextStyle(
     color: Colors.white,
     height: 1.333,
     letterSpacing: 0.1);
+final searchBarBorder = InputDecoration(
+  isDense: true,
+  contentPadding: EdgeInsets.zero,
+  border: const OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.transparent),
+  ),
+  enabledBorder: const OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.transparent),
+  ),
+  focusedBorder: const OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.transparent),
+  ),
+  hintText: 'Search Keyword (name,position etc.)',
+  hintStyle: MyFonts.w400.size(12).setColor(Themes.comet),
+);

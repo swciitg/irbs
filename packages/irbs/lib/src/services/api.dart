@@ -15,9 +15,9 @@ class APIService {
   APIService() {
     dio.interceptors
         .add(InterceptorsWrapper(onRequest: (options, handler) async {
-      print("THIS IS TOKEN");
-      print(await AuthUserHelpers.getAccessToken());
-      print(options.path);
+      // print("THIS IS TOKEN");
+      // print(await AuthUserHelpers.getAccessToken());
+      // print(options.path);
       options.headers["Authorization"] =
       "Bearer ${await AuthUserHelpers.getAccessToken()}";
       handler.next(options);
@@ -27,10 +27,10 @@ class APIService {
         if ((await AuthUserHelpers.getAccessToken()).isEmpty) {
           showSnackBar("Login to continue!!");
         } else {
-          print(response.requestOptions.path);
+          // print(response.requestOptions.path);
           bool couldRegenerate =
           await AuthUserHelpers().regenerateAccessToken();
-          print(couldRegenerate);
+          // print(couldRegenerate);
           // ignore: use_build_context_synchronously
           if (couldRegenerate) {
             // retry
@@ -43,8 +43,8 @@ class APIService {
       } else if (response != null && response.statusCode == 403) {
         showSnackBar("Access not allowed in guest mode");
       } else if (response != null && response.statusCode == 400) {
-        print(response);
-        print("HEllo worldo");
+        // print(response);
+        // print("HEllo worldo");
         //showSnackBar(response.data["message"]);
       }
       // admin user with expired tokens
@@ -144,7 +144,7 @@ class APIService {
         throw Exception(res.statusMessage.toString());
       }
     }catch(e){
-      print(e);
+      // print(e);
       throw Exception(e.toString());
     }
   }
@@ -182,7 +182,7 @@ class APIService {
         throw Exception(res.statusMessage);
       }
     }catch(e){
-      print(e.toString());
+      // print(e.toString());
       throw Exception(e.toString());
     }
   }
@@ -216,11 +216,11 @@ class APIService {
       {
         var myRooms = response.data;
         List<RoomModel> ans = [];
-        print(myRooms);
+        // print(myRooms);
         for (var room in myRooms) {
-          print("HERE");
+          // print("HERE");
           ans.add(RoomModel.fromJson(room));
-          print("HERE 2");
+          // print("HERE 2");
         }
         return ans;
       } else {
@@ -246,7 +246,7 @@ class APIService {
         return "Some error occured";
       }
     } catch (e) {
-      print("Inside catch");
+      // print("Inside catch");
       return e.toString();
       //throw Exception(e.toString());
     }
@@ -263,7 +263,7 @@ class APIService {
       );
 
       if(res.statusCode == 200){
-        print('Booking rejected');
+        // print('Booking rejected');
         return true;
       }else{
         throw Exception(res.statusMessage);
@@ -275,7 +275,7 @@ class APIService {
 
   Future<bool> acceptBooking(String bookingId, String instructions)async{
     try {
-      print(instructions);
+      // print(instructions);
       Response res = await dio.post(
         Endpoints.baseUrl+Endpoints.acceptBooking,
         data: {
@@ -285,7 +285,7 @@ class APIService {
       );
 
       if(res.statusCode == 200){
-        print('Booking accepted');
+        // print('Booking accepted');
         return true;
       }else{
         throw Exception(res.statusMessage);
@@ -304,7 +304,7 @@ class APIService {
       if(res.statusCode == 200){
         var bookingMapList = res.data;
         List<BookingModel> currentBooking = [];
-        DateTime a =DateTime.parse(DateTime.now().toIso8601String()+"Z");
+        DateTime a =DateTime.parse("${DateTime.now().toIso8601String()}Z");
         for(var booking in bookingMapList){
           DateTime b = DateTime.parse(booking['outTime']);
           if(!a.isAfter(b))
@@ -323,7 +323,7 @@ class APIService {
         throw Exception(res.statusMessage);
       }
     }catch(e){
-      print(e.toString());
+      // print(e.toString());
       throw Exception(e.toString());
     }
   }
@@ -339,7 +339,7 @@ class APIService {
       if(res.statusCode == 200){
         var bookingMapList = res.data;
         List<BookingModel> bookings = [];
-        DateTime a =DateTime.parse(DateTime.now().toIso8601String()+"Z");
+        DateTime a =DateTime.parse("${DateTime.now().toIso8601String()}Z");
         for(var booking in bookingMapList){
           DateTime b = DateTime.parse(booking['outTime']);
           if(a.isAfter(b))
@@ -355,7 +355,7 @@ class APIService {
         throw Exception(res.statusMessage);
       }
     }catch(e){
-      print(e.toString());
+      // print(e.toString());
       throw Exception(e.toString());
     }
   }
@@ -366,15 +366,15 @@ class APIService {
         "id": id
       });
       if (response.statusCode == 200) {
-        print('deleted');
+        // print('deleted');
         return "Success";
       } else {
-        print('failed___ ${response.statusCode}');
+        // print('failed___ ${response.statusCode}');
         return "Failed";
       }
     } catch (error) {
       return 'ERROR: $error';
-      return "Failed";
+      // return "Failed";
     }
   }
 
@@ -386,14 +386,14 @@ class APIService {
       },
       );
       if (response.statusCode == 200) {
-        print('updated');
+        // print('updated');
         return "Success";
       } else {
-        print('failed___ ${response.statusCode}');
+        // print('failed___ ${response.statusCode}');
         return response.statusMessage.toString();
       }
     } catch (error) {
-      print('ERROR: $error');
+      // print('ERROR: $error');
       return error.toString();
     }
   }
@@ -405,17 +405,17 @@ class APIService {
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         var room = response.data;
-        print(room.runtimeType);
+        // print(room.runtimeType);
         if (room['errors'] != null) {
-          print("exc");
+          // print("exc");
           throw Exception('Email doesn\'t Exist');
         }
         return RoomModel.fromJson(room);
       } else if (response.statusCode == 404) {
-        print("exception");
+        // print("exception");
         throw Exception('Email doesn\'t Exist');
       } else {
-        print("excep");
+        // print("excep");
         showSnackBar(response.statusMessage.toString());
         throw Exception(response.statusMessage);
       }

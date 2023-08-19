@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:irbs/src/globals/colors.dart';
-import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/widgets/roomBookingDetails/upcoming_booking_widget.dart';
+import 'package:irbs/src/globals/my_fonts.dart';
+import '../../globals/colors.dart';
+import '../roomBookingDetails/upcoming_booking_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
 class RoomBookingDetailsShimmer extends StatelessWidget {
@@ -11,8 +11,8 @@ class RoomBookingDetailsShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      highlightColor: const Color.fromRGBO(68, 71, 79, 1),
-      baseColor: const Color.fromRGBO(47, 48, 51, 1),
+      highlightColor: Themes.allRequestShimmerHighlight,
+      baseColor: Themes.allRequestShimmerBase,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start, 
         children: [
@@ -53,12 +53,12 @@ class RoomBookingDetailsShimmer extends StatelessWidget {
           ),
           ExpansionTile(
             childrenPadding: const EdgeInsets.only(bottom: 12),
-            title: const Text(
+            title: Text(
               'Upcoming Bookings',
-              style: subHeadingStyle,
+              style: MyFonts.w400.setColor(Themes.kSubHeading),
             ),
-            collapsedIconColor:const Color.fromRGBO(135, 145, 165, 1),
-            iconColor:const Color.fromRGBO(135, 145, 165, 1),
+            collapsedIconColor:Themes.regentGrey,
+            iconColor:Themes.regentGrey,
             children: [].map(
               (e) => UpcomingBookingsWidget(
                 name: e.userInfo.name ?? '',

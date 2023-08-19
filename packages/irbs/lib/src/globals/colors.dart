@@ -27,4 +27,17 @@ class Themes {
   static const roomHeadingColor = Color.fromRGBO(253, 252, 255, 1);
   static const subHeadingColor = Color.fromRGBO(135, 145, 165, 1);
   static const kTextButtonColor = Color.fromRGBO(88, 129, 191, 1);
+  static const black = Colors.black;
+  static const red = Colors.red;
+  static const calenderBgColor = Color.fromRGBO(35, 35, 35, 1);
+  static const datepickerPrimaryColor = Color.fromRGBO(189, 199, 220, 1);
+  static const datepickerSurfaceColor = Color.fromRGBO(43, 62, 92, 1);
+  static const permanentTextColor = Color.fromRGBO(169, 173, 179, 1);
+  static const modalToastBgColor = Color.fromRGBO(39, 49, 65, 0.7);
+  static const modalBorderColor = Color.fromRGBO(147, 152, 160, 1);
+  static const approvedColor = Color.fromRGBO(53, 118, 42, 1);
+  static const allRequestShimmerHighlight = Color.fromRGBO(68, 71, 79, 1);
+  static const allRequestShimmerBase = Color.fromRGBO(47, 48, 51, 1);
+  static const backgroundColor0Opacity = Color.fromRGBO(28, 28, 30, 0);
+
 }

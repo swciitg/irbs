@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/globals/colors.dart';
-import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/models/booking_model.dart';
-import 'package:irbs/src/models/room_model.dart';
-import 'package:irbs/src/widgets/home/common_rooms.dart';
-import 'package:irbs/src/widgets/home/current_bookings_widget.dart';
-import 'package:irbs/src/widgets/roomlist/list_display.dart';
+import 'package:irbs/src/globals/my_fonts.dart';
+import '../../globals/colors.dart';
+import '../../models/booking_model.dart';
+import '../../models/room_model.dart';
+import '../../widgets/home/common_rooms.dart';
+import '../../widgets/home/current_bookings_widget.dart';
+import '../../widgets/roomlist/list_display.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomeShimmer extends StatelessWidget {
@@ -14,7 +14,7 @@ class HomeShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
+      backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
         centerTitle: true,
         leading: GestureDetector(
@@ -26,17 +26,17 @@ class HomeShimmer extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        title: const Text(
+        title: Text(
           "IRBS",
-          style: kAppBarTextStyle,
+          style: MyFonts.w500.size(20).setColor(Themes.white),
         ),
         backgroundColor: Themes.kCommonBoxBackground,
       ),
       body: Stack(fit: StackFit.expand, children: [
         SingleChildScrollView(
           child: Shimmer.fromColors(
-            highlightColor: const Color.fromRGBO(68, 71, 79, 1),
-            baseColor: const Color.fromRGBO(47, 48, 51, 1),
+            highlightColor: Themes.allRequestShimmerHighlight,
+            baseColor: Themes.allRequestShimmerBase,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -48,17 +48,16 @@ class HomeShimmer extends StatelessWidget {
                     children: [
                       Text(
                         'Current Bookings',
-                        style: kSubHeadingStyle.copyWith(
-                            fontWeight: FontWeight.w600),
+                        style: MyFonts.w600.size(14).letterSpace(0.5).setColor(Themes.kSubHeading),
                       ),
                       TextButton(
                         onPressed: () {
                           Navigator.pushNamed(
                               context, '/irbs/bookingHistory');
                         },
-                        child: const Text(
+                        child: Text(
                           'View History',
-                          style: kTextButtonStyle,
+                          style: MyFonts.w400.size(12).letterSpace(0.5).underline().setColor(Themes.kTextButtonColor),
                         ),
                       ),
                     ],
@@ -70,7 +69,7 @@ class HomeShimmer extends StatelessWidget {
                         CrossAxisAlignment.start,
                     children: [
                       ListView.builder(
-                          padding: EdgeInsets.all(0),
+                          padding: const EdgeInsets.all(0),
                           shrinkWrap: true,
                         itemCount: 3,
                         physics:
@@ -114,10 +113,10 @@ class HomeShimmer extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: Themes.kCommonBoxBackground,
                                 borderRadius: BorderRadius.circular(4)),
-                            child: const Center(
+                            child: Center(
                               child: Text(
                                 'View all upcoming bookings',
-                                style: kRequestedRoomStyle,
+                                style: MyFonts.w500.letterSpace(0.5).size(14).setColor(Themes.white),
                               ),
                             ),
                           ),
@@ -174,28 +173,24 @@ class HomeShimmer extends StatelessWidget {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                      Color.fromRGBO(28, 28, 30, 0),
-                      Color.fromRGBO(28, 28, 30, 1)
+                      Themes.backgroundColor0Opacity,
+                      Themes.backgroundColor
                     ])),
               ),
               Container(
-                color: const Color.fromRGBO(28, 28, 30, 1),
+                color: Themes.backgroundColor,
                 child: Container(
                   height: 52,
                   margin: const EdgeInsets.fromLTRB(17, 0, 16, 36),
                   decoration: const BoxDecoration(
-                      color: Color.fromRGBO(118, 172, 255, 1),
+                      color: Themes.primaryColor,
                       borderRadius: BorderRadius.all(Radius.circular(4))),
                   child: InkWell(
                       onTap: (){},
-                      child: const Center(
+                      child: Center(
                           child: Text(
                         'Book a Room',
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            package: 'irbs',
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
+                        style: MyFonts.w700.size(16),
                       ))),
                 ),
               ),

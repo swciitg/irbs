@@ -40,7 +40,7 @@ abstract class _CommonStore with Store {
   initialisePinnedRooms()
   async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? res = await prefs.getString('pinnedRooms');
+    String? res = prefs.getString('pinnedRooms');
     if(res != null)
       {
         Map<String,dynamic> a = jsonDecode(res);
@@ -55,23 +55,23 @@ abstract class _CommonStore with Store {
   @action
   Future<void> addPinnedRooms(RoomModel room)
   async {
-    print("g");
+    // print("g");
     pinnedRooms[room.id] = room;
     pinnedRooms = pinnedRooms;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('pinnedRooms', jsonEncode(pinnedRooms));
-    print("d");
+    // print("d");
   }
 
   @action
   Future<void> removePinnedRooms(String id)
   async {
-    print("g");
+    // print("g");
     pinnedRooms.remove(id);
     pinnedRooms = pinnedRooms;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('pinnedRooms', jsonEncode(pinnedRooms));
-    print("d");
+    // print("d");
 
   }
 
