@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import '../../globals/colors.dart';
-import '../../globals/styles.dart';
+import '../../globals/my_fonts.dart';
 import '../../store/data_store.dart';
 import '../../store/room_detail_store.dart';
 import '../../widgets/myrooms/add_member_dailogue.dart';
-import '../../widgets/myrooms/memberTile.dart';
+import '../../widgets/myrooms/member_tile.dart';
 import 'edit_room_details.dart';
 
 class RoomDetailsScreen extends StatefulWidget {
@@ -39,11 +39,12 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                 color: Colors.white,
               ),
             ),
-            title: const Text(
+            title: Text(
               "IRBS",
-              style: kAppBarTextStyle,
+              // style: kAppBarTextStyle,
+              style: MyFonts.w500.size(20).setColor(Themes.white),
             ),
-            backgroundColor: Themes.kCommonBoxBackground,
+            backgroundColor: Themes.tileColor,
           ),
           body: SingleChildScrollView(
             child: Container(
@@ -53,10 +54,12 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                   Row(
                     children: [
                       Expanded(
-                          child: Text(
-                            rd.currentRoom.roomName,
-                        style: roomheadingStyle,
-                      )),
+                        child: Text(
+                          rd.currentRoom.roomName,
+                          // style: roomheadingStyle,
+                          style: MyFonts.w600.size(24).setColor(Themes.myRoomsFormHeadingColor),
+                        )
+                      ),
                       if (isAdmin)
                         GestureDetector(
                           onTap: () {
@@ -82,17 +85,19 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Capacity: ${rd.currentRoom.roomCapacity}',
-                      style: kRequestedRoomStyle,
+                      // style: kRequestedRoomStyle,
+                      style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
                     ),
                   ),
                   const SizedBox(
                     height: 16,
                   ),
-                  const Align(
+                  Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Instructions',
-                      style: instrHeadingStyle,
+                      // style: instrHeadingStyle,
+                      style: MyFonts.w600.size(14).setColor(Themes.kSubHeading),
                     ),
                   ),
                   const SizedBox(
@@ -102,17 +107,19 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       '${rd.currentRoom.instructions}',
-                      style: instrTextStyle,
+                      // style: instrTextStyle,
+                      style: MyFonts.w500.size(11).setColor(Themes.myRoomsFormHeadingColor).setHeight(1.4545),
                     ),
                   ),
                   const SizedBox(
                     height: 16,
                   ),
-                  const Align(
+                  Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Members',
-                      style: instrHeadingStyle,
+                      // style: instrHeadingStyle,
+                      style: MyFonts.w600.size(14).setColor(Themes.kSubHeading),
                     ),
                   ),
                   const SizedBox(
@@ -125,19 +132,20 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
                           border: Border.all(
-                              color: const Color.fromRGBO(85, 95, 113, 1),
+                              color: Themes.comet,
                               width: 1),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.add,
-                              color: Color.fromRGBO(118, 172, 255, 1),
+                              color: Themes.primaryColor,
                             ),
                             Text(
                               'Add Member',
-                              style: addmemberStyle,
+                              // style: addmemberStyle,
+                              style: MyFonts.w500.size(14).setColor(Themes.primaryColor),
                             )
                           ],
                         ),
@@ -150,7 +158,7 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                     height: 12,
                   ),
                   ListView.builder(
-                      padding: EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(0),
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: rd.currentRoom.owner.length,
@@ -170,7 +178,7 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                         );
                       }),
                   ListView.builder(
-                    padding: EdgeInsets.all(0),
+                    padding: const EdgeInsets.all(0),
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: rd.currentRoom.allowedUsers.length,

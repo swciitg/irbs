@@ -26,13 +26,13 @@ class _IRBSDatePickerState extends State<IRBSDatePicker> {
           bodySmall: MyFonts.w400, // days
         ),
         colorScheme: const ColorScheme.dark(
-          primary: Themes.datepickerPrimaryColor,
-          surface: Themes.datepickerSurfaceColor,
+          primary: Themes.datePickerPrimaryColor,
+          surface: Themes.datePickerSurfaceColor,
         ),
-        dialogBackgroundColor: Themes.datepickerSurfaceColor,
+        dialogBackgroundColor: Themes.datePickerSurfaceColor,
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-              backgroundColor: Themes.datepickerSurfaceColor, // button
+              backgroundColor: Themes.datePickerSurfaceColor, // button
               foregroundColor: Themes.primaryColor,
               elevation: 0,
               textStyle: MyFonts.w400),

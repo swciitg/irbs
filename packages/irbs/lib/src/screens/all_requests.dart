@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import '../globals/colors.dart';
-import '../globals/styles.dart';
+import '../globals/my_fonts.dart';
 import '../models/booking_model.dart';
 import '../services/api.dart';
 import '../store/common_store.dart';
@@ -17,7 +17,7 @@ class PendingRequestsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var cs = context.read<CommonStore>();
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
+      backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
         centerTitle: true,
         leading: GestureDetector(
@@ -29,11 +29,12 @@ class PendingRequestsScreen extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        title: const Text(
+        title: Text(
           "Pending Requests",
-          style: kAppBarTextStyle,
+          // style: kAppBarTextStyle,
+          style: MyFonts.w500.size(20).setColor(Themes.white),
         ),
-        backgroundColor: Themes.kCommonBoxBackground,
+        backgroundColor: Themes.tileColor,
       ),
       body: SafeArea(
         child: Observer(builder: (context) {
@@ -46,7 +47,7 @@ class PendingRequestsScreen extends StatelessWidget {
                       return const Center(child: Text('Error'));
                     }
                     return ListView.builder(
-                      padding: EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(0),
 
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {

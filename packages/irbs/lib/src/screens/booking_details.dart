@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:irbs/src/models/booking_model.dart';
-import 'package:irbs/src/services/api.dart';
-import 'package:irbs/src/store/common_store.dart';
-import 'package:irbs/src/store/data_store.dart';
-import 'package:irbs/src/store/room_detail_store.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../globals/colors.dart';
-import '../globals/styles.dart';
+import '../globals/my_fonts.dart';
+import '../models/booking_model.dart';
+import '../services/api.dart';
+import '../store/common_store.dart';
+import '../store/data_store.dart';
+import '../store/room_detail_store.dart';
+
 class BookingDetails extends StatelessWidget {
-  BookingModel booking;
-  BookingDetails({Key? key, required this.booking}) : super(key: key);
+  final BookingModel booking;
+  const BookingDetails({Key? key, required this.booking}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var store = context.read<RoomDetailStore>();
@@ -34,12 +35,13 @@ class BookingDetails extends StatelessWidget {
           },
           child: const Icon(
             Icons.arrow_back_sharp,
-            color: Colors.white,
+            color: Themes.white,
           ),
         ),
-        title:  const Text(
+        title:  Text(
           "Booking Details",
-          style: kAppBarTextStyle,
+          // style: kAppBarTextStyle,
+          style: MyFonts.w500.size(20).setColor(Themes.white),
         ),
         actions: [
           GestureDetector(
@@ -56,98 +58,128 @@ class BookingDetails extends StatelessWidget {
                 ),
               ))
         ],
-        backgroundColor: Themes.kCommonBoxBackground,
+        backgroundColor: Themes.tileColor,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('Room Name:',style: subHeadingStyle,),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+            child: Text('Room Name:',
+              // style: subHeadingStyle,
+              style: MyFonts.w400.setColor(Themes.kSubHeading),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 3,horizontal: 16),
             child: Text(booking.roomDetails.roomName,
-              style: kBookingDetailStyle,
+              // style: kBookingDetailStyle,
+              style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('Start Time:',style: subHeadingStyle,),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+            child: Text('Start Time:',
+              // style: subHeadingStyle,
+              style: MyFonts.w400.setColor(Themes.kSubHeading),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: RichText(
-              text: TextSpan(style: kBookingDetailStyle, children: [
-                TextSpan(
-                  text: DateFormat("hh:mm a")
-                      .format(DateTime.parse(booking.inTime)),
-                ),
-                const TextSpan(
-                  text: ' · ',
-                ),
-                TextSpan(
-                    text: DateFormat("dd MMMM")
-                        .format(DateTime.parse(booking.inTime)))
-              ]),
+              text: TextSpan(
+                // style: kBookingDetailStyle,
+                style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+                children: [
+                  TextSpan(
+                    text: DateFormat("hh:mm a")
+                        .format(DateTime.parse(booking.inTime)),
+                  ),
+                  const TextSpan(
+                    text: ' · ',
+                  ),
+                  TextSpan(
+                      text: DateFormat("dd MMMM")
+                          .format(DateTime.parse(booking.inTime)))
+                ],
+              ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('End Time:',style: subHeadingStyle,),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+            child: Text('End Time:',
+              // style: subHeadingStyle,
+              style: MyFonts.w400.setColor(Themes.kSubHeading),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: RichText(
-              text: TextSpan(style: kBookingDetailStyle, children: [
-                TextSpan(
-                  text: DateFormat("hh:mm a")
-                      .format(DateTime.parse(booking.outTime)),
-                ),
-                const TextSpan(
-                  text: ' · ',
-                ),
-                TextSpan(
-                    text: DateFormat("dd MMMM")
-                        .format(DateTime.parse(booking.outTime)))
-              ]),
+              text: TextSpan(
+                // style: kBookingDetailStyle,
+                style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+                children: [
+                  TextSpan(
+                    text: DateFormat("hh:mm a")
+                        .format(DateTime.parse(booking.outTime)),
+                  ),
+                  const TextSpan(
+                    text: ' · ',
+                  ),
+                  TextSpan(
+                      text: DateFormat("dd MMMM")
+                          .format(DateTime.parse(booking.outTime)))
+                ],
+              ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('Booker Name:',style: subHeadingStyle,),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+            child: Text('Booker Name:',
+              // style: subHeadingStyle,
+              style: MyFonts.w400.setColor(Themes.kSubHeading),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(booking.userInfo.name!,
-              style: kBookingDetailStyle,
+              // style: kBookingDetailStyle,
+              style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('Booker Email:',style: subHeadingStyle,),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+            child: Text('Booker Email:',
+              // style: subHeadingStyle,
+              style: MyFonts.w400.setColor(Themes.kSubHeading),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(booking.userInfo.email!,
-              style: kBookingDetailStyle,
+              // style: kBookingDetailStyle,
+              style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('Booker Phone:',style: subHeadingStyle,),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+            child: Text('Booker Phone:',
+              // style: subHeadingStyle,
+              style: MyFonts.w400.setColor(Themes.kSubHeading),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               children: [
                 Text("${booking.userInfo.phoneNumber!}",
-                  style: kBookingDetailStyle,
+                  // style: kBookingDetailStyle,
+                  style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16),
                   child: GestureDetector(
-                    child: const Icon(Icons.call,color: Themes.kSubHeading, size: 16,),
+                    child: const Icon(Icons.call,color: Themes.regentGrey, size: 16,),
                     onTap: () async{
                       final url = 'tel:${booking.userInfo.phoneNumber!}';
                       await launchUrl(Uri.parse(url));
@@ -157,24 +189,32 @@ class BookingDetails extends StatelessWidget {
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('Booking Purpose:',style: subHeadingStyle,),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+            child: Text('Booking Purpose:',
+              // style: subHeadingStyle,
+              style: MyFonts.w400.setColor(Themes.kSubHeading),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(booking.bookingPurpose,
-              style: kBookingDetailStyle,
+              // style: kBookingDetailStyle,
+              style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8,horizontal: 16),
-            child: Text('Status:',style: subHeadingStyle,),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+            child: Text('Status:',
+              // style: subHeadingStyle,
+              style: MyFonts.w400.setColor(Themes.kSubHeading),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(booking.status,
-              style: kBookingDetailStyle,
+              // style: kBookingDetailStyle,
+              style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
             ),
           ),
 
@@ -184,13 +224,14 @@ class BookingDetails extends StatelessWidget {
               onTap: () async {
                 try {
                   await APIService().deleteBooking(booking.id);
-                  Fluttertoast.showToast(msg: 'Booking Deleted', backgroundColor: Colors.white, textColor: Colors.black);
+                  Fluttertoast.showToast(msg: 'Booking Deleted', backgroundColor: Themes.white, textColor: Themes.black);
                   cs.pending = cs.pending + 1;
+                  if(!context.mounted)return;
                   Navigator.of(context).pop();
                 }
                 catch(e)
                 {
-                  Fluttertoast.showToast(msg: 'Some Error Occured', backgroundColor: Colors.white, textColor: Colors.black);
+                  Fluttertoast.showToast(msg: 'Some Error Occured', backgroundColor: Themes.white, textColor: Themes.black);
                 }
               },
               child: const Padding(
@@ -202,7 +243,7 @@ class BookingDetails extends StatelessWidget {
                     fontSize: 14.0,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.5,
-                    color: Colors.red,
+                    color: Themes.red,
                   )
                 ),
               ),

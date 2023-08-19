@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../functions/snackbar.dart';
 import '../../globals/colors.dart';
-import '../../globals/styles.dart';
+import '../../globals/my_fonts.dart';
 import '../../models/booking_model.dart';
 import '../../services/api.dart';
 import '../../store/common_store.dart';
@@ -45,7 +45,7 @@ class _RespondDialogueState extends State<RespondDialogue> {
             child: const Icon(
               Icons.clear,
               size: 20,
-              color: Colors.white,
+              color: Themes.white,
             ),
           ),
         ),
@@ -66,18 +66,25 @@ class _RespondDialogueState extends State<RespondDialogue> {
                       left: 0, right: 0, top: 0, bottom: 12),
                   child: RichText(
                     text: TextSpan(children: [
-                      TextSpan(text: 'Requested by  ', style: kHeading3Style),
-                      TextSpan(style: kHeading3DescStyle, children: [
-                        TextSpan(
-                          text: widget.bookingData.userInfo.name,
-                        ),
-                        // TextSpan(
-                        //   text: ' · ',
-                        // ),
-                        // TextSpan(
-                        //   text: 'Design Head',
-                        // )
-                      ]),
+                      TextSpan(
+                        text: 'Requested by  ',
+                        // style: kHeading3Style,
+                        style: MyFonts.w400.size(10).setColor(Themes.white.withOpacity(0.6)).letterSpace(0.5),
+                      ),
+                      TextSpan(
+                        // style: kHeading3DescStyle,
+                        style: MyFonts.w500.size(10).setColor(Themes.white).letterSpace(0.5),
+                        children: [
+                          TextSpan(
+                            text: widget.bookingData.userInfo.name,
+                          ),
+                          // TextSpan(
+                          //   text: ' · ',
+                          // ),
+                          // TextSpan(
+                          //   text: 'Design Head',
+                          // )
+                        ]),
                     ]),
                   ),
                 ),
@@ -86,13 +93,20 @@ class _RespondDialogueState extends State<RespondDialogue> {
                     text: TextSpan(children: [
                       TextSpan(
                         text: widget.bookingData.roomDetails.roomName,
-                        style: kDialogRoomStyle,
+                        // style: kDialogRoomStyle,
+                        style: MyFonts.w600.size(16).setColor(Themes.white).letterSpace(0.5),
                       ),
-                      const TextSpan(text: '  ', style: kDialogRoomStyle),
+                      TextSpan(
+                        text: '  ',
+                        // style: kDialogRoomStyle,
+                        style: MyFonts.w600.size(16).setColor(Themes.white).letterSpace(0.5),
+                      ),
                       TextSpan(text: widget.bookingData.roomDetails.roomType == 'club'
                         ? 'Club Room'
                         : widget.bookingData.roomDetails.roomName == 'board' ? 'Board Room' : 'Common Room',
-                      style: kDialogSubRoomStyle)
+                      // style: kDialogSubRoomStyle,
+                        style: MyFonts.w400.size(12).setColor(Themes.dialogSubRoomColor).letterSpace(0.5),
+                      )
                     ])),
                 GridView.count(
                   physics: const NeverScrollableScrollPhysics(),
@@ -111,22 +125,26 @@ class _RespondDialogueState extends State<RespondDialogue> {
                           padding: EdgeInsets.only(right: 7.33),
                           child: Icon(
                             Icons.access_time,
-                            color: Color.fromRGBO(162, 172, 192, 1),
+                            color: Themes.iconColor,
                             size: 13.33,
                           ),
                         ),
                         RichText(
-                          text: TextSpan(style: kDialogTimeStyle, children: [
-                            TextSpan(
-                              text: DateFormat('hh:mm a').format(DateTime.parse(widget.bookingData.inTime)),
-                            ),
-                            const TextSpan(
-                              text: ' - ',
-                            ),
-                            TextSpan(
-                              text: DateFormat('hh:mm a').format(DateTime.parse(widget.bookingData.outTime)),
-                            )
-                          ]),
+                          text: TextSpan(
+                            // style: kDialogTimeStyle,
+                            style: MyFonts.w500.size(11).setColor(Themes.roomHeadingColor).letterSpace(0.5),
+                            children: [
+                              TextSpan(
+                                text: DateFormat('hh:mm a').format(DateTime.parse(widget.bookingData.inTime)),
+                              ),
+                              const TextSpan(
+                                text: ' - ',
+                              ),
+                              TextSpan(
+                                text: DateFormat('hh:mm a').format(DateTime.parse(widget.bookingData.outTime)),
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -136,13 +154,14 @@ class _RespondDialogueState extends State<RespondDialogue> {
                           padding: EdgeInsets.only(right: 7.33),
                           child: Icon(
                             Icons.calendar_today_outlined,
-                            color: Color.fromRGBO(162, 172, 192, 1),
+                            color: Themes.iconColor,
                             size: 13.33,
                           ),
                         ),
                         Text(
                           DateFormat('MMM dd, yyyy').format(DateTime.parse(widget.bookingData.inTime)),
-                          style: kDialogTimeStyle,
+                          // style: kDialogTimeStyle,
+                          style: MyFonts.w500.size(11).setColor(Themes.roomHeadingColor).letterSpace(0.5),
                         ),
                       ],
                     ),
@@ -150,19 +169,25 @@ class _RespondDialogueState extends State<RespondDialogue> {
                 ),
                 RichText(
                   text: TextSpan(children: [
-                    const TextSpan(text: 'Purpose - ', style: kDialogPurposeStyle),
+                    TextSpan(
+                      text: 'Purpose - ',
+                      // style: kDialogPurposeStyle,
+                      style: MyFonts.w500.size(11).setColor(Themes.iconColor).letterSpace(0.5),
+                    ),
                     TextSpan(
                       text: widget.bookingData.bookingPurpose, 
-                      style: kDialogTimeStyle
+                      // style: kDialogTimeStyle
+                      style: MyFonts.w500.size(11).setColor(Themes.roomHeadingColor).letterSpace(0.5),
                     ),
                   ]),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(
+                Padding(
+                  padding: const EdgeInsets.only(
                       top: 12, bottom: 8, left: 0, right: 0),
                   child: Text(
                     'Instruction/Reason to reject -',
-                    style: kDialogInstStyle,
+                    // style: kDialogInstStyle,
+                    style: MyFonts.w400.size(11).setColor(Themes.iconColor).letterSpace(0.5),
                   ),
                 ),
                 Padding(
@@ -182,20 +207,22 @@ class _RespondDialogueState extends State<RespondDialogue> {
                         },
                         maxLines: 3,
                         controller: textEditingController,
-                        style: editRoomText,
+                        // style: editRoomText,
+                        style: MyFonts.w400.size(16).setColor(Themes.white).setHeight(1.5).letterSpace(0.1),
                         decoration: InputDecoration(
                           hintText: 'Type Here...',
-                          hintStyle: kDialogHintStyle,
+                          // hintStyle: kDialogHintStyle,
+                          hintStyle: MyFonts.w400.size(12).setColor(Themes.comet).letterSpace(0.5),
                           // contentPadding: EdgeInsets.zero,
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                   width: 0.5,
-                                  color: Colors.white.withOpacity(0.5)),
+                                  color: Themes.white.withOpacity(0.5)),
                               borderRadius: BorderRadius.circular(4)),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                   width: 0.5,
-                                  color: Colors.white.withOpacity(0.5)),
+                                  color: Themes.white.withOpacity(0.5)),
                               borderRadius: BorderRadius.circular(4)),
                         ),
                       ),
@@ -218,13 +245,14 @@ class _RespondDialogueState extends State<RespondDialogue> {
                           height: 24,
                           width: double.maxFinite,
                           decoration: BoxDecoration(
-                              color: const Color.fromRGBO(62, 71, 88, 1),
+                              color: Themes.disabledButtonBackground,
                               borderRadius: BorderRadius.circular(4)),
                           child: Center(
                             child: Text(
                               'Reject',
-                              style:
-                                  kRejectedStyle.copyWith(color: Colors.white),
+                              // style:
+                              //     kRejectedStyle.copyWith(color: Themes.white),
+                              style: MyFonts.w500.size(12).setColor(Themes.rejectedBooking).letterSpace(0.5).copyWith(color: Themes.white),
                             ),
                           ),
                         ),
@@ -234,7 +262,7 @@ class _RespondDialogueState extends State<RespondDialogue> {
                               return;
                             }
                           if (!formKey.currentState!.validate()) {
-                            print("Form not validated");
+                            // print("Form not validated");
                             return;
                           }
                           setState(() {
@@ -254,13 +282,14 @@ class _RespondDialogueState extends State<RespondDialogue> {
                             setState(() {
                               isLoading = false;
                             });
+                            if(!mounted)return;
                             Navigator.of(context).pop();
                           }catch(e){
                             widget.commonStore.pending = widget.commonStore.pending + 1;
                             setState(() {
                               isLoading = false;
                             });
-                            print(e);
+                            // print(e);
                           }
                         },
                       ),
@@ -272,12 +301,13 @@ class _RespondDialogueState extends State<RespondDialogue> {
                           height: 24,
                           width: double.maxFinite,
                           decoration: BoxDecoration(
-                              color: const Color.fromRGBO(118, 172, 255, 1),
+                              color: Themes.primaryColor,
                               borderRadius: BorderRadius.circular(4)),
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               'Approve',
-                              style: kApproveStyle,
+                              // style: kApproveStyle,
+                              style: MyFonts.w600.size(14).setColor(Themes.onPrimaryColor).letterSpace(0.5),
                             ),
                           ),
                         ),
@@ -303,13 +333,14 @@ class _RespondDialogueState extends State<RespondDialogue> {
                             setState(() {
                               isLoading = false;
                             });
+                            if(!mounted)return;
                             Navigator.of(context).pop();
                           }catch(e){
                             widget.commonStore.pending = widget.commonStore.pending + 1;
                             setState(() {
                               isLoading = false;
                             });
-                            print(e);
+                            // print(e);
                           }
                         },
                       ),

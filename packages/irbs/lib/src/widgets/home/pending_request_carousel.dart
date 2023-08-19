@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:irbs/src/screens/all_requests.dart';
-import 'package:irbs/src/services/api.dart';
-import 'package:irbs/src/store/common_store.dart';
-import 'package:irbs/src/widgets/home/empty_sate.dart';
 import 'package:irbs/src/widgets/home/request_tile.dart';
-import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/globals/colors.dart';
-import 'package:irbs/src/widgets/shimmer/pending_requests_shimmer.dart';
 import 'package:provider/provider.dart';
+
+import '../../globals/colors.dart';
+import '../../globals/my_fonts.dart';
+import '../../screens/all_requests.dart';
+import '../../services/api.dart';
+import '../../store/common_store.dart';
+import '../shimmer/pending_requests_shimmer.dart';
+import 'empty_sate.dart';
 
 class PendingRequestCarousel extends StatelessWidget {
   const PendingRequestCarousel({super.key});
@@ -66,10 +67,11 @@ class PendingRequestCarousel extends StatelessWidget {
                               ? Themes.disabledButtonBackground 
                               : Themes.kCommonBoxBackground,
                             borderRadius: BorderRadius.circular(4)),
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             'View all Requests',
-                            style: kRequestedRoomStyle,
+                            // style: kRequestedRoomStyle,
+                            style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
                           ),
                         ),
                       ),

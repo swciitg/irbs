@@ -85,9 +85,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               activeIndex = 4;
                             });
                           },
-                          child: const Text(
+                          child: Text(
                             'Skip',
-                            style: textButtonStyle2,
+                            style: MyFontsRaleway.w400.size(12).setColor(Themes.blueGrey),
                           )),
                       SizedBox(
                         height: 6,
@@ -109,9 +109,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               activeIndex++;
                             });
                           },
-                          child: const Text(
+                          child: Text(
                             'Next',
-                            style: textButtonStyle1,
+                            // style: textButtonStyle1,
+                            style: MyFontsRaleway.w400.size(12).setColor(Themes.white),
                           ))
                     ],
                   )
@@ -125,9 +126,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 context, '/irbs/home');
                           },
                           style: elevatedButtonStyle,
-                          child: const Text(
+                          child: Text(
                             "Start Booking",
-                            style: elevatedButtonTextStyle,
+                            style: MyFontsRaleway.w700.size(16),
                           )),
                     ),
                   ),

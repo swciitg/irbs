@@ -3,6 +3,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:irbs/src/store/common_store.dart';
 import 'package:provider/provider.dart';
 
+import '../globals/colors.dart';
+import '../globals/my_fonts.dart';
+
 class CustomDropDown extends StatelessWidget {
   final String hintText;
   final String? value;
@@ -73,65 +76,69 @@ class CustomDropDown extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: hintText,
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        package: 'irbs',
-                        fontWeight: FontWeight.w500, fontSize: 14, color: Color.fromRGBO(171, 171, 175, 1)),
+                    // style: const TextStyle(
+                    //     fontFamily: 'Montserrat',
+                    //     package: 'irbs',
+                    //     fontWeight: FontWeight.w500, fontSize: 14, color: Themes.hintText),
+                    style: MyFonts.w500.size(14).setColor(Themes.hintText),
                   ),
                   TextSpan(
                     text: ' * ',
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        package: 'irbs',
-                        fontWeight: FontWeight.w500, fontSize: 16, color: Color.fromRGBO(255, 84, 73, 1)),
+                    // style: TextStyle(
+                    //     fontFamily: 'Montserrat',
+                    //     package: 'irbs',
+                    //     fontWeight: FontWeight.w500, fontSize: 16, color: Themes.starColor),
+                    style: MyFonts.w500.size(16).setColor(Themes.starColor),
                   ),
                 ],
               ),
             ),
-            labelStyle: TextStyle(
-                fontFamily: 'Montserrat',
-                package: 'irbs',
-                fontWeight: FontWeight.w500, fontSize: 14, color: Color.fromRGBO(171, 171, 175, 1)),
+            // labelStyle: const TextStyle(
+            //     fontFamily: 'Montserrat',
+            //     package: 'irbs',
+            //     fontWeight: FontWeight.w500, fontSize: 14, color: Themes.hintText),
+            labelStyle: MyFonts.w500.size(14).setColor(Themes.hintText),
             contentPadding:
-             EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+             const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
             focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Color.fromRGBO(94, 94, 94, 1), width: 1),
+              borderSide: BorderSide(color: Themes.borderColor, width: 1),
               borderRadius: BorderRadius.all(
                 Radius.circular(4),
               ),
             ),
             enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color:  Color.fromRGBO(94, 94, 94, 1), width: 1),
+              borderSide: BorderSide(color:  Themes.borderColor, width: 1),
               borderRadius: BorderRadius.all(
                 Radius.circular(4),
               ),
             ),
             errorBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.red, width: 1),
+              borderSide: BorderSide(color: Themes.red, width: 1),
               borderRadius: BorderRadius.all(
                 Radius.circular(4),
               ),
             ),
             focusedErrorBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.red, width: 1),
+              borderSide: BorderSide(color: Themes.red, width: 1),
               borderRadius: BorderRadius.all(
                 Radius.circular(4),
               ),
             ),
           ),
-          dropdownColor: Color.fromRGBO(27, 27, 29, 1),
+          dropdownColor: Themes.dropDownColor,
           isDense: true,
           icon: const Icon(
             Icons.arrow_drop_down,
             size: 28,
           ),
           elevation: 16,
-          style: TextStyle(
-              fontFamily: 'Montserrat',
-              package: 'irbs',
-              fontWeight: FontWeight.w500, fontSize: 14, color: Colors.white),
+          // style: const TextStyle(
+          //     fontFamily: 'Montserrat',
+          //     package: 'irbs',
+          //     fontWeight: FontWeight.w500, fontSize: 14, color: Themes.white),
+          style: MyFonts.w500.size(14).setColor(Themes.white),
           onChanged: (String? value) {
-            print(value);
+            // print(value);
             if(value != null)
               {
                 if(hintText == "Month")

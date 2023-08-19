@@ -3,10 +3,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:irbs/src/models/room_model.dart';
 import 'package:provider/provider.dart';
 
-import '../../functions/filter_rooms.dart';
-import '../../globals/styles.dart';
+import '../../globals/colors.dart';
+import '../../globals/my_fonts.dart';
 import '../../screens/room_booking_details.dart';
-import '../../store/common_store.dart';
 import '../../store/room_detail_store.dart';
 import '../shimmer/room_list_shimmer.dart';
 import 'empty_sate.dart';
@@ -29,9 +28,10 @@ class _CommonRoomsState extends State<CommonRooms> {
           alignment: Alignment.centerLeft,
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: const Text(
+            child: Text(
               'Common Rooms',
-              style: subHeadingStyle,
+              // style: subHeadingStyle,
+              style: MyFonts.w400.size(14).setColor(Themes.kSubHeading).letterSpace(0.5),
             ),
           ),
         ),
@@ -39,7 +39,6 @@ class _CommonRoomsState extends State<CommonRooms> {
         FutureBuilder(
             future: rd.getAllRooms(),
             builder: (context, snapshot) {
-              var commonStore = context.read<CommonStore>();
               if (!snapshot.hasData) {
                 return const RoomListShimmer();
               } else if (snapshot.hasError) {
@@ -112,13 +111,14 @@ class GridWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: const BoxDecoration(
-            color: Color.fromRGBO(39, 49, 65, 1),
+            color: Themes.tileColor,
             borderRadius: BorderRadius.all(Radius.circular(4))),
         child: Center(
             child: Text(
               name,
               textAlign: TextAlign.center,
-              style: textStyle,
+              // style: textStyle,
+              style: MyFonts.w400.size(14).setColor(Themes.white),
             )),
       ),
       onTap: () {

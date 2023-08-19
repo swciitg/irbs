@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import '../functions/filter_rooms.dart';
 import '../globals/colors.dart';
-import '../globals/styles.dart';
+import '../globals/my_fonts.dart';
 import '../store/common_store.dart';
 import '../store/room_detail_store.dart';
 import '../widgets/home/empty_sate.dart';
@@ -28,9 +28,9 @@ class _RoomListScreenState extends State<RoomListScreen> {
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'IRBS',
-          style: appBarStyle,
+          style: MyFonts.w500.size(20).setColor(Themes.white),
         ),
         actions: [
           GestureDetector(

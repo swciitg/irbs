@@ -1,16 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:irbs/src/store/room_detail_store.dart';
 import 'package:provider/provider.dart';
 import '../../functions/snackbar.dart';
 import '../../globals/colors.dart';
-import '../../globals/styles.dart';
+import '../../globals/my_fonts.dart';
 import '../../models/room_model.dart';
 import '../../services/api.dart';
-import '../../store/data_store.dart';
+import '../../store/room_detail_store.dart';
 import '../../widgets/myrooms/edit_room_text_field.dart';
-import 'room_details.dart';
 
 class EditRoomScreen extends StatefulWidget {
   final RoomModel data;
@@ -49,14 +47,15 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
           },
           child: const Icon(
             Icons.arrow_back_sharp,
-            color: Colors.white,
+            color: Themes.white,
           ),
         ),
-        title: const Text(
+        title: Text(
           "IRBS",
-          style: kAppBarTextStyle,
+          // style: kAppBarTextStyle,
+          style: MyFonts.w500.size(20).setColor(Themes.white),
         ),
-        backgroundColor: Themes.kCommonBoxBackground,
+        backgroundColor: Themes.tileColor,
       ),
       body: Stack(fit: StackFit.expand, children: [
         SingleChildScrollView(
@@ -96,17 +95,17 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                      Color.fromRGBO(28, 28, 30, 0),
-                      Color.fromRGBO(28, 28, 30, 1)
+                      Themes.gradientBackgroundColor,
+                      Themes.backgroundColor
                     ])),
               ),
               Container(
-                color: const Color.fromRGBO(28, 28, 30, 1),
+                color: Themes.backgroundColor,
                 child: Container(
                   height: 52,
                   margin: const EdgeInsets.fromLTRB(17, 0, 16, 36),
                   decoration: const BoxDecoration(
-                      color: Color.fromRGBO(118, 172, 255, 1),
+                      color: Themes.primaryColor,
                       borderRadius: BorderRadius.all(Radius.circular(4))),
                   child: InkWell(
                       onTap: () async {
@@ -151,7 +150,7 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
         if (apiCall)
           const Opacity(
             opacity: 0.8,
-            child: ModalBarrier(dismissible: false, color: Colors.black),
+            child: ModalBarrier(dismissible: false, color: Themes.black),
           ),
         if (apiCall)
           const Center(
