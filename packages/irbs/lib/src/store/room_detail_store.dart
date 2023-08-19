@@ -8,67 +8,70 @@ part 'room_detail_store.g.dart';
 class RoomDetailStore = _RoomDetailStore with _$RoomDetailStore;
 
 abstract class _RoomDetailStore with Store {
+  @observable
+  ObservableMap<String, List<RoomModel>> rooms =
+      ObservableMap<String, List<RoomModel>>.of({});
 
   @observable
-  ObservableMap<String, List<RoomModel>> rooms = ObservableMap<String, List<RoomModel>>.of({});
-
-  @observable
-  RoomModel currentRoom = RoomModel(owner: ['owner'], roomName: 'roomName', allowedUsers: [], roomType: 'common', roomCapacity: 1, id: 'id', ownerInfo: [], allowedUserInfo: []);
+  RoomModel currentRoom = RoomModel(
+      owner: ['owner'],
+      roomName: 'roomName',
+      allowedUsers: [],
+      roomType: 'common',
+      roomCapacity: 1,
+      id: 'id',
+      ownerInfo: [],
+      allowedUserInfo: []);
 
   @observable
   ObservableList<RoomModel> myRooms = ObservableList<RoomModel>.of({});
 
   @observable
-  ObservableList<BookingModel> upcomingBookings = ObservableList<BookingModel>.of({});
+  ObservableList<BookingModel> upcomingBookings =
+      ObservableList<BookingModel>.of({});
 
   @action
-  Future<List<RoomModel>> getMyrooms()
-  async {
-      myRooms = ObservableList<RoomModel>.of(await APIService().getMyRooms());
-    return  myRooms;
+  Future<List<RoomModel>> getMyrooms() async {
+    myRooms = ObservableList<RoomModel>.of(await APIService().getMyRooms());
+    return myRooms;
   }
 
   @action
-  Future<List<BookingModel>> getBookings()
-  async {
-      upcomingBookings = ObservableList<BookingModel>.of(await APIService().getUpcomingBokings());
+  Future<List<BookingModel>> getBookings() async {
+    upcomingBookings = ObservableList<BookingModel>.of(
+        await APIService().getUpcomingBokings());
     return upcomingBookings;
   }
 
   @action
-  Future<Map<String, List<RoomModel>>> getAllRooms()
-  async {
-      rooms = ObservableMap<String, List<RoomModel>>.of(await APIService().getAllRooms());
+  Future<Map<String, List<RoomModel>>> getAllRooms() async {
+    rooms = ObservableMap<String, List<RoomModel>>.of(
+        await APIService().getAllRooms());
     return rooms;
   }
 
   @action
-  setMyrooms()
-  async {
-     await getMyrooms();
+  setMyrooms() async {
+    await getMyrooms();
   }
 
   @action
-  setRooms()
-  async {
+  setRooms() async {
     await getAllRooms();
   }
 
   @action
-  setUpcomingBookings()
-  async {
+  setUpcomingBookings() async {
     await getBookings();
   }
 
   @action
-  setSelectedRoom(RoomModel room)
-  {
+  setSelectedRoom(RoomModel room) {
     currentRoom = room;
   }
 
   @action
-  updateRoom(RoomModel room)
-  {
+  updateRoom(RoomModel room) {
     setSelectedRoom(room);
     rooms[room.roomType]!.removeWhere((element) => element.id == room.id);
     myRooms.removeWhere((element) => element.id == room.id);
@@ -77,16 +80,22 @@ abstract class _RoomDetailStore with Store {
   }
 
   @action
-  RoomModel getRoomById(String id)
-  {
-    for(String key in rooms.keys) {
+  RoomModel getRoomById(String id) {
+    for (String key in rooms.keys) {
       for (RoomModel room in rooms[key]!) {
-        if(room.id == id)
-          {
-            return room;
-          }
+        if (room.id == id) {
+          return room;
+        }
       }
     }
-    return RoomModel(owner: ['owner'], roomName: 'roomName', allowedUsers: [], roomType: 'common', roomCapacity: 1, id: 'id', ownerInfo: [], allowedUserInfo: []);
+    return RoomModel(
+        owner: ['owner'],
+        roomName: 'roomName',
+        allowedUsers: [],
+        roomType: 'common',
+        roomCapacity: 1,
+        id: 'id',
+        ownerInfo: [],
+        allowedUserInfo: []);
   }
 }

@@ -8,11 +8,10 @@ class DataStore {
   static Map<String, dynamic> userData = {};
   static bool upcomingFlag = true;
 
-  static bool isGuest(){
-    if(userData["name"] == "Guest")
-      {
-        return true;
-      }
+  static bool isGuest() {
+    if (userData["name"] == "Guest") {
+      return true;
+    }
     return false;
   }
 
@@ -24,28 +23,23 @@ class DataStore {
       getUserData(),
       rd.getAllRooms(),
       rd.getBookings(),
-      // cs.initialisePinnedRooms(),
-      ]
-    );
+    ]);
     return results[0];
   }
 
-  clearAll(){
+  clearAll() {
     upcomingFlag = false;
     userData = {};
   }
-  clear(){
+
+  clear() {
     upcomingFlag = false;
   }
 
-  Future<void> getUserData()
-  async {
-    if (userData.isEmpty)
-    {
+  Future<void> getUserData() async {
+    if (userData.isEmpty) {
       SharedPreferences instance = await SharedPreferences.getInstance();
       userData = jsonDecode(instance.getString('userInfo')!);
     }
   }
-
-
 }
