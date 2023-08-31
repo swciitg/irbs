@@ -1,6 +1,6 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:irbs/src/models/booking_model.dart';
+import '../../globals/colors.dart';
+import '../../models/booking_model.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../models/room_model.dart';
@@ -19,15 +19,15 @@ class _UpcomingBookingShimmerState extends State<UpcomingBookingShimmer> {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Color.fromRGBO(47, 48, 51, 1),
-      highlightColor: Color.fromRGBO(68, 71, 79, 1),
+      baseColor: Themes.allRequestShimmerBase,
+      highlightColor: Themes.allRequestShimmerHighlight,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment:
           CrossAxisAlignment.start,
           children: [
             ListView.builder(
-                padding: EdgeInsets.all(0),
+                padding: const EdgeInsets.all(0),
                 shrinkWrap: true,
                 itemCount: widget.number,
                 physics:

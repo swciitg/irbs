@@ -148,6 +148,17 @@ mixin _$RoomDetailStore on _RoomDetailStore, Store {
   }
 
   @override
+  RoomModel getRoomById(String id) {
+    final _$actionInfo = _$_RoomDetailStoreActionController.startAction(
+        name: '_RoomDetailStore.getRoomById');
+    try {
+      return super.getRoomById(id);
+    } finally {
+      _$_RoomDetailStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 rooms: ${rooms},

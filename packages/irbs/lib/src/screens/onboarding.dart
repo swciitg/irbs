@@ -1,10 +1,10 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:irbs/src/globals/colors.dart';
-import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/widgets/onboarding/nav_dots.dart';
+import '../globals/colors.dart';
+import '../globals/my_fonts.dart';
+import '../globals/styles.dart';
+import '../widgets/onboarding/nav_dots.dart';
+import 'home.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -33,8 +33,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ImageProvider img =
-        AssetImage('assets/onboarding_${activeIndex + 1}.png', package: 'irbs');
 
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
@@ -51,7 +49,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: Text(
                     headingList[activeIndex],
                     textAlign: TextAlign.center,
-                    style: headingStyle,
+                    style: MyFonts.w700.size(28).setColor(Themes.white),
                   ),
                 ),
                 Padding(
@@ -59,7 +57,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: Text(
                     textList[activeIndex],
                     textAlign: TextAlign.center,
-                    style: textStyle,
+                    style: MyFonts.w400.size(14).setColor(Themes.white),
                   ),
                 ),
               ],
@@ -88,9 +86,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               activeIndex = 4;
                             });
                           },
-                          child: const Text(
+                          child: Text(
                             'Skip',
-                            style: textButtonStyle2,
+                            style: MyFontsRaleway.w400.size(12).setColor(Themes.blueGrey),
                           )),
                       SizedBox(
                         height: 6,
@@ -112,9 +110,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               activeIndex++;
                             });
                           },
-                          child: const Text(
+                          child: Text(
                             'Next',
-                            style: textButtonStyle1,
+                            // style: textButtonStyle1,
+                            style: MyFontsRaleway.w400.size(12).setColor(Themes.white),
                           ))
                     ],
                   )
@@ -124,13 +123,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       height: double.infinity,
                       child: ElevatedButton(
                           onPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, '/irbs/home');
+                            Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const HomeScreen()));
+                            // Navigator.pushReplacementNamed(
+                            //     context, '/irbs/home');
                           },
                           style: elevatedButtonStyle,
-                          child: const Text(
+                          child: Text(
                             "Start Booking",
-                            style: elevatedButtonTextStyle,
+                            style: MyFontsRaleway.w700.size(16),
                           )),
                     ),
                   ),

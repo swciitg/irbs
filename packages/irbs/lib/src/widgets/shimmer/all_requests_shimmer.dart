@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/models/booking_model.dart';
-import 'package:irbs/src/models/room_model.dart';
-import 'package:irbs/src/store/common_store.dart';
-import 'package:irbs/src/widgets/home/request_tile.dart';
+import '../../globals/colors.dart';
+import '../../models/booking_model.dart';
+import '../../models/room_model.dart';
+import '../../store/common_store.dart';
+import '../home/request_tile.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AllRequestsShimmer extends StatefulWidget {
@@ -41,10 +42,10 @@ class _AllRequestsShimmerState extends State<AllRequestsShimmer> {
     );
       
     return Shimmer.fromColors(
-      highlightColor: const Color.fromRGBO(68, 71, 79, 1),
-      baseColor: const Color.fromRGBO(47, 48, 51, 1),
+      highlightColor: Themes.allRequestShimmerHighlight,
+      baseColor: Themes.allRequestShimmerBase,
       child: ListView.builder(
-          padding: EdgeInsets.all(0),
+          padding: const EdgeInsets.all(0),
 
           itemCount: 5,
         itemBuilder: (context, index) {

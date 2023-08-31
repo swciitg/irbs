@@ -350,7 +350,7 @@ packages:
       path: "packages/irbs"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "1.0.0"
   js:
     dependency: transitive
     description:

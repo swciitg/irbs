@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:irbs/src/globals/colors.dart';
-import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/store/common_store.dart';
-import 'package:irbs/src/widgets/home/respond_dialog.dart';
+import '../../globals/colors.dart';
+import '../../globals/styles.dart';
+import '../../globals/my_fonts.dart';
 import '../../models/booking_model.dart';
+import '../../store/common_store.dart';
+import '../../widgets/home/respond_dialog.dart';
 
 class RequestTile extends StatefulWidget {
   final BookingModel bookingData;
@@ -23,6 +24,7 @@ class _RequestTileState extends State<RequestTile> {
     return Container(
       height: screenWidth*167/360,
       width: screenWidth*304/360,
+      // padding: ,
       decoration: BoxDecoration(
         color: Themes.requestTile,
         borderRadius: BorderRadius.circular(screenWidth*4/360)
@@ -37,7 +39,7 @@ class _RequestTileState extends State<RequestTile> {
               height: screenWidth*24/360,
               child: Text(
                 widget.bookingData.roomDetails.roomName,
-                style: permanentTextStyle.copyWith(color: Colors.white, fontSize: 14*screenWidth/360),
+                style: MyFonts.w500.size(14).setColor(Themes.permanentTextColor).copyWith(color: Themes.white, fontSize: 14*screenWidth/360),
               ),
             ),
           ),
@@ -55,9 +57,10 @@ class _RequestTileState extends State<RequestTile> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Request by -',
-                      style: labelTextStyle.copyWith(
-                        fontSize: 10*screenWidth/360, color: Colors.white60,
-                        height: 1
+                      overflow: TextOverflow.ellipsis,
+                      style: MyFonts.w400.size(12).setColor(Themes.permanentTextColor).setHeight(1.33).letterSpace(0.4).copyWith(
+                          fontSize: 10*screenWidth/360, color: Themes.white60,
+                          height: 1
                       ),
                     ),
                   ),
@@ -65,10 +68,10 @@ class _RequestTileState extends State<RequestTile> {
                     height: 12*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      widget.bookingData.userInfo.name.toString(),
-                      style: labelTextStyle.copyWith(
-                        fontSize: 10*screenWidth/360, color: Colors.white,
-                        height: 1
+                      widget.bookingData.userInfo.email.toString(),
+                      style: MyFonts.w400.size(12).setColor(Themes.permanentTextColor).setHeight(1.33).letterSpace(0.4).copyWith(
+                          fontSize: 10*screenWidth/360, color: Themes.white,
+                          height: 1
                       ),
                     ),
                   )
@@ -90,9 +93,10 @@ class _RequestTileState extends State<RequestTile> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Purpose -',
-                      style: labelTextStyle.copyWith(
-                        fontSize: 10*screenWidth/360, color: Colors.white60,
-                        height: 1
+                      overflow: TextOverflow.ellipsis,
+                      style: MyFonts.w400.size(12).setColor(Themes.permanentTextColor).setHeight(1.33).letterSpace(0.4).copyWith(
+                          fontSize: 10*screenWidth/360, color: Themes.white60,
+                          height: 1
                       ),
                     ),
                   ),
@@ -101,9 +105,9 @@ class _RequestTileState extends State<RequestTile> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       widget.bookingData.bookingPurpose,
-                      style: labelTextStyle.copyWith(
-                        fontSize: 10*screenWidth/360, color: Colors.white,
-                        height: 1
+                      style: MyFonts.w400.size(12).setColor(Themes.permanentTextColor).setHeight(1.33).letterSpace(0.4).copyWith(
+                          fontSize: 10*screenWidth/360, color: Themes.white60,
+                          height: 1
                       ),
                     ),
                   )
@@ -125,9 +129,9 @@ class _RequestTileState extends State<RequestTile> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Time Slot -',
-                      style: labelTextStyle.copyWith(
-                        fontSize: 10*screenWidth/360, color: Colors.white60,
-                        height: 1
+                      style: MyFonts.w400.size(12).setColor(Themes.permanentTextColor).setHeight(1.33).letterSpace(0.4).copyWith(
+                          fontSize: 10*screenWidth/360, color: Themes.white60,
+                          height: 1
                       ),
                     ),
                   ),
@@ -137,9 +141,9 @@ class _RequestTileState extends State<RequestTile> {
                     child: Text(
                       '${DateFormat('hh:mm a').format(DateTime.parse(widget.bookingData.inTime))} - ${DateFormat('hh:mm a').format(DateTime.parse(widget.bookingData.outTime))}',
                       // '10:00 AM - 02:00 PM',
-                      style: labelTextStyle.copyWith(
-                        fontSize: 10*screenWidth/360, color: Colors.white,
-                        height: 1
+                      style: MyFonts.w400.size(12).setColor(Themes.permanentTextColor).setHeight(1.33).letterSpace(0.4).copyWith(
+                          fontSize: 10*screenWidth/360, color: Themes.white,
+                          height: 1
                       ),
                     ),
                   )
@@ -161,9 +165,9 @@ class _RequestTileState extends State<RequestTile> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Date -',
-                      style: labelTextStyle.copyWith(
-                        fontSize: 10*screenWidth/360, color: Colors.white60,
-                        height: 1
+                      style: MyFonts.w400.size(12).setColor(Themes.permanentTextColor).setHeight(1.33).letterSpace(0.4).copyWith(
+                          fontSize: 10*screenWidth/360, color: Themes.white60,
+                          height: 1
                       ),
                     ),
                   ),
@@ -172,9 +176,9 @@ class _RequestTileState extends State<RequestTile> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       DateFormat('MMMM dd, yyyy').format(DateTime.parse(widget.bookingData.inTime)),
-                      style: labelTextStyle.copyWith(
-                        fontSize: 10*screenWidth/360, color: Colors.white,
-                        height: 1
+                      style: MyFonts.w400.size(12).setColor(Themes.permanentTextColor).setHeight(1.33).letterSpace(0.4).copyWith(
+                          fontSize: 10*screenWidth/360, color: Themes.white,
+                          height: 1
                       ),
                     ),
                   )

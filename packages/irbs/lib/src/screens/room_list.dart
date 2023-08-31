@@ -3,13 +3,14 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import '../functions/filter_rooms.dart';
 import '../globals/colors.dart';
-import '../globals/styles.dart';
+import '../globals/my_fonts.dart';
 import '../store/common_store.dart';
 import '../store/room_detail_store.dart';
 import '../widgets/home/empty_sate.dart';
 import '../widgets/roomlist/list_display.dart';
 import '../widgets/roomlist/search_bar.dart';
 import '../widgets/shimmer/room_list_shimmer.dart';
+import 'onboarding.dart';
 
 class RoomListScreen extends StatefulWidget {
   const RoomListScreen({Key? key}) : super(key: key);
@@ -28,14 +29,28 @@ class _RoomListScreenState extends State<RoomListScreen> {
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
+        leading: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Icon(
+                  Icons.arrow_back_sharp,
+                  color: Themes.white,
+                ),
+              ),
+        title: Text(
           'IRBS',
-          style: appBarStyle,
+          style: MyFonts.w500.size(20).setColor(Themes.white),
         ),
         actions: [
           GestureDetector(
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/irbs/onboarding');
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const OnboardingScreen()));
+                // Navigator.pushReplacementNamed(context, '/irbs/onboarding');
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 11.0),

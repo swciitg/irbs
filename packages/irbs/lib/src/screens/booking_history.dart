@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import '../globals/colors.dart';
-import '../globals/styles.dart';
+import '../globals/my_fonts.dart';
 import '../models/booking_model.dart';
 import '../services/api.dart';
 import '../store/common_store.dart';
@@ -26,9 +26,9 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'Booking History',
-          style: appBarStyle,
+          style: MyFonts.w500.size(20).setColor(Themes.white),
         ),
         backgroundColor: Themes.tileColor,
       ),
@@ -68,7 +68,7 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ListView.builder(
-                              padding: EdgeInsets.all(0),
+                              padding: const EdgeInsets.all(0),
 
                               shrinkWrap: true,
                               itemCount: currentBooking.length,

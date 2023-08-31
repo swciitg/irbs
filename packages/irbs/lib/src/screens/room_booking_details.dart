@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/screens/booking_details.dart';
-import 'package:irbs/src/screens/room_details/room_details.dart';
-import 'package:irbs/src/services/api.dart';
-import 'package:irbs/src/store/data_store.dart';
-import 'package:irbs/src/store/room_detail_store.dart';
-import 'package:irbs/src/widgets/roomBookingDetails/calendar.dart';
-import 'package:irbs/src/widgets/roomBookingDetails/request_modal.dart';
-import 'package:irbs/src/widgets/shimmer/room_booking_details_shimmer.dart';
+import '../globals/my_fonts.dart';
+import './booking_details.dart';
+import './room_details/room_details.dart';
+import '../services/api.dart';
+import '../store/data_store.dart';
+import '../store/room_detail_store.dart';
+import '../widgets/roomBookingDetails/calendar.dart';
+import '../widgets/roomBookingDetails/request_modal.dart';
+import '../widgets/shimmer/room_booking_details_shimmer.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../globals/colors.dart';
-import '../globals/styles.dart';
 import 'package:intl/intl.dart';
 import '../widgets/roomBookingDetails/upcoming_booking_widget.dart';
 import '../models/booking_model.dart';
 import '../models/room_model.dart';
+import 'onboarding.dart';
 
 
 class RoomBookingDetails extends StatefulWidget {
@@ -34,7 +35,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
     await showModalBottomSheet<dynamic>(
         context: contexto,
         isScrollControlled: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Themes.transparent,
         builder: (BuildContext context) {
           return RequestModal(room: widget.room, rootContext: contexto,);
         });
@@ -50,7 +51,6 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getRoomBookings = APIService().getBookingsForCalendar(
       roomId: widget.room.id,
@@ -75,17 +75,22 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
           },
           child: const Icon(
             Icons.arrow_back_sharp,
-            color: Colors.white,
+            color: Themes.white,
           ),
         ),
-        title: const Text(
+        title: Text(
           "IRBS",
-          style: kAppBarTextStyle,
+          style: MyFonts.w500.size(20).setColor(Themes.white),
         ),
         actions: [
           GestureDetector(
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/irbs/onboarding');
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const OnboardingScreen()));
+                // Navigator.pushReplacementNamed(context, '/irbs/onboarding');
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 11.0),
@@ -100,7 +105,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
         backgroundColor: Themes.kCommonBoxBackground,
       ),
       floatingActionButton: DataStore.isGuest() ? Container(): FloatingActionButton(
-          backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
+          backgroundColor: Themes.backgroundColor,
           onPressed: () {
             _showModal(context);
           },
@@ -141,26 +146,25 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                 Container(
                   padding: const EdgeInsets.only(left: 16),
                   height: 60,
-                  //color: const Color.fromRGBO(39, 49, 65, 1),
                   child: Row(
                     children: [
                       Expanded(
                           child: Text(
                         widget.room.roomName,
-                        style: roomheadingStyle,
+                        style: MyFonts.w600.size(24).setColor(Themes.roomHeadingColor),
                       )),
                       GestureDetector(
                         onTap: () {
                           rd.setSelectedRoom(widget.room);
                           Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => RoomDetailsScreen()),
+                            MaterialPageRoute(builder: (context) => const RoomDetailsScreen()),
                           );
                         },
                         child: const Padding(
                           padding: EdgeInsets.only(right: 16.0),
                           child: Icon(
                             Icons.more_vert,
-                            color: Colors.white,
+                            color: Themes.white,
                           ),
                         ),
                       ),
@@ -172,16 +176,16 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                 ),
                 Divider(
                   height: 0.5,
-                  color: Colors.white.withOpacity(0.2),
+                  color: Themes.white.withOpacity(0.2),
                 ),
                 ExpansionTile(
                   childrenPadding: const EdgeInsets.only(bottom: 12),
-                  title: const Text(
+                  title: Text(
                     'Upcoming Bookings',
-                    style: subHeadingStyle,
+                    style: MyFonts.w400.setColor(Themes.subHeadingColor),
                   ),
-                  collapsedIconColor:const Color.fromRGBO(135, 145, 165, 1),
-                  iconColor:const Color.fromRGBO(135, 145, 165, 1),
+                  collapsedIconColor:Themes.kSubHeading,
+                  iconColor:Themes.kSubHeading,
                   children: latestBookings.map(
                     (e) => GestureDetector(
                       onTap: (){
@@ -203,7 +207,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                 ),
                 Divider(
                   height: 0.5,
-                  color: Colors.white.withOpacity(0.2),
+                  color: Themes.white.withOpacity(0.2),
                 ),
                 Expanded(child: Calendar(roomId: widget.room.id,),),
               ]

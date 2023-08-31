@@ -1,15 +1,15 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:irbs/src/services/api.dart';
-import 'package:irbs/src/store/common_store.dart';
-import 'package:irbs/src/store/data_store.dart';
-import 'package:irbs/src/store/room_detail_store.dart';
-import 'package:irbs/src/widgets/roomBookingDetails/booking_success_dailogue.dart';
+import '../../globals/my_fonts.dart';
+import '../../services/api.dart';
+import '../../store/data_store.dart';
+import '../../store/room_detail_store.dart';
+import '../roomBookingDetails/booking_success_dailogue.dart';
 import 'package:provider/provider.dart';
 import '../../functions/format_time.dart';
+import '../../globals/colors.dart';
 import '../../globals/styles.dart';
 import '../../models/room_model.dart';
 import 'datepicker_color.dart';
@@ -17,7 +17,8 @@ import 'datepicker_color.dart';
 class RequestModal extends StatefulWidget {
   final RoomModel room;
   final BuildContext rootContext;
-  const RequestModal({super.key, required this.room, required this.rootContext});
+  const RequestModal(
+      {super.key, required this.room, required this.rootContext});
 
   @override
   State<RequestModal> createState() => _RequestModalState();
@@ -47,8 +48,7 @@ class _RequestModalState extends State<RequestModal>
     return Wrap(children: [
       Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            color: const Color.fromRGBO(39, 49, 65, 1)),
+            borderRadius: BorderRadius.circular(4), color: Themes.tileColor),
         margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
         child: Form(
@@ -62,7 +62,10 @@ class _RequestModalState extends State<RequestModal>
                 alignment: Alignment.centerLeft,
                 child: Text(
                   widget.room.roomName,
-                  style: roomNameTextStyle,
+                  style: MyFonts.w700
+                      .size(16)
+                      .setColor(Themes.white)
+                      .setHeight(1.5),
                 ),
               ),
               const SizedBox(
@@ -72,7 +75,9 @@ class _RequestModalState extends State<RequestModal>
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Choose a date and time you want to book the room for.',
-                  style: roomInstructTextSTyle,
+                  style: MyFonts.w400
+                      .size(10)
+                      .setColor(Themes.white.withOpacity(0.6)),
                 ),
               ),
               const SizedBox(
@@ -81,18 +86,23 @@ class _RequestModalState extends State<RequestModal>
               TextFormField(
                 controller: nameCtl,
                 readOnly: true,
-                style: permanentTextStyle,
+                style:
+                    MyFonts.w500.size(14).setColor(Themes.permanentTextColor),
                 decoration: InputDecoration(
                   labelText: 'Name',
-                  labelStyle: labelTextStyle,
+                  labelStyle: MyFonts.w400
+                      .size(12)
+                      .letterSpace(0.4)
+                      .setHeight(1.33)
+                      .setColor(Themes.permanentTextColor),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide: const BorderSide(
-                          color: Color.fromRGBO(147, 152, 160, 1))),
+                      borderSide:
+                          const BorderSide(color: Themes.modalBorderColor)),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide: const BorderSide(
-                          color: Color.fromRGBO(147, 152, 160, 1))),
+                      borderSide:
+                          const BorderSide(color: Themes.modalBorderColor)),
                 ),
               ),
               const SizedBox(
@@ -106,14 +116,18 @@ class _RequestModalState extends State<RequestModal>
                   }
                   return null;
                 },
-                style: TextFormFieldStyle,
+                style: MyFonts.w500.size(14).setColor(Themes.white),
                 decoration: textFieldDecoration.copyWith(
                   labelText: 'Date',
-                  labelStyle: labelTextStyle,
-                  prefixIconColor: Colors.white,
+                  labelStyle: MyFonts.w400
+                      .size(12)
+                      .letterSpace(0.4)
+                      .setHeight(1.33)
+                      .setColor(Themes.permanentTextColor),
+                  prefixIconColor: Themes.white,
                   prefixIcon: const ImageIcon(
                     AssetImage('packages/irbs/assets/images/calender_icon.png'),
-                    color: Colors.white,
+                    color: Themes.white,
                   ),
                 ),
                 readOnly: true,
@@ -147,14 +161,18 @@ class _RequestModalState extends State<RequestModal>
                     }
                     return null;
                   },
-                  style: TextFormFieldStyle,
+                  style: MyFonts.w500.size(14).setColor(Themes.white),
                   decoration: textFieldDecoration.copyWith(
                     labelText: 'Time',
-                    labelStyle: labelTextStyle,
-                    prefixIconColor: Colors.white,
+                    labelStyle: MyFonts.w400
+                        .size(12)
+                        .letterSpace(0.4)
+                        .setHeight(1.33)
+                        .setColor(Themes.permanentTextColor),
+                    prefixIconColor: Themes.white,
                     prefixIcon: const ImageIcon(
                       AssetImage('packages/irbs/assets/images/clock_icon.png'),
-                      color: Colors.white,
+                      color: Themes.white,
                     ),
                   ),
                   readOnly: true,
@@ -175,8 +193,7 @@ class _RequestModalState extends State<RequestModal>
                         Fluttertoast.showToast(
                             msg:
                                 'You cannot book after 12:00 AM and before 8:00 AM',
-                            backgroundColor:
-                                const Color.fromRGBO(39, 49, 65, 0.7));
+                            backgroundColor: Themes.modalToastBgColor);
 
                         setState(() {
                           text = '';
@@ -187,6 +204,7 @@ class _RequestModalState extends State<RequestModal>
                         });
                       }
                     }
+                    if (!mounted) return;
                     res1 = (text == '')
                         ? null
                         : await showTimePicker(
@@ -198,6 +216,7 @@ class _RequestModalState extends State<RequestModal>
                               child: child,
                             ),
                           );
+
                     if (res1 != null) {
                       String formattedTime = res1.toString().substring(10, 15);
                       if (formattedTime[0] == '0' &&
@@ -205,8 +224,7 @@ class _RequestModalState extends State<RequestModal>
                         Fluttertoast.showToast(
                             msg:
                                 'You cannot book after 12:00 AM and before 8:00 AM',
-                            backgroundColor:
-                                const Color.fromRGBO(39, 49, 65, 0.7));
+                            backgroundColor: Themes.modalToastBgColor);
                         setState(() {
                           text = '';
                           timeCtl.text = '';
@@ -216,8 +234,7 @@ class _RequestModalState extends State<RequestModal>
                       } else if (formattedTime.compareTo(text) <= 0) {
                         Fluttertoast.showToast(
                             msg: 'Please Enter a Valid Time Range',
-                            backgroundColor:
-                                const Color.fromRGBO(39, 49, 65, 0.7));
+                            backgroundColor: Themes.modalToastBgColor);
                         setState(() {
                           timeCtl.text = '';
                           res = null;
@@ -234,11 +251,15 @@ class _RequestModalState extends State<RequestModal>
               const SizedBox(
                 height: 16,
               ),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'State the purpose of your booking',
-                  style: labelTextStyle,
+                  style: MyFonts.w400
+                      .size(12)
+                      .letterSpace(0.4)
+                      .setHeight(1.33)
+                      .setColor(Themes.permanentTextColor),
                 ),
               ),
               const SizedBox(
@@ -254,9 +275,10 @@ class _RequestModalState extends State<RequestModal>
                   },
                   maxLines: 3,
                   keyboardType: TextInputType.multiline,
-                  style: TextFormFieldStyle,
+                  style: MyFonts.w500.size(14).setColor(Themes.white),
                   decoration: textFieldDecoration.copyWith(
-                      hintText: 'Type here...', hintStyle: hintTextStyle)),
+                      hintText: 'Type here...',
+                      hintStyle: MyFonts.w400.size(12).setColor(Themes.comet))),
               const SizedBox(
                 height: 16,
               ),
@@ -275,8 +297,11 @@ class _RequestModalState extends State<RequestModal>
                           pickedDate!.day,
                           res1!.hour,
                           res1!.minute);
-                      if(inTime.isBefore(DateTime.now())){
-                        Fluttertoast.showToast(msg: "Start time has passed", backgroundColor: Colors.white, textColor: Colors.black);
+                      if (inTime.isBefore(DateTime.now())) {
+                        Fluttertoast.showToast(
+                            msg: "Start time has passed",
+                            backgroundColor: Themes.white,
+                            textColor: Themes.black);
                         return;
                       }
                       var details = jsonEncode({
@@ -288,18 +313,26 @@ class _RequestModalState extends State<RequestModal>
 
                       var response = await APIService().createBooking(details);
                       if (response == "Success") {
+                        if (!mounted) return;
                         var x = widget.rootContext.read<RoomDetailStore>();
                         await x.setUpcomingBookings();
+                        if (!mounted) return;
                         showDialogue(context);
                       } else {
                         if (response ==
                             'DioException [bad response]: The request returned an invalid status code of 400.') {
-                          Fluttertoast.showToast(msg: "Slot already booked", backgroundColor: Colors.white, textColor: Colors.black);
+                          Fluttertoast.showToast(
+                              msg: "Slot already booked",
+                              backgroundColor: Themes.white,
+                              textColor: Themes.black);
                         } else {
                           Fluttertoast.showToast(
-                              msg: "Some error occured, try again later", backgroundColor: Colors.white, textColor: Colors.black);
+                              msg: "Some error occured, try again later",
+                              backgroundColor: Themes.white,
+                              textColor: Themes.black);
                         }
                       }
+                      if (!mounted) return;
                       Navigator.pop(context);
                     }
                   },
@@ -307,13 +340,15 @@ class _RequestModalState extends State<RequestModal>
                     height: 36,
                     width: 136,
                     decoration: BoxDecoration(
-                      color: const Color.fromRGBO(118, 172, 255, 1),
+                      color: Themes.primaryColor,
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
                         'Send Request',
-                        style: sendRequestTextStyle,
+                        style: MyFonts.w500
+                            .size(14)
+                            .setColor(Themes.onPrimaryColor),
                       ),
                     ),
                   ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import '../../globals/colors.dart';
-import '../../globals/styles.dart';
+import '../../globals/my_fonts.dart';
 
 class EmptyListPlaceholder extends StatelessWidget {
   final String text;
@@ -10,7 +10,7 @@ class EmptyListPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.transparent,
+      color: Themes.transparentColor,
       margin: const EdgeInsets.symmetric(horizontal: 16),
       child: DottedBorder(
         borderType: BorderType.RRect,
@@ -22,7 +22,12 @@ class EmptyListPlaceholder extends StatelessWidget {
         child: SizedBox(
           height: 18,
           width: MediaQuery.of(context).size.width,
-          child: Center(child: Text(text, style: subHeadingStyle)),
+          child: Center(
+              child: Text(
+                text,
+                style: MyFonts.w400.setColor(Themes.subHeadingColor),
+              )
+          ),
         ),
       ),
     );

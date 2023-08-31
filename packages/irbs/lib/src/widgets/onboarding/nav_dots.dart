@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/globals/colors.dart';
+
+import '../../globals/colors.dart';
 
 class NavDot extends StatefulWidget {
   final bool isActive;

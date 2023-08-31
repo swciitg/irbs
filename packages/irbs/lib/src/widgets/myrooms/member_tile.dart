@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../functions/launch_phone.dart';
-import '../../globals/styles.dart';
+import '../../globals/colors.dart';
+import '../../globals/my_fonts.dart';
 import '../../models/room_model.dart';
 import '../../store/data_store.dart';
 import 'edit_member_dailogue.dart';
@@ -69,7 +70,7 @@ class _MemberTileState extends State<MemberTile> {
       padding: const EdgeInsets.fromLTRB(16, 8, 0, 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
-          color: const Color.fromRGBO(39, 49, 65, 1)),
+          color: Themes.tileColor),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -80,11 +81,11 @@ class _MemberTileState extends State<MemberTile> {
             children: [
               Text(
                 name,
-                style: TextFormFieldStyle,
+                style: MyFonts.w500.size(14).setColor(Themes.white),
               ),
               Text(
                 widget.isPersonAdmin ? 'Admin' : 'Member',
-                style: designationStyle,
+                style: MyFonts.w400.size(10).setColor(Themes.white).setHeight(1.2).letterSpace(0.1),
               )
             ],
           )),
@@ -97,13 +98,13 @@ class _MemberTileState extends State<MemberTile> {
             child: ImageIcon(
               const AssetImage('packages/irbs/assets/images/phone_icon.png'),
               size: 20,
-              color: phone != null ? Colors.white : Colors.grey,
+              color: phone != null ? Themes.white : Themes.grey,
             ),
           ),
           if (widget.isAdmin && !isMyself)
             Theme(
               data: Theme.of(context)
-                  .copyWith(cardColor: const Color.fromRGBO(39, 49, 65, 1)),
+                  .copyWith(cardColor: Themes.tileColor),
               child: PopupMenuButton(
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -111,7 +112,7 @@ class _MemberTileState extends State<MemberTile> {
                 constraints: const BoxConstraints(minWidth: 160),
                 icon: const Icon(
                   Icons.more_vert,
-                  color: Colors.white,
+                  color: Themes.white,
                 ),
                 itemBuilder: (ctx) => [
                   buildPopupMenuItem(
@@ -156,7 +157,7 @@ PopupMenuItem buildPopupMenuItem(String title, String iconAddress, int val) {
         ),
         Text(
           title,
-          style: popupMenuStyle,
+          style: MyFonts.w400.size(12).setColor(Themes.white).setHeight(1.219).letterSpace(0.1),
         ),
       ],
     ),
