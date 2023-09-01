@@ -33,6 +33,7 @@ class _RequestModalState extends State<RequestModal>
   DateTime? pickedDate;
   TimeOfDay? res;
   TimeOfDay? res1;
+  bool isLoading = false;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -289,6 +290,10 @@ class _RequestModalState extends State<RequestModal>
                     if (_formKey.currentState!.validate() == false) {
                       return;
                     } else {
+                      if(isLoading)
+                        {
+                          return;
+                        }
                       var inTime = DateTime(pickedDate!.year, pickedDate!.month,
                           pickedDate!.day, res!.hour, res!.minute);
                       var outTime = DateTime(
@@ -310,7 +315,9 @@ class _RequestModalState extends State<RequestModal>
                         "outTime": outTime.toIso8601String(),
                         "bookingPurpose": purposeCtl.text
                       });
-
+                      setState(() {
+                        isLoading = true;
+                      });
                       var response = await APIService().createBooking(details);
                       if (response == "Success") {
                         if (!mounted) return;
@@ -319,6 +326,9 @@ class _RequestModalState extends State<RequestModal>
                         if (!mounted) return;
                         showDialogue(context);
                       } else {
+                        setState(() {
+                          isLoading = false;
+                        });
                         if (response ==
                             'DioException [bad response]: The request returned an invalid status code of 400.') {
                           Fluttertoast.showToast(
@@ -343,7 +353,7 @@ class _RequestModalState extends State<RequestModal>
                       color: Themes.primaryColor,
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: Center(
+                    child: isLoading ? CircularProgressIndicator() :Center(
                       child: Text(
                         'Send Request',
                         style: MyFonts.w500
