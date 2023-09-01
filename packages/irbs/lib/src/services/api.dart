@@ -288,10 +288,11 @@ class APIService {
         // print('Booking accepted');
         return true;
       }else{
+        print(res);
         throw Exception(res.statusMessage);
       }
     }catch(e){
-      throw Exception(e.toString());
+      rethrow;
     }
   }
 

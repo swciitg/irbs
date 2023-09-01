@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import '../../functions/snackbar.dart';
 import '../../globals/colors.dart';
@@ -30,21 +32,6 @@ class _RespondDialogueState extends State<RespondDialogue> {
           return SimpleDialog(
             backgroundColor: Themes.darkSlateGrey,
             children: [
-              // Align(
-              //   alignment: Alignment.centerRight,
-              //   child: GestureDetector(
-              //       onTap: () {
-              //         Navigator.pop(context);
-              //       },
-              //       child: const Padding(
-              //         padding: EdgeInsets.only(right: 16.0),
-              //         child: Icon(
-              //           Icons.close,
-              //           color: Themes.white,
-              //         ),
-              //       )),
-              // ),
-              // Icon(Icons.abc,size: 100,),
               const SizedBox(
                 height: 20,
               ),
@@ -57,8 +44,6 @@ class _RespondDialogueState extends State<RespondDialogue> {
                       'packages/irbs/assets/approved.svg',
                       height: 50,
                     ),
-              // Lottie.asset('packages/irbs/assets/sent_request.json',
-              //     height: 100),
               const SizedBox(
                 height: 15,
               ),
@@ -96,9 +81,6 @@ class _RespondDialogueState extends State<RespondDialogue> {
                 right: 16,
                 top: 16,
                 child: GestureDetector(
-                  // constraints: BoxConstraints(),
-                  // padding: EdgeInsets.zero,
-                  // iconSize: 20,
                   onTap: () {
                     Navigator.pop(context);
                   },
@@ -450,6 +432,14 @@ class _RespondDialogueState extends State<RespondDialogue> {
                                     showApproveDialogue(context, 1);
                                   }
                                 } catch (e) {
+                                  print("inside catch");
+                                  DioException x = e as DioException;
+                                  var res = x.response!.statusCode;
+                                  if(res == 400)
+                                    {
+                                      Fluttertoast.showToast(msg: "Slot already booked");
+                                    }
+                                  Navigator.of(context).pop();
                                   widget.commonStore.pending =
                                       widget.commonStore.pending + 1;
                                   setState(() {
