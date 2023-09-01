@@ -290,10 +290,9 @@ class _RequestModalState extends State<RequestModal>
                     if (_formKey.currentState!.validate() == false) {
                       return;
                     } else {
-                      if(isLoading)
-                        {
-                          return;
-                        }
+                      if (isLoading) {
+                        return;
+                      }
                       var inTime = DateTime(pickedDate!.year, pickedDate!.month,
                           pickedDate!.day, res!.hour, res!.minute);
                       var outTime = DateTime(
@@ -353,14 +352,19 @@ class _RequestModalState extends State<RequestModal>
                       color: Themes.primaryColor,
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: isLoading ? CircularProgressIndicator() :Center(
-                      child: Text(
-                        'Send Request',
-                        style: MyFonts.w500
-                            .size(14)
-                            .setColor(Themes.onPrimaryColor),
-                      ),
-                    ),
+                    child: isLoading
+                        ? const SizedBox(
+                            height: 30,
+                            width: 30,
+                            child: CircularProgressIndicator())
+                        : Center(
+                            child: Text(
+                              'Send Request',
+                              style: MyFonts.w500
+                                  .size(14)
+                                  .setColor(Themes.onPrimaryColor),
+                            ),
+                          ),
                   ),
                 ),
               ),
