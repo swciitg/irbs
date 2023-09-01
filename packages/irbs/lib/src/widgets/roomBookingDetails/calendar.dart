@@ -34,7 +34,7 @@ class _CalendarState extends State<Calendar> {
   List<Meeting> _getDataSource(List<CalendarData> data) {
     final List<Meeting> meetings = <Meeting>[];
     for(int i = 0; i < data.length; i++){
-      if(data[i].status == 'requested' || data[i].status == 'accepted'){
+      if(data[i].status == 'accepted'){
         meetings.add(
             Meeting(
                 eventName: data[i].eventName,
