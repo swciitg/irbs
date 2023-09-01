@@ -432,7 +432,6 @@ class _RespondDialogueState extends State<RespondDialogue> {
                                     showApproveDialogue(context, 1);
                                   }
                                 } catch (e) {
-                                  print("inside catch");
                                   DioException x = e as DioException;
                                   var res = x.response!.statusCode;
                                   if(res == 400)
