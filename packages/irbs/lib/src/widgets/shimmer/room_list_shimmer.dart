@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../models/room_model.dart';
-import '../roomList/list_display.dart';
-import '../roomList/search_bar.dart';
+import '../roomlist/list_display.dart';
+import '../roomlist/search_bar.dart';
 
 class RoomListShimmer extends StatefulWidget {
   const RoomListShimmer({super.key});
