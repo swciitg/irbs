@@ -81,9 +81,7 @@ class HomePage extends StatelessWidget {
 
 
                 await user.setString("accessToken",
-                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGNmZmRiNmExOTJjMGExMDYzOWM2NmMiLCJpYXQiOjE2OTM0Nzg0ODksImV4cCI6MTY5NDM0MjQ4OX0.FFOLBFWX8uUmr3YDzNOdzfgI3_kwvUWlkPjEpBD460E");
-                await user.setString("refreshToken",
-                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGNmZmRiNmExOTJjMGExMDYzOWM2NmMiLCJpYXQiOjE2OTM0Nzg0ODksImV4cCI6MTY5NjA3MDQ4OX0.7BMwrgf3RpSITogj_FXPomgqwLG09mjcCgSByGe9PEo");
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDlkOTk2NzA2MmNmOTBmYzljMjMwNjAiLCJpYXQiOjE2OTM2NDUyMDAsImV4cCI6MTY5NDUwOTIwMH0.bQOROieq4MCGLvbFD8oLaM-vmK2I-w1ZTY5q5tGwVYM");
 
                 if (!context.mounted) return;
                 Navigator.of(context).push(

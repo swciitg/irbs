@@ -353,10 +353,16 @@ class _RequestModalState extends State<RequestModal>
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: isLoading
-                        ? const SizedBox(
-                            height: 30,
-                            width: 30,
-                            child: CircularProgressIndicator())
+                        ? Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Row(
+                      children: [
+                          Expanded(child: Container(),),
+                          CircularProgressIndicator(),
+                          Expanded(child: Container(),),
+                      ],
+                    ),
+                        )
                         : Center(
                             child: Text(
                               'Send Request',
