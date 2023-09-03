@@ -212,7 +212,7 @@ class BookingDetails extends StatelessWidget {
               style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
             ),
           ),
-          isAdmin
+          isAdmin && DateTime.parse(booking.outTime).isBefore(DateTime.parse("${DateTime.now().toIso8601String()}Z"))
               ? Center(
                   child: GestureDetector(
                     onTap: () async {
