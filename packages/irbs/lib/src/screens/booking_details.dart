@@ -212,14 +212,22 @@ class BookingDetails extends StatelessWidget {
               style: MyFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
             ),
           ),
-          isAdmin && DateTime.parse(booking.outTime).isBefore(DateTime.parse("${DateTime.now().toIso8601String()}Z"))
+          isAdmin && DateTime.parse(booking.outTime).isAfter(DateTime.parse("${DateTime.now().toIso8601String()}Z"))
               ? Center(
                   child: GestureDetector(
                     onTap: () async {
+                      bool notStarted = DateTime.parse(booking.inTime).isAfter(DateTime.parse("${DateTime.now().toIso8601String()}Z"));
                       try {
-                        await APIService().deleteBooking(booking.id);
+                        if(notStarted)
+                          {
+                            await APIService().deleteBooking(booking.id);
+                          }
+                        else
+                          {
+                            await APIService().endBooking(booking.id);
+                          }
                         Fluttertoast.showToast(
-                            msg: 'Booking Deleted',
+                            msg: notStarted ? 'Booking Deleted': 'Booking Ended',
                             backgroundColor: Themes.white,
                             textColor: Themes.black);
                         cs.pending = cs.pending + 1;
@@ -232,11 +240,11 @@ class BookingDetails extends StatelessWidget {
                             textColor: Themes.black);
                       }
                     },
-                    child: const Padding(
+                    child: Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                      child: Text('Delete Booking',
-                          style: TextStyle(
+                          const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      child: Text(DateTime.parse(booking.inTime).isAfter(DateTime.parse("${DateTime.now().toIso8601String()}Z")) ? 'Delete Booking': 'End Booking',
+                          style: const TextStyle(
                             fontFamily: 'Montserrat',
                             package: 'irbs',
                             fontSize: 14.0,
