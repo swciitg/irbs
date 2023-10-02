@@ -22,9 +22,9 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  String month = DateFormat('MMMM').format(DateTime.now());
-  int monthDigits = DateTime.now().month;
-  String year = DateTime.now().year.toString();
+  String month = DateFormat('MMMM').format(DateTime.now().toLocal());
+  int monthDigits = DateTime.now().toLocal().month;
+  String year = DateTime.now().toLocal().year.toString();
 
   final _calendarController = CalendarController();
   final _datePickerController = DateRangePickerController();
@@ -78,7 +78,7 @@ class _CalendarState extends State<Calendar> {
                   if(mounted){
                     setState(() {
                       if(datePickerHeight == 0){
-                        month = DateFormat('MMMM').format(_datePickerController.selectedDate ?? DateTime.now());
+                        month = DateFormat('MMMM').format(_datePickerController.selectedDate ?? DateTime.now().toLocal());
                         datePickerHeight = 350;
                       }else{
                         month = DateFormat('MMMM').format(_calendarController.displayDate!);
@@ -174,7 +174,7 @@ class _CalendarState extends State<Calendar> {
               onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
                 _calendarController.displayDate = args.value;
               },
-              initialSelectedDate: DateTime.now(),
+              initialSelectedDate: DateTime.now().toLocal(),
               onViewChanged: (DateRangePickerViewChangedArgs args){
                 WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                   if(datePickerHeight != 0){_datePickerController.selectedDate = args.visibleDateRange.startDate;}
@@ -240,7 +240,7 @@ class _CalendarState extends State<Calendar> {
                         }
                       },
                       showDatePickerButton: true,
-                      initialDisplayDate: DateTime.now(),
+                      initialDisplayDate: DateTime.now().toLocal(),
                       firstDayOfWeek: 1,
                       view: CalendarView.week,
                       controller: _calendarController,
