@@ -3,7 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../../functions/launch_phone.dart';
-import '../../globals/styles.dart';
+import '../../globals/colors.dart';
+import '../../globals/my_fonts.dart';
 import '../../screens/room_details/room_details.dart';
 import '../../store/data_store.dart';
 import '../../store/room_detail_store.dart';
@@ -17,7 +18,7 @@ class SideDrawer extends StatelessWidget {
       child: Container(
         width: 240,
         decoration: BoxDecoration(
-          color: const Color.fromRGBO(31, 39, 51, 1),
+          color: Themes.drawerBox,
           borderRadius: BorderRadius.circular(4)
         ),
         child: Observer(
@@ -25,11 +26,12 @@ class SideDrawer extends StatelessWidget {
             return Stack(
               children: [
                 ListView(
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     Container(
                       width: 240,
                       decoration: BoxDecoration(
-                          color: const Color.fromRGBO(31, 39, 51, 1),
+                          color: Themes.drawerBox,
                           borderRadius: BorderRadius.circular(4)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,15 +41,15 @@ class SideDrawer extends StatelessWidget {
                           ),
                           SvgPicture.asset(
                             'packages/irbs/assets/images/person.svg',
-                            color: Colors.white,
+                            color: Themes.white,
                           ),
                           Text(
                             DataStore.userData["name"] ?? "Name",
-                            style: sideDrawerStyle,
+                            style: MyFonts.w600.size(14).setColor(Themes.white).setHeight(1.715).letterSpace(0.1),
                           ),
                           Text(
                             DataStore.userData["rollNo"] ?? "RollNumber",
-                            style: sideDrawerStyle,
+                            style: MyFonts.w600.size(14).setColor(Themes.white).setHeight(1.715).letterSpace(0.1),
                           ),
                           const SizedBox(
                             height: 28,
@@ -69,13 +71,13 @@ class SideDrawer extends StatelessWidget {
                             children: [
                               Text(
                                 "My Rooms",
-                                style: addmemberStyle.copyWith(
-                                    color: Colors.white.withOpacity(0.5)),
+                                style: MyFonts.w500.size(14).setColor(Themes.primaryColor).copyWith(
+                                    color: Themes.white.withOpacity(0.5)),
                               ),
                             ],
                           ),
                           ListView.builder(
-                            padding: EdgeInsets.all(0),
+                            padding: const EdgeInsets.all(0),
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: rd.myRooms.length,
@@ -90,7 +92,7 @@ class SideDrawer extends StatelessWidget {
                                       vertical: 6),
                                   child: Text(
                                     roomName,
-                                    style: sideDrawerRoomStyle,
+                                    style: MyFonts.w600.size(15).setColor(Themes.white).setHeight(1.333).letterSpace(0.1),
                                   ),
                                 ),
                                 onTap: () {
@@ -98,7 +100,7 @@ class SideDrawer extends StatelessWidget {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          RoomDetailsScreen(),
+                                          const RoomDetailsScreen(),
                                     ),
                                   ).then((value) => Navigator.of(context).pop());
                                 },
@@ -115,7 +117,7 @@ class SideDrawer extends StatelessWidget {
                             Container(
                               width: 200,
                               height: 0.5,
-                              color: Colors.white.withOpacity(0.2),
+                              color: Themes.white.withOpacity(0.2),
                             ),
                             const SizedBox(
                               height: 16,
@@ -127,8 +129,8 @@ class SideDrawer extends StatelessWidget {
                                 ),
                                 Text(
                                   "Need Help?",
-                                  style: cancelButtonStyle.copyWith(
-                                      color: Colors.white, height: 2),
+                                  style: MyFonts.w500.size(12).setColor(Themes.cancelButtonColor).copyWith(
+                                      color: Themes.white, height: 2),
                                 ),
                                 const SizedBox(
                                   width: 8,
@@ -139,8 +141,8 @@ class SideDrawer extends StatelessWidget {
                                   },
                                   child: Text(
                                     'Contact Us',
-                                    style: cancelButtonStyle.copyWith(
-                                        color: Colors.white,
+                                    style: MyFonts.w500.size(12).setColor(Themes.cancelButtonColor).copyWith(
+                                        color: Themes.white,
                                         height: 2,
                                         decoration:
                                         TextDecoration.underline),
@@ -161,7 +163,7 @@ class SideDrawer extends StatelessWidget {
                     child: GestureDetector(
                       child: const Icon(
                         Icons.close,
-                        color: Colors.white,
+                        color: Themes.white,
                       ),
                       onTap: () {
                         Navigator.pop(context);

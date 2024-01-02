@@ -1,5 +1,5 @@
-import 'package:irbs/src/globals/colors.dart';
-import 'package:irbs/src/models/booking_model.dart';
+import '../globals/colors.dart';
+import 'booking_model.dart';
 import 'package:flutter/material.dart';
 
 class CalendarData{

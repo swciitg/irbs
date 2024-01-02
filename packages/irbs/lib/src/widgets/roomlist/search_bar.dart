@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:irbs/src/globals/styles.dart';
+import '../../globals/my_fonts.dart';
+import '../../globals/styles.dart';
 import 'package:provider/provider.dart';
 import '../../globals/colors.dart';
 import '../../store/common_store.dart';
@@ -33,7 +34,7 @@ class RoomSearchBar extends StatelessWidget {
                   size: 16,
                 ),
               ),
-              Container(
+              SizedBox(
                 // height: 20,
                 // margin: const EdgeInsets.only(top: 2),
                 width: MediaQuery.of(context).size.width - 80,
@@ -41,38 +42,11 @@ class RoomSearchBar extends StatelessWidget {
                   onChanged: (value) {
                     commonStore.setSearchText(value);
                   },
-                  style: editRoomInstrText,
+                  style: MyFonts.w400.size(12).setColor(Themes.white).setHeight(1.333),
                   maxLines: 1,
                   scrollPhysics: const ClampingScrollPhysics(),
                   cursorColor: Themes.comet,
-                  decoration: const InputDecoration(
-                    isDense: true,
-                    contentPadding: EdgeInsets.zero,
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.transparent),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.transparent),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.transparent),
-                    ),
-                    hintText: 'Search Keyword (name,position etc.)',
-                    hintStyle: TextStyle(
-                      color: Themes.comet,
-                      fontSize: 12,
-                    ),
-                    // suffixIcon: GestureDetector(
-                    //   child: const Icon(
-                    //     Icons.close,
-                    //     size: 16,
-                    //     color: Colors.white,
-                    //   ),
-                    //   onTap: () {
-                    //     commonStore.clearSearch();
-                    //   },
-                    // ),
-                  ),
+                  decoration: searchBarBorder,
                 ),
               )
             ],

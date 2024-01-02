@@ -2,11 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../functions/snackbar.dart';
-import '../../globals/styles.dart';
+import '../../globals/colors.dart';
+import '../../globals/my_fonts.dart';
 import '../../models/room_model.dart';
-import '../../screens/room_details/room_details.dart';
 import '../../services/api.dart';
-import '../../store/data_store.dart';
 import '../../store/room_detail_store.dart';
 
 Future<void> showEditMemberDialogue({required BuildContext rootContext, required RoomModel room, required bool isPersonAdmin, required int index, required String type}) async {
@@ -48,13 +47,13 @@ class _EditMemberDailogueState extends State<EditMemberDailogue> {
     return SimpleDialog(
       insetPadding: EdgeInsets.zero,
       contentPadding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
-      backgroundColor: const Color.fromRGBO(39, 49, 65, 1),
+      backgroundColor: Themes.tileColor,
       children: [
         Align(
           alignment: Alignment.center,
           child: Text(
             widget.type == "change" ? (widget.isPersonAdmin ? 'Change to Member?' : 'Change to Admin?') : 'Remove memeber?',
-            style: sentRequestStyle,
+            style: MyFonts.w600.size(16).setColor(Themes.white),
           ),
         ),
         const SizedBox(
@@ -68,7 +67,7 @@ class _EditMemberDailogueState extends State<EditMemberDailogue> {
                 height: 32,
                 width: 144,
                 decoration: BoxDecoration(
-                    color: const Color.fromRGBO(62, 71, 88, 1),
+                    color: Themes.disabledButtonBackground,
                     borderRadius: BorderRadius.circular(4)),
                 child: Center(
                   child: isLoading
@@ -76,9 +75,9 @@ class _EditMemberDailogueState extends State<EditMemberDailogue> {
                       height: 20,
                       width: 20,
                       child: CircularProgressIndicator())
-                      : const Text(
+                      : Text(
                     "Cancel",
-                    style: dialogCancelStyle,
+                    style: MyFonts.w600.size(12).setColor(Themes.white).setHeight(1.666).letterSpace(0.1),
                   ),
                 ),
               ),
@@ -91,7 +90,7 @@ class _EditMemberDailogueState extends State<EditMemberDailogue> {
                 height: 32,
                 width: 144,
                 decoration: BoxDecoration(
-                    color: const Color.fromRGBO(118, 172, 255, 1),
+                    color: Themes.primaryColor,
                     borderRadius: BorderRadius.circular(4)),
                 child: Center(
                   child: isLoading
@@ -99,9 +98,9 @@ class _EditMemberDailogueState extends State<EditMemberDailogue> {
                       height: 20,
                       width: 20,
                       child: CircularProgressIndicator())
-                      : const Text(
+                      : Text(
                     "Confirm",
-                    style: dialogConfirmStyle,
+                    style: MyFonts.w600.size(12).setColor(Themes.onPrimaryColor).setHeight(1.666).letterSpace(0.1),
                   ),
                 ),
               ),

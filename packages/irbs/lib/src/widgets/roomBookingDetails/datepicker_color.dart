@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../globals/styles.dart';
+import '../../globals/colors.dart';
+import '../../globals/my_fonts.dart';
 
 class IRBSDatePicker extends StatefulWidget {
   final Widget? child;
@@ -14,27 +15,27 @@ class _IRBSDatePickerState extends State<IRBSDatePicker> {
   Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
-        textTheme: const TextTheme(
-          headlineMedium: basicFontStyle,
-          headlineSmall: basicFontStyle, // Selected Date landscape
-          titleLarge: basicFontStyle, // Selected Date portrait
-          labelSmall: basicFontStyle, // Title - SELECT DATE
-          bodyLarge: basicFontStyle, // year gridbview picker
-          titleMedium: basicFontStyle, // input
-          titleSmall: basicFontStyle, // month/year picker
-          bodySmall: basicFontStyle, // days
+        textTheme: TextTheme(
+          headlineMedium: MyFonts.w400,
+          headlineSmall: MyFonts.w400, // Selected Date landscape
+          titleLarge: MyFonts.w400, // Selected Date portrait
+          labelSmall: MyFonts.w400, // Title - SELECT DATE
+          bodyLarge: MyFonts.w400, // year gridbview picker
+          titleMedium: MyFonts.w400, // input
+          titleSmall: MyFonts.w400, // month/year picker
+          bodySmall: MyFonts.w400, // days
         ),
         colorScheme: const ColorScheme.dark(
-          primary: Color.fromRGBO(189, 199, 220, 1),
-          surface: Color.fromRGBO(43, 62, 92, 1),
+          primary: Themes.datePickerPrimaryColor,
+          surface: Themes.datePickerSurfaceColor,
         ),
-        dialogBackgroundColor: const Color.fromRGBO(43, 62, 92, 1),
+        dialogBackgroundColor: Themes.datePickerSurfaceColor,
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(43, 62, 92, 1), // button
-              foregroundColor: const Color.fromRGBO(118, 172, 255, 1),
+              backgroundColor: Themes.datePickerSurfaceColor, // button
+              foregroundColor: Themes.primaryColor,
               elevation: 0,
-              textStyle: basicFontStyle),
+              textStyle: MyFonts.w400),
         ),
       ),
       child: widget.child!,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../globals/styles.dart';
-
+import '../../globals/my_fonts.dart';
 import '../../globals/colors.dart';
 
 class UpcomingBookingsWidget extends StatefulWidget {
@@ -35,10 +34,10 @@ class _UpcomingBookingsWidgetState extends State<UpcomingBookingsWidget> {
               0.0125
             ], colors: [
               (widget.status == 0)
-                  ? const Color.fromRGBO(217, 114, 108, 1)
+                  ? Themes.rejectedColor
                   : (widget.status == 1)
-                      ? const Color.fromRGBO(147, 144, 148, 1)
-                      : const Color.fromRGBO(53, 118, 42, 1),
+                      ? Themes.pendingColor
+                      : Themes.approvedColor,
               Themes.kCommonBoxBackground
             ]),
             borderRadius: BorderRadius.circular(4)),
@@ -48,10 +47,10 @@ class _UpcomingBookingsWidgetState extends State<UpcomingBookingsWidget> {
           title: Text(
             widget.name,
             overflow: TextOverflow.ellipsis,
-            style: kRequestedRoomStyle,
+            style: MyFonts.w500.size(14).letterSpace(0.5).setColor(Themes.white),
           ),
           subtitle: RichText(
-            text: TextSpan(style: kHeading3DescStyle, children: [
+            text: TextSpan(style: MyFonts.w500.size(10).letterSpace(0.5).setColor(Themes.white), children: [
               TextSpan(
                 text: widget.startTime,
               ),
@@ -82,10 +81,10 @@ class _UpcomingBookingsWidgetState extends State<UpcomingBookingsWidget> {
                           ? 'Pending'
                           : 'Approved',
                   style: (widget.status == 0)
-                      ? rejectTextStyle
+                      ? MyFonts.w500.size(12).letterSpace(0.5).setColor(Themes.white)
                       : (widget.status == 1)
-                          ? pendingStyle
-                          : approvedStyle,
+                          ? MyFonts.w500.size(14).setColor(Themes.pendingColor)
+                          : MyFonts.w500.size(14).setColor(Themes.approvedColor),
                 ),
               ),
             ),

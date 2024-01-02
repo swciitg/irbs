@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:irbs/src/store/room_detail_store.dart';
 import 'package:provider/provider.dart';
 import '../../globals/colors.dart';
+import '../../globals/my_fonts.dart';
 import '../../globals/styles.dart';
 import '../../services/api.dart';
+import '../../store/room_detail_store.dart';
 
 
 
@@ -42,7 +43,7 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
     return Form(
       key: _formkey,
       child: SimpleDialog(
-        backgroundColor: const Color.fromRGBO(39, 49, 65, 1),
+        backgroundColor: Themes.tileColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
         children: [
           const SizedBox(
@@ -58,7 +59,7 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
                   padding: EdgeInsets.only(right: 0.0),
                   child: Icon(
                     Icons.close,
-                    color: Colors.white,
+                    color: Themes.white,
                   ),
                 )),
           ),
@@ -69,7 +70,7 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
             height: 24,
             child: Text(
               'Add Member',
-              style: appBarStyle.copyWith(
+              style: MyFonts.w500.size(20).setColor(Themes.white).copyWith(
                   color: Themes.myRoomsFormHeadingColor, fontSize: 18),
               textAlign: TextAlign.left,
             ),
@@ -90,10 +91,12 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
                 }
                 return null;
               },
-              style: permanentTextStyle,
+              style: MyFonts.w500.size(14).setColor(Themes.permanentTextColor),
               keyboardType: TextInputType.emailAddress,
               decoration: textFieldDecoration.copyWith(
-                  labelText: "Mail ID", labelStyle: labelTextStyle)),
+                  labelText: "Mail ID",
+                  labelStyle: MyFonts.w400.size(12).setColor(Themes.permanentTextColor).letterSpace(0.4).setHeight(1.33),
+              )),
           const SizedBox(
             height: 18,
           ),
@@ -101,7 +104,7 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
               value: checkAdmin,
               title: Text(
                 'Admin',
-                style: popupMenuStyle.copyWith(fontSize: 14),
+                style: MyFonts.w400.size(12).setColor(Themes.white).setHeight(1.219).letterSpace(0.1).copyWith(fontSize: 14),
               ),
               onChanged: (bool? value) {
                 setState(() {
@@ -114,7 +117,7 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
           Container(
             height: 48,
             decoration: const BoxDecoration(
-                color: Color.fromRGBO(118, 172, 255, 1),
+                color: Themes.primaryColor,
                 borderRadius: BorderRadius.all(Radius.circular(4))),
             child: InkWell(
                 onTap: () async {
@@ -134,18 +137,19 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
 
                       try{
                      var res = await APIService().editRoomDetails(rd.currentRoom.id, details);
-                     print(res);
+                     // print(res);
                      rd.updateRoom(res);
+                     if(!mounted)return;
                      Navigator.pop(context);
                       }
                   catch(e){
                     setState(() {
                       apiCall = false;
                     });
-                    print("THIS WAS THE ERROR");
-                    Fluttertoast.showToast(msg: 'Email Invalid', backgroundColor: Colors.white, textColor: Colors.black);
-                    print(rd.currentRoom.owner);
-                    print(rd.currentRoom.allowedUsers);
+                    // print("THIS WAS THE ERROR");
+                    Fluttertoast.showToast(msg: 'Email Invalid', backgroundColor: Themes.white, textColor: Themes.black);
+                    // print(rd.currentRoom.owner);
+                    // print(rd.currentRoom.allowedUsers);
                     Navigator.pop(context);
                   }
                     }
@@ -154,13 +158,9 @@ class _AddMemberDailogueState extends State<AddMemberDailogue> {
                 child: Center(
                     child: (apiCall)
                         ? const CircularProgressIndicator()
-                        : const Text(
+                        : Text(
                       'Add',
-                      style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          package: 'irbs',
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                      style: MyFonts.w500.size(16),
                     ))),
           ),
           const SizedBox(

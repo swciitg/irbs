@@ -1,4 +1,4 @@
-import 'package:irbs/src/models/room_model.dart';
+import 'room_model.dart';
 
 class BookingModel {
   String roomId = '';

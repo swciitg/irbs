@@ -29,7 +29,8 @@ class _IRBSState extends State<IRBS> {
           create: (_) => RoomDetailStore(),
         ),
       ],
-      child: MaterialApp(
+      child:
+      MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: HomeScreen.id,
         routes: {

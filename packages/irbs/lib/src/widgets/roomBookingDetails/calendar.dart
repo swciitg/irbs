@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
-import 'package:irbs/src/globals/colors.dart';
-import 'package:irbs/src/globals/styles.dart';
-import 'package:irbs/src/models/calendar_data.dart';
-import 'package:irbs/src/store/common_store.dart';
-import 'package:irbs/src/widgets/shimmer/calendar_shimmer.dart';
+import '../../globals/colors.dart';
+import '../../globals/my_fonts.dart';
+import '../../models/calendar_data.dart';
+import '../../store/common_store.dart';
+import '../shimmer/calendar_shimmer.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-
 import '../../models/booking_model.dart';
 import '../../screens/booking_details.dart';
 import '../../services/api.dart';
 
 class Calendar extends StatefulWidget {
-  //final List<CalendarData> bookings;
   final String roomId;
   const Calendar({required this.roomId, super.key});
 
@@ -24,9 +22,9 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  String month = DateFormat('MMMM').format(DateTime.now());
-  int monthDigits = DateTime.now().month;
-  String year = DateTime.now().year.toString();
+  String month = DateFormat('MMMM').format(DateTime.now().toLocal());
+  int monthDigits = DateTime.now().toLocal().month;
+  String year = DateTime.now().toLocal().year.toString();
 
   final _calendarController = CalendarController();
   final _datePickerController = DateRangePickerController();
@@ -36,7 +34,7 @@ class _CalendarState extends State<Calendar> {
   List<Meeting> _getDataSource(List<CalendarData> data) {
     final List<Meeting> meetings = <Meeting>[];
     for(int i = 0; i < data.length; i++){
-      if(data[i].status == 'requested' || data[i].status == 'accepted'){
+      if(data[i].status == 'accepted'){
         meetings.add(
             Meeting(
                 eventName: data[i].eventName,
@@ -57,15 +55,15 @@ class _CalendarState extends State<Calendar> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.fromLTRB(16, 16, 0, 0),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
           child: SizedBox(
             height: 20,
             width: 76,
             child: Center(
               child: Text(
                   'Select Slot',
-                  style: subHeadingStyle
+                  style: MyFonts.w400.setColor(Themes.kSubHeading)
               ),
             ),
           ),
@@ -80,7 +78,7 @@ class _CalendarState extends State<Calendar> {
                   if(mounted){
                     setState(() {
                       if(datePickerHeight == 0){
-                        month = DateFormat('MMMM').format(_datePickerController.selectedDate ?? DateTime.now());
+                        month = DateFormat('MMMM').format(_datePickerController.selectedDate ?? DateTime.now().toLocal());
                         datePickerHeight = 350;
                       }else{
                         month = DateFormat('MMMM').format(_calendarController.displayDate!);
@@ -98,7 +96,7 @@ class _CalendarState extends State<Calendar> {
                       children: [
                         Text(
                           month,
-                          style: appBarStyle,
+                          style: MyFonts.w500.size(20).setColor(Themes.white),
                         ),
                         const SizedBox(width: 8,),
                         SizedBox(
@@ -159,7 +157,7 @@ class _CalendarState extends State<Calendar> {
               ),
               headerStyle: const DateRangePickerHeaderStyle(
                   textStyle: TextStyle(
-                      color: Colors.red
+                      color: Themes.red
                   )
               ),
               headerHeight: 0,
@@ -176,7 +174,7 @@ class _CalendarState extends State<Calendar> {
               onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
                 _calendarController.displayDate = args.value;
               },
-              initialSelectedDate: DateTime.now(),
+              initialSelectedDate: DateTime.now().toLocal(),
               onViewChanged: (DateRangePickerViewChangedArgs args){
                 WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                   if(datePickerHeight != 0){_datePickerController.selectedDate = args.visibleDateRange.startDate;}
@@ -188,10 +186,10 @@ class _CalendarState extends State<Calendar> {
                       color: Themes.backgroundColor
                   ),
                   textStyle: TextStyle(
-                    color: Colors.white,
+                    color: Themes.white,
                   ),
                   weekendTextStyle: TextStyle(
-                      color: Colors.red
+                      color: Themes.red
                   ),
                   todayTextStyle: TextStyle(
                       color: Themes.primaryColor
@@ -214,7 +212,7 @@ class _CalendarState extends State<Calendar> {
                   }else if(snapshot.hasError){
                     return Center(child: Text(snapshot.error.toString()),);
                   }else{
-                    print(snapshot.data!);
+                    // print(snapshot.data!);
                     return SfCalendar(
                       onViewChanged: (viewChangedDetails)async{
                         WidgetsBinding.instance.addPostFrameCallback((timeStamp){
@@ -231,8 +229,8 @@ class _CalendarState extends State<Calendar> {
                         });
                       },
                       onTap: (calendarTapDetails) {
-                        print(calendarTapDetails.appointments?[0].eventName);
-                        print(calendarTapDetails.appointments?[0].from);
+                        // print(calendarTapDetails.appointments?[0].eventName);
+                        // print(calendarTapDetails.appointments?[0].from);
                         if(calendarTapDetails.appointments?[0]!=null) {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context)=>   BookingDetails(
@@ -242,27 +240,27 @@ class _CalendarState extends State<Calendar> {
                         }
                       },
                       showDatePickerButton: true,
-                      initialDisplayDate: DateTime.now(),
+                      initialDisplayDate: DateTime.now().toLocal(),
                       firstDayOfWeek: 1,
                       view: CalendarView.week,
                       controller: _calendarController,
-                      backgroundColor: const Color.fromRGBO(35, 35, 35, 1),
-                      cellBorderColor: const Color.fromRGBO(135, 145, 165, 1),
+                      backgroundColor: Themes.calenderBgColor,
+                      cellBorderColor: Themes.kSubHeading,
                       viewHeaderStyle: const ViewHeaderStyle(
-                        backgroundColor: Color.fromRGBO(35, 35, 35, 1),
-                        dateTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
-                        dayTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
+                        backgroundColor: Themes.calenderBgColor,
+                        dateTextStyle: TextStyle(color: Themes.kSubHeading,),
+                        dayTextStyle: TextStyle(color: Themes.kSubHeading,),
                       ),
                       todayHighlightColor: Themes.primaryColor,
                       headerDateFormat: 'MMMM',
                       headerHeight: 0,
-                      headerStyle: const CalendarHeaderStyle(
+                      headerStyle: CalendarHeaderStyle(
                         backgroundColor: Themes.backgroundColor,
-                        textStyle: appBarStyle,
+                        textStyle: MyFonts.w500.size(20).setColor(Themes.white),
 
                       ),
                       timeSlotViewSettings: const TimeSlotViewSettings(
-                        timeTextStyle: TextStyle(color: Color.fromRGBO(135, 145, 165, 1),),
+                        timeTextStyle: TextStyle(color: Themes.kSubHeading,),
                       ),
                       allowDragAndDrop: false,
                       dataSource: MeetingDataSource(_getDataSource(
