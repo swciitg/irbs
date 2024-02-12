@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:irbs/irbs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,15 +62,6 @@ class HomePage extends StatelessWidget {
               onTap: () async {
                 SharedPreferences user = await SharedPreferences.getInstance();
 
-                //k.pal@iitg.ac.in
-                // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NDlkOTE3NTVkZDQxYWRkNjgwNzgxMWMiLCJpYXQiOjE2ODg4MTIyMDYsImV4cCI6MTY4OTY3NjIwNn0.MXtOloM4Uq_c2Yl0hlr7OwtrqZdnu3BGSI0jaQUhVNk
-
-                //b.abhinav@iitg.ac.in
-                // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGE5MWVjODllN2ZiYzU5ZWZmMzQ0ZDAiLCJpYXQiOjE2ODg4MDUwNjQsImV4cCI6MTY4OTY2OTA2NH0.tVRhkBUH-a6F8LpR0bBBDGa8Jjnd6Ovnmgdv9xGSPg8
-
-                //r.hardik@iitg.ac.in
-                // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGM3NWM4YWE2ZDE3ZWE0NTYyM2M5ODIiLCJpYXQiOjE2OTYxNzQ4MTYsImV4cCI6MTY5NzAzODgxNn0.hNdOKT4r7rdc-wCZBwnE0k6EFWkFzabJFQiSkbbdssc
-
                 await user.setString(
                     "userInfo",
                     jsonEncode({
@@ -84,7 +74,7 @@ class HomePage extends StatelessWidget {
 
 
                 await user.setString("accessToken",
-                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGM3NWM4YWE2ZDE3ZWE0NTYyM2M5ODIiLCJpYXQiOjE2OTYxNzQ4MTYsImV4cCI6MTY5NzAzODgxNn0.hNdOKT4r7rdc-wCZBwnE0k6EFWkFzabJFQiSkbbdssc");
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGMyNDE5ODRhYTU5ZGM4OTQzYzgyNGMiLCJpYXQiOjE3MDcyNTA1OTYsImV4cCI6MTcwODExNDU5Nn0.TPIANeU8SQIo7dC07jU0FW4loLnkURRMo1jmAp1W54k");
 
                 if (!context.mounted) return;
                 Navigator.of(context).push(

@@ -15,6 +15,7 @@ dependencies:
   provider: ^6.0.5
   lottie: ^2.4.0  
   fluttertoast: ^8.2.2
+  calendar_view: ^1.0.4
   syncfusion_flutter_calendar: ^20.3.60
   syncfusion_flutter_datepicker: ^20.3.60
   carousel_slider: ^4.2.1

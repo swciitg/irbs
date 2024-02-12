@@ -9,7 +9,6 @@ import '../widgets/roomBookingDetails/calendar.dart';
 import '../widgets/roomBookingDetails/request_modal.dart';
 import '../widgets/shimmer/room_booking_details_shimmer.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../globals/colors.dart';
 import 'package:intl/intl.dart';
 import '../widgets/roomBookingDetails/upcoming_booking_widget.dart';
@@ -27,7 +26,6 @@ class RoomBookingDetails extends StatefulWidget {
 }
 
 class _RoomBookingDetailsState extends State<RoomBookingDetails> {
-  CalendarView view = CalendarView.month;
   late Future getRoomBookings;
 
   TextEditingController dateCtl = TextEditingController();
@@ -44,7 +42,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
       getRoomBookings = APIService().getBookingsForCalendar(
         roomId: widget.room.id,
         month: DateTime.now().month,
-        year: DateTime.now().year.toString()
+        year: DateTime.now().year
       );
     });    
   }
@@ -55,7 +53,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
     getRoomBookings = APIService().getBookingsForCalendar(
       roomId: widget.room.id,
       month: DateTime.now().month,
-      year: DateTime.now().year.toString()
+      year: DateTime.now().year
     );
   }
 
@@ -209,7 +207,9 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                   height: 0.5,
                   color: Themes.white.withOpacity(0.2),
                 ),
-                Expanded(child: Calendar(roomId: widget.room.id,),),
+                Expanded(
+                  child: Calendar(roomId: widget.room.id,),
+                ),
               ]
             );
           }

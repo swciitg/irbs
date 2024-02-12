@@ -190,17 +190,29 @@ class APIService {
   Future<List<BookingModel>> getBookingsForCalendar({
     required String roomId,
     required int month,
-    required String year
+    required int year
   })async{
+
+    //get current month bookings
     List<BookingModel> bookings = await getMonthWiseRoomBookings(
         roomId: roomId,
         month: month.toString(),
-        year: year
+        year: year.toString(),
     );
+
+    //get next month bookings
+
+
+    //in case current month is december, we need to change the year of next month
+    if(month == 11)
+      {
+        year = year+1;
+      }
+
     List<BookingModel> nextMonthBookings = await getMonthWiseRoomBookings(
         roomId: roomId,
         month: (month+1).toString(),
-        year: year
+        year: year.toString()
     );
 
     bookings.addAll(nextMonthBookings);
