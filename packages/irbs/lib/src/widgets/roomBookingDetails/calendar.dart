@@ -3,6 +3,7 @@ import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
+import 'package:irbs/src/globals/my_fonts.dart';
 import '../../globals/colors.dart';
 import '../../store/common_store.dart';
 import '../shimmer/calendar_shimmer.dart';
@@ -53,7 +54,9 @@ class _CalendarState extends State<Calendar> {
             return cs.pending > 0
                 ? FutureBuilder(
                     future: APIService().getBookingsForCalendar(
-                        roomId: widget.roomId, month: currentMonth, year: currentYear),
+                        roomId: widget.roomId,
+                        month: currentMonth,
+                        year: currentYear),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
                         return const CalendarShimmer();
@@ -64,58 +67,85 @@ class _CalendarState extends State<Calendar> {
                       } else {
                         ctrl.addAll(getEvents(snapshot.data!));
                         return WeekView(
+                          weekNumberBuilder: (date) {
+                            return Container();
+                          },
+                          hourIndicatorSettings: const HourIndicatorSettings(
+                              color: Themes.subHeadingColor, height: 0.7),
+                          timeLineBuilder: (date) {
+                            return Padding(
+                              padding: const EdgeInsets.only(left: 3.0),
+                              child: Text(
+                                DateFormat('hh a').format(date),
+                                style: MyFonts.w500
+                                    .setColor(Themes.subHeadingColor),
+                              ),
+                            );
+                          },
+                          weekDayBuilder: (date) {
+                            return Column(
+                              children: [
+                                Text(
+                                  DateFormat('EEEE')
+                                      .format(date)
+                                      .substring(0, 3),
+                                  style: MyFonts.w500
+                                      .setColor(Themes.subHeadingColor),
+                                ),
+                                Text(
+                                  date.day.toString(),
+                                  style: MyFonts.w500
+                                      .setColor(Themes.subHeadingColor),
+                                ),
+                              ],
+                            );
+                          },
                           headerStyle: const HeaderStyle(
-                            headerTextStyle: TextStyle(
-                              color: Themes.kSubHeading,
-                            ),
-                            leftIcon: Icon(
-                              Icons.chevron_left,
-                              color: Themes.subHeadingColor,
-                            ),
+                              headerTextStyle: TextStyle(
+                                color: Themes.white,
+                              ),
+                              leftIcon: Icon(
+                                Icons.chevron_left,
+                                color: Themes.white,
+                              ),
                               rightIcon: Icon(
                                 Icons.chevron_right,
-                                color: Themes.subHeadingColor,
+                                color: Themes.white,
                               ),
-                            decoration: BoxDecoration(
-                              color: Themes.calenderBgColor
-                            )
-                          ),
+                              decoration:
+                                  BoxDecoration(color: Themes.calenderBgColor)),
                           backgroundColor: Themes.calenderBgColor,
                           controller: ctrl,
-                          onPageChange: (date, index){
-                            if(currentMonth != date.month)
-                              {
-                                print("called setstate");
-                                setState(() {
-                                  currentMonth = date.month;
-                                  currentYear = date.year;
-                                });
-                              }
+                          onPageChange: (date, index) {
+                            if (currentMonth != date.month) {
+                              print("called setstate");
+                              setState(() {
+                                currentMonth = date.month;
+                                currentYear = date.year;
+                              });
+                            }
                           },
-                          showLiveTimeLineInAllDays:
-                              true, // To display live time line in all pages in week view.
-                          //width: 400, // width of week view.
                           minDay: DateTime(2023),
                           maxDay: DateTime(2050),
                           onEventTap: (events, date) {
-                            Navigator.push(context,
-                                          MaterialPageRoute(builder: (context)=>   BookingDetails(
-                                            booking: BookingModel.fromJson(jsonDecode(events.first.description)),
-                                          )
-                                          ));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BookingDetails(
+                                          booking: BookingModel.fromJson(
+                                              jsonDecode(
+                                                  events.first.description)),
+                                        )));
                           },
                           initialDay: DateTime.now().toLocal(),
-                          heightPerMinute:
-                              0.6, // height occupied by 1 minute time span.
-                          startDay: WeekDays
-                              .monday, // To change the first day of the week.
+                          startDay: WeekDays.sunday,
                         );
                       }
                     },
                   )
                 : Container();
           }),
-        ),
+        )
       ],
     );
   }

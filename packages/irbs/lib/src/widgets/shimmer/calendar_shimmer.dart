@@ -16,7 +16,6 @@ class CalendarShimmer extends StatelessWidget {
         controller: EventController(),
         showLiveTimeLineInAllDays:
         true, // To display live time line in all pages in week view.
-        width: 400, // width of week view.
         minDay: DateTime(2023),
         maxDay: DateTime(2050),
         initialDay: DateTime.now().toLocal(),
