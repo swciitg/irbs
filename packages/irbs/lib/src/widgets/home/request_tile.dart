@@ -102,9 +102,11 @@ class _RequestTileState extends State<RequestTile> {
                   ),
                   Container(
                     height: 12*screenWidth/360,
+                    width: 100*screenWidth/360,
                     alignment: Alignment.centerLeft,
                     child: Text(
                       widget.bookingData.bookingPurpose,
+                      overflow: TextOverflow.ellipsis,
                       style: MyFonts.w400.size(12).setColor(Themes.permanentTextColor).setHeight(1.33).letterSpace(0.4).copyWith(
                           fontSize: 10*screenWidth/360, color: Themes.white60,
                           height: 1

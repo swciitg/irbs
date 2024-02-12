@@ -219,26 +219,26 @@ class _RespondDialogueState extends State<RespondDialogue> {
                         ),
                       ],
                     ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    RichText(
+                      text: TextSpan(
                       children: [
-                        Text(
-                          'Purpose - ',
+                        TextSpan(
+                          text: 'Purpose - ',
                           // style: kDialogPurposeStyle,
                           style: MyFonts.w500
                               .size(11)
                               .setColor(Themes.iconColor)
                               .letterSpace(0.5),
                         ),
-                        Text(
-                          widget.bookingData.bookingPurpose,
+                        TextSpan(
+                          text: widget.bookingData.bookingPurpose,
                           // style: kDialogTimeStyle
                           style: MyFonts.w500
                               .size(11)
                               .setColor(Themes.roomHeadingColor)
                               .letterSpace(0.5),
                         ),
-                      ],
+                      ],)
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
