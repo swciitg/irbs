@@ -134,7 +134,7 @@ class _CalendarState extends State<Calendar> {
                                     builder: (context) => BookingDetails(
                                           booking: BookingModel.fromJson(
                                               jsonDecode(
-                                                  events.first.description)),
+                                                  events.first.description!)),
                                         )));
                           },
                           initialDay: DateTime.now().toLocal(),
