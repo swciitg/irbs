@@ -9,11 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^1.1.6
+  flutter_svg: ^2.0.10+1
   intl: ^0.18.1
   mobx: ^2.2.0
   provider: ^6.0.5
-  lottie: ^2.4.0  
+  lottie: ^2.4.0
   fluttertoast: ^8.2.2
   calendar_view: ^1.0.4
   syncfusion_flutter_calendar: ^20.3.60
