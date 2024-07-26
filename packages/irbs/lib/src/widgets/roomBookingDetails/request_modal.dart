@@ -1,22 +1,26 @@
 import 'dart:convert';
+
+import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:irbs/src/functions/format_time.dart';
+import 'package:provider/provider.dart';
+
+import '../../globals/colors.dart';
 import '../../globals/my_fonts.dart';
+import '../../globals/styles.dart';
+import '../../models/room_model.dart';
 import '../../services/api.dart';
 import '../../store/data_store.dart';
 import '../../store/room_detail_store.dart';
 import '../roomBookingDetails/booking_success_dailogue.dart';
-import 'package:provider/provider.dart';
-import '../../functions/format_time.dart';
-import '../../globals/colors.dart';
-import '../../globals/styles.dart';
-import '../../models/room_model.dart';
 import 'datepicker_color.dart';
 
 class RequestModal extends StatefulWidget {
   final RoomModel room;
   final BuildContext rootContext;
+
   const RequestModal(
       {super.key, required this.room, required this.rootContext});
 
@@ -27,12 +31,13 @@ class RequestModal extends StatefulWidget {
 class _RequestModalState extends State<RequestModal>
     with SingleTickerProviderStateMixin {
   TextEditingController dateCtl = TextEditingController();
-  TextEditingController timeCtl = TextEditingController();
+  TextEditingController fromTimeCtl = TextEditingController();
+  TextEditingController toTimeCtl = TextEditingController();
   TextEditingController purposeCtl = TextEditingController();
   TextEditingController nameCtl = TextEditingController();
   DateTime? pickedDate;
-  TimeOfDay? res;
-  TimeOfDay? res1;
+  TimeOfDay? fromTime;
+  TimeOfDay? toTime;
   bool isLoading = false;
   final _formKey = GlobalKey<FormState>();
 
@@ -154,63 +159,94 @@ class _RequestModalState extends State<RequestModal>
               const SizedBox(
                 height: 12,
               ),
-              TextFormField(
-                  controller: timeCtl,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Enter time';
-                    }
-                    return null;
-                  },
-                  style: MyFonts.w500.size(14).setColor(Themes.white),
-                  decoration: textFieldDecoration.copyWith(
-                    labelText: 'Time',
-                    labelStyle: MyFonts.w400
-                        .size(12)
-                        .letterSpace(0.4)
-                        .setHeight(1.33)
-                        .setColor(Themes.permanentTextColor),
-                    prefixIconColor: Themes.white,
-                    prefixIcon: const ImageIcon(
-                      AssetImage('packages/irbs/assets/images/clock_icon.png'),
-                      color: Themes.white,
-                    ),
-                  ),
-                  readOnly: true,
-                  onTap: () async {
-                    String text = '';
-                    res = await showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.now(),
-                      helpText: 'SELECT FROM TIME',
-                      builder: (context, child) => IRBSDatePicker(
-                        child: child,
-                      ),
-                    );
-                    if (res != null) {
-                      String formattedTime = res.toString().substring(10, 15);
-                      if (formattedTime[0] == '0' &&
-                          formattedTime[1].compareTo('8') < 0) {
-                        Fluttertoast.showToast(
-                            msg:
-                                'You cannot book after 12:00 AM and before 8:00 AM',
-                            backgroundColor: Themes.modalToastBgColor);
-
-                        setState(() {
-                          text = '';
-                        });
-                      } else {
-                        setState(() {
-                          text = formattedTime;
-                        });
-                      }
-                    }
-                    if (!mounted) return;
-                    res1 = (text == '')
-                        ? null
-                        : await showTimePicker(
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                        controller: fromTimeCtl,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Enter From-Time';
+                          }
+                          return null;
+                        },
+                        style: MyFonts.w500.size(14).setColor(Themes.white),
+                        decoration: textFieldDecoration.copyWith(
+                          labelText: 'From',
+                          labelStyle: MyFonts.w400
+                              .size(12)
+                              .letterSpace(0.4)
+                              .setHeight(1.33)
+                              .setColor(Themes.permanentTextColor),
+                          prefixIconColor: Themes.white,
+                          prefixIcon: const ImageIcon(
+                            AssetImage(
+                                'packages/irbs/assets/images/clock_icon.png'),
+                            color: Themes.white,
+                          ),
+                        ),
+                        readOnly: true,
+                        onTap: () async {
+                          fromTime = await showTimePicker(
                             context: context,
-                            initialTime: res!,
+                            initialTime: TimeOfDay.now(),
+                            helpText: 'SELECT FROM TIME',
+                            builder: (context, child) => IRBSDatePicker(
+                              child: child,
+                            ),
+                          );
+                          if (fromTime != null) {
+                            if (fromTime!.getTotalMinutes < 480) {
+                              setState(() {
+                                fromTimeCtl.text = '';
+                                fromTime = null;
+                              });
+                              Fluttertoast.showToast(
+                                  msg:
+                                      'You cannot book between 12:00 AM and 8:00 AM',
+                                  backgroundColor: Themes.modalToastBgColor);
+                            } else {
+                              fromTimeCtl.text = time24to12Format(
+                                  fromTime.toString().substring(10, 15));
+                            }
+                          }
+                        }),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: TextFormField(
+                        controller: toTimeCtl,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Enter To-Time';
+                          }
+                          return null;
+                        },
+                        style: MyFonts.w500.size(14).setColor(Themes.white),
+                        decoration: textFieldDecoration.copyWith(
+                          labelText: 'To',
+                          labelStyle: MyFonts.w400
+                              .size(12)
+                              .letterSpace(0.4)
+                              .setHeight(1.33)
+                              .setColor(Themes.permanentTextColor),
+                          prefixIconColor: Themes.white,
+                          prefixIcon: const ImageIcon(
+                            AssetImage(
+                                'packages/irbs/assets/images/clock_icon.png'),
+                            color: Themes.white,
+                          ),
+                        ),
+                        readOnly: true,
+                        onTap: () async {
+                          if (fromTime == null) {
+                            Fluttertoast.showToast(
+                                msg: 'From Time not selected!',
+                                backgroundColor: Themes.modalToastBgColor);
+                          }
+                          toTime = await showTimePicker(
+                            context: context,
+                            initialTime: fromTime!,
                             helpText: 'SELECT TO TIME',
                             // routeSettings: RouteSettings(),
                             builder: (context, child) => IRBSDatePicker(
@@ -218,40 +254,27 @@ class _RequestModalState extends State<RequestModal>
                             ),
                           );
 
-                    if (res1 != null) {
-                      String formattedTime = res1.toString().substring(10, 15);
-                      if (formattedTime[0] == '0' &&
-                          formattedTime[1].compareTo('8') < 0) {
-                        Fluttertoast.showToast(
-                            msg:
-                                'You cannot book after 12:00 AM and before 8:00 AM',
-                            backgroundColor: Themes.modalToastBgColor);
-                        setState(() {
-                          text = '';
-                          timeCtl.text = '';
-                          res1 = null;
-                          res = null;
-                        });
-                      } else if (formattedTime.compareTo(text) <= 0) {
-                        Fluttertoast.showToast(
-                            msg: 'Please Enter a Valid Time Range',
-                            backgroundColor: Themes.modalToastBgColor);
-                        setState(() {
-                          timeCtl.text = '';
-                          res = null;
-                          res1 = null;
-                        });
-                      } else {
-                        setState(() {
-                          timeCtl.text =
-                              "${time24to12Format(text)} - ${time24to12Format(formattedTime)}";
-                        });
-                      }
-                    }
-                  }),
-              const SizedBox(
-                height: 16,
+                          if (toTime != null) {
+                            if (fromTime!.getTotalMinutes >=
+                                toTime!.getTotalMinutes) {
+                              Fluttertoast.showToast(
+                                  msg: 'Please Enter a Valid Time Range',
+                                  backgroundColor: Themes.modalToastBgColor);
+                              setState(() {
+                                toTimeCtl.text = '';
+                                toTime = null;
+                              });
+                            } else {
+                              final formattedTime =
+                                  toTime.toString().substring(10, 15);
+                              toTimeCtl.text = time24to12Format(formattedTime);
+                            }
+                          }
+                        }),
+                  ),
+                ],
               ),
+              const SizedBox(height: 16),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -294,13 +317,13 @@ class _RequestModalState extends State<RequestModal>
                         return;
                       }
                       var inTime = DateTime(pickedDate!.year, pickedDate!.month,
-                          pickedDate!.day, res!.hour, res!.minute);
+                          pickedDate!.day, fromTime!.hour, fromTime!.minute);
                       var outTime = DateTime(
                           pickedDate!.year,
                           pickedDate!.month,
                           pickedDate!.day,
-                          res1!.hour,
-                          res1!.minute);
+                          toTime!.hour,
+                          toTime!.minute);
                       if (inTime.isBefore(DateTime.now())) {
                         Fluttertoast.showToast(
                             msg: "Start time has passed",
@@ -353,16 +376,19 @@ class _RequestModalState extends State<RequestModal>
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: isLoading
-                        ? Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Row(
-                      children: [
-                          Expanded(child: Container(),),
-                          CircularProgressIndicator(),
-                          Expanded(child: Container(),),
-                      ],
-                    ),
-                        )
+                        ? const Padding(
+                            padding: EdgeInsets.all(4.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                        color: Themes.white),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
                         : Center(
                             child: Text(
                               'Send Request',
