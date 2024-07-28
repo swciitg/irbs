@@ -11,10 +11,8 @@ class NavDot extends StatefulWidget {
 }
 
 class _NavDotState extends State<NavDot> {
-
   @override
   Widget build(BuildContext context) {
-
     return AnimatedContainer(
       duration: const Duration(milliseconds: 400),
       width: widget.isActive ? 24 : 6,

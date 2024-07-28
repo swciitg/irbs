@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:onestop_kit/onestop_kit.dart';
 import '../../globals/colors.dart';
-import '../../globals/my_fonts.dart';
 
 class IRBSDatePicker extends StatefulWidget {
   final Widget? child;
@@ -16,14 +16,14 @@ class _IRBSDatePickerState extends State<IRBSDatePicker> {
     return Theme(
       data: Theme.of(context).copyWith(
         textTheme: TextTheme(
-          headlineMedium: MyFonts.w400,
-          headlineSmall: MyFonts.w400, // Selected Date landscape
-          titleLarge: MyFonts.w400, // Selected Date portrait
-          labelSmall: MyFonts.w400, // Title - SELECT DATE
-          bodyLarge: MyFonts.w400, // year gridbview picker
-          titleMedium: MyFonts.w400, // input
-          titleSmall: MyFonts.w400, // month/year picker
-          bodySmall: MyFonts.w400, // days
+          headlineMedium: OnestopFonts.w400,
+          headlineSmall: OnestopFonts.w400, // Selected Date landscape
+          titleLarge: OnestopFonts.w400, // Selected Date portrait
+          labelSmall: OnestopFonts.w400, // Title - SELECT DATE
+          bodyLarge: OnestopFonts.w400, // year gridbview picker
+          titleMedium: OnestopFonts.w400, // input
+          titleSmall: OnestopFonts.w400, // month/year picker
+          bodySmall: OnestopFonts.w400, // days
         ),
         colorScheme: const ColorScheme.dark(
           primary: Themes.datePickerPrimaryColor,
@@ -35,7 +35,7 @@ class _IRBSDatePickerState extends State<IRBSDatePicker> {
               backgroundColor: Themes.datePickerSurfaceColor, // button
               foregroundColor: Themes.primaryColor,
               elevation: 0,
-              textStyle: MyFonts.w400),
+              textStyle: OnestopFonts.w400),
         ),
       ),
       child: widget.child!,

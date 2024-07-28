@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onestop_kit/onestop_kit.dart';
 import '../../functions/launch_phone.dart';
 import '../../globals/colors.dart';
-import '../../globals/my_fonts.dart';
+
 import '../../models/room_model.dart';
 import '../../store/data_store.dart';
 import 'edit_member_dailogue.dart';
@@ -44,8 +45,7 @@ class _MemberTileState extends State<MemberTile> {
         }
       }
       if (!foundName) name = widget.room.owner[widget.index];
-      if (widget.room.owner[widget.index] ==
-          DataStore.userData['outlookEmail']) {
+      if (widget.room.owner[widget.index] == DataStore.userData['outlookEmail']) {
         isMyself = true;
       }
     } else {
@@ -58,8 +58,9 @@ class _MemberTileState extends State<MemberTile> {
         }
       }
       if (!foundName) name = widget.room.allowedUsers[widget.index];
-      if (widget.room.allowedUsers[widget.index] ==
-          DataStore.userData['outlookEmail']) isMyself = true;
+      if (widget.room.allowedUsers[widget.index] == DataStore.userData['outlookEmail']) {
+        isMyself = true;
+      }
     }
   }
 
@@ -68,9 +69,7 @@ class _MemberTileState extends State<MemberTile> {
     return Container(
       height: 54,
       padding: const EdgeInsets.fromLTRB(16, 8, 0, 10),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
-          color: Themes.tileColor),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: Themes.tileColor),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -81,11 +80,15 @@ class _MemberTileState extends State<MemberTile> {
             children: [
               Text(
                 name,
-                style: MyFonts.w500.size(14).setColor(Themes.white),
+                style: OnestopFonts.w500.size(14).setColor(Themes.white),
               ),
               Text(
                 widget.isPersonAdmin ? 'Admin' : 'Member',
-                style: MyFonts.w400.size(10).setColor(Themes.white).setHeight(1.2).letterSpace(0.1),
+                style: OnestopFonts.w400
+                    .size(10)
+                    .setColor(Themes.white)
+                    .setHeight(1.2)
+                    .letterSpace(0.1),
               )
             ],
           )),
@@ -103,8 +106,7 @@ class _MemberTileState extends State<MemberTile> {
           ),
           if (widget.isAdmin && !isMyself)
             Theme(
-              data: Theme.of(context)
-                  .copyWith(cardColor: Themes.tileColor),
+              data: Theme.of(context).copyWith(cardColor: Themes.tileColor),
               child: PopupMenuButton(
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -115,22 +117,17 @@ class _MemberTileState extends State<MemberTile> {
                   color: Themes.white,
                 ),
                 itemBuilder: (ctx) => [
-                  buildPopupMenuItem(
-                      widget.isPersonAdmin
-                          ? "Change to Member"
-                          : 'Change to Admin',
-                      'packages/irbs/assets/images/edit.svg',
-                      1),
-                  buildPopupMenuItem("Remove",
-                      'packages/irbs/assets/images/removeCross.svg', 2)
+                  buildPopupMenuItem(widget.isPersonAdmin ? "Change to Member" : 'Change to Admin',
+                      'packages/irbs/assets/images/edit.svg', 1),
+                  buildPopupMenuItem("Remove", 'packages/irbs/assets/images/removeCross.svg', 2)
                 ],
                 onSelected: (value) async {
-                    showEditMemberDialogue(
-                        rootContext: context,
-                        room: widget.room,
-                        index: widget.index,
-                        isPersonAdmin: widget.isPersonAdmin,
-                        type: value == 1? "change": "remove");
+                  showEditMemberDialogue(
+                      rootContext: context,
+                      room: widget.room,
+                      index: widget.index,
+                      isPersonAdmin: widget.isPersonAdmin,
+                      type: value == 1 ? "change" : "remove");
                 },
               ),
             ),
@@ -157,7 +154,8 @@ PopupMenuItem buildPopupMenuItem(String title, String iconAddress, int val) {
         ),
         Text(
           title,
-          style: MyFonts.w400.size(12).setColor(Themes.white).setHeight(1.219).letterSpace(0.1),
+          style:
+              OnestopFonts.w400.size(12).setColor(Themes.white).setHeight(1.219).letterSpace(0.1),
         ),
       ],
     ),

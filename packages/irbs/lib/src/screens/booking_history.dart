@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:onestop_kit/onestop_kit.dart';
 import 'package:provider/provider.dart';
 import '../globals/colors.dart';
-import '../globals/my_fonts.dart';
 import '../models/booking_model.dart';
 import '../services/api.dart';
 import '../store/common_store.dart';
@@ -28,7 +28,7 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
         centerTitle: true,
         title: Text(
           'Booking History',
-          style: MyFonts.w500.size(20).setColor(Themes.white),
+          style: OnestopFonts.w500.size(20).setColor(Themes.white),
         ),
         backgroundColor: Themes.tileColor,
       ),
@@ -42,18 +42,14 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    SizedBox(
-                        width: 130, child: CustomDropDown(hintText: 'Month')),
-                    SizedBox(
-                        width: 130, child: CustomDropDown(hintText: 'Year')),
+                    SizedBox(width: 130, child: CustomDropDown(hintText: 'Month')),
+                    SizedBox(width: 130, child: CustomDropDown(hintText: 'Year')),
                   ],
                 ),
               ),
-
               Observer(builder: (context) {
                 return FutureBuilder(
-                  future: APIService()
-                      .getBookingHistory(month: store.month, year: store.year),
+                  future: APIService().getBookingHistory(month: store.month, year: store.year),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
                       return const UpcomingBookingShimmer(number: 8);
@@ -69,7 +65,6 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
                         children: [
                           ListView.builder(
                               padding: const EdgeInsets.all(0),
-
                               shrinkWrap: true,
                               itemCount: currentBooking.length,
                               physics: const NeverScrollableScrollPhysics(),

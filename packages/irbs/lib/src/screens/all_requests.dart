@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:onestop_kit/onestop_kit.dart';
 import 'package:provider/provider.dart';
 import '../globals/colors.dart';
-import '../globals/my_fonts.dart';
 import '../models/booking_model.dart';
 import '../services/api.dart';
 import '../store/common_store.dart';
@@ -31,7 +31,7 @@ class PendingRequestsScreen extends StatelessWidget {
         ),
         title: Text(
           "Pending Requests",
-          style: MyFonts.w500.size(20).setColor(Themes.white),
+          style: OnestopFonts.w500.size(20).setColor(Themes.white),
         ),
         backgroundColor: Themes.tileColor,
       ),
@@ -47,7 +47,6 @@ class PendingRequestsScreen extends StatelessWidget {
                     }
                     return ListView.builder(
                       padding: const EdgeInsets.all(0),
-
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         return Center(

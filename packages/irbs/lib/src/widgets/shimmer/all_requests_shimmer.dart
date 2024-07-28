@@ -19,44 +19,40 @@ class _AllRequestsShimmerState extends State<AllRequestsShimmer> {
   @override
   Widget build(BuildContext context) {
     BookingModel booking = BookingModel(
-      roomId: 'roomId', 
-      user: 'user', 
-      status: 'status', 
-      inTime: DateTime.now().toString(), 
-      outTime: DateTime.now().toString(), 
-      bookingPurpose: 'bookingPurpose', 
-      createdAt: DateTime.now().toString(), 
+      roomId: 'roomId',
+      user: 'user',
+      status: 'status',
+      inTime: DateTime.now().toString(),
+      outTime: DateTime.now().toString(),
+      bookingPurpose: 'bookingPurpose',
+      createdAt: DateTime.now().toString(),
       roomDetails: RoomDetailsModel(
-        owner: ['owner'], 
-        roomName: 'roomName', 
-        allowedUsers: ['allowedUsers'], 
-        roomType: 'roomType', 
-        roomCapacity: 10
-      ), 
-      id: ' id', 
-      userInfo: OwnerInfo(
-        name: 'name', 
-        email: 'email', 
-        rollNo: 'rollNo'
-      ),
+          owner: ['owner'],
+          roomName: 'roomName',
+          allowedUsers: ['allowedUsers'],
+          roomType: 'roomType',
+          roomCapacity: 10),
+      id: ' id',
+      userInfo: OwnerInfo(name: 'name', email: 'email', rollNo: 'rollNo'),
     );
-      
+
     return Shimmer.fromColors(
       highlightColor: Themes.allRequestShimmerHighlight,
       baseColor: Themes.allRequestShimmerBase,
       child: ListView.builder(
           padding: const EdgeInsets.all(0),
-
           itemCount: 5,
-        itemBuilder: (context, index) {
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: RequestTile(bookingData: booking, commonStore: CommonStore(),),
-            ),
-          );
-        }
-      ),
+          itemBuilder: (context, index) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: RequestTile(
+                  bookingData: booking,
+                  commonStore: CommonStore(),
+                ),
+              ),
+            );
+          }),
     );
   }
 }

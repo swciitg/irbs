@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:onestop_kit/onestop_kit.dart';
 import 'package:provider/provider.dart';
 import '../globals/colors.dart';
 import '../models/booking_model.dart';
-import '../globals/my_fonts.dart';
+
 import '../store/room_detail_store.dart';
 import '../widgets/home/current_bookings_widget.dart';
 import '../widgets/home/empty_sate.dart';
@@ -25,7 +26,7 @@ class _UpcomingBookingsScreenState extends State<UpcomingBookingsScreen> {
         centerTitle: true,
         title: Text(
           'Upcoming Booking',
-          style: MyFonts.w500.size(20).setColor(Colors.white) ,
+          style: OnestopFonts.w500.size(20).setColor(Colors.white),
         ),
         backgroundColor: Themes.tileColor,
       ),

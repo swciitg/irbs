@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:onestop_kit/onestop_kit.dart';
 import 'package:provider/provider.dart';
 import '../../functions/snackbar.dart';
 import '../../globals/colors.dart';
-import '../../globals/my_fonts.dart';
 import '../../models/room_model.dart';
 import '../../services/api.dart';
 import '../../store/room_detail_store.dart';
@@ -29,8 +29,7 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
     super.initState();
     roomNameCtl.text = widget.data.roomName;
     capacityCtl.text = widget.data.roomCapacity.toString();
-    instructionCtl.text =
-        widget.data.instructions == null ? '' : widget.data.instructions!;
+    instructionCtl.text = widget.data.instructions == null ? '' : widget.data.instructions!;
   }
 
   @override
@@ -52,7 +51,7 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
         ),
         title: Text(
           "IRBS",
-          style: MyFonts.w500.size(20).setColor(Themes.white),
+          style: OnestopFonts.w500.size(20).setColor(Themes.white),
         ),
         backgroundColor: Themes.tileColor,
       ),
@@ -65,18 +64,15 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  EditRoomTextField(
-                      title: 'Room Name', controller: roomNameCtl),
+                  EditRoomTextField(title: 'Room Name', controller: roomNameCtl),
                   const SizedBox(
                     height: 16,
                   ),
-                  EditRoomTextField(
-                      title: 'Room Capacity', controller: capacityCtl),
+                  EditRoomTextField(title: 'Room Capacity', controller: capacityCtl),
                   const SizedBox(
                     height: 16,
                   ),
-                  EditRoomTextField(
-                      title: "Instructions", controller: instructionCtl),
+                  EditRoomTextField(title: "Instructions", controller: instructionCtl),
                 ],
               ),
             ),
@@ -93,10 +89,7 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
                     gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [
-                      Themes.gradientBackgroundColor,
-                      Themes.backgroundColor
-                    ])),
+                        colors: [Themes.gradientBackgroundColor, Themes.backgroundColor])),
               ),
               Container(
                 color: Themes.backgroundColor,
@@ -137,7 +130,7 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
                       child: Center(
                           child: Text(
                         'Save Details',
-                            style: MyFonts.w700.size(16),
+                        style: OnestopFonts.w700.size(16),
                       ))),
                 ),
               ),

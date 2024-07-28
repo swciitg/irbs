@@ -38,14 +38,9 @@ class _PendingRequestShimmerState extends State<PendingRequestShimmer> {
                       bookingPurpose: ' bookingPurpose',
                       createdAt: 'createdAt',
                       roomDetails: RoomDetailsModel(
-                          owner: [],
-                          roomName: '',
-                          allowedUsers: [],
-                          roomType: '',
-                          roomCapacity: 1),
+                          owner: [], roomName: '', allowedUsers: [], roomType: '', roomCapacity: 1),
                       id: ' id',
-                      userInfo: OwnerInfo(
-                          name: '', email: '', phoneNumber: 1, rollNo: '')),
+                      userInfo: OwnerInfo(name: '', email: '', phoneNumber: 1, rollNo: '')),
                 ),
               ),
               Padding(
@@ -61,14 +56,9 @@ class _PendingRequestShimmerState extends State<PendingRequestShimmer> {
                       bookingPurpose: ' bookingPurpose',
                       createdAt: 'createdAt',
                       roomDetails: RoomDetailsModel(
-                          owner: [],
-                          roomName: '',
-                          allowedUsers: [],
-                          roomType: '',
-                          roomCapacity: 1),
+                          owner: [], roomName: '', allowedUsers: [], roomType: '', roomCapacity: 1),
                       id: ' id',
-                      userInfo: OwnerInfo(
-                          name: '', email: '', phoneNumber: 1, rollNo: '')),
+                      userInfo: OwnerInfo(name: '', email: '', phoneNumber: 1, rollNo: '')),
                 ),
               ),
             ],
