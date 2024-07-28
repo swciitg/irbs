@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import '../functions/snackbar.dart';
 import '../globals/endpoints.dart';
 import '../models/booking_model.dart';
@@ -13,13 +14,11 @@ class APIService {
       headers: Endpoints.getHeader()));
 
   APIService() {
-    dio.interceptors
-        .add(InterceptorsWrapper(onRequest: (options, handler) async {
+    dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) async {
       // print("THIS IS TOKEN");
       // print(await AuthUserHelpers.getAccessToken());
       // print(options.path);
-      options.headers["Authorization"] =
-      "Bearer ${await AuthUserHelpers.getAccessToken()}";
+      options.headers["Authorization"] = "Bearer ${await AuthUserHelpers.getAccessToken()}";
       handler.next(options);
     }, onError: (error, handler) async {
       var response = error.response;
@@ -28,14 +27,12 @@ class APIService {
           showSnackBar("Login to continue!!");
         } else {
           // print(response.requestOptions.path);
-          bool couldRegenerate =
-          await AuthUserHelpers().regenerateAccessToken();
+          bool couldRegenerate = await AuthUserHelpers().regenerateAccessToken();
           // print(couldRegenerate);
           // ignore: use_build_context_synchronously
           if (couldRegenerate) {
             // retry
-            return handler
-                .resolve(await AuthUserHelpers().retryRequest(response));
+            return handler.resolve(await AuthUserHelpers().retryRequest(response));
           } else {
             showSnackBar("Your session has expired!! Login again.");
           }
@@ -52,25 +49,21 @@ class APIService {
     }));
   }
 
-  Future<List<BookingModel>> getOwnedRoomBookings()async{
+  Future<List<BookingModel>> getOwnedRoomBookings() async {
     try {
-      Response res = await dio.get(
-        '${Endpoints.baseUrl}${Endpoints.getOwnedRoomBookings}',
-        queryParameters: {
-          'status': 'requested'
-        }
-      );
+      Response res = await dio.get('${Endpoints.baseUrl}${Endpoints.getOwnedRoomBookings}',
+          queryParameters: {'status': 'requested'});
 
-      if(res.statusCode == 200){
+      if (res.statusCode == 200) {
         List<BookingModel> bookings = [];
-        for(var booking in res.data){
+        for (var booking in res.data) {
           bookings.add(BookingModel.fromJson(booking));
         }
         return bookings;
-      }else{
+      } else {
         throw Exception(res.statusMessage);
       }
-    }catch(e){
+    } catch (e) {
       throw Exception(e.toString());
     }
   }
@@ -103,117 +96,86 @@ class APIService {
     }
   }
 
-  Future<String> getRoomFromId(String roomId)async{
+  Future<String> getRoomFromId(String roomId) async {
     try {
       Response res = await dio.get('${Endpoints.getSpecificRoom}/$roomId');
 
-      if(res.statusCode == 200){
+      if (res.statusCode == 200) {
         return res.data['roomName'];
-      }
-      else{
+      } else {
         throw Exception(res.statusMessage);
       }
-    }catch(e){
+    } catch (e) {
       throw Exception(e.toString());
     }
   }
 
-  Future<List<BookingModel>> getRoomBookings(String roomId)async{
-    try{
-      Response res = await dio.get(
-          Endpoints.getRoomBookings,
-          queryParameters: {
-            'roomId': roomId
-          }
-      );
+  Future<List<BookingModel>> getRoomBookings(String roomId) async {
+    try {
+      Response res = await dio.get(Endpoints.getRoomBookings, queryParameters: {'roomId': roomId});
 
-      if(res.statusCode == 200){
+      if (res.statusCode == 200) {
         var bookingMapList = res.data;
 
         List<BookingModel> bookingList = [];
 
-        for(var booking in bookingMapList){
-          bookingList.add(
-              BookingModel.fromJson(booking)
-          );
+        for (var booking in bookingMapList) {
+          bookingList.add(BookingModel.fromJson(booking));
         }
 
         return bookingList;
-      }
-      else{
+      } else {
         throw Exception(res.statusMessage.toString());
       }
-    }catch(e){
+    } catch (e) {
       // print(e);
       throw Exception(e.toString());
     }
   }
 
-  Future<List<BookingModel>> getMonthWiseRoomBookings({
-    required String roomId,
-    required String month,
-    required String year
-  })async{
-    try{
-      Response res = await dio.get(
-          Endpoints.baseUrl + Endpoints.getRoomBookings,
-          queryParameters: {
-            'roomId': roomId,
-            'month': month,
-            'year': year
-          }
-      );
+  Future<List<BookingModel>> getMonthWiseRoomBookings(
+      {required String roomId, required String month, required String year}) async {
+    try {
+      Response res = await dio.get(Endpoints.baseUrl + Endpoints.getRoomBookings,
+          queryParameters: {'roomId': roomId, 'month': month, 'year': year});
 
-      if(res.statusCode == 200){
+      if (res.statusCode == 200) {
         var bookingMapList = res.data;
-
 
         List<BookingModel> bookingList = [];
 
-        for(var booking in bookingMapList){
-          bookingList.add(
-              BookingModel.fromJson(booking)
-          );
+        for (var booking in bookingMapList) {
+          bookingList.add(BookingModel.fromJson(booking));
         }
 
         return bookingList;
-      }
-      else{
+      } else {
         throw Exception(res.statusMessage);
       }
-    }catch(e){
+    } catch (e) {
       // print(e.toString());
       throw Exception(e.toString());
     }
   }
 
-  Future<List<BookingModel>> getBookingsForCalendar({
-    required String roomId,
-    required int month,
-    required int year
-  })async{
-
+  Future<List<BookingModel>> getBookingsForCalendar(
+      {required String roomId, required int month, required int year}) async {
     //get current month bookings
     List<BookingModel> bookings = await getMonthWiseRoomBookings(
-        roomId: roomId,
-        month: month.toString(),
-        year: year.toString(),
+      roomId: roomId,
+      month: month.toString(),
+      year: year.toString(),
     );
 
     //get next month bookings
 
-
     //in case current month is december, we need to change the year of next month
-    if(month == 11)
-      {
-        year = year+1;
-      }
+    if (month == 11) {
+      year = year + 1;
+    }
 
     List<BookingModel> nextMonthBookings = await getMonthWiseRoomBookings(
-        roomId: roomId,
-        month: (month+1).toString(),
-        year: year.toString()
-    );
+        roomId: roomId, month: (month + 1).toString(), year: year.toString());
 
     bookings.addAll(nextMonthBookings);
     bookings.removeWhere((element) => element.status == "requested");
@@ -221,11 +183,9 @@ class APIService {
   }
 
   Future<List<RoomModel>> getMyRooms() async {
-
-    try{
+    try {
       var response = await dio.get(Endpoints.getMyRooms);
-      if(response.statusCode == 200)
-      {
+      if (response.statusCode == 200) {
         var myRooms = response.data;
         List<RoomModel> ans = [];
         // print(myRooms);
@@ -251,10 +211,9 @@ class APIService {
         return "Success";
         // return BookingModel.fromJson(booking);
       } else {
-        if(response.statusCode == 400)
-          {
-            return "Invalid Slot";
-          }
+        if (response.statusCode == 400) {
+          return "Invalid Slot";
+        }
         return "Some error occured";
       }
     } catch (e) {
@@ -263,121 +222,104 @@ class APIService {
       //throw Exception(e.toString());
     }
   }
-  
-  Future<bool> rejectBooking(String bookingId, String rejectionReason)async{
-    try {
-      Response res = await dio.post(
-        Endpoints.baseUrl+Endpoints.rejectBooking,
-        data: {
-          'id': bookingId,
-          'reasonRejection': rejectionReason
-        }
-      );
 
-      if(res.statusCode == 200){
+  Future<bool> rejectBooking(String bookingId, String rejectionReason) async {
+    try {
+      Response res = await dio.post(Endpoints.baseUrl + Endpoints.rejectBooking,
+          data: {'id': bookingId, 'reasonRejection': rejectionReason});
+
+      if (res.statusCode == 200) {
         // print('Booking rejected');
         return true;
-      }else{
+      } else {
         throw Exception(res.statusMessage);
       }
-    }catch(e){
+    } catch (e) {
       throw Exception(e.toString());
     }
   }
 
-  Future<bool> acceptBooking(String bookingId, String instructions)async{
+  Future<bool> acceptBooking(String bookingId, String instructions) async {
     try {
       // print(instructions);
-      Response res = await dio.post(
-        Endpoints.baseUrl+Endpoints.acceptBooking,
-        data: {
-          'id': bookingId,
-          'acceptInstructions': instructions == ""? "NONE": instructions
-        }
-      );
+      Response res = await dio.post(Endpoints.baseUrl + Endpoints.acceptBooking, data: {
+        'id': bookingId,
+        'acceptInstructions': instructions == "" ? "NONE" : instructions
+      });
 
-      if(res.statusCode == 200){
+      if (res.statusCode == 200) {
         // print('Booking accepted');
         return true;
-      }else{
+      } else {
         print(res);
         throw Exception(res.statusMessage);
       }
-    }catch(e){
+    } catch (e) {
       rethrow;
     }
   }
 
-  Future<List<BookingModel>> getUpcomingBokings()async{
-    try{
-      Response res = await dio.get(Endpoints.getRoomBookings, queryParameters: {
-        'isMy': true,
-        'upcoming': true
-      });
-      if(res.statusCode == 200){
+  Future<List<BookingModel>> getUpcomingBokings() async {
+    try {
+      Response res = await dio
+          .get(Endpoints.getRoomBookings, queryParameters: {'isMy': true, 'upcoming': true});
+      if (res.statusCode == 200) {
         var bookingMapList = res.data;
         List<BookingModel> currentBooking = [];
-        DateTime a =DateTime.parse("${DateTime.now().toIso8601String()}Z");
-        for(var booking in bookingMapList){
+        DateTime a = DateTime.parse("${DateTime.now().toIso8601String()}Z");
+        for (var booking in bookingMapList) {
           DateTime b = DateTime.parse(booking['outTime']);
-          if(!a.isAfter(b))
-            {
-              currentBooking.add(
-                BookingModel.fromJson(booking),
-              );
-            }
-
+          if (!a.isAfter(b)) {
+            currentBooking.add(
+              BookingModel.fromJson(booking),
+            );
+          }
         }
         sortByParameter(currentBooking, (a, b) => b.inTime.compareTo(a.inTime));
         sortByParameter(currentBooking, (a, b) => a.outTime.compareTo(b.outTime));
         return currentBooking;
-      }
-      else{
+      } else {
+        debugPrint("Error in fetching upcoming bookings");
+        debugPrint(res.statusMessage);
         throw Exception(res.statusMessage);
       }
-    }catch(e){
+    } catch (e) {
+      debugPrint("Error in fetching upcoming bookings");
+      debugPrint(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<List<BookingModel>> getBookingHistory({int month = 1, int year = 2023}) async {
+    try {
+      Response res = await dio.get(Endpoints.getRoomBookings,
+          queryParameters: {'isMy': true, 'upcoming': false, 'month': month, 'year': year});
+      if (res.statusCode == 200) {
+        var bookingMapList = res.data;
+        List<BookingModel> bookings = [];
+        DateTime a = DateTime.parse("${DateTime.now().toIso8601String()}Z");
+        for (var booking in bookingMapList) {
+          DateTime b = DateTime.parse(booking['outTime']);
+          if (a.isAfter(b)) {
+            bookings.add(
+              BookingModel.fromJson(booking),
+            );
+          }
+        }
+        sortByParameter(bookings, (a1, b1) => b1.outTime.compareTo(a1.outTime));
+        return bookings;
+      } else {
+        throw Exception(res.statusMessage);
+      }
+    } catch (e) {
       // print(e.toString());
       throw Exception(e.toString());
     }
   }
 
-  Future<List<BookingModel>> getBookingHistory({int month = 1, int year = 2023})async{
-    try{
-      Response res = await dio.get(Endpoints.getRoomBookings, queryParameters: {
-        'isMy': true,
-        'upcoming': false,
-        'month': month,
-        'year': year
-      });
-      if(res.statusCode == 200){
-        var bookingMapList = res.data;
-        List<BookingModel> bookings = [];
-        DateTime a =DateTime.parse("${DateTime.now().toIso8601String()}Z");
-        for(var booking in bookingMapList){
-          DateTime b = DateTime.parse(booking['outTime']);
-          if(a.isAfter(b))
-          {
-            bookings.add(
-              BookingModel.fromJson(booking),
-            );}
-        }
-        sortByParameter(bookings, (a1, b1) => b1.outTime.compareTo(a1.outTime));
-        return bookings;
-      }
-      else{
-        throw Exception(res.statusMessage);
-      }
-    }catch(e){
-      // print(e.toString());
-      throw Exception(e.toString());
-    }
-  }
-  
   Future<String> deleteBooking(String id) async {
     try {
-      Response response = await dio.delete(Endpoints.deleteBooking, data: {
-        "id": id
-      });
+      Response response = await dio.delete(Endpoints.deleteBooking, data: {"id": id});
       if (response.statusCode == 200) {
         // print('deleted');
         return "Success";
@@ -391,12 +333,13 @@ class APIService {
     }
   }
 
-
-  Future<String> endBooking(String id) async{
+  Future<String> endBooking(String id) async {
     try {
-      Response response = await dio.patch('${Endpoints.deleteBooking}/$id', data: {
-        "outTime": DateTime.now().toString(),
-      },
+      Response response = await dio.patch(
+        '${Endpoints.deleteBooking}/$id',
+        data: {
+          "outTime": DateTime.now().toString(),
+        },
       );
       if (response.statusCode == 200) {
         // print('updated');
@@ -410,11 +353,10 @@ class APIService {
       return error.toString();
     }
   }
-  
+
   Future<RoomModel> editRoomDetails(String roomId, String details) async {
     try {
-      var response =
-      await dio.patch('${Endpoints.editRoom}/$roomId', data: details);
+      var response = await dio.patch('${Endpoints.editRoom}/$roomId', data: details);
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         var room = response.data;
@@ -438,6 +380,8 @@ class APIService {
     }
   }
 }
-void sortByParameter<BookingModel>(List<BookingModel> list, int Function(BookingModel a,BookingModel b) compare) {
+
+void sortByParameter<BookingModel>(
+    List<BookingModel> list, int Function(BookingModel a, BookingModel b) compare) {
   list.sort(compare);
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:onestop_kit/onestop_kit.dart';
 import 'package:provider/provider.dart';
 
 import '../globals/colors.dart';
-import '../globals/my_fonts.dart';
 import '../models/booking_model.dart';
 import '../models/room_model.dart';
 import '../services/api.dart';
@@ -45,9 +45,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
 
     setState(() {
       getRoomBookings = APIService().getBookingsForCalendar(
-          roomId: widget.room.id,
-          month: DateTime.now().month,
-          year: DateTime.now().year);
+          roomId: widget.room.id, month: DateTime.now().month, year: DateTime.now().year);
     });
   }
 
@@ -55,9 +53,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
   void initState() {
     super.initState();
     getRoomBookings = APIService().getBookingsForCalendar(
-        roomId: widget.room.id,
-        month: DateTime.now().month,
-        year: DateTime.now().year);
+        roomId: widget.room.id, month: DateTime.now().month, year: DateTime.now().year);
   }
 
   @override
@@ -81,16 +77,13 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
         ),
         title: Text(
           "IRBS",
-          style: MyFonts.w500.size(20).setColor(Themes.white),
+          style: OnestopFonts.w500.size(20).setColor(Themes.white),
         ),
         actions: [
           GestureDetector(
               onTap: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            const OnboardingScreen()));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (BuildContext context) => const OnboardingScreen()));
                 // Navigator.pushReplacementNamed(context, '/irbs/onboarding');
               },
               child: Padding(
@@ -145,92 +138,82 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
             } else {
               latestBookings = [allBookings[0], allBookings[1]];
             }
-            return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(left: 16),
-                    height: 60,
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: Text(
-                          widget.room.roomName,
-                          style: MyFonts.w600
-                              .size(24)
-                              .setColor(Themes.roomHeadingColor),
-                        )),
-                        GestureDetector(
-                          onTap: () {
-                            rd.setSelectedRoom(widget.room);
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RoomDetailsScreen()),
-                            );
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.only(right: 16.0),
-                            child: Icon(
-                              Icons.more_vert,
-                              color: Themes.white,
-                            ),
-                          ),
+            return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Container(
+                padding: const EdgeInsets.only(left: 16),
+                height: 60,
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Text(
+                      widget.room.roomName,
+                      style: OnestopFonts.w600.size(24).setColor(Themes.roomHeadingColor),
+                    )),
+                    GestureDetector(
+                      onTap: () {
+                        rd.setSelectedRoom(widget.room);
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => const RoomDetailsScreen()),
+                        );
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.only(right: 16.0),
+                        child: Icon(
+                          Icons.more_vert,
+                          color: Themes.white,
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Divider(
-                    height: 0.5,
-                    color: Themes.white.withOpacity(0.2),
-                  ),
-                  ExpansionTile(
-                    childrenPadding: const EdgeInsets.only(bottom: 12),
-                    title: Text(
-                      'Upcoming Bookings',
-                      style: MyFonts.w400.setColor(Themes.subHeadingColor),
-                    ),
-                    collapsedIconColor: Themes.kSubHeading,
-                    iconColor: Themes.kSubHeading,
-                    children: latestBookings
-                        .map((e) => GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            BookingDetails(booking: e)));
-                              },
-                              child: UpcomingBookingsWidget(
-                                name: e.userInfo.name ?? '',
-                                startTime: DateFormat("hh:mm a")
-                                    .format(DateTime.parse(e.inTime)),
-                                endTime: DateFormat("hh:mm a")
-                                    .format(DateTime.parse(e.outTime)),
-                                date: DateFormat("dd MMMM")
-                                    .format(DateTime.parse(e.inTime)),
-                                status: e.status == 'requested'
-                                    ? 1
-                                    : e.status == 'accepted'
-                                        ? 2
-                                        : 0,
-                              ),
-                            ))
-                        .toList(),
-                  ),
-                  Divider(
-                    height: 0.5,
-                    color: Themes.white.withOpacity(0.2),
-                  ),
-                  Expanded(
-                    child: Calendar(
-                      roomId: widget.room.id,
-                    ),
-                  ),
-                ]);
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Divider(
+                height: 0.5,
+                color: Themes.white.withOpacity(0.2),
+              ),
+              ExpansionTile(
+                childrenPadding: const EdgeInsets.only(bottom: 12),
+                title: Text(
+                  'Upcoming Bookings',
+                  style: OnestopFonts.w400.setColor(Themes.subHeadingColor),
+                ),
+                collapsedIconColor: Themes.kSubHeading,
+                iconColor: Themes.kSubHeading,
+                children: latestBookings
+                    .map((e) => GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BookingDetails(booking: e)));
+                          },
+                          child: UpcomingBookingsWidget(
+                            name: e.userInfo.name ?? '',
+                            startTime: DateFormat("hh:mm a").format(DateTime.parse(e.inTime)),
+                            endTime: DateFormat("hh:mm a").format(DateTime.parse(e.outTime)),
+                            date: DateFormat("dd MMMM").format(DateTime.parse(e.inTime)),
+                            status: e.status == 'requested'
+                                ? 1
+                                : e.status == 'accepted'
+                                    ? 2
+                                    : 0,
+                          ),
+                        ))
+                    .toList(),
+              ),
+              Divider(
+                height: 0.5,
+                color: Themes.white.withOpacity(0.2),
+              ),
+              Expanded(
+                child: Calendar(
+                  roomId: widget.room.id,
+                ),
+              ),
+            ]);
           }
         },
       ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../globals/my_fonts.dart';
+import 'package:onestop_kit/onestop_kit.dart';
+
 import '../../models/room_model.dart';
 import '../../screens/room_booking_details.dart';
 import '../../store/common_store.dart';
@@ -42,17 +43,17 @@ class _RoomTileState extends State<RoomTile> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width*0.75,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 15, bottom: 16, left: 15),
-                    child: Text(
-                      widget.room.roomName,
-                      overflow: TextOverflow.ellipsis,
-                      style: MyFonts.w500.size(14).setColor(Themes.white),
-                    ),
-                  ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.75,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15, bottom: 16, left: 15),
+                child: Text(
+                  widget.room.roomName,
+                  overflow: TextOverflow.ellipsis,
+                  style: OnestopFonts.w500.size(14).setColor(Themes.white),
                 ),
+              ),
+            ),
             //   ],
             // ),
             Observer(builder: (context) {

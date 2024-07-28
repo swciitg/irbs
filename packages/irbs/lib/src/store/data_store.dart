@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:irbs/src/models/room_model.dart';
 import 'room_detail_store.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,10 +16,10 @@ class DataStore {
     return false;
   }
 
-  Future initialiseData(BuildContext context) async {
+  Future<List<RoomModel>> initialiseData(BuildContext context) async {
     userData = {};
     var rd = context.read<RoomDetailStore>();
-    final results = await Future.wait([
+    List<dynamic> results = await Future.wait([
       rd.getMyrooms(),
       getUserData(),
       rd.getAllRooms(),

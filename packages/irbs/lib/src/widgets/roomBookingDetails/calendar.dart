@@ -3,7 +3,8 @@ import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
-import 'package:irbs/src/globals/my_fonts.dart';
+
+import 'package:onestop_kit/onestop_kit.dart';
 import '../../globals/colors.dart';
 import '../../store/common_store.dart';
 import '../shimmer/calendar_shimmer.dart';
@@ -54,9 +55,7 @@ class _CalendarState extends State<Calendar> {
             return cs.pending > 0
                 ? FutureBuilder(
                     future: APIService().getBookingsForCalendar(
-                        roomId: widget.roomId,
-                        month: currentMonth,
-                        year: currentYear),
+                        roomId: widget.roomId, month: currentMonth, year: currentYear),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
                         return const CalendarShimmer();
@@ -77,8 +76,7 @@ class _CalendarState extends State<Calendar> {
                               padding: const EdgeInsets.only(left: 3.0),
                               child: Text(
                                 DateFormat('hh a').format(date),
-                                style: MyFonts.w500
-                                    .setColor(Themes.subHeadingColor),
+                                style: OnestopFonts.w500.setColor(Themes.subHeadingColor),
                               ),
                             );
                           },
@@ -86,16 +84,12 @@ class _CalendarState extends State<Calendar> {
                             return Column(
                               children: [
                                 Text(
-                                  DateFormat('EEEE')
-                                      .format(date)
-                                      .substring(0, 3),
-                                  style: MyFonts.w500
-                                      .setColor(Themes.subHeadingColor),
+                                  DateFormat('EEEE').format(date).substring(0, 3),
+                                  style: OnestopFonts.w500.setColor(Themes.subHeadingColor),
                                 ),
                                 Text(
                                   date.day.toString(),
-                                  style: MyFonts.w500
-                                      .setColor(Themes.subHeadingColor),
+                                  style: OnestopFonts.w500.setColor(Themes.subHeadingColor),
                                 ),
                               ],
                             );
@@ -112,8 +106,7 @@ class _CalendarState extends State<Calendar> {
                                 Icons.chevron_right,
                                 color: Themes.white,
                               ),
-                              decoration:
-                                  BoxDecoration(color: Themes.calenderBgColor)),
+                              decoration: BoxDecoration(color: Themes.calenderBgColor)),
                           backgroundColor: Themes.calenderBgColor,
                           controller: ctrl,
                           onPageChange: (date, index) {
@@ -133,8 +126,7 @@ class _CalendarState extends State<Calendar> {
                                 MaterialPageRoute(
                                     builder: (context) => BookingDetails(
                                           booking: BookingModel.fromJson(
-                                              jsonDecode(
-                                                  events.first.description!)),
+                                              jsonDecode(events.first.description!)),
                                         )));
                           },
                           initialDay: DateTime.now().toLocal(),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:onestop_kit/onestop_kit.dart';
 import '../globals/colors.dart';
-import '../globals/my_fonts.dart';
 import '../globals/styles.dart';
 import '../widgets/onboarding/nav_dots.dart';
 import 'home.dart';
@@ -33,7 +33,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Themes.backgroundColor,
       body: Center(
@@ -49,7 +48,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: Text(
                     headingList[activeIndex],
                     textAlign: TextAlign.center,
-                    style: MyFonts.w700.size(28).setColor(Themes.white),
+                    style: OnestopFonts.w700.size(28).setColor(Themes.white),
                   ),
                 ),
                 Padding(
@@ -57,7 +56,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: Text(
                     textList[activeIndex],
                     textAlign: TextAlign.center,
-                    style: MyFonts.w400.size(14).setColor(Themes.white),
+                    style: OnestopFonts.w400.size(14).setColor(Themes.white),
                   ),
                 ),
               ],
@@ -88,7 +87,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           },
                           child: Text(
                             'Skip',
-                            style: MyFontsRaleway.w400.size(12).setColor(Themes.blueGrey),
+                            style: OnestopFonts.w400.size(12).setColor(Themes.blueGrey),
                           )),
                       SizedBox(
                         height: 6,
@@ -113,7 +112,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           child: Text(
                             'Next',
                             // style: textButtonStyle1,
-                            style: MyFontsRaleway.w400.size(12).setColor(Themes.white),
+                            style: OnestopFonts.w400.size(12).setColor(Themes.white),
                           ))
                     ],
                   )
@@ -124,17 +123,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       child: ElevatedButton(
                           onPressed: () {
                             Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            const HomeScreen()));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) => const HomeScreen()));
                             // Navigator.pushReplacementNamed(
                             //     context, '/irbs/home');
                           },
                           style: elevatedButtonStyle,
                           child: Text(
                             "Start Booking",
-                            style: MyFontsRaleway.w700.size(16),
+                            style: OnestopFonts.w700.size(16),
                           )),
                     ),
                   ),

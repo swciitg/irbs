@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:onestop_kit/onestop_kit.dart';
 import 'package:provider/provider.dart';
 
 import '../../globals/colors.dart';
-import '../../globals/my_fonts.dart';
+
 import '../../models/room_model.dart';
 import '../../screens/room_booking_details.dart';
 import '../../store/room_detail_store.dart';
@@ -30,11 +31,10 @@ class _CommonRoomsState extends State<CommonRooms> {
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Text(
               'Common Rooms',
-              style: MyFonts.w400.size(14).setColor(Themes.kSubHeading).letterSpace(0.5),
+              style: OnestopFonts.w400.size(14).setColor(Themes.kSubHeading).letterSpace(0.5),
             ),
           ),
         ),
-
         FutureBuilder(
             future: rd.getAllRooms(),
             builder: (context, snapshot) {
@@ -45,7 +45,7 @@ class _CommonRoomsState extends State<CommonRooms> {
               }
               return Observer(builder: (context) {
                 List<RoomModel> commonRooms = snapshot.data!['common']!;
-                count =commonRooms.length;
+                count = commonRooms.length;
                 return SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -57,17 +57,19 @@ class _CommonRoomsState extends State<CommonRooms> {
                           mainAxisSpacing: 12),
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: commonRooms.length>6 ? 6: commonRooms.length,
+                      itemCount: commonRooms.length > 6 ? 6 : commonRooms.length,
                       itemBuilder: (BuildContext context, int index) {
-                        if(index==6) return const GridWidget(name: "View All");
-                        return  GridWidget(name: commonRooms[index].roomName,room: commonRooms[index],);
+                        if (index == 6) return const GridWidget(name: "View All");
+                        return GridWidget(
+                          name: commonRooms[index].roomName,
+                          room: commonRooms[index],
+                        );
                       },
                     ),
                   ),
                 );
               });
-            }
-        ),
+            }),
       ],
     );
   }
@@ -94,7 +96,7 @@ class _CommonRoomGridState extends State<CommonRoomGrid> {
       shrinkWrap: true,
       itemCount: widget.commonRooms.length,
       itemBuilder: (BuildContext context, int index) {
-        return  GridWidget(name: widget.commonRooms[index].roomName);
+        return GridWidget(name: widget.commonRooms[index].roomName);
       },
     );
   }
@@ -102,7 +104,7 @@ class _CommonRoomGridState extends State<CommonRoomGrid> {
 
 class GridWidget extends StatelessWidget {
   final String name;
-  final RoomModel? room ;
+  final RoomModel? room;
   const GridWidget({Key? key, required this.name, this.room}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -110,23 +112,22 @@ class GridWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: const BoxDecoration(
-            color: Themes.tileColor,
-            borderRadius: BorderRadius.all(Radius.circular(4))),
+            color: Themes.tileColor, borderRadius: BorderRadius.all(Radius.circular(4))),
         child: Center(
             child: Text(
-              name,
-              textAlign: TextAlign.center,
-              style: MyFonts.w400.size(14).setColor(Themes.white),
-            )),
+          name,
+          textAlign: TextAlign.center,
+          style: OnestopFonts.w400.size(14).setColor(Themes.white),
+        )),
       ),
       onTap: () {
-        if(room != null) {
+        if (room != null) {
           Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => RoomBookingDetails(
-                  room: room!,
-                )),
+                      room: room!,
+                    )),
           );
         }
       },

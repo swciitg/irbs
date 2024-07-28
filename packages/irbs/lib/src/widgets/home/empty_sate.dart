@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:onestop_kit/onestop_kit.dart';
 import '../../globals/colors.dart';
-import '../../globals/my_fonts.dart';
 
 class EmptyListPlaceholder extends StatelessWidget {
   final String text;
@@ -24,10 +24,9 @@ class EmptyListPlaceholder extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: Center(
               child: Text(
-                text,
-                style: MyFonts.w400.setColor(Themes.subHeadingColor),
-              )
-          ),
+            text,
+            style: OnestopFonts.w400.setColor(Themes.subHeadingColor),
+          )),
         ),
       ),
     );

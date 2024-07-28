@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:onestop_kit/onestop_kit.dart';
 import 'package:provider/provider.dart';
 import '../functions/filter_rooms.dart';
 import '../globals/colors.dart';
-import '../globals/my_fonts.dart';
 import '../store/common_store.dart';
 import '../store/room_detail_store.dart';
 import '../widgets/home/empty_sate.dart';
@@ -30,26 +30,23 @@ class _RoomListScreenState extends State<RoomListScreen> {
       appBar: AppBar(
         centerTitle: true,
         leading: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Icon(
-                  Icons.arrow_back_sharp,
-                  color: Themes.white,
-                ),
-              ),
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: const Icon(
+            Icons.arrow_back_sharp,
+            color: Themes.white,
+          ),
+        ),
         title: Text(
           'IRBS',
-          style: MyFonts.w500.size(20).setColor(Themes.white),
+          style: OnestopFonts.w500.size(20).setColor(Themes.white),
         ),
         actions: [
           GestureDetector(
               onTap: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            const OnboardingScreen()));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (BuildContext context) => const OnboardingScreen()));
                 // Navigator.pushReplacementNamed(context, '/irbs/onboarding');
               },
               child: Padding(
@@ -75,26 +72,21 @@ class _RoomListScreenState extends State<RoomListScreen> {
             return Observer(builder: (context) {
               return SafeArea(
                 child: SingleChildScrollView(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const RoomSearchBar(),
-                        ListDisplay(
-                          type: 'Club Rooms',
-                          roomList: filterRooms(
-                              snapshot.data!['club']!, commonStore.searchText),
-                        ),
-                        ListDisplay(
-                          type: 'Common Rooms',
-                          roomList: filterRooms(snapshot.data!['common']!,
-                              commonStore.searchText),
-                        ),
-                        ListDisplay(
-                          type: 'Board Rooms',
-                          roomList: filterRooms(
-                              snapshot.data!['board']!, commonStore.searchText),
-                        )
-                      ]),
+                  child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    const RoomSearchBar(),
+                    ListDisplay(
+                      type: 'Club Rooms',
+                      roomList: filterRooms(snapshot.data!['club']!, commonStore.searchText),
+                    ),
+                    ListDisplay(
+                      type: 'Common Rooms',
+                      roomList: filterRooms(snapshot.data!['common']!, commonStore.searchText),
+                    ),
+                    ListDisplay(
+                      type: 'Board Rooms',
+                      roomList: filterRooms(snapshot.data!['board']!, commonStore.searchText),
+                    )
+                  ]),
                 ),
               );
             });

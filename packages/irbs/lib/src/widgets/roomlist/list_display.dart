@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../globals/my_fonts.dart';
+import 'package:onestop_kit/onestop_kit.dart';
+
 import 'room_tile.dart';
 import '../../globals/colors.dart';
 import '../../models/room_model.dart';
@@ -25,24 +26,20 @@ class _ListDisplayState extends State<ListDisplay> {
         : Column(
             children: [
               Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.type,
-                          style: MyFonts.w400.size(14).setColor(Themes.regentGrey),
-                        )
-                      ])),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    Text(
+                      widget.type,
+                      style: OnestopFonts.w400.size(14).setColor(Themes.regentGrey),
+                    )
+                  ])),
               ListView.builder(
                   padding: const EdgeInsets.all(0),
                   physics: const ClampingScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: widget.roomList.length,
                   itemBuilder: (context, index) {
-                    return RoomTile(
-                        room: widget.roomList[index]);
+                    return RoomTile(room: widget.roomList[index]);
                   }),
             ],
           );

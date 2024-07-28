@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:onestop_kit/onestop_kit.dart';
 import '../../globals/colors.dart';
-import '../../globals/my_fonts.dart';
+
 import '../../models/booking_model.dart';
 import '../../models/room_model.dart';
 import '../../screens/booking_history.dart';
@@ -29,7 +30,7 @@ class HomeShimmer extends StatelessWidget {
         ),
         title: Text(
           "IRBS",
-          style: MyFonts.w500.size(20).setColor(Themes.white),
+          style: OnestopFonts.w500.size(20).setColor(Themes.white),
         ),
         backgroundColor: Themes.kCommonBoxBackground,
       ),
@@ -42,28 +43,33 @@ class HomeShimmer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10, left: 16, bottom: 7, right: 16),
+                  padding: const EdgeInsets.only(top: 10, left: 16, bottom: 7, right: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Current Bookings',
-                        style: MyFonts.w600.size(14).letterSpace(0.5).setColor(Themes.kSubHeading),
+                        style: OnestopFonts.w600
+                            .size(14)
+                            .letterSpace(0.5)
+                            .setColor(Themes.kSubHeading),
                       ),
                       TextButton(
                         onPressed: () {
                           Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            const BookingHistoryScreen()));
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => const BookingHistoryScreen()));
                           // Navigator.pushNamed(
                           //     context, '/irbs/bookingHistory');
                         },
                         child: Text(
                           'View History',
-                          style: MyFonts.w400.size(12).letterSpace(0.5).underline().setColor(Themes.kTextButtonColor),
+                          style: OnestopFonts.w400
+                              .size(12)
+                              .letterSpace(0.5)
+                              .underline()
+                              .setColor(Themes.kTextButtonColor),
                         ),
                       ),
                     ],
@@ -71,48 +77,39 @@ class HomeShimmer extends StatelessWidget {
                 ),
                 SingleChildScrollView(
                   child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ListView.builder(
                           padding: const EdgeInsets.all(0),
                           shrinkWrap: true,
-                        itemCount: 3,
-                        physics:
-                            const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index){
-                          return BookingTile(
-                            model: BookingModel(
-                              roomId: 'roomId',
-                              user: 'user',
-                              status: 'rejected',
-                              reasonRejection: 'rejected',
-                              inTime: DateTime.now().toString(),
-                              outTime: DateTime.now().toString(),
-                              bookingPurpose: ' bookingPurpose',
-                              createdAt: 'createdAt',
-                              roomDetails: RoomDetailsModel(
-                                owner: [],
-                                roomName: '',
-                                allowedUsers: [],
-                                roomType: '',
-                                roomCapacity: 1
+                          itemCount: 3,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return BookingTile(
+                              model: BookingModel(
+                                roomId: 'roomId',
+                                user: 'user',
+                                status: 'rejected',
+                                reasonRejection: 'rejected',
+                                inTime: DateTime.now().toString(),
+                                outTime: DateTime.now().toString(),
+                                bookingPurpose: ' bookingPurpose',
+                                createdAt: 'createdAt',
+                                roomDetails: RoomDetailsModel(
+                                    owner: [],
+                                    roomName: '',
+                                    allowedUsers: [],
+                                    roomType: '',
+                                    roomCapacity: 1),
+                                id: ' id',
+                                userInfo:
+                                    OwnerInfo(name: '', email: '', phoneNumber: 1, rollNo: ''),
                               ),
-                              id: ' id',
-                              userInfo: OwnerInfo(
-                                name: '', 
-                                email: '', 
-                                phoneNumber: 1, 
-                                rollNo: ''
-                              ),
-                            ),
-                          );
-                        }
-                      ),
+                            );
+                          }),
                       GestureDetector(
                         child: Padding(
-                          padding:
-                          const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                           child: Container(
                             height: 40,
                             width: double.maxFinite,
@@ -122,12 +119,15 @@ class HomeShimmer extends StatelessWidget {
                             child: Center(
                               child: Text(
                                 'View all upcoming bookings',
-                                style: MyFonts.w500.letterSpace(0.5).size(14).setColor(Themes.white),
+                                style: OnestopFonts.w500
+                                    .letterSpace(0.5)
+                                    .size(14)
+                                    .setColor(Themes.white),
                               ),
                             ),
                           ),
                         ),
-                        onTap: (){},
+                        onTap: () {},
                       ),
                     ],
                   ),
@@ -136,27 +136,18 @@ class HomeShimmer extends StatelessWidget {
                   type: 'Pinned Rooms',
                   roomList: [
                     RoomModel(
-                      owner: [''], 
-                      roomName: '', 
-                      allowedUsers: [''], 
-                      roomType: 'roomType', 
-                      roomCapacity: 0, 
-                      id: ' id', 
-                      ownerInfo: [
-                        OwnerInfo(
-                          name: 'name', 
-                          email: 'email', 
-                          rollNo: 'rollNo'
-                        ),
-                      ], 
-                      allowedUserInfo: [
-                        OwnerInfo(
-                          name: 'name', 
-                          email: 'email', 
-                          rollNo: 'rollNo'
-                        ),
-                      ]
-                    ),
+                        owner: [''],
+                        roomName: '',
+                        allowedUsers: [''],
+                        roomType: 'roomType',
+                        roomCapacity: 0,
+                        id: ' id',
+                        ownerInfo: [
+                          OwnerInfo(name: 'name', email: 'email', rollNo: 'rollNo'),
+                        ],
+                        allowedUserInfo: [
+                          OwnerInfo(name: 'name', email: 'email', rollNo: 'rollNo'),
+                        ]),
                   ],
                 ),
                 const CommonRooms(),
@@ -178,10 +169,7 @@ class HomeShimmer extends StatelessWidget {
                     gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [
-                      Themes.backgroundColor0Opacity,
-                      Themes.backgroundColor
-                    ])),
+                        colors: [Themes.backgroundColor0Opacity, Themes.backgroundColor])),
               ),
               Container(
                 color: Themes.backgroundColor,
@@ -192,11 +180,11 @@ class HomeShimmer extends StatelessWidget {
                       color: Themes.primaryColor,
                       borderRadius: BorderRadius.all(Radius.circular(4))),
                   child: InkWell(
-                      onTap: (){},
+                      onTap: () {},
                       child: Center(
                           child: Text(
                         'Book a Room',
-                        style: MyFonts.w700.size(16),
+                        style: OnestopFonts.w700.size(16),
                       ))),
                 ),
               ),

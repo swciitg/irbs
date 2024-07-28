@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+
+import 'package:onestop_kit/onestop_kit.dart';
 import '../../globals/colors.dart';
-import '../../globals/my_fonts.dart';
 
 class EditRoomTextField extends StatefulWidget {
   final String title;
@@ -16,9 +17,13 @@ class _EditRoomTextFieldState extends State<EditRoomTextField> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-         Text(
+        Text(
           "${widget.title}:",
-           style: MyFonts.w500.size(16).setColor(Themes.myRoomsFormHeadingColor).setHeight(1.5).letterSpace(0.1),
+          style: OnestopFonts.w500
+              .size(16)
+              .setColor(Themes.myRoomsFormHeadingColor)
+              .setHeight(1.5)
+              .letterSpace(0.1),
         ),
         const SizedBox(
           height: 8,
@@ -32,22 +37,24 @@ class _EditRoomTextFieldState extends State<EditRoomTextField> {
             return null;
           },
           maxLines: widget.title == "Instructions" ? 5 : 1,
-          keyboardType: widget.title == "Room Capacity" ? TextInputType.number: widget.title == "Room Name" ? TextInputType.text : TextInputType.multiline,
-          style: widget.title != "Instructions" ?
-            MyFonts.w400.size(16).setColor(Themes.white).setHeight(1.5).letterSpace(0.1) :
-            MyFonts.w400.size(12).setColor(Themes.white).setHeight(1.333),
+          keyboardType: widget.title == "Room Capacity"
+              ? TextInputType.number
+              : widget.title == "Room Name"
+                  ? TextInputType.text
+                  : TextInputType.multiline,
+          style: widget.title != "Instructions"
+              ? OnestopFonts.w400.size(16).setColor(Themes.white).setHeight(1.5).letterSpace(0.1)
+              : OnestopFonts.w400.size(12).setColor(Themes.white).setHeight(1.333),
           decoration: InputDecoration(
               contentPadding: const EdgeInsets.fromLTRB(16, 12, 0, 12),
               filled: true,
               fillColor: Themes.tileColor,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4.0),
-                  borderSide: const BorderSide(
-                      color: Themes.tileColor)),
+                  borderSide: const BorderSide(color: Themes.tileColor)),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4.0),
-                  borderSide: const BorderSide(
-                      color: Themes.tileColor)),
+                  borderSide: const BorderSide(color: Themes.tileColor)),
               errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4.0),
                   borderSide: const BorderSide(color: Themes.red)),
