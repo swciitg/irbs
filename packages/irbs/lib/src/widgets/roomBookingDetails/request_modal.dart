@@ -275,6 +275,7 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
             if (fromTime == null) {
               Fluttertoast.showToast(
                   msg: 'From Time not selected!', backgroundColor: Themes.modalToastBgColor);
+              return;
             }
             toTime = await showTimePicker(
               context: context,
@@ -286,6 +287,8 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
               ),
             );
 
+            print(toTime.toString());
+
             if (toTime != null) {
               if (fromTime!.getTotalMinutes >= toTime!.getTotalMinutes) {
                 Fluttertoast.showToast(
@@ -296,8 +299,7 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
                   toTime = null;
                 });
               } else {
-                final formattedTime = toTime.toString().substring(10, 15);
-                toTimeCtl.text = time24to12Format(formattedTime);
+                toTimeCtl.text = formatTimeOfDay(toTime!);
               }
             }
           }),
@@ -338,6 +340,9 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
                 child: child,
               ),
             );
+
+            print(fromTime.toString());
+
             if (fromTime != null) {
               if (fromTime!.getTotalMinutes < 480) {
                 setState(() {
@@ -348,7 +353,7 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
                     msg: 'You cannot book between 12:00 AM and 8:00 AM',
                     backgroundColor: Themes.modalToastBgColor);
               } else {
-                fromTimeCtl.text = time24to12Format(fromTime.toString().substring(10, 15));
+                fromTimeCtl.text = formatTimeOfDay(fromTime!);
               }
             }
           }),

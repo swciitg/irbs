@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 String time24to12Format(String time) {
   int h = int.parse(time.split(":").first);
   int m = int.parse(time.split(":").last.split(" ").first);
@@ -16,4 +18,8 @@ String time24to12Format(String time) {
   }
 
   return send;
+}
+
+String formatTimeOfDay(TimeOfDay time){
+  return "${time.hour > 12 ? time.hour - 12 : time.hour}:${time.minute < 10 ? "0" : ""}${time.minute} ${time.hour < 12 ? "AM" : "PM"}";
 }
