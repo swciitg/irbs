@@ -1,16 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:onestop_kit/onestop_kit.dart';
 import 'package:provider/provider.dart';
 
 import '../../globals/colors.dart';
-
 import '../../screens/all_requests.dart';
 import '../../services/api.dart';
 import '../../store/common_store.dart';
-import '../shimmer/pending_requests_shimmer.dart';
 import '../home/request_tile.dart';
+import '../shimmer/pending_requests_shimmer.dart';
 import 'empty_sate.dart';
 
 class PendingRequestCarousel extends StatelessWidget {
@@ -32,8 +31,9 @@ class PendingRequestCarousel extends StatelessWidget {
                     child: Text('Error'),
                   );
                 } else {
-                  if (snapshot.data!.isEmpty)
+                  if (snapshot.data!.isEmpty) {
                     return const EmptyListPlaceholder(text: 'No new requests');
+                  }
                   return Column(
                     children: [
                       SizedBox(
@@ -62,7 +62,8 @@ class PendingRequestCarousel extends StatelessWidget {
                       ),
                       GestureDetector(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
                           child: Container(
                             height: 40,
                             width: double.maxFinite,

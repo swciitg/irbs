@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:irbs/irbs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +19,8 @@ class DismissKeyboard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+        if (!currentFocus.hasPrimaryFocus &&
+            currentFocus.focusedChild != null) {
           FocusManager.instance.primaryFocus?.unfocus();
         }
       },
@@ -75,11 +77,12 @@ class HomePage extends StatelessWidget {
 
                 await user.setString(
                   "accessToken",
-                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NGQwNWExNmExOTJjMGExMDYzOWQ4OWEiLCJpYXQiOjE3MjIwNjk0MTIsImV4cCI6MTcyMjkzMzQxMn0.j9LkrXETtKQtJWsX6I7pp3Udfd_dF7vJBICUBzN-ORo",
+                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2NmEyM2VkYWFlYmJiNGY4YWU1ZGI5ZmYiLCJpYXQiOjE3MjQwOTAxNzQsImV4cCI6MTcyNDk1NDE3NH0.Y3vBYmNN8uvhzUw6WTaoNwRD8NuXf1xLYyQFHlNfTy0",
                 );
 
                 if (!context.mounted) return;
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const IRBS()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const IRBS()));
               },
             ),
           ),
