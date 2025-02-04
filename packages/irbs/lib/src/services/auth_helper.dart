@@ -1,39 +1,38 @@
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../globals/database_strings.dart';
 import '../globals/endpoints.dart';
-import 'package:dio/dio.dart';
 
-class AuthUserHelpers{
-
+class AuthUserHelpers {
   Future<Response<dynamic>> retryRequest(Response response) async {
     // print(response);
     // print("INSIDE RETRY REQUEST");
     RequestOptions requestOptions = response.requestOptions;
-    response.requestOptions.headers[BackendHelper.authorization] = "Bearer ${await AuthUserHelpers.getAccessToken()}";
-    try{
-    final options = Options(method: requestOptions.method, headers: requestOptions.headers);
-    Dio retryDio = Dio(BaseOptions(
-        baseUrl: Endpoints.oneStopbaseURL,
-        connectTimeout: const Duration(seconds: 5),
-        receiveTimeout: const Duration(seconds: 5),
-        headers: {
-          'Security-Key': Endpoints.apiSecurityKey
-        }));
-    if (requestOptions.method == "GET") {
-      return retryDio.request(requestOptions.path,
-          queryParameters: requestOptions.queryParameters, options: options);
-    } else {
-      return retryDio.request(requestOptions.path,
-          queryParameters: requestOptions.queryParameters,
-          data: requestOptions.data,
-          options: options);
-    }
-  }
-  catch(e){
+    response.requestOptions.headers[BackendHelper.authorization] =
+        "Bearer ${await AuthUserHelpers.getAccessToken()}";
+    try {
+      final options = Options(
+          method: requestOptions.method, headers: requestOptions.headers);
+      Dio retryDio = Dio(BaseOptions(
+          baseUrl: Endpoints.oneStopBaseURL,
+          connectTimeout: const Duration(seconds: 5),
+          receiveTimeout: const Duration(seconds: 5),
+          headers: {'Security-Key': Endpoints.apiSecurityKey}));
+      if (requestOptions.method == "GET") {
+        return retryDio.request(requestOptions.path,
+            queryParameters: requestOptions.queryParameters, options: options);
+      } else {
+        return retryDio.request(requestOptions.path,
+            queryParameters: requestOptions.queryParameters,
+            data: requestOptions.data,
+            options: options);
+      }
+    } catch (e) {
       // print("error adarahooo");
       // print(e);
       throw Exception(e);
-  }
+    }
   }
 
   Future<bool> regenerateAccessToken() async {
@@ -42,12 +41,14 @@ class AuthUserHelpers{
     // print(refreshToken);
     try {
       Dio regenDio = Dio(BaseOptions(
-          baseUrl: Endpoints.oneStopbaseURL,
+          baseUrl: Endpoints.oneStopBaseURL,
           connectTimeout: const Duration(seconds: 5),
           receiveTimeout: const Duration(seconds: 5)));
-      Response resp = await regenDio.post(
-          "/user/accesstoken",
-          options: Options(headers: {'Security-Key': Endpoints.apiSecurityKey,"authorization": "Bearer $refreshToken"}));
+      Response resp = await regenDio.post("/user/accesstoken",
+          options: Options(headers: {
+            'Security-Key': Endpoints.apiSecurityKey,
+            "authorization": "Bearer $refreshToken"
+          }));
       // print(resp);
       var data = resp.data!;
       // print(data);
