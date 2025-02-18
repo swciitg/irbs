@@ -1,9 +1,9 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 
 class Endpoints {
-  static final baseUrl = dotenv.env['IRBS_SERVER_URL']!;
-  static final oneStopBaseURL = dotenv.env['SERVER_URL']!;
-  static final apiSecurityKey = dotenv.env['SECURITY_KEY']!;
+  static const baseUrl = String.fromEnvironment('IRBS_SERVER_URL');
+  static const oneStopBaseURL = String.fromEnvironment('SERVER_URL');
+  static const apiSecurityKey = String.fromEnvironment('SECURITY_KEY');
   static const getAllRooms = '/api/room';
   static const getRoomBookings = '/api/booking';
   static const getOwnedRoomBookings = '/api/booking/rooms-owned';
