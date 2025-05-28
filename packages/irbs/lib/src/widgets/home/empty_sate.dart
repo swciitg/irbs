@@ -13,12 +13,13 @@ class EmptyListPlaceholder extends StatelessWidget {
       color: Themes.transparentColor,
       margin: const EdgeInsets.symmetric(horizontal: 16),
       child: DottedBorder(
-        borderType: BorderType.RRect,
-        color: Themes.blueGrey,
-        strokeWidth: 1.2,
-        dashPattern: const [5.5],
-        radius: const Radius.circular(4),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        options: RoundedRectDottedBorderOptions(
+          color: Themes.blueGrey,
+          strokeWidth: 1.2,
+          dashPattern: const [5.5],
+          radius: const Radius.circular(4),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        ),
         child: SizedBox(
           height: 18,
           width: MediaQuery.of(context).size.width,
