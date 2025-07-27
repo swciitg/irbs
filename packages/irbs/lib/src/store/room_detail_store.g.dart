@@ -9,8 +9,10 @@ part of 'room_detail_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$RoomDetailStore on _RoomDetailStore, Store {
-  late final _$roomsAtom =
-      Atom(name: '_RoomDetailStore.rooms', context: context);
+  late final _$roomsAtom = Atom(
+    name: '_RoomDetailStore.rooms',
+    context: context,
+  );
 
   @override
   ObservableMap<String, List<RoomModel>> get rooms {
@@ -25,8 +27,10 @@ mixin _$RoomDetailStore on _RoomDetailStore, Store {
     });
   }
 
-  late final _$currentRoomAtom =
-      Atom(name: '_RoomDetailStore.currentRoom', context: context);
+  late final _$currentRoomAtom = Atom(
+    name: '_RoomDetailStore.currentRoom',
+    context: context,
+  );
 
   @override
   RoomModel get currentRoom {
@@ -41,8 +45,10 @@ mixin _$RoomDetailStore on _RoomDetailStore, Store {
     });
   }
 
-  late final _$myRoomsAtom =
-      Atom(name: '_RoomDetailStore.myRooms', context: context);
+  late final _$myRoomsAtom = Atom(
+    name: '_RoomDetailStore.myRooms',
+    context: context,
+  );
 
   @override
   ObservableList<RoomModel> get myRooms {
@@ -57,8 +63,10 @@ mixin _$RoomDetailStore on _RoomDetailStore, Store {
     });
   }
 
-  late final _$upcomingBookingsAtom =
-      Atom(name: '_RoomDetailStore.upcomingBookings', context: context);
+  late final _$upcomingBookingsAtom = Atom(
+    name: '_RoomDetailStore.upcomingBookings',
+    context: context,
+  );
 
   @override
   ObservableList<BookingModel> get upcomingBookings {
@@ -73,62 +81,78 @@ mixin _$RoomDetailStore on _RoomDetailStore, Store {
     });
   }
 
-  late final _$getMyroomsAsyncAction =
-      AsyncAction('_RoomDetailStore.getMyrooms', context: context);
+  late final _$getMyroomsAsyncAction = AsyncAction(
+    '_RoomDetailStore.getMyrooms',
+    context: context,
+  );
 
   @override
   Future<List<RoomModel>> getMyrooms() {
     return _$getMyroomsAsyncAction.run(() => super.getMyrooms());
   }
 
-  late final _$getBookingsAsyncAction =
-      AsyncAction('_RoomDetailStore.getBookings', context: context);
+  late final _$getBookingsAsyncAction = AsyncAction(
+    '_RoomDetailStore.getBookings',
+    context: context,
+  );
 
   @override
   Future<List<BookingModel>> getBookings() {
     return _$getBookingsAsyncAction.run(() => super.getBookings());
   }
 
-  late final _$getAllRoomsAsyncAction =
-      AsyncAction('_RoomDetailStore.getAllRooms', context: context);
+  late final _$getAllRoomsAsyncAction = AsyncAction(
+    '_RoomDetailStore.getAllRooms',
+    context: context,
+  );
 
   @override
   Future<Map<String, List<RoomModel>>> getAllRooms() {
     return _$getAllRoomsAsyncAction.run(() => super.getAllRooms());
   }
 
-  late final _$setMyroomsAsyncAction =
-      AsyncAction('_RoomDetailStore.setMyrooms', context: context);
+  late final _$setMyroomsAsyncAction = AsyncAction(
+    '_RoomDetailStore.setMyrooms',
+    context: context,
+  );
 
   @override
-  Future setMyrooms() {
+  Future<void> setMyrooms() {
     return _$setMyroomsAsyncAction.run(() => super.setMyrooms());
   }
 
-  late final _$setRoomsAsyncAction =
-      AsyncAction('_RoomDetailStore.setRooms', context: context);
+  late final _$setRoomsAsyncAction = AsyncAction(
+    '_RoomDetailStore.setRooms',
+    context: context,
+  );
 
   @override
-  Future setRooms() {
+  Future<void> setRooms() {
     return _$setRoomsAsyncAction.run(() => super.setRooms());
   }
 
-  late final _$setUpcomingBookingsAsyncAction =
-      AsyncAction('_RoomDetailStore.setUpcomingBookings', context: context);
+  late final _$setUpcomingBookingsAsyncAction = AsyncAction(
+    '_RoomDetailStore.setUpcomingBookings',
+    context: context,
+  );
 
   @override
-  Future setUpcomingBookings() {
-    return _$setUpcomingBookingsAsyncAction
-        .run(() => super.setUpcomingBookings());
+  Future<void> setUpcomingBookings() {
+    return _$setUpcomingBookingsAsyncAction.run(
+      () => super.setUpcomingBookings(),
+    );
   }
 
-  late final _$_RoomDetailStoreActionController =
-      ActionController(name: '_RoomDetailStore', context: context);
+  late final _$_RoomDetailStoreActionController = ActionController(
+    name: '_RoomDetailStore',
+    context: context,
+  );
 
   @override
-  dynamic setSelectedRoom(RoomModel room) {
+  void setSelectedRoom(RoomModel room) {
     final _$actionInfo = _$_RoomDetailStoreActionController.startAction(
-        name: '_RoomDetailStore.setSelectedRoom');
+      name: '_RoomDetailStore.setSelectedRoom',
+    );
     try {
       return super.setSelectedRoom(room);
     } finally {
@@ -137,9 +161,10 @@ mixin _$RoomDetailStore on _RoomDetailStore, Store {
   }
 
   @override
-  dynamic updateRoom(RoomModel room) {
+  void updateRoom(RoomModel room) {
     final _$actionInfo = _$_RoomDetailStoreActionController.startAction(
-        name: '_RoomDetailStore.updateRoom');
+      name: '_RoomDetailStore.updateRoom',
+    );
     try {
       return super.updateRoom(room);
     } finally {
@@ -150,7 +175,8 @@ mixin _$RoomDetailStore on _RoomDetailStore, Store {
   @override
   RoomModel getRoomById(String id) {
     final _$actionInfo = _$_RoomDetailStoreActionController.startAction(
-        name: '_RoomDetailStore.getRoomById');
+      name: '_RoomDetailStore.getRoomById',
+    );
     try {
       return super.getRoomById(id);
     } finally {

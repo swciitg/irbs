@@ -7,7 +7,7 @@ import '../../globals/colors.dart';
 import '../../store/common_store.dart';
 
 class RoomSearchBar extends StatelessWidget {
-  const RoomSearchBar({Key? key}) : super(key: key);
+  const RoomSearchBar({super.key});
   @override
   Widget build(BuildContext context) {
     var commonStore = context.read<CommonStore>();

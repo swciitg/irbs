@@ -15,7 +15,7 @@ class Endpoints {
   static const rejectBooking = '/api/booking/reject';
   static const acceptBooking = '/api/booking/accept';
 
-  static getHeader() {
+  static Map<String, String> getHeader() {
     return {
       'Content-Type': 'application/json',
       'security-key': Endpoints.apiSecurityKey,

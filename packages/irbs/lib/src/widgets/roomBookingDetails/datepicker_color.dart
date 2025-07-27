@@ -29,14 +29,13 @@ class _IRBSDatePickerState extends State<IRBSDatePicker> {
           primary: Themes.datePickerPrimaryColor,
           surface: Themes.datePickerSurfaceColor,
         ),
-        dialogBackgroundColor: Themes.datePickerSurfaceColor,
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
               backgroundColor: Themes.datePickerSurfaceColor, // button
               foregroundColor: Themes.primaryColor,
               elevation: 0,
               textStyle: OnestopFonts.w400),
-        ),
+        ), dialogTheme: DialogThemeData(backgroundColor: Themes.datePickerSurfaceColor),
       ),
       child: widget.child!,
     );

@@ -8,7 +8,7 @@ import '../home/current_bookings_widget.dart';
 
 class UpcomingBookingShimmer extends StatefulWidget {
   final int number;
-  const UpcomingBookingShimmer({Key? key, required this.number}) : super(key: key);
+  const UpcomingBookingShimmer({super.key, required this.number});
 
   @override
   State<UpcomingBookingShimmer> createState() => _UpcomingBookingShimmerState();

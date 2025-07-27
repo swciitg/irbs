@@ -11,7 +11,7 @@ final GlobalKey<ScaffoldMessengerState> irbsRootScaffoldMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
 
 class IRBS extends StatefulWidget {
-  const IRBS({Key? key}) : super(key: key);
+  const IRBS({super.key});
 
   @override
   State<IRBS> createState() => _IRBSState();

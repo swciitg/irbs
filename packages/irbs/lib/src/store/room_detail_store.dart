@@ -51,27 +51,27 @@ abstract class _RoomDetailStore with Store {
   }
 
   @action
-  setMyrooms() async {
+  Future<void> setMyrooms() async {
     await getMyrooms();
   }
 
   @action
-  setRooms() async {
+  Future<void> setRooms() async {
     await getAllRooms();
   }
 
   @action
-  setUpcomingBookings() async {
+  Future<void> setUpcomingBookings() async {
     await getBookings();
   }
 
   @action
-  setSelectedRoom(RoomModel room) {
+  void setSelectedRoom(RoomModel room) {
     currentRoom = room;
   }
 
   @action
-  updateRoom(RoomModel room) {
+  void updateRoom(RoomModel room) {
     setSelectedRoom(room);
     rooms[room.roomType]!.removeWhere((element) => element.id == room.id);
     myRooms.removeWhere((element) => element.id == room.id);

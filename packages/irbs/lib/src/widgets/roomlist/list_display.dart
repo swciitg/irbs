@@ -9,10 +9,10 @@ class ListDisplay extends StatefulWidget {
   final String type;
   final List<RoomModel> roomList;
   const ListDisplay({
-    Key? key,
+    super.key,
     required this.roomList,
     required this.type,
-  }) : super(key: key);
+  });
 
   @override
   State<ListDisplay> createState() => _ListDisplayState();

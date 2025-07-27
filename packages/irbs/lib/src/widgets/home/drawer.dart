@@ -11,7 +11,7 @@ import '../../store/data_store.dart';
 import '../../store/room_detail_store.dart';
 
 class SideDrawer extends StatelessWidget {
-  const SideDrawer({Key? key}) : super(key: key);
+  const SideDrawer({super.key});
   @override
   Widget build(BuildContext context) {
     var rd = context.read<RoomDetailStore>();
@@ -19,122 +19,115 @@ class SideDrawer extends StatelessWidget {
       child: Container(
         width: 240,
         decoration: BoxDecoration(color: Themes.drawerBox, borderRadius: BorderRadius.circular(4)),
-        child: Observer(builder: (context) {
-          return Stack(
-            children: [
-              ListView(
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  Container(
-                    width: 240,
-                    decoration: BoxDecoration(
-                        color: Themes.drawerBox, borderRadius: BorderRadius.circular(4)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        SvgPicture.asset(
-                          'packages/irbs/assets/images/person.svg',
-                          color: Themes.white,
-                        ),
-                        Text(
-                          DataStore.userData["name"] ?? "Name",
-                          style: OnestopFonts.w600
-                              .size(14)
-                              .setColor(Themes.white)
-                              .setHeight(1.715)
-                              .letterSpace(0.1),
-                        ),
-                        Text(
-                          DataStore.userData["rollNo"] ?? "RollNumber",
-                          style: OnestopFonts.w600
-                              .size(14)
-                              .setColor(Themes.white)
-                              .setHeight(1.715)
-                              .letterSpace(0.1),
-                        ),
-                        const SizedBox(
-                          height: 28,
-                        ),
-                      ],
+        child: Observer(
+          builder: (context) {
+            return Stack(
+              children: [
+                ListView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    Container(
+                      width: 240,
+                      decoration: BoxDecoration(
+                        color: Themes.drawerBox,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 24),
+                          SvgPicture.asset(
+                            'packages/irbs/assets/images/person.svg',
+                            colorFilter: ColorFilter.mode(Themes.white, BlendMode.srcIn),
+                          ),
+                          Text(
+                            DataStore.userData["name"] ?? "Name",
+                            style: OnestopFonts.w600
+                                .size(14)
+                                .setColor(Themes.white)
+                                .setHeight(1.715)
+                                .letterSpace(0.1),
+                          ),
+                          Text(
+                            DataStore.userData["rollNo"] ?? "RollNumber",
+                            style: OnestopFonts.w600
+                                .size(14)
+                                .setColor(Themes.white)
+                                .setHeight(1.715)
+                                .letterSpace(0.1),
+                          ),
+                          const SizedBox(height: 28),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    width: 240,
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "My Rooms",
-                              style: OnestopFonts.w500
-                                  .size(14)
-                                  .setColor(Themes.primaryColor)
-                                  .copyWith(color: Themes.white.withOpacity(0.5)),
-                            ),
-                          ],
-                        ),
-                        ListView.builder(
-                          padding: const EdgeInsets.all(0),
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: rd.myRooms.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            String? roomName = rd.myRooms[index].roomName;
-                            return InkWell(
-                              child: Container(
-                                margin: const EdgeInsets.symmetric(vertical: 8),
-                                padding: const EdgeInsets.symmetric(vertical: 6),
-                                child: Text(
-                                  roomName,
-                                  style: OnestopFonts.w600
-                                      .size(15)
-                                      .setColor(Themes.white)
-                                      .setHeight(1.333)
-                                      .letterSpace(0.1),
-                                ),
+                    Container(
+                      width: 240,
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "My Rooms",
+                                style: OnestopFonts.w500
+                                    .size(14)
+                                    .setColor(Themes.primaryColor)
+                                    .copyWith(color: Themes.white.withValues(alpha: 0.5)),
                               ),
-                              onTap: () {
-                                rd.setSelectedRoom(rd.myRooms[index]);
-                                Navigator.of(context)
-                                    .push(
-                                      MaterialPageRoute(
-                                        builder: (context) => const RoomDetailsScreen(),
-                                      ),
-                                    )
-                                    .then((value) => Navigator.of(context).pop());
-                              },
-                            );
-                          },
-                        ),
-                      ],
+                            ],
+                          ),
+                          ListView.builder(
+                            padding: const EdgeInsets.all(0),
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: rd.myRooms.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              String? roomName = rd.myRooms[index].roomName;
+                              return InkWell(
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(vertical: 8),
+                                  padding: const EdgeInsets.symmetric(vertical: 6),
+                                  child: Text(
+                                    roomName,
+                                    style: OnestopFonts.w600
+                                        .size(15)
+                                        .setColor(Themes.white)
+                                        .setHeight(1.333)
+                                        .letterSpace(0.1),
+                                  ),
+                                ),
+                                onTap: () {
+                                  rd.setSelectedRoom(rd.myRooms[index]);
+                                  Navigator.of(context)
+                                      .push(
+                                        MaterialPageRoute(
+                                          builder: (context) => const RoomDetailsScreen(),
+                                        ),
+                                      )
+                                      .then((value) => Navigator.of(context).pop());
+                                },
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Align(
+                    Align(
                       alignment: Alignment.bottomLeft,
                       child: Column(
                         children: [
                           Container(
                             width: 200,
                             height: 0.5,
-                            color: Themes.white.withOpacity(0.2),
+                            color: Themes.white.withValues(alpha: 0.2),
                           ),
-                          const SizedBox(
-                            height: 16,
-                          ),
+                          const SizedBox(height: 16),
                           Row(
                             children: [
-                              const SizedBox(
-                                width: 24,
-                              ),
+                              const SizedBox(width: 24),
                               Text(
                                 "Need Help?",
                                 style: OnestopFonts.w500
@@ -142,9 +135,7 @@ class SideDrawer extends StatelessWidget {
                                     .setColor(Themes.cancelButtonColor)
                                     .copyWith(color: Themes.white, height: 2),
                               ),
-                              const SizedBox(
-                                width: 8,
-                              ),
+                              const SizedBox(width: 8),
                               GestureDetector(
                                 onTap: () async {
                                   await launchEmail("swc@iitg.ac.in");
@@ -155,35 +146,34 @@ class SideDrawer extends StatelessWidget {
                                       .size(12)
                                       .setColor(Themes.cancelButtonColor)
                                       .copyWith(
-                                          color: Themes.white,
-                                          height: 2,
-                                          decoration: TextDecoration.underline),
+                                        color: Themes.white,
+                                        height: 2,
+                                        decoration: TextDecoration.underline,
+                                      ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
-                          const SizedBox(
-                            height: 24,
-                          )
+                          const SizedBox(height: 24),
                         ],
-                      ))
-                ],
-              ),
-              Positioned(
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(
                   left: 16,
                   top: 16,
                   child: GestureDetector(
-                    child: const Icon(
-                      Icons.close,
-                      color: Themes.white,
-                    ),
+                    child: const Icon(Icons.close, color: Themes.white),
                     onTap: () {
                       Navigator.pop(context);
                     },
-                  )),
-            ],
-          );
-        }),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

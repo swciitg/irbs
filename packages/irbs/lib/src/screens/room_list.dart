@@ -13,7 +13,7 @@ import '../widgets/shimmer/room_list_shimmer.dart';
 import 'onboarding.dart';
 
 class RoomListScreen extends StatefulWidget {
-  const RoomListScreen({Key? key}) : super(key: key);
+  const RoomListScreen({super.key});
 
   @override
   State<RoomListScreen> createState() => _RoomListScreenState();

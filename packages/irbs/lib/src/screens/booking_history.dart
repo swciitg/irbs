@@ -12,7 +12,7 @@ import '../widgets/home/empty_sate.dart';
 import '../widgets/shimmer/current_booking_shimmer.dart';
 
 class BookingHistoryScreen extends StatefulWidget {
-  const BookingHistoryScreen({Key? key}) : super(key: key);
+  const BookingHistoryScreen({super.key});
 
   @override
   State<BookingHistoryScreen> createState() => _BookingHistoryScreenState();

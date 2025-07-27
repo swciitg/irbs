@@ -9,7 +9,7 @@ import 'package:shimmer/shimmer.dart';
 import '../home/request_tile.dart';
 
 class PendingRequestShimmer extends StatefulWidget {
-  const PendingRequestShimmer({Key? key}) : super(key: key);
+  const PendingRequestShimmer({super.key});
 
   @override
   State<PendingRequestShimmer> createState() => _PendingRequestShimmerState();

@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: _buildAppBar(context),
           body: RefreshIndicator(
             onRefresh: () async {
-              await DataStore().clear();
+              DataStore().clear();
               setState(() {
                 cs.pending++;
               });

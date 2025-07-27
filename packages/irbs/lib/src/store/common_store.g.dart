@@ -39,8 +39,10 @@ mixin _$CommonStore on _CommonStore, Store {
     });
   }
 
-  late final _$pendingAtom =
-      Atom(name: '_CommonStore.pending', context: context);
+  late final _$pendingAtom = Atom(
+    name: '_CommonStore.pending',
+    context: context,
+  );
 
   @override
   int get pending {
@@ -55,8 +57,10 @@ mixin _$CommonStore on _CommonStore, Store {
     });
   }
 
-  late final _$searchTextAtom =
-      Atom(name: '_CommonStore.searchText', context: context);
+  late final _$searchTextAtom = Atom(
+    name: '_CommonStore.searchText',
+    context: context,
+  );
 
   @override
   String get searchText {
@@ -71,8 +75,10 @@ mixin _$CommonStore on _CommonStore, Store {
     });
   }
 
-  late final _$pinnedRoomsAtom =
-      Atom(name: '_CommonStore.pinnedRooms', context: context);
+  late final _$pinnedRoomsAtom = Atom(
+    name: '_CommonStore.pinnedRooms',
+    context: context,
+  );
 
   @override
   ObservableMap<String, RoomModel> get pinnedRooms {
@@ -87,39 +93,50 @@ mixin _$CommonStore on _CommonStore, Store {
     });
   }
 
-  late final _$initialisePinnedRoomsAsyncAction =
-      AsyncAction('_CommonStore.initialisePinnedRooms', context: context);
+  late final _$initialisePinnedRoomsAsyncAction = AsyncAction(
+    '_CommonStore.initialisePinnedRooms',
+    context: context,
+  );
 
   @override
-  Future initialisePinnedRooms(BuildContext context) {
-    return _$initialisePinnedRoomsAsyncAction
-        .run(() => super.initialisePinnedRooms(context));
+  Future<String> initialisePinnedRooms(BuildContext context) {
+    return _$initialisePinnedRoomsAsyncAction.run(
+      () => super.initialisePinnedRooms(context),
+    );
   }
 
-  late final _$addPinnedRoomsAsyncAction =
-      AsyncAction('_CommonStore.addPinnedRooms', context: context);
+  late final _$addPinnedRoomsAsyncAction = AsyncAction(
+    '_CommonStore.addPinnedRooms',
+    context: context,
+  );
 
   @override
   Future<void> addPinnedRooms(RoomModel room) {
     return _$addPinnedRoomsAsyncAction.run(() => super.addPinnedRooms(room));
   }
 
-  late final _$removePinnedRoomsAsyncAction =
-      AsyncAction('_CommonStore.removePinnedRooms', context: context);
+  late final _$removePinnedRoomsAsyncAction = AsyncAction(
+    '_CommonStore.removePinnedRooms',
+    context: context,
+  );
 
   @override
   Future<void> removePinnedRooms(String id) {
-    return _$removePinnedRoomsAsyncAction
-        .run(() => super.removePinnedRooms(id));
+    return _$removePinnedRoomsAsyncAction.run(
+      () => super.removePinnedRooms(id),
+    );
   }
 
-  late final _$_CommonStoreActionController =
-      ActionController(name: '_CommonStore', context: context);
+  late final _$_CommonStoreActionController = ActionController(
+    name: '_CommonStore',
+    context: context,
+  );
 
   @override
   void setMonth(int m) {
     final _$actionInfo = _$_CommonStoreActionController.startAction(
-        name: '_CommonStore.setMonth');
+      name: '_CommonStore.setMonth',
+    );
     try {
       return super.setMonth(m);
     } finally {
@@ -130,7 +147,8 @@ mixin _$CommonStore on _CommonStore, Store {
   @override
   void setYear(int y) {
     final _$actionInfo = _$_CommonStoreActionController.startAction(
-        name: '_CommonStore.setYear');
+      name: '_CommonStore.setYear',
+    );
     try {
       return super.setYear(y);
     } finally {
@@ -141,7 +159,8 @@ mixin _$CommonStore on _CommonStore, Store {
   @override
   void setSearchText(String txt) {
     final _$actionInfo = _$_CommonStoreActionController.startAction(
-        name: '_CommonStore.setSearchText');
+      name: '_CommonStore.setSearchText',
+    );
     try {
       return super.setSearchText(txt);
     } finally {
@@ -152,7 +171,8 @@ mixin _$CommonStore on _CommonStore, Store {
   @override
   void clearSearch() {
     final _$actionInfo = _$_CommonStoreActionController.startAction(
-        name: '_CommonStore.clearSearch');
+      name: '_CommonStore.clearSearch',
+    );
     try {
       return super.clearSearch();
     } finally {

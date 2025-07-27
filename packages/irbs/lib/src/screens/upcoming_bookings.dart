@@ -10,7 +10,7 @@ import '../widgets/home/current_bookings_widget.dart';
 import '../widgets/home/empty_sate.dart';
 
 class UpcomingBookingsScreen extends StatefulWidget {
-  const UpcomingBookingsScreen({Key? key}) : super(key: key);
+  const UpcomingBookingsScreen({super.key});
   @override
   State<UpcomingBookingsScreen> createState() => _UpcomingBookingsScreenState();
 }

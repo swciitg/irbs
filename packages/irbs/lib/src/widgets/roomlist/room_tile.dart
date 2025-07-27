@@ -11,7 +11,7 @@ import '../../globals/colors.dart';
 
 class RoomTile extends StatefulWidget {
   final RoomModel room;
-  const RoomTile({Key? key, required this.room}) : super(key: key);
+  const RoomTile({super.key, required this.room});
 
   @override
   State<RoomTile> createState() => _RoomTileState();

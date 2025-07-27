@@ -15,7 +15,7 @@ import 'onboarding.dart';
 
 class BookingDetails extends StatelessWidget {
   final BookingModel booking;
-  const BookingDetails({Key? key, required this.booking}) : super(key: key);
+  const BookingDetails({super.key, required this.booking});
   @override
   Widget build(BuildContext context) {
     var store = context.read<RoomDetailStore>();

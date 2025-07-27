@@ -28,12 +28,12 @@ class DataStore {
     return results[0];
   }
 
-  clearAll() {
+  void clearAll() {
     upcomingFlag = false;
     userData = {};
   }
 
-  clear() {
+  void clear() {
     upcomingFlag = false;
   }
 

@@ -7,52 +7,62 @@ import '../models/room_model.dart';
 import 'auth_helper.dart';
 
 class APIService {
-  final dio = Dio(BaseOptions(
+  final dio = Dio(
+    BaseOptions(
       baseUrl: Endpoints.baseUrl,
       connectTimeout: const Duration(seconds: 15),
       receiveTimeout: const Duration(seconds: 15),
-      headers: Endpoints.getHeader()));
+      headers: Endpoints.getHeader(),
+    ),
+  );
 
   APIService() {
-    dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) async {
-      // print("THIS IS TOKEN");
-      // print(await AuthUserHelpers.getAccessToken());
-      // print(options.path);
-      options.headers["Authorization"] = "Bearer ${await AuthUserHelpers.getAccessToken()}";
-      handler.next(options);
-    }, onError: (error, handler) async {
-      var response = error.response;
-      if (response != null && response.statusCode == 401) {
-        if ((await AuthUserHelpers.getAccessToken()).isEmpty) {
-          showSnackBar("Login to continue!!");
-        } else {
-          // print(response.requestOptions.path);
-          bool couldRegenerate = await AuthUserHelpers().regenerateAccessToken();
-          // print(couldRegenerate);
-          // ignore: use_build_context_synchronously
-          if (couldRegenerate) {
-            // retry
-            return handler.resolve(await AuthUserHelpers().retryRequest(response));
-          } else {
-            showSnackBar("Your session has expired!! Login again.");
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          // print("THIS IS TOKEN");
+          // print(await AuthUserHelpers.getAccessToken());
+          // print(options.path);
+          options.headers["Authorization"] = "Bearer ${await AuthUserHelpers.getAccessToken()}";
+          handler.next(options);
+        },
+        onError: (error, handler) async {
+          var response = error.response;
+          if (response != null && response.statusCode == 401) {
+            if ((await AuthUserHelpers.getAccessToken()).isEmpty) {
+              showSnackBar("Login to continue!!");
+            } else {
+              // print(response.requestOptions.path);
+              bool couldRegenerate = await AuthUserHelpers().regenerateAccessToken();
+              // print(couldRegenerate);
+              // ignore: use_build_context_synchronously
+              if (couldRegenerate) {
+                // retry
+                return handler.resolve(await AuthUserHelpers().retryRequest(response));
+              } else {
+                showSnackBar("Your session has expired!! Login again.");
+              }
+            }
+          } else if (response != null && response.statusCode == 403) {
+            showSnackBar("Access not allowed in guest mode");
+          } else if (response != null && response.statusCode == 400) {
+            // print(response);
+            // print("HEllo worldo");
+            //showSnackBar(response.data["message"]);
           }
-        }
-      } else if (response != null && response.statusCode == 403) {
-        showSnackBar("Access not allowed in guest mode");
-      } else if (response != null && response.statusCode == 400) {
-        // print(response);
-        // print("HEllo worldo");
-        //showSnackBar(response.data["message"]);
-      }
-      // admin user with expired tokens
-      return handler.next(error);
-    }));
+          // admin user with expired tokens
+          return handler.next(error);
+        },
+      ),
+    );
   }
 
   Future<List<BookingModel>> getOwnedRoomBookings() async {
     try {
-      Response res = await dio.get('${Endpoints.baseUrl}${Endpoints.getOwnedRoomBookings}',
-          queryParameters: {'status': 'requested'});
+      Response res = await dio.get(
+        '${Endpoints.baseUrl}${Endpoints.getOwnedRoomBookings}',
+        queryParameters: {'status': 'requested'},
+      );
 
       if (res.statusCode == 200) {
         List<BookingModel> bookings = [];
@@ -133,11 +143,16 @@ class APIService {
     }
   }
 
-  Future<List<BookingModel>> getMonthWiseRoomBookings(
-      {required String roomId, required String month, required String year}) async {
+  Future<List<BookingModel>> getMonthWiseRoomBookings({
+    required String roomId,
+    required String month,
+    required String year,
+  }) async {
     try {
-      Response res = await dio.get(Endpoints.baseUrl + Endpoints.getRoomBookings,
-          queryParameters: {'roomId': roomId, 'month': month, 'year': year});
+      Response res = await dio.get(
+        Endpoints.baseUrl + Endpoints.getRoomBookings,
+        queryParameters: {'roomId': roomId, 'month': month, 'year': year},
+      );
 
       if (res.statusCode == 200) {
         var bookingMapList = res.data;
@@ -158,8 +173,11 @@ class APIService {
     }
   }
 
-  Future<List<BookingModel>> getBookingsForCalendar(
-      {required String roomId, required int month, required int year}) async {
+  Future<List<BookingModel>> getBookingsForCalendar({
+    required String roomId,
+    required int month,
+    required int year,
+  }) async {
     //get current month bookings
     List<BookingModel> bookings = await getMonthWiseRoomBookings(
       roomId: roomId,
@@ -175,7 +193,10 @@ class APIService {
     }
 
     List<BookingModel> nextMonthBookings = await getMonthWiseRoomBookings(
-        roomId: roomId, month: (month + 1).toString(), year: year.toString());
+      roomId: roomId,
+      month: (month + 1).toString(),
+      year: year.toString(),
+    );
 
     bookings.addAll(nextMonthBookings);
     bookings.removeWhere((element) => element.status == "requested");
@@ -225,8 +246,10 @@ class APIService {
 
   Future<bool> rejectBooking(String bookingId, String rejectionReason) async {
     try {
-      Response res = await dio.post(Endpoints.baseUrl + Endpoints.rejectBooking,
-          data: {'id': bookingId, 'reasonRejection': rejectionReason});
+      Response res = await dio.post(
+        Endpoints.baseUrl + Endpoints.rejectBooking,
+        data: {'id': bookingId, 'reasonRejection': rejectionReason},
+      );
 
       if (res.statusCode == 200) {
         // print('Booking rejected');
@@ -242,16 +265,15 @@ class APIService {
   Future<bool> acceptBooking(String bookingId, String instructions) async {
     try {
       // print(instructions);
-      Response res = await dio.post(Endpoints.baseUrl + Endpoints.acceptBooking, data: {
-        'id': bookingId,
-        'acceptInstructions': instructions == "" ? "NONE" : instructions
-      });
+      Response res = await dio.post(
+        Endpoints.baseUrl + Endpoints.acceptBooking,
+        data: {'id': bookingId, 'acceptInstructions': instructions == "" ? "NONE" : instructions},
+      );
 
       if (res.statusCode == 200) {
         // print('Booking accepted');
         return true;
       } else {
-        print(res);
         throw Exception(res.statusMessage);
       }
     } catch (e) {
@@ -261,8 +283,10 @@ class APIService {
 
   Future<List<BookingModel>> getUpcomingBokings() async {
     try {
-      Response res = await dio
-          .get(Endpoints.getRoomBookings, queryParameters: {'isMy': true, 'upcoming': true});
+      Response res = await dio.get(
+        Endpoints.getRoomBookings,
+        queryParameters: {'isMy': true, 'upcoming': true},
+      );
       if (res.statusCode == 200) {
         var bookingMapList = res.data;
         List<BookingModel> currentBooking = [];
@@ -270,9 +294,7 @@ class APIService {
         for (var booking in bookingMapList) {
           DateTime b = DateTime.parse(booking['outTime']);
           if (!a.isAfter(b)) {
-            currentBooking.add(
-              BookingModel.fromJson(booking),
-            );
+            currentBooking.add(BookingModel.fromJson(booking));
           }
         }
         sortByParameter(currentBooking, (a, b) => b.inTime.compareTo(a.inTime));
@@ -292,8 +314,10 @@ class APIService {
 
   Future<List<BookingModel>> getBookingHistory({int month = 1, int year = 2023}) async {
     try {
-      Response res = await dio.get(Endpoints.getRoomBookings,
-          queryParameters: {'isMy': true, 'upcoming': false, 'month': month, 'year': year});
+      Response res = await dio.get(
+        Endpoints.getRoomBookings,
+        queryParameters: {'isMy': true, 'upcoming': false, 'month': month, 'year': year},
+      );
       if (res.statusCode == 200) {
         var bookingMapList = res.data;
         List<BookingModel> bookings = [];
@@ -301,9 +325,7 @@ class APIService {
         for (var booking in bookingMapList) {
           DateTime b = DateTime.parse(booking['outTime']);
           if (a.isAfter(b)) {
-            bookings.add(
-              BookingModel.fromJson(booking),
-            );
+            bookings.add(BookingModel.fromJson(booking));
           }
         }
         sortByParameter(bookings, (a1, b1) => b1.outTime.compareTo(a1.outTime));
@@ -337,9 +359,7 @@ class APIService {
     try {
       Response response = await dio.patch(
         '${Endpoints.deleteBooking}/$id',
-        data: {
-          "outTime": DateTime.now().toString(),
-        },
+        data: {"outTime": DateTime.now().toString()},
       );
       if (response.statusCode == 200) {
         // print('updated');
@@ -382,6 +402,8 @@ class APIService {
 }
 
 void sortByParameter<BookingModel>(
-    List<BookingModel> list, int Function(BookingModel a, BookingModel b) compare) {
+  List<BookingModel> list,
+  int Function(BookingModel a, BookingModel b) compare,
+) {
   list.sort(compare);
 }

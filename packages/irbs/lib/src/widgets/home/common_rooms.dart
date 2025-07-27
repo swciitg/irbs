@@ -77,7 +77,7 @@ class _CommonRoomsState extends State<CommonRooms> {
 
 class CommonRoomGrid extends StatefulWidget {
   final List<RoomModel> commonRooms;
-  const CommonRoomGrid({Key? key, required this.commonRooms}) : super(key: key);
+  const CommonRoomGrid({super.key, required this.commonRooms});
 
   @override
   State<CommonRoomGrid> createState() => _CommonRoomGridState();
@@ -105,7 +105,7 @@ class _CommonRoomGridState extends State<CommonRoomGrid> {
 class GridWidget extends StatelessWidget {
   final String name;
   final RoomModel? room;
-  const GridWidget({Key? key, required this.name, this.room}) : super(key: key);
+  const GridWidget({super.key, required this.name, this.room});
   @override
   Widget build(BuildContext context) {
     return InkWell(

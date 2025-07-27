@@ -12,9 +12,9 @@ import '../../store/room_detail_store.dart';
 class BookingTile extends StatefulWidget {
   final BookingModel model;
   const BookingTile({
-    Key? key,
+    super.key,
     required this.model,
-  }) : super(key: key);
+  });
 
   @override
   State<BookingTile> createState() => _BookingTileState();

@@ -10,13 +10,12 @@ class UpcomingBookingsWidget extends StatefulWidget {
   final String date;
   final String name;
   const UpcomingBookingsWidget(
-      {Key? key,
+      {super.key,
       required this.status,
       required this.startTime,
       required this.endTime,
       required this.date,
-      required this.name})
-      : super(key: key);
+      required this.name});
 
   @override
   State<UpcomingBookingsWidget> createState() => _UpcomingBookingsWidgetState();

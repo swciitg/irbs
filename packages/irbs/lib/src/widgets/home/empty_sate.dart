@@ -5,7 +5,7 @@ import '../../globals/colors.dart';
 
 class EmptyListPlaceholder extends StatelessWidget {
   final String text;
-  const EmptyListPlaceholder({Key? key, required this.text}) : super(key: key);
+  const EmptyListPlaceholder({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {

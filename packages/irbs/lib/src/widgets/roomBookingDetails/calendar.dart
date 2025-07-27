@@ -30,14 +30,17 @@ class _CalendarState extends State<Calendar> {
     List<CalendarEventData> res = [];
     for (var booking in bookings) {
       if (booking.status == 'accepted') {
-        res.add(CalendarEventData(
+        res.add(
+          CalendarEventData(
             title: booking.bookingPurpose,
             date: DateTime.parse(booking.inTime),
             startTime: DateTime.parse(booking.inTime),
             color: Colors.green,
             endTime: DateTime.parse(booking.outTime),
             endDate: DateTime.parse(booking.outTime),
-            description: jsonEncode(booking.toJson())));
+            description: jsonEncode(booking.toJson()),
+          ),
+        );
       }
     }
     return res;
@@ -51,18 +54,20 @@ class _CalendarState extends State<Calendar> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: Observer(builder: (context) {
-            return cs.pending > 0
-                ? FutureBuilder(
+          child: Observer(
+            builder: (context) {
+              return cs.pending > 0
+                  ? FutureBuilder(
                     future: APIService().getBookingsForCalendar(
-                        roomId: widget.roomId, month: currentMonth, year: currentYear),
+                      roomId: widget.roomId,
+                      month: currentMonth,
+                      year: currentYear,
+                    ),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
                         return const CalendarShimmer();
                       } else if (snapshot.hasError) {
-                        return Center(
-                          child: Text(snapshot.error.toString()),
-                        );
+                        return Center(child: Text(snapshot.error.toString()));
                       } else {
                         ctrl.addAll(getEvents(snapshot.data!));
                         return WeekView(
@@ -70,7 +75,9 @@ class _CalendarState extends State<Calendar> {
                             return Container();
                           },
                           hourIndicatorSettings: const HourIndicatorSettings(
-                              color: Themes.subHeadingColor, height: 0.7),
+                            color: Themes.subHeadingColor,
+                            height: 0.7,
+                          ),
                           timeLineBuilder: (date) {
                             return Padding(
                               padding: const EdgeInsets.only(left: 3.0),
@@ -94,24 +101,20 @@ class _CalendarState extends State<Calendar> {
                               ],
                             );
                           },
-                          headerStyle: const HeaderStyle(
-                              headerTextStyle: TextStyle(
-                                color: Themes.white,
-                              ),
-                              leftIcon: Icon(
-                                Icons.chevron_left,
-                                color: Themes.white,
-                              ),
-                              rightIcon: Icon(
-                                Icons.chevron_right,
-                                color: Themes.white,
-                              ),
-                              decoration: BoxDecoration(color: Themes.calenderBgColor)),
+                          headerStyle: HeaderStyle(
+                            headerTextStyle: TextStyle(color: Themes.white),
+                            leftIconConfig: IconDataConfig(
+                              icon: (_) => Icon(Icons.chevron_left, color: Themes.white),
+                            ),
+                            rightIconConfig: IconDataConfig(
+                              icon: (_) => Icon(Icons.chevron_right, color: Themes.white),
+                            ),
+                            decoration: BoxDecoration(color: Themes.calenderBgColor),
+                          ),
                           backgroundColor: Themes.calenderBgColor,
                           controller: ctrl,
                           onPageChange: (date, index) {
                             if (currentMonth != date.month) {
-                              print("called setstate");
                               setState(() {
                                 currentMonth = date.month;
                                 currentYear = date.year;
@@ -122,12 +125,16 @@ class _CalendarState extends State<Calendar> {
                           maxDay: DateTime(2050),
                           onEventTap: (events, date) {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BookingDetails(
-                                          booking: BookingModel.fromJson(
-                                              jsonDecode(events.first.description!)),
-                                        )));
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => BookingDetails(
+                                      booking: BookingModel.fromJson(
+                                        jsonDecode(events.first.description!),
+                                      ),
+                                    ),
+                              ),
+                            );
                           },
                           initialDay: DateTime.now().toLocal(),
                           startDay: WeekDays.sunday,
@@ -135,9 +142,10 @@ class _CalendarState extends State<Calendar> {
                       }
                     },
                   )
-                : Container();
-          }),
-        )
+                  : Container();
+            },
+          ),
+        ),
       ],
     );
   }

@@ -38,10 +38,9 @@ abstract class _CommonStore with Store {
       ObservableMap<String, RoomModel>.of({});
 
   @action
-  initialisePinnedRooms(BuildContext context) async {
+  Future<String> initialisePinnedRooms(BuildContext context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? res = prefs.getString('pinnedRooms');
-    if (!context.mounted) return;
     var rd = context.read<RoomDetailStore>();
     if (res != null) {
       Map<String, dynamic> a = jsonDecode(res);
