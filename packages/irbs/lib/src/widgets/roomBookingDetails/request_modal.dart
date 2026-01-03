@@ -397,12 +397,13 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
       ),
       readOnly: true,
       onTap: () async {
+        final now = DateTime.now();
         FocusScope.of(context).requestFocus(FocusNode());
         pickedDate = await showDatePicker(
           context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime(2023),
-          lastDate: DateTime(2026),
+          initialDate: now,
+          firstDate: now,
+          lastDate: now.add(Duration(days: 365)),
           builder: (context, child) => IRBSDatePicker(child: child),
         );
         if (pickedDate != null) {
