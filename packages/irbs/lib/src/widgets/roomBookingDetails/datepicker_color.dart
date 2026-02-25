@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 import '../../globals/colors.dart';
 
 class IRBSDatePicker extends StatefulWidget {
@@ -16,26 +16,28 @@ class _IRBSDatePickerState extends State<IRBSDatePicker> {
     return Theme(
       data: Theme.of(context).copyWith(
         textTheme: TextTheme(
-          headlineMedium: OnestopFonts.w400,
-          headlineSmall: OnestopFonts.w400, // Selected Date landscape
-          titleLarge: OnestopFonts.w400, // Selected Date portrait
-          labelSmall: OnestopFonts.w400, // Title - SELECT DATE
-          bodyLarge: OnestopFonts.w400, // year gridbview picker
-          titleMedium: OnestopFonts.w400, // input
-          titleSmall: OnestopFonts.w400, // month/year picker
-          bodySmall: OnestopFonts.w400, // days
+          headlineMedium: OTextStyle.bodySmall,
+          headlineSmall: OTextStyle.bodySmall, // Selected Date landscape
+          titleLarge: OTextStyle.bodySmall, // Selected Date portrait
+          labelSmall: OTextStyle.bodySmall, // Title - SELECT DATE
+          bodyLarge: OTextStyle.bodySmall, // year gridbview picker
+          titleMedium: OTextStyle.bodySmall, // input
+          titleSmall: OTextStyle.bodySmall, // month/year picker
+          bodySmall: OTextStyle.bodySmall, // days
         ),
-        colorScheme: const ColorScheme.dark(
+        colorScheme: ColorScheme.light(
           primary: Themes.datePickerPrimaryColor,
           surface: Themes.datePickerSurfaceColor,
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-              backgroundColor: Themes.datePickerSurfaceColor, // button
-              foregroundColor: Themes.primaryColor,
-              elevation: 0,
-              textStyle: OnestopFonts.w400),
-        ), dialogTheme: DialogThemeData(backgroundColor: Themes.datePickerSurfaceColor),
+            backgroundColor: Themes.datePickerSurfaceColor, // button
+            foregroundColor: Themes.primaryColor,
+            elevation: 0,
+            textStyle: OTextStyle.bodySmall,
+          ),
+        ),
+        dialogTheme: DialogThemeData(backgroundColor: Themes.datePickerSurfaceColor),
       ),
       child: widget.child!,
     );

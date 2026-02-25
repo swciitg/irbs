@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 import '../../globals/colors.dart';
 import '../../globals/styles.dart';
 
@@ -27,7 +27,9 @@ class _RequestTileState extends State<RequestTile> {
       width: screenWidth * 304 / 360,
       // padding: ,
       decoration: BoxDecoration(
-          color: Themes.requestTile, borderRadius: BorderRadius.circular(screenWidth * 4 / 360)),
+        color: Themes.requestTile,
+        borderRadius: BorderRadius.circular(screenWidth * 4 / 360),
+      ),
       child: Stack(
         children: [
           Positioned(
@@ -38,10 +40,10 @@ class _RequestTileState extends State<RequestTile> {
               height: screenWidth * 24 / 360,
               child: Text(
                 widget.bookingData.roomDetails.roomName,
-                style: OnestopFonts.w500
-                    .size(14)
-                    .setColor(Themes.permanentTextColor)
-                    .copyWith(color: Themes.white, fontSize: 14 * screenWidth / 360),
+                style: OTextStyle.labelSmall.copyWith(
+                  color: OColor.gray800,
+                  fontSize: 14 * screenWidth / 360,
+                ),
               ),
             ),
           ),
@@ -60,13 +62,11 @@ class _RequestTileState extends State<RequestTile> {
                     child: Text(
                       'Request by -',
                       overflow: TextOverflow.ellipsis,
-                      style: OnestopFonts.w400
-                          .size(12)
-                          .setColor(Themes.permanentTextColor)
-                          .setHeight(1.33)
-                          .letterSpace(0.4)
-                          .copyWith(
-                              fontSize: 10 * screenWidth / 360, color: Themes.white60, height: 1),
+                      style: OTextStyle.bodyXSmall.copyWith(
+                        fontSize: 10 * screenWidth / 360,
+                        color: OColor.gray600,
+                        height: 1,
+                      ),
                     ),
                   ),
                   Container(
@@ -74,15 +74,13 @@ class _RequestTileState extends State<RequestTile> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       widget.bookingData.userInfo.email.toString(),
-                      style: OnestopFonts.w400
-                          .size(12)
-                          .setColor(Themes.permanentTextColor)
-                          .setHeight(1.33)
-                          .letterSpace(0.4)
-                          .copyWith(
-                              fontSize: 10 * screenWidth / 360, color: Themes.white, height: 1),
+                      style: OTextStyle.bodyXSmall.copyWith(
+                        fontSize: 10 * screenWidth / 360,
+                        color: OColor.gray800,
+                        height: 1,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -102,13 +100,11 @@ class _RequestTileState extends State<RequestTile> {
                     child: Text(
                       'Purpose -',
                       overflow: TextOverflow.ellipsis,
-                      style: OnestopFonts.w400
-                          .size(12)
-                          .setColor(Themes.permanentTextColor)
-                          .setHeight(1.33)
-                          .letterSpace(0.4)
-                          .copyWith(
-                              fontSize: 10 * screenWidth / 360, color: Themes.white60, height: 1),
+                      style: OTextStyle.bodyXSmall.copyWith(
+                        fontSize: 10 * screenWidth / 360,
+                        color: OColor.gray600,
+                        height: 1,
+                      ),
                     ),
                   ),
                   Container(
@@ -118,15 +114,13 @@ class _RequestTileState extends State<RequestTile> {
                     child: Text(
                       widget.bookingData.bookingPurpose,
                       overflow: TextOverflow.ellipsis,
-                      style: OnestopFonts.w400
-                          .size(12)
-                          .setColor(Themes.permanentTextColor)
-                          .setHeight(1.33)
-                          .letterSpace(0.4)
-                          .copyWith(
-                              fontSize: 10 * screenWidth / 360, color: Themes.white60, height: 1),
+                      style: OTextStyle.bodyXSmall.copyWith(
+                        fontSize: 10 * screenWidth / 360,
+                        color: OColor.gray600,
+                        height: 1,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -145,13 +139,11 @@ class _RequestTileState extends State<RequestTile> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Time Slot -',
-                      style: OnestopFonts.w400
-                          .size(12)
-                          .setColor(Themes.permanentTextColor)
-                          .setHeight(1.33)
-                          .letterSpace(0.4)
-                          .copyWith(
-                              fontSize: 10 * screenWidth / 360, color: Themes.white60, height: 1),
+                      style: OTextStyle.bodyXSmall.copyWith(
+                        fontSize: 10 * screenWidth / 360,
+                        color: OColor.gray600,
+                        height: 1,
+                      ),
                     ),
                   ),
                   Container(
@@ -160,15 +152,13 @@ class _RequestTileState extends State<RequestTile> {
                     child: Text(
                       '${DateFormat('hh:mm a').format(DateTime.parse(widget.bookingData.inTime))} - ${DateFormat('hh:mm a').format(DateTime.parse(widget.bookingData.outTime))}',
                       // '10:00 AM - 02:00 PM',
-                      style: OnestopFonts.w400
-                          .size(12)
-                          .setColor(Themes.permanentTextColor)
-                          .setHeight(1.33)
-                          .letterSpace(0.4)
-                          .copyWith(
-                              fontSize: 10 * screenWidth / 360, color: Themes.white, height: 1),
+                      style: OTextStyle.bodyXSmall.copyWith(
+                        fontSize: 10 * screenWidth / 360,
+                        color: OColor.gray800,
+                        height: 1,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -187,13 +177,11 @@ class _RequestTileState extends State<RequestTile> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Date -',
-                      style: OnestopFonts.w400
-                          .size(12)
-                          .setColor(Themes.permanentTextColor)
-                          .setHeight(1.33)
-                          .letterSpace(0.4)
-                          .copyWith(
-                              fontSize: 10 * screenWidth / 360, color: Themes.white60, height: 1),
+                      style: OTextStyle.bodyXSmall.copyWith(
+                        fontSize: 10 * screenWidth / 360,
+                        color: OColor.gray600,
+                        height: 1,
+                      ),
                     ),
                   ),
                   Container(
@@ -201,15 +189,13 @@ class _RequestTileState extends State<RequestTile> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       DateFormat('MMMM dd, yyyy').format(DateTime.parse(widget.bookingData.inTime)),
-                      style: OnestopFonts.w400
-                          .size(12)
-                          .setColor(Themes.permanentTextColor)
-                          .setHeight(1.33)
-                          .letterSpace(0.4)
-                          .copyWith(
-                              fontSize: 10 * screenWidth / 360, color: Themes.white, height: 1),
+                      style: OTextStyle.bodyXSmall.copyWith(
+                        fontSize: 10 * screenWidth / 360,
+                        color: OColor.gray800,
+                        height: 1,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -221,27 +207,30 @@ class _RequestTileState extends State<RequestTile> {
               width: 272 * screenWidth / 360,
               height: 32 * screenWidth / 360,
               child: ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          contentPadding: EdgeInsets.zero,
-                          insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-                          content: RespondDialogue(
-                              bookingData: widget.bookingData, commonStore: widget.commonStore),
-                        );
-                      },
-                    );
-                  },
-                  style: elevatedButtonStyle.copyWith(
-                    shape: WidgetStateProperty.all(
-                      RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                    ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        contentPadding: EdgeInsets.zero,
+                        insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                        content: RespondDialogue(
+                          bookingData: widget.bookingData,
+                          commonStore: widget.commonStore,
+                        ),
+                      );
+                    },
+                  );
+                },
+                style: elevatedButtonStyle.copyWith(
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                   ),
-                  child: const Text('Respond')),
+                ),
+                child: const Text('Respond'),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

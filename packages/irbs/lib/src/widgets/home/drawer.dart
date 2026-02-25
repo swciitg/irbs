@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 import 'package:provider/provider.dart';
 import '../../functions/launch_phone.dart';
 import '../../globals/colors.dart';
@@ -42,19 +42,11 @@ class SideDrawer extends StatelessWidget {
                           ),
                           Text(
                             DataStore.userData["name"] ?? "Name",
-                            style: OnestopFonts.w600
-                                .size(14)
-                                .setColor(Themes.white)
-                                .setHeight(1.715)
-                                .letterSpace(0.1),
+                            style: OTextStyle.headingXSmall.copyWith(color: OColor.gray800),
                           ),
                           Text(
                             DataStore.userData["rollNo"] ?? "RollNumber",
-                            style: OnestopFonts.w600
-                                .size(14)
-                                .setColor(Themes.white)
-                                .setHeight(1.715)
-                                .letterSpace(0.1),
+                            style: OTextStyle.headingXSmall.copyWith(color: OColor.gray800),
                           ),
                           const SizedBox(height: 28),
                         ],
@@ -72,10 +64,7 @@ class SideDrawer extends StatelessWidget {
                             children: [
                               Text(
                                 "My Rooms",
-                                style: OnestopFonts.w500
-                                    .size(14)
-                                    .setColor(Themes.primaryColor)
-                                    .copyWith(color: Themes.white.withValues(alpha: 0.5)),
+                                style: OTextStyle.labelSmall.copyWith(color: OColor.gray600),
                               ),
                             ],
                           ),
@@ -92,11 +81,7 @@ class SideDrawer extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(vertical: 6),
                                   child: Text(
                                     roomName,
-                                    style: OnestopFonts.w600
-                                        .size(15)
-                                        .setColor(Themes.white)
-                                        .setHeight(1.333)
-                                        .letterSpace(0.1),
+                                    style: OTextStyle.headingXSmall.copyWith(color: OColor.gray800),
                                   ),
                                 ),
                                 onTap: () {
@@ -130,10 +115,7 @@ class SideDrawer extends StatelessWidget {
                               const SizedBox(width: 24),
                               Text(
                                 "Need Help?",
-                                style: OnestopFonts.w500
-                                    .size(12)
-                                    .setColor(Themes.cancelButtonColor)
-                                    .copyWith(color: Themes.white, height: 2),
+                                style: OTextStyle.labelXSmall.copyWith(color: OColor.gray800),
                               ),
                               const SizedBox(width: 8),
                               GestureDetector(
@@ -142,14 +124,10 @@ class SideDrawer extends StatelessWidget {
                                 },
                                 child: Text(
                                   'Contact Us',
-                                  style: OnestopFonts.w500
-                                      .size(12)
-                                      .setColor(Themes.cancelButtonColor)
-                                      .copyWith(
-                                        color: Themes.white,
-                                        height: 2,
-                                        decoration: TextDecoration.underline,
-                                      ),
+                                  style: OTextStyle.labelXSmall.copyWith(
+                                    color: OColor.gray800,
+                                    decoration: TextDecoration.underline,
+                                  ),
                                 ),
                               ),
                             ],
@@ -164,7 +142,7 @@ class SideDrawer extends StatelessWidget {
                   left: 16,
                   top: 16,
                   child: GestureDetector(
-                    child: const Icon(Icons.close, color: Themes.white),
+                    child: Icon(Icons.close, color: Themes.white),
                     onTap: () {
                       Navigator.pop(context);
                     },

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:irbs/src/functions/format_time.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 import 'package:provider/provider.dart';
 
 import '../../globals/colors.dart';
@@ -67,7 +67,7 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
                   alignment: Alignment.centerLeft,
                   child: Text(
                     widget.room.roomName,
-                    style: OnestopFonts.w700.size(16).setColor(Themes.white).setHeight(1.5),
+                    style: OTextStyle.headingSmall.copyWith(color: Themes.white),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -75,7 +75,9 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Choose a date and time you want to book the room for.',
-                    style: OnestopFonts.w400.size(10).setColor(Themes.white.withValues(alpha: 0.6)),
+                    style: OTextStyle.bodyXSmall.copyWith(
+                      color: Themes.white.withValues(alpha: 0.6),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -89,11 +91,7 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'State the purpose of your booking',
-                    style: OnestopFonts.w400
-                        .size(12)
-                        .letterSpace(0.4)
-                        .setHeight(1.33)
-                        .setColor(Themes.permanentTextColor),
+                    style: OTextStyle.bodyXSmall.copyWith(color: Themes.permanentTextColor),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -120,10 +118,10 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
       },
       maxLines: 3,
       keyboardType: TextInputType.multiline,
-      style: OnestopFonts.w500.size(14).setColor(Themes.white),
+      style: OTextStyle.labelSmall.copyWith(color: Themes.white),
       decoration: textFieldDecoration.copyWith(
         hintText: 'Type here...',
-        hintStyle: OnestopFonts.w400.size(12).setColor(Themes.comet),
+        hintStyle: OTextStyle.bodyXSmall.copyWith(color: Themes.comet),
       ),
     );
   }
@@ -132,21 +130,17 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
     return TextFormField(
       controller: nameCtl,
       readOnly: true,
-      style: OnestopFonts.w500.size(14).setColor(Themes.permanentTextColor),
+      style: OTextStyle.labelSmall.copyWith(color: Themes.permanentTextColor),
       decoration: InputDecoration(
         labelText: 'Name',
-        labelStyle: OnestopFonts.w400
-            .size(12)
-            .letterSpace(0.4)
-            .setHeight(1.33)
-            .setColor(Themes.permanentTextColor),
+        labelStyle: OTextStyle.bodyXSmall.copyWith(color: Themes.permanentTextColor),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.0),
-          borderSide: const BorderSide(color: Themes.modalBorderColor),
+          borderSide: BorderSide(color: Themes.modalBorderColor),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.0),
-          borderSide: const BorderSide(color: Themes.modalBorderColor),
+          borderSide: BorderSide(color: Themes.modalBorderColor),
         ),
       ),
     );
@@ -229,7 +223,7 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
           ),
           child:
               isLoading
-                  ? const Padding(
+                  ? Padding(
                     padding: EdgeInsets.all(4.0),
                     child: Row(
                       children: [
@@ -242,7 +236,7 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
                   : Center(
                     child: Text(
                       'Send Request',
-                      style: OnestopFonts.w500.size(14).setColor(Themes.onPrimaryColor),
+                      style: OTextStyle.labelSmall.copyWith(color: Themes.onPrimaryColor),
                     ),
                   ),
         ),
@@ -270,16 +264,12 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
           }
           return null;
         },
-        style: OnestopFonts.w500.size(14).setColor(Themes.white),
+        style: OTextStyle.labelSmall.copyWith(color: Themes.white),
         decoration: textFieldDecoration.copyWith(
           labelText: 'To',
-          labelStyle: OnestopFonts.w400
-              .size(12)
-              .letterSpace(0.4)
-              .setHeight(1.33)
-              .setColor(Themes.permanentTextColor),
+          labelStyle: OTextStyle.bodyXSmall.copyWith(color: Themes.permanentTextColor),
           prefixIconColor: Themes.white,
-          prefixIcon: const ImageIcon(
+          prefixIcon: ImageIcon(
             AssetImage('packages/irbs/assets/images/clock_icon.png'),
             color: Themes.white,
           ),
@@ -330,16 +320,12 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
           }
           return null;
         },
-        style: OnestopFonts.w500.size(14).setColor(Themes.white),
+        style: OTextStyle.labelSmall.copyWith(color: Themes.white),
         decoration: textFieldDecoration.copyWith(
           labelText: 'From',
-          labelStyle: OnestopFonts.w400
-              .size(12)
-              .letterSpace(0.4)
-              .setHeight(1.33)
-              .setColor(Themes.permanentTextColor),
+          labelStyle: OTextStyle.bodyXSmall.copyWith(color: Themes.permanentTextColor),
           prefixIconColor: Themes.white,
-          prefixIcon: const ImageIcon(
+          prefixIcon: ImageIcon(
             AssetImage('packages/irbs/assets/images/clock_icon.png'),
             color: Themes.white,
           ),
@@ -381,16 +367,12 @@ class _RequestModalState extends State<RequestModal> with SingleTickerProviderSt
         }
         return null;
       },
-      style: OnestopFonts.w500.size(14).setColor(Themes.white),
+      style: OTextStyle.labelSmall.copyWith(color: Themes.white),
       decoration: textFieldDecoration.copyWith(
         labelText: 'Date',
-        labelStyle: OnestopFonts.w400
-            .size(12)
-            .letterSpace(0.4)
-            .setHeight(1.33)
-            .setColor(Themes.permanentTextColor),
+        labelStyle: OTextStyle.bodyXSmall.copyWith(color: Themes.permanentTextColor),
         prefixIconColor: Themes.white,
-        prefixIcon: const ImageIcon(
+        prefixIcon: ImageIcon(
           AssetImage('packages/irbs/assets/images/calender_icon.png'),
           color: Themes.white,
         ),

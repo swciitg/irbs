@@ -1,69 +1,64 @@
 import 'package:flutter/material.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 import 'colors.dart';
 
 final elevatedButtonStyle = ButtonStyle(
-  shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+  shape: WidgetStateProperty.all(
+    RoundedRectangleBorder(borderRadius: BorderRadius.circular(OCornerRadius.s)),
+  ),
   backgroundColor: WidgetStateProperty.all(Themes.primaryColor),
-  foregroundColor: WidgetStateProperty.all(Themes.onPrimaryColor),
+  foregroundColor: WidgetStateProperty.all(OColor.white),
 );
 
 final textInputDecoration = InputDecoration(
   filled: true,
-  fillColor: Themes.tileColor,
+  fillColor: OColor.gray100,
   hintText: 'Name*',
-  hintStyle: OnestopFonts.w400.size(14).setColor(Themes.kSubHeading).letterSpace(0.5),
-  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+  hintStyle: OTextStyle.bodySmall.copyWith(color: OColor.gray400),
+  contentPadding: const EdgeInsets.symmetric(horizontal: OSpacing.m),
   border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(4),
-      borderSide: const BorderSide(
-        color: Colors.transparent,
-        width: 0,
-      )),
+    borderRadius: BorderRadius.circular(OCornerRadius.s),
+    borderSide: BorderSide(color: OColor.gray200, width: 1),
+  ),
   focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(4),
-      borderSide: const BorderSide(
-        color: Colors.transparent,
-        width: 0,
-      )),
+    borderRadius: BorderRadius.circular(OCornerRadius.s),
+    borderSide: BorderSide(color: OColor.green600, width: 1),
+  ),
   enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(4),
-      borderSide: const BorderSide(
-        color: Colors.transparent,
-        width: 0,
-      )),
+    borderRadius: BorderRadius.circular(OCornerRadius.s),
+    borderSide: BorderSide(color: OColor.gray200, width: 1),
+  ),
   errorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(4),
-      borderSide: const BorderSide(
-        color: Colors.transparent,
-        width: 0,
-      )),
+    borderRadius: BorderRadius.circular(OCornerRadius.s),
+    borderSide: BorderSide(color: OColor.red500, width: 1),
+  ),
 );
 
 var textFieldDecoration = InputDecoration(
-    enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(4.0),
-        borderSide: const BorderSide(color: Color.fromRGBO(255, 255, 255, 0.5))),
-    focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(4.0),
-        borderSide: const BorderSide(color: Color.fromRGBO(255, 255, 255, 0.5))),
-    errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(4.0), borderSide: const BorderSide(color: Colors.red)),
-    focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(4.0), borderSide: const BorderSide(color: Colors.red)));
+  enabledBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(OCornerRadius.s),
+    borderSide: BorderSide(color: OColor.gray200),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(OCornerRadius.s),
+    borderSide: BorderSide(color: OColor.green600),
+  ),
+  errorBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(OCornerRadius.s),
+    borderSide: BorderSide(color: OColor.red500),
+  ),
+  focusedErrorBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(OCornerRadius.s),
+    borderSide: BorderSide(color: OColor.red500),
+  ),
+);
 
 final searchBarBorder = InputDecoration(
   isDense: true,
   contentPadding: EdgeInsets.zero,
-  border: const OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.transparent),
-  ),
-  enabledBorder: const OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.transparent),
-  ),
-  focusedBorder: const OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.transparent),
-  ),
-  hintText: 'Search Keyword (name,position etc.)',
-  hintStyle: OnestopFonts.w400.size(12).setColor(Themes.comet),
+  border: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
+  enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
+  focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
+  hintText: 'Search rooms...',
+  hintStyle: OTextStyle.bodyXSmall.copyWith(color: OColor.gray400),
 );

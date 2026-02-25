@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 
 import '../../models/room_model.dart';
 import '../../screens/room_booking_details.dart';
@@ -25,10 +25,7 @@ class _RoomTileState extends State<RoomTile> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => RoomBookingDetails(
-                    room: widget.room,
-                  )),
+          MaterialPageRoute(builder: (context) => RoomBookingDetails(room: widget.room)),
         );
         // Navigator.pushNamed(context, '/irbs/roomBookingDetails', arguments: widget.room);
       },
@@ -50,17 +47,18 @@ class _RoomTileState extends State<RoomTile> {
                 child: Text(
                   widget.room.roomName,
                   overflow: TextOverflow.ellipsis,
-                  style: OnestopFonts.w500.size(14).setColor(Themes.white),
+                  style: OTextStyle.labelSmall.copyWith(color: Themes.white),
                 ),
               ),
             ),
             //   ],
             // ),
-            Observer(builder: (context) {
-              return Row(
-                children: [
-                  cs.pinnedRooms.keys.contains(widget.room.id)
-                      ? GestureDetector(
+            Observer(
+              builder: (context) {
+                return Row(
+                  children: [
+                    cs.pinnedRooms.keys.contains(widget.room.id)
+                        ? GestureDetector(
                           child: SizedBox(
                             height: 48,
                             width: 20,
@@ -74,7 +72,7 @@ class _RoomTileState extends State<RoomTile> {
                             await cs.removePinnedRooms(widget.room.id);
                           },
                         )
-                      : GestureDetector(
+                        : GestureDetector(
                           child: SizedBox(
                             height: 48,
                             width: 20,
@@ -88,12 +86,11 @@ class _RoomTileState extends State<RoomTile> {
                             await cs.addPinnedRooms(widget.room);
                           },
                         ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                ],
-              );
-            })
+                    const SizedBox(width: 15),
+                  ],
+                );
+              },
+            ),
           ],
         ),
       ),

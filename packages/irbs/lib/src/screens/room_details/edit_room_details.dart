@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:provider/provider.dart';
 import '../../functions/snackbar.dart';
 import '../../globals/colors.dart';
@@ -40,66 +41,63 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        leading: GestureDetector(
-          onTap: () {
+        scrolledUnderElevation: 0,
+        leading: IconButton(
+          icon: Icon(FluentIcons.arrow_left_24_regular, color: OColor.gray800),
+          onPressed: () {
             Navigator.pop(context);
           },
-          child: const Icon(
-            Icons.arrow_back_sharp,
-            color: Themes.white,
-          ),
         ),
-        title: Text(
-          "IRBS",
-          style: OnestopFonts.w500.size(20).setColor(Themes.white),
-        ),
-        backgroundColor: Themes.tileColor,
+        title: Text("IRBS", style: OTextStyle.headingMedium.copyWith(color: OColor.gray800)),
+        backgroundColor: OColor.gray100,
       ),
-      body: Stack(fit: StackFit.expand, children: [
-        SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  EditRoomTextField(title: 'Room Name', controller: roomNameCtl),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  EditRoomTextField(title: 'Room Capacity', controller: capacityCtl),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  EditRoomTextField(title: "Instructions", controller: instructionCtl),
-                ],
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    EditRoomTextField(title: 'Room Name', controller: roomNameCtl),
+                    const SizedBox(height: 16),
+                    EditRoomTextField(title: 'Room Capacity', controller: capacityCtl),
+                    const SizedBox(height: 16),
+                    EditRoomTextField(title: "Instructions", controller: instructionCtl),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        Positioned(
+          Positioned(
             left: 0,
             right: 0,
             bottom: 0,
-            child: Column(children: [
-              Container(
-                height: 24,
-                decoration: const BoxDecoration(
+            child: Column(
+              children: [
+                Container(
+                  height: 24,
+                  decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Themes.gradientBackgroundColor, Themes.backgroundColor])),
-              ),
-              Container(
-                color: Themes.backgroundColor,
-                child: Container(
-                  height: 52,
-                  margin: const EdgeInsets.fromLTRB(17, 0, 16, 36),
-                  decoration: const BoxDecoration(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Themes.gradientBackgroundColor, Themes.backgroundColor],
+                    ),
+                  ),
+                ),
+                Container(
+                  color: Themes.backgroundColor,
+                  child: Container(
+                    height: 52,
+                    margin: const EdgeInsets.fromLTRB(17, 0, 16, 36),
+                    decoration: BoxDecoration(
                       color: Themes.primaryColor,
-                      borderRadius: BorderRadius.all(Radius.circular(4))),
-                  child: InkWell(
+                      borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    ),
+                    child: InkWell(
                       onTap: () async {
                         if (!apiCall) {
                           if (_formKey.currentState!.validate() == false) {
@@ -108,7 +106,7 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
                             var details = jsonEncode({
                               'roomName': roomNameCtl.text,
                               'roomCapacity': capacityCtl.text,
-                              'instructions': instructionCtl.text
+                              'instructions': instructionCtl.text,
                             });
                             setState(() {
                               apiCall = true;
@@ -116,35 +114,35 @@ class _EditRoomScreenState extends State<EditRoomScreen> {
                             await APIService()
                                 .editRoomDetails(widget.data.id, details)
                                 .then((value) {
-                              rd.updateRoom(value);
-                              Navigator.pop(context);
-                            }).catchError((error, stackTrace) {
-                              showSnackBar(error.toString());
-                              setState(() {
-                                apiCall = false;
-                              });
-                            });
+                                  rd.updateRoom(value);
+                                  Navigator.pop(context);
+                                })
+                                .catchError((error, stackTrace) {
+                                  showSnackBar(error.toString());
+                                  setState(() {
+                                    apiCall = false;
+                                  });
+                                });
                           }
                         }
                       },
                       child: Center(
-                          child: Text(
-                        'Save Details',
-                        style: OnestopFonts.w700.size(16),
-                      ))),
+                        child: Text(
+                          'Save Details',
+                          style: OTextStyle.labelMedium.copyWith(color: OColor.white),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ])),
-        if (apiCall)
-          const Opacity(
-            opacity: 0.8,
-            child: ModalBarrier(dismissible: false, color: Themes.black),
+              ],
+            ),
           ),
-        if (apiCall)
-          const Center(
-            child: CircularProgressIndicator(),
-          ),
-      ]),
+          if (apiCall)
+            Opacity(opacity: 0.8, child: ModalBarrier(dismissible: false, color: Themes.black)),
+          if (apiCall) const Center(child: CircularProgressIndicator()),
+        ],
+      ),
     );
   }
 }

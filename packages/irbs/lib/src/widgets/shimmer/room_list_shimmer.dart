@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onestop_ui/index.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../models/room_model.dart';
@@ -18,8 +19,8 @@ class _RoomListShimmerState extends State<RoomListShimmer> {
     return SafeArea(
       child: SingleChildScrollView(
         child: Shimmer.fromColors(
-          highlightColor: const Color.fromRGBO(68, 71, 79, 1),
-          baseColor: const Color.fromRGBO(47, 48, 51, 1),
+          highlightColor: OColor.gray100,
+          baseColor: OColor.gray200,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -28,26 +29,14 @@ class _RoomListShimmerState extends State<RoomListShimmer> {
                 type: 'Club Rooms',
                 roomList: [
                   RoomModel(
-                    owner: [''], 
-                    roomName: '', 
-                    allowedUsers: [''], 
-                    roomType: 'roomType', 
-                    roomCapacity: 0, 
-                    id: ' id', 
-                    ownerInfo: [
-                      OwnerInfo(
-                        name: 'name', 
-                        email: 'email', 
-                        rollNo: 'rollNo'
-                      ),
-                    ], 
-                    allowedUserInfo: [
-                      OwnerInfo(
-                        name: 'name', 
-                        email: 'email', 
-                        rollNo: 'rollNo'
-                      ),
-                    ]
+                    owner: [''],
+                    roomName: '',
+                    allowedUsers: [''],
+                    roomType: 'roomType',
+                    roomCapacity: 0,
+                    id: ' id',
+                    ownerInfo: [OwnerInfo(name: 'name', email: 'email', rollNo: 'rollNo')],
+                    allowedUserInfo: [OwnerInfo(name: 'name', email: 'email', rollNo: 'rollNo')],
                   ),
                 ],
               ),
@@ -55,26 +44,14 @@ class _RoomListShimmerState extends State<RoomListShimmer> {
                 type: 'Common Rooms',
                 roomList: [
                   RoomModel(
-                    owner: [''], 
-                    roomName: '', 
-                    allowedUsers: [''], 
-                    roomType: 'roomType', 
-                    roomCapacity: 0, 
-                    id: ' id', 
-                    ownerInfo: [
-                      OwnerInfo(
-                        name: 'name', 
-                        email: 'email', 
-                        rollNo: 'rollNo'
-                      ),
-                    ], 
-                    allowedUserInfo: [
-                      OwnerInfo(
-                        name: 'name', 
-                        email: 'email', 
-                        rollNo: 'rollNo'
-                      ),
-                    ]
+                    owner: [''],
+                    roomName: '',
+                    allowedUsers: [''],
+                    roomType: 'roomType',
+                    roomCapacity: 0,
+                    id: ' id',
+                    ownerInfo: [OwnerInfo(name: 'name', email: 'email', rollNo: 'rollNo')],
+                    allowedUserInfo: [OwnerInfo(name: 'name', email: 'email', rollNo: 'rollNo')],
                   ),
                 ],
               ),
@@ -82,30 +59,18 @@ class _RoomListShimmerState extends State<RoomListShimmer> {
                 type: 'Board Rooms',
                 roomList: [
                   RoomModel(
-                    owner: [''], 
-                    roomName: '', 
-                    allowedUsers: [''], 
-                    roomType: 'roomType', 
-                    roomCapacity: 0, 
-                    id: ' id', 
-                    ownerInfo: [
-                      OwnerInfo(
-                        name: 'name', 
-                        email: 'email', 
-                        rollNo: 'rollNo'
-                      ),
-                    ], 
-                    allowedUserInfo: [
-                      OwnerInfo(
-                        name: 'name', 
-                        email: 'email', 
-                        rollNo: 'rollNo'
-                      ),
-                    ]
+                    owner: [''],
+                    roomName: '',
+                    allowedUsers: [''],
+                    roomType: 'roomType',
+                    roomCapacity: 0,
+                    id: ' id',
+                    ownerInfo: [OwnerInfo(name: 'name', email: 'email', rollNo: 'rollNo')],
+                    allowedUserInfo: [OwnerInfo(name: 'name', email: 'email', rollNo: 'rollNo')],
                   ),
                 ],
-              )
-            ]
+              ),
+            ],
           ),
         ),
       ),

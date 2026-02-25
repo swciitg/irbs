@@ -1,13 +1,13 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:irbs/src/models/room_model.dart';
 import 'package:irbs/src/screens/error_screen.dart';
 import 'package:irbs/src/widgets/home/home_upcoming_bookings.dart';
 import 'package:irbs/src/widgets/shimmer/room_list_shimmer.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 import 'package:provider/provider.dart';
 import '../screens/room_list.dart';
-import '../globals/colors.dart';
 import '../store/common_store.dart';
 import '../store/data_store.dart';
 import '../store/room_detail_store.dart';
@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           isAdmin = true;
         }
         return Scaffold(
-          backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
+          backgroundColor: OColor.gray100,
           endDrawer: (!isAdmin) ? null : const SideDrawer(),
           appBar: _buildAppBar(context),
           body: RefreshIndicator(
@@ -75,10 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.only(top: 18, left: 16, bottom: 10),
                       child: Text(
                         'Requests',
-                        style: OnestopFonts.w600
-                            .setColor(Themes.kSubHeading)
-                            .size(14)
-                            .letterSpace(0.5),
+                        style: OTextStyle.headingSmall.copyWith(color: OColor.gray600),
                       ),
                     ),
                   if (isAdmin) const PendingRequestCarousel(),
@@ -86,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   _buildUpcomingBookings(context, rd, snapshot.data!),
                   _buildPinnedRooms(cs),
                   const CommonRooms(),
-                  const SizedBox(height: 108)
+                  const SizedBox(height: 108),
                 ],
               ),
             ),
@@ -101,22 +98,18 @@ class _HomeScreenState extends State<HomeScreen> {
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      leading: GestureDetector(
-        onTap: () {
+      elevation: 0,
+      scrolledUnderElevation: 0,
+      leading: IconButton(
+        icon: Icon(FluentIcons.arrow_left_24_regular, color: OColor.gray800),
+        onPressed: () {
           DataStore().clearAll();
           Navigator.of(context, rootNavigator: true).pop();
         },
-        child: const Icon(
-          Icons.arrow_back_sharp,
-          color: Themes.white,
-        ),
       ),
-      title: Text(
-        "IRBS",
-        style: OnestopFonts.w500.size(20).setColor(Themes.white),
-      ),
+      title: Text("IRBS", style: OTextStyle.headingMedium.copyWith(color: OColor.gray800)),
       actions: _buildAppBarActions(context),
-      backgroundColor: Themes.kCommonBoxBackground,
+      backgroundColor: OColor.gray100,
     );
   }
 
@@ -130,9 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (!snapshot.hasData) {
               return const RoomListShimmer();
             } else if (snapshot.hasError) {
-              return Center(
-                child: Text(snapshot.error.toString()),
-              );
+              return Center(child: Text(snapshot.error.toString()));
             } else {
               if (snapshot.data!.isNotEmpty) {
                 isAdmin = true;
@@ -151,20 +142,19 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Container(
         height: 52,
         margin: const EdgeInsets.fromLTRB(17, 0, 16, 36),
-        decoration: const BoxDecoration(
-            color: Color.fromRGBO(118, 172, 255, 1),
-            borderRadius: BorderRadius.all(Radius.circular(4))),
+        decoration: BoxDecoration(
+          color: OColor.green600,
+          borderRadius: BorderRadius.circular(OCornerRadius.m),
+        ),
         child: InkWell(
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => const RoomListScreen(),
-              ),
+              MaterialPageRoute(builder: (BuildContext context) => const RoomListScreen()),
             );
           },
           child: Center(
-            child: Text('Book a Room', style: OnestopFonts.w700.size(16)),
+            child: Text('Book a Room', style: OTextStyle.labelMedium.copyWith(color: OColor.white)),
           ),
         ),
       ),
@@ -178,26 +168,20 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            'Current Bookings',
-            style: OnestopFonts.w600.setColor(Themes.kSubHeading).size(14).letterSpace(0.5),
-          ),
+          Text('Current Bookings', style: OTextStyle.headingSmall.copyWith(color: OColor.gray600)),
           TextButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => const BookingHistoryScreen(),
-                ),
+                MaterialPageRoute(builder: (BuildContext context) => const BookingHistoryScreen()),
               );
             },
             child: Text(
               'View History',
-              style: OnestopFonts.w400
-                  .size(12)
-                  .letterSpace(0.5)
-                  .underline()
-                  .setColor(Themes.kTextButtonColor),
+              style: OTextStyle.bodyXSmall.copyWith(
+                color: OColor.green600,
+                decoration: TextDecoration.underline,
+              ),
             ),
           ),
         ],
@@ -212,33 +196,26 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: () {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-              builder: (BuildContext context) => const OnboardingScreen(),
-            ),
+            MaterialPageRoute(builder: (BuildContext context) => const OnboardingScreen()),
           );
         },
         child: Padding(
           padding: const EdgeInsets.only(right: 11.0),
-          child: Image.asset(
-            'assets/question_circle.png',
-            package: 'irbs',
-            height: 24,
-            width: 24,
-          ),
+          child: Image.asset('assets/question_circle.png', package: 'irbs', height: 24, width: 24),
         ),
-      )
+      ),
     ];
   }
 
   Widget _buildUpcomingBookings(BuildContext context, RoomDetailStore rd, List<RoomModel> rooms) {
     return !DataStore.isGuest()
         ? Observer(
-            builder: (context) {
-              return rd.upcomingBookings.isEmpty
-                  ? const EmptyListPlaceholder(text: 'No Upcoming Bookings')
-                  : HomeUpcomingBookings(rooms: rooms);
-            },
-          )
+          builder: (context) {
+            return rd.upcomingBookings.isEmpty
+                ? const EmptyListPlaceholder(text: 'No Upcoming Bookings')
+                : HomeUpcomingBookings(rooms: rooms);
+          },
+        )
         : const SizedBox();
   }
 }

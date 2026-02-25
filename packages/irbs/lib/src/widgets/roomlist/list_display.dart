@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 
 import 'room_tile.dart';
 import '../../globals/colors.dart';
@@ -8,11 +8,7 @@ import '../../models/room_model.dart';
 class ListDisplay extends StatefulWidget {
   final String type;
   final List<RoomModel> roomList;
-  const ListDisplay({
-    super.key,
-    required this.roomList,
-    required this.type,
-  });
+  const ListDisplay({super.key, required this.roomList, required this.type});
 
   @override
   State<ListDisplay> createState() => _ListDisplayState();
@@ -24,24 +20,26 @@ class _ListDisplayState extends State<ListDisplay> {
     return widget.roomList.isEmpty
         ? const SizedBox()
         : Column(
-            children: [
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                    Text(
-                      widget.type,
-                      style: OnestopFonts.w400.size(14).setColor(Themes.regentGrey),
-                    )
-                  ])),
-              ListView.builder(
-                  padding: const EdgeInsets.all(0),
-                  physics: const ClampingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: widget.roomList.length,
-                  itemBuilder: (context, index) {
-                    return RoomTile(room: widget.roomList[index]);
-                  }),
-            ],
-          );
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(widget.type, style: OTextStyle.bodySmall.copyWith(color: Themes.regentGrey)),
+                ],
+              ),
+            ),
+            ListView.builder(
+              padding: const EdgeInsets.all(0),
+              physics: const ClampingScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: widget.roomList.length,
+              itemBuilder: (context, index) {
+                return RoomTile(room: widget.roomList[index]);
+              },
+            ),
+          ],
+        );
   }
 }

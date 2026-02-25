@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:provider/provider.dart';
 import '../globals/colors.dart';
 import '../models/booking_model.dart';
@@ -20,25 +21,25 @@ class PendingRequestsScreen extends StatelessWidget {
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
         centerTitle: true,
-        leading: GestureDetector(
-          onTap: () {
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        leading: IconButton(
+          icon: Icon(FluentIcons.arrow_left_24_regular, color: OColor.gray800),
+          onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Icon(
-            Icons.arrow_back_sharp,
-            color: Colors.white,
-          ),
         ),
         title: Text(
           "Pending Requests",
-          style: OnestopFonts.w500.size(20).setColor(Themes.white),
+          style: OTextStyle.headingMedium.copyWith(color: OColor.gray800),
         ),
-        backgroundColor: Themes.tileColor,
+        backgroundColor: OColor.gray100,
       ),
       body: SafeArea(
-        child: Observer(builder: (context) {
-          return cs.pending > 0
-              ? FutureBuilder(
+        child: Observer(
+          builder: (context) {
+            return cs.pending > 0
+                ? FutureBuilder(
                   future: APIService().getOwnedRoomBookings(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) return const AllRequestsShimmer();
@@ -52,17 +53,16 @@ class PendingRequestsScreen extends StatelessWidget {
                         return Center(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: RequestTile(
-                              bookingData: snapshot.data![index],
-                              commonStore: cs,
-                            ),
+                            child: RequestTile(bookingData: snapshot.data![index], commonStore: cs),
                           ),
                         );
                       },
                     );
-                  })
-              : Container();
-        }),
+                  },
+                )
+                : Container();
+          },
+        ),
       ),
     );
   }

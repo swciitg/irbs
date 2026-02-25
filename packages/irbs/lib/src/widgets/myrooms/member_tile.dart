@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 import '../../functions/launch_phone.dart';
 import '../../globals/colors.dart';
 
@@ -13,12 +13,13 @@ class MemberTile extends StatefulWidget {
   final int index;
   final RoomModel room;
   final bool isPersonAdmin;
-  const MemberTile(
-      {super.key,
-      required this.isAdmin,
-      required this.index,
-      required this.room,
-      required this.isPersonAdmin});
+  const MemberTile({
+    super.key,
+    required this.isAdmin,
+    required this.index,
+    required this.room,
+    required this.isPersonAdmin,
+  });
 
   @override
   State<MemberTile> createState() => _MemberTileState();
@@ -74,24 +75,18 @@ class _MemberTileState extends State<MemberTile> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                name,
-                style: OnestopFonts.w500.size(14).setColor(Themes.white),
-              ),
-              Text(
-                widget.isPersonAdmin ? 'Admin' : 'Member',
-                style: OnestopFonts.w400
-                    .size(10)
-                    .setColor(Themes.white)
-                    .setHeight(1.2)
-                    .letterSpace(0.1),
-              )
-            ],
-          )),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(name, style: OTextStyle.labelSmall.copyWith(color: Themes.white)),
+                Text(
+                  widget.isPersonAdmin ? 'Admin' : 'Member',
+                  style: OTextStyle.bodyXSmall.copyWith(color: Themes.white),
+                ),
+              ],
+            ),
+          ),
           GestureDetector(
             onTap: () async {
               if (phone != null) {
@@ -112,28 +107,32 @@ class _MemberTileState extends State<MemberTile> {
                   borderRadius: BorderRadius.all(Radius.circular(4)),
                 ),
                 constraints: const BoxConstraints(minWidth: 160),
-                icon: const Icon(
-                  Icons.more_vert,
-                  color: Themes.white,
-                ),
-                itemBuilder: (ctx) => [
-                  buildPopupMenuItem(widget.isPersonAdmin ? "Change to Member" : 'Change to Admin',
-                      'packages/irbs/assets/images/edit.svg', 1),
-                  buildPopupMenuItem("Remove", 'packages/irbs/assets/images/removeCross.svg', 2)
-                ],
+                icon: Icon(Icons.more_vert, color: Themes.white),
+                itemBuilder:
+                    (ctx) => [
+                      buildPopupMenuItem(
+                        widget.isPersonAdmin ? "Change to Member" : 'Change to Admin',
+                        'packages/irbs/assets/images/edit.svg',
+                        1,
+                      ),
+                      buildPopupMenuItem(
+                        "Remove",
+                        'packages/irbs/assets/images/removeCross.svg',
+                        2,
+                      ),
+                    ],
                 onSelected: (value) async {
                   showEditMemberDialogue(
-                      rootContext: context,
-                      room: widget.room,
-                      index: widget.index,
-                      isPersonAdmin: widget.isPersonAdmin,
-                      type: value == 1 ? "change" : "remove");
+                    rootContext: context,
+                    room: widget.room,
+                    index: widget.index,
+                    isPersonAdmin: widget.isPersonAdmin,
+                    type: value == 1 ? "change" : "remove",
+                  );
                 },
               ),
             ),
-          const SizedBox(
-            width: 8,
-          )
+          const SizedBox(width: 8),
         ],
       ),
     );
@@ -145,18 +144,9 @@ PopupMenuItem buildPopupMenuItem(String title, String iconAddress, int val) {
     value: val,
     child: Row(
       children: [
-        SvgPicture.asset(
-          iconAddress,
-          height: 12,
-        ),
-        const SizedBox(
-          width: 8,
-        ),
-        Text(
-          title,
-          style:
-              OnestopFonts.w400.size(12).setColor(Themes.white).setHeight(1.219).letterSpace(0.1),
-        ),
+        SvgPicture.asset(iconAddress, height: 12),
+        const SizedBox(width: 8),
+        Text(title, style: OTextStyle.bodyXSmall.copyWith(color: Themes.white)),
       ],
     ),
   );
