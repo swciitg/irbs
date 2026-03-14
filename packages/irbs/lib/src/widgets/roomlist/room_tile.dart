@@ -1,96 +1,72 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:onestop_ui/index.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/room_model.dart';
-import '../../screens/room_booking_details.dart';
 import '../../store/common_store.dart';
-import 'package:provider/provider.dart';
-import '../../globals/colors.dart';
+import '../home/room_detail_popup.dart';
 
-class RoomTile extends StatefulWidget {
+class RoomTile extends StatelessWidget {
   final RoomModel room;
   const RoomTile({super.key, required this.room});
 
-  @override
-  State<RoomTile> createState() => _RoomTileState();
-}
-
-class _RoomTileState extends State<RoomTile> {
   @override
   Widget build(BuildContext context) {
     var cs = context.read<CommonStore>();
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => RoomBookingDetails(room: widget.room)),
-        );
-        // Navigator.pushNamed(context, '/irbs/roomBookingDetails', arguments: widget.room);
+        showRoomDetailPopup(context, room);
       },
       child: Container(
         height: 48,
         margin: const EdgeInsets.only(left: 16, right: 16, bottom: 6),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color: Themes.tileColor,
-          borderRadius: BorderRadius.circular(8), // Set the radius here
+          color: OColor.white,
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.75,
+            Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(top: 15, bottom: 16, left: 15),
+                padding: const EdgeInsets.only(left: 15),
                 child: Text(
-                  widget.room.roomName,
+                  room.roomName,
                   overflow: TextOverflow.ellipsis,
-                  style: OTextStyle.labelSmall.copyWith(color: Themes.white),
+                  style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
                 ),
               ),
             ),
-            //   ],
-            // ),
             Observer(
               builder: (context) {
-                return Row(
-                  children: [
-                    cs.pinnedRooms.keys.contains(widget.room.id)
-                        ? GestureDetector(
-                          child: SizedBox(
-                            height: 48,
-                            width: 20,
-                            child: SvgPicture.asset(
-                              "packages/irbs/assets/images/pinned.svg",
-                              height: 20,
-                              width: 20,
-                            ),
-                          ),
-                          onTap: () async {
-                            await cs.removePinnedRooms(widget.room.id);
-                          },
-                        )
-                        : GestureDetector(
-                          child: SizedBox(
-                            height: 48,
-                            width: 20,
-                            child: SvgPicture.asset(
-                              "packages/irbs/assets/images/unpinned.svg",
-                              height: 20,
-                              width: 20,
-                            ),
-                          ),
-                          onTap: () async {
-                            await cs.addPinnedRooms(widget.room);
-                          },
-                        ),
-                    const SizedBox(width: 15),
-                  ],
+                final isPinned = cs.pinnedRooms.keys.contains(room.id);
+                return GestureDetector(
+                  onTap: () async {
+                    if (isPinned) {
+                      await cs.removePinnedRooms(room.id);
+                    } else {
+                      await cs.addPinnedRooms(room);
+                    }
+                  },
+                  child: Icon(
+                    isPinned
+                        ? FluentIcons.star_20_filled
+                        : FluentIcons.star_20_regular,
+                    color: OColor.green600,
+                    size: 20,
+                  ),
                 );
               },
             ),
+            const SizedBox(width: 8),
+            Icon(
+              FluentIcons.chevron_right_20_regular,
+              color: OColor.gray400,
+              size: 20,
+            ),
+            const SizedBox(width: 12),
           ],
         ),
       ),

@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:onestop_ui/index.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:provider/provider.dart';
-import '../../globals/colors.dart';
 import '../../store/data_store.dart';
 import '../../store/room_detail_store.dart';
 import '../../widgets/myrooms/add_member_dailogue.dart';
@@ -27,150 +26,225 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
     return Observer(
       builder: (context) {
         return Scaffold(
-          backgroundColor: Themes.backgroundColor,
+          backgroundColor: OColor.gray100,
           appBar: AppBar(
             centerTitle: true,
             elevation: 0,
             scrolledUnderElevation: 0,
             leading: IconButton(
               icon: Icon(FluentIcons.arrow_left_24_regular, color: OColor.gray800),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              onPressed: () => Navigator.of(context).pop(),
             ),
-            title: Text("IRBS", style: OTextStyle.headingMedium.copyWith(color: OColor.gray800)),
+            title: Text(
+              "IRBS",
+              style: OTextStyle.headingSmall.copyWith(color: OColor.gray800),
+            ),
             backgroundColor: OColor.gray100,
           ),
           body: SingleChildScrollView(
-            child: Container(
-              margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          rd.currentRoom.roomName,
-                          style: OTextStyle.headingLarge.copyWith(color: OColor.gray800),
-                        ),
-                      ),
-                      if (isAdmin)
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => EditRoomScreen(data: rd.currentRoom),
-                              ),
-                            );
-                          },
-                          child: ImageIcon(
-                            const AssetImage('packages/irbs/assets/images/edit.png'),
-                            color: Themes.white,
-                          ),
-                        ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Capacity: ${rd.currentRoom.roomCapacity}',
-                      style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Instructions',
-                      style: OTextStyle.headingXSmall.copyWith(color: OColor.gray600),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      '${rd.currentRoom.instructions}',
-                      style: OTextStyle.bodyXSmall.copyWith(color: OColor.gray800, height: 1.4545),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Members',
-                      style: OTextStyle.headingXSmall.copyWith(color: OColor.gray600),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  if (isAdmin)
-                    InkWell(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          border: Border.all(color: Themes.comet, width: 1),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.add, color: Themes.primaryColor),
-                            Text(
-                              'Add Member',
-                              style: OTextStyle.labelSmall.copyWith(color: Themes.primaryColor),
-                            ),
-                          ],
-                        ),
-                      ),
-                      onTap: () async {
-                        await addMemberDialog(context);
-                      },
-                    ),
-                  const SizedBox(height: 12),
-                  ListView.builder(
-                    padding: const EdgeInsets.all(0),
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: rd.currentRoom.owner.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          MemberTile(
-                            isAdmin: isAdmin,
-                            index: index,
-                            room: rd.currentRoom,
-                            isPersonAdmin: true,
-                          ),
-                          const SizedBox(height: 8),
-                        ],
-                      );
-                    },
-                  ),
-                  ListView.builder(
-                    padding: const EdgeInsets.all(0),
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: rd.currentRoom.allowedUsers.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          MemberTile(
-                            isAdmin: isAdmin,
-                            index: index,
-                            room: rd.currentRoom,
-                            isPersonAdmin: false,
-                          ),
-                          const SizedBox(height: 8),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildRoomHeader(rd),
+                const SizedBox(height: 24),
+                _buildCapacitySection(rd),
+                const SizedBox(height: 24),
+                _buildInstructionsSection(rd),
+                const SizedBox(height: 24),
+                _buildMembersSection(rd),
+                const SizedBox(height: 32),
+              ],
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _buildRoomHeader(RoomDetailStore rd) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: OColor.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: OColor.gray200, width: 0.5),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              color: OColor.green100,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(FluentIcons.building_20_regular, color: OColor.green600, size: 24),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              rd.currentRoom.roomName,
+              style: OTextStyle.headingMedium.copyWith(color: OColor.gray800),
+            ),
+          ),
+          if (isAdmin)
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => EditRoomScreen(data: rd.currentRoom),
+                  ),
+                );
+              },
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  border: Border.all(color: OColor.gray200),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(FluentIcons.edit_20_regular, color: OColor.green600, size: 20),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCapacitySection(RoomDetailStore rd) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: OColor.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: OColor.gray200, width: 0.5),
+      ),
+      child: Row(
+        children: [
+          Icon(FluentIcons.people_20_regular, color: OColor.gray500, size: 20),
+          const SizedBox(width: 8),
+          Text('Capacity', style: OTextStyle.bodySmall.copyWith(color: OColor.gray500)),
+          const Spacer(),
+          Text(
+            '${rd.currentRoom.roomCapacity} Members',
+            style: OTextStyle.labelMedium.copyWith(color: OColor.gray800),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInstructionsSection(RoomDetailStore rd) {
+    final instructions = rd.currentRoom.instructions;
+    if (instructions == null || instructions.isEmpty) return const SizedBox();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Instructions', style: OTextStyle.bodySmall.copyWith(color: OColor.gray500)),
+        const SizedBox(height: 8),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: OColor.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: OColor.gray200, width: 0.5),
+          ),
+          child: Text(
+            instructions,
+            style: OTextStyle.bodySmall.copyWith(color: OColor.gray800, height: 1.5),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMembersSection(RoomDetailStore rd) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Members', style: OTextStyle.bodySmall.copyWith(color: OColor.gray500)),
+            if (isAdmin)
+              GestureDetector(
+                onTap: () async => await addMemberDialog(context),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: OColor.green600),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(FluentIcons.add_20_regular, color: OColor.green600, size: 16),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Add Member',
+                        style: OTextStyle.labelXSmall.copyWith(color: OColor.green600),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        if (rd.currentRoom.owner.isNotEmpty) ...[
+          Text(
+            'Admins',
+            style: OTextStyle.labelXSmall.copyWith(color: OColor.gray400, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 8),
+          ListView.builder(
+            padding: EdgeInsets.zero,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: rd.currentRoom.owner.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: MemberTile(
+                  isAdmin: isAdmin,
+                  index: index,
+                  room: rd.currentRoom,
+                  isPersonAdmin: true,
+                ),
+              );
+            },
+          ),
+        ],
+        if (rd.currentRoom.allowedUsers.isNotEmpty) ...[
+          const SizedBox(height: 8),
+          Text(
+            'Members',
+            style: OTextStyle.labelXSmall.copyWith(color: OColor.gray400, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 8),
+          ListView.builder(
+            padding: EdgeInsets.zero,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: rd.currentRoom.allowedUsers.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: MemberTile(
+                  isAdmin: isAdmin,
+                  index: index,
+                  room: rd.currentRoom,
+                  isPersonAdmin: false,
+                ),
+              );
+            },
+          ),
+        ],
+      ],
     );
   }
 }

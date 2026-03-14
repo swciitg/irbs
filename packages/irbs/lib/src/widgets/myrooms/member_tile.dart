@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:onestop_ui/index.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import '../../functions/launch_phone.dart';
-import '../../globals/colors.dart';
 
 import '../../models/room_model.dart';
 import '../../store/data_store.dart';
@@ -32,6 +31,7 @@ class _MemberTileState extends State<MemberTile> {
   int? phone;
   bool foundName = false;
   bool isMyself = false;
+
   @override
   void initState() {
     super.initState();
@@ -68,86 +68,114 @@ class _MemberTileState extends State<MemberTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 54,
-      padding: const EdgeInsets.fromLTRB(16, 8, 0, 10),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: Themes.tileColor),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: OColor.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: OColor.gray200, width: 0.5),
+      ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          CircleAvatar(
+            radius: 20,
+            backgroundColor: OColor.gray100,
+            child: Icon(FluentIcons.person_20_regular, color: OColor.gray400, size: 20),
+          ),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(name, style: OTextStyle.labelSmall.copyWith(color: Themes.white)),
                 Text(
-                  widget.isPersonAdmin ? 'Admin' : 'Member',
-                  style: OTextStyle.bodyXSmall.copyWith(color: Themes.white),
+                  name,
+                  style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
+                ),
+                const SizedBox(height: 2),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: widget.isPersonAdmin ? OColor.green100 : OColor.gray100,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    widget.isPersonAdmin ? 'Admin' : 'Member',
+                    style: OTextStyle.bodyXSmall.copyWith(
+                      color: widget.isPersonAdmin ? OColor.green600 : OColor.gray500,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
-          GestureDetector(
-            onTap: () async {
-              if (phone != null) {
-                await makePhoneCall(phone!.toString());
-              }
-            },
-            child: ImageIcon(
-              const AssetImage('packages/irbs/assets/images/phone_icon.png'),
-              size: 20,
-              color: phone != null ? Themes.white : Themes.grey,
-            ),
-          ),
-          if (widget.isAdmin && !isMyself)
-            Theme(
-              data: Theme.of(context).copyWith(cardColor: Themes.tileColor),
-              child: PopupMenuButton(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
+          if (phone != null)
+            GestureDetector(
+              onTap: () async => await makePhoneCall(phone!.toString()),
+              child: Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  border: Border.all(color: OColor.gray200),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                constraints: const BoxConstraints(minWidth: 160),
-                icon: Icon(Icons.more_vert, color: Themes.white),
-                itemBuilder:
-                    (ctx) => [
-                      buildPopupMenuItem(
-                        widget.isPersonAdmin ? "Change to Member" : 'Change to Admin',
-                        'packages/irbs/assets/images/edit.svg',
-                        1,
-                      ),
-                      buildPopupMenuItem(
-                        "Remove",
-                        'packages/irbs/assets/images/removeCross.svg',
-                        2,
-                      ),
-                    ],
-                onSelected: (value) async {
-                  showEditMemberDialogue(
-                    rootContext: context,
-                    room: widget.room,
-                    index: widget.index,
-                    isPersonAdmin: widget.isPersonAdmin,
-                    type: value == 1 ? "change" : "remove",
-                  );
-                },
+                child: Icon(FluentIcons.call_20_regular, color: OColor.green600, size: 18),
               ),
             ),
-          const SizedBox(width: 8),
+          if (widget.isAdmin && !isMyself) ...[
+            const SizedBox(width: 8),
+            PopupMenuButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              color: OColor.white,
+              constraints: const BoxConstraints(minWidth: 160),
+              icon: Icon(FluentIcons.more_vertical_20_regular, color: OColor.gray500, size: 20),
+              itemBuilder: (ctx) => [
+                PopupMenuItem(
+                  value: 1,
+                  child: Row(
+                    children: [
+                      Icon(
+                        FluentIcons.arrow_swap_20_regular,
+                        size: 16,
+                        color: OColor.gray600,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        widget.isPersonAdmin ? 'Change to Member' : 'Change to Admin',
+                        style: OTextStyle.bodySmall.copyWith(color: OColor.gray800),
+                      ),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 2,
+                  child: Row(
+                    children: [
+                      Icon(FluentIcons.delete_20_regular, size: 16, color: OColor.red500),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Remove',
+                        style: OTextStyle.bodySmall.copyWith(color: OColor.red500),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+              onSelected: (value) async {
+                showEditMemberDialogue(
+                  rootContext: context,
+                  room: widget.room,
+                  index: widget.index,
+                  isPersonAdmin: widget.isPersonAdmin,
+                  type: value == 1 ? "change" : "remove",
+                );
+              },
+            ),
+          ],
         ],
       ),
     );
   }
-}
-
-PopupMenuItem buildPopupMenuItem(String title, String iconAddress, int val) {
-  return PopupMenuItem(
-    value: val,
-    child: Row(
-      children: [
-        SvgPicture.asset(iconAddress, height: 12),
-        const SizedBox(width: 8),
-        Text(title, style: OTextStyle.bodyXSmall.copyWith(color: Themes.white)),
-      ],
-    ),
-  );
 }
