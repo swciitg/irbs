@@ -109,7 +109,8 @@ class _HomeScreenState extends State<HomeScreen> {
       leading: IconButton(
         icon: Icon(TablerIcons.arrow_left, color: OColor.green600),
         onPressed: () {
-          Navigator.popUntil(context, ModalRoute.withName("/home2"));
+          DataStore().clearAll();
+          Navigator.of(context, rootNavigator: true).pop();
         },
       ),
       centerTitle: true,
