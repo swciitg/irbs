@@ -31,13 +31,22 @@ class ListDisplay extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        ListView.builder(
+        ListView.separated(
           padding: const EdgeInsets.all(0),
           physics: const ClampingScrollPhysics(),
           shrinkWrap: true,
           itemCount: roomList.length,
           itemBuilder: (context, index) {
             return RoomTile(room: roomList[index]);
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return Divider(
+              color: OColor.gray200,
+              height: 0,
+              thickness: 1,
+              indent: 16,
+              endIndent: 16,
+            );
           },
         ),
       ],

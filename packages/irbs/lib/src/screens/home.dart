@@ -1,6 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:irbs/src/screens/error_screen.dart';
 import 'package:irbs/src/widgets/shimmer/room_list_shimmer.dart';
 import 'package:onestop_ui/index.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 import '../store/common_store.dart';
 import '../store/data_store.dart';
 import '../store/room_detail_store.dart';
+import '../models/room_model.dart';
 import '../widgets/home/booking_card.dart';
 import '../widgets/home/favourite_workspaces.dart';
 import '../widgets/home/empty_sate.dart';
@@ -28,6 +30,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isAdmin = false;
+  late Future<List<RoomModel>> _initialDataFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _initialDataFuture = DataStore().initialiseData(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var rd = context.read<RoomDetailStore>();
 
     return FutureBuilder(
-      future: DataStore().initialiseData(context),
+      future: _initialDataFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const HomeShimmer();
@@ -73,7 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.only(left: 16, bottom: 10),
                       child: Text(
                         'Requests',
-                        style: OTextStyle.headingSmall.copyWith(color: OColor.gray600),
+                        style: OTextStyle.headingSmall.copyWith(
+                          color: OColor.gray600,
+                        ),
                       ),
                     ),
                     const PendingRequestCarousel(),
@@ -93,21 +104,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      centerTitle: true,
-      elevation: 0,
       scrolledUnderElevation: 0,
+      backgroundColor: OColor.white,
       leading: IconButton(
-        icon: Icon(FluentIcons.arrow_left_24_regular, color: OColor.gray800),
+        icon: Icon(TablerIcons.arrow_left, color: OColor.green600),
         onPressed: () {
-          DataStore().clearAll();
-          Navigator.of(context, rootNavigator: true).pop();
+          Navigator.popUntil(context, ModalRoute.withName("/home2"));
         },
       ),
+      centerTitle: true,
       title: Text(
-        "IRBS",
-        style: OTextStyle.headingSmall.copyWith(color: OColor.gray800),
+        'SAC Room Booking',
+        style: OTextStyle.labelSmall.copyWith(
+          color: OColor.gray800,
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+        ),
       ),
-      backgroundColor: OColor.gray100,
     );
   }
 
@@ -125,7 +138,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text(
                     'Your Bookings',
-                    style: OTextStyle.headingMedium.copyWith(color: OColor.gray800),
+                    style: OTextStyle.headingMedium.copyWith(
+                      color: OColor.gray800,
+                    ),
                   ),
                   TextButton(
                     onPressed: () {
@@ -154,9 +169,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
-                  itemCount: rd.upcomingBookings.length > 3
-                      ? 3
-                      : rd.upcomingBookings.length,
+                  itemCount:
+                      rd.upcomingBookings.length > 3
+                          ? 3
+                          : rd.upcomingBookings.length,
                   itemBuilder: (context, index) {
                     return BookingCard(model: rd.upcomingBookings[index]);
                   },
@@ -209,7 +225,9 @@ class _HomeScreenState extends State<HomeScreen> {
             if (!snapshot.hasData) {
               return const RoomListShimmer();
             } else if (snapshot.hasError) {
-              return const EmptyListPlaceholder(text: 'Some error occurred, try again');
+              return const EmptyListPlaceholder(
+                text: 'Some error occurred, try again',
+              );
             }
             // Restore pinned rooms from SharedPreferences once rooms are loaded
             final cs = context.read<CommonStore>();

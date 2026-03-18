@@ -37,6 +37,7 @@ dependencies:
       url: https://github.com/swciitg/onestop_ui.git
       ref: dev
       path: packages/onestop_ui
+  flutter_tabler_icons: ^1.43.0
 
 dev_dependencies:
   flutter_test:

@@ -13,8 +13,8 @@ import '../../screens/room_details/room_details.dart';
 import '../../services/api.dart';
 import '../../store/common_store.dart';
 import '../../store/data_store.dart';
-import '../../functions/launch_phone.dart';
 import '../../store/room_detail_store.dart';
+import './contact_dialog.dart';
 
 Future<void> showRoomDetailPopup(BuildContext context, RoomModel room) async {
   await showModalBottomSheet(
@@ -27,7 +27,10 @@ Future<void> showRoomDetailPopup(BuildContext context, RoomModel room) async {
           maxChildSize: 0.95,
           minChildSize: 0.5,
           builder: (context, scrollController) {
-            return _RoomDetailContent(room: room, scrollController: scrollController);
+            return _RoomDetailContent(
+              room: room,
+              scrollController: scrollController,
+            );
           },
         ),
   );
@@ -37,7 +40,10 @@ class _RoomDetailContent extends StatefulWidget {
   final RoomModel room;
   final ScrollController scrollController;
 
-  const _RoomDetailContent({required this.room, required this.scrollController});
+  const _RoomDetailContent({
+    required this.room,
+    required this.scrollController,
+  });
 
   @override
   State<_RoomDetailContent> createState() => _RoomDetailContentState();
@@ -63,7 +69,11 @@ class _RoomDetailContentState extends State<_RoomDetailContent> {
       final now = DateTime.now();
       _currentBookings =
           bookings
-              .where((b) => b.status == 'accepted' && DateTime.parse(b.outTime).isAfter(now))
+              .where(
+                (b) =>
+                    b.status == 'accepted' &&
+                    DateTime.parse(b.outTime).isAfter(now),
+              )
               .toList()
             ..sort((a, b) => a.inTime.compareTo(b.inTime));
       if (_currentBookings.length > 2) {
@@ -105,10 +115,7 @@ class _RoomDetailContentState extends State<_RoomDetailContent> {
           _buildCurrentBookings(),
           const SizedBox(height: 24),
           _buildPOCs(),
-          if (_isAdmin) ...[
-            const SizedBox(height: 24),
-            _buildAdminControls(),
-          ],
+          if (_isAdmin) ...[const SizedBox(height: 24), _buildAdminControls()],
           const SizedBox(height: 24),
         ],
       ),
@@ -140,7 +147,13 @@ class _RoomDetailContentState extends State<_RoomDetailContent> {
         height: 200,
         width: double.infinity,
         color: OColor.gray200,
-        child: Center(child: Icon(FluentIcons.image_24_regular, size: 48, color: OColor.gray400)),
+        child: Center(
+          child: Icon(
+            FluentIcons.image_24_regular,
+            size: 48,
+            color: OColor.gray400,
+          ),
+        ),
       ),
     );
   }
@@ -157,10 +170,17 @@ class _RoomDetailContentState extends State<_RoomDetailContent> {
                   Navigator.pop(context);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EnterDetailsScreen(room: widget.room)),
+                    MaterialPageRoute(
+                      builder:
+                          (context) => EnterDetailsScreen(room: widget.room),
+                    ),
                   );
                 },
-                icon: Icon(FluentIcons.bookmark_20_regular, color: Colors.white, size: 18),
+                icon: Icon(
+                  FluentIcons.bookmark_20_regular,
+                  color: Colors.white,
+                  size: 18,
+                ),
                 label: Text(
                   'Book Room',
                   style: OTextStyle.labelSmall.copyWith(color: Colors.white),
@@ -168,7 +188,9 @@ class _RoomDetailContentState extends State<_RoomDetailContent> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: OColor.green600,
                   padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                 ),
               ),
             ),
@@ -183,18 +205,22 @@ class _RoomDetailContentState extends State<_RoomDetailContent> {
                   }
                 },
                 icon: Icon(
-                  isFavourite ? FluentIcons.star_20_filled : FluentIcons.star_20_regular,
+                  isFavourite
+                      ? FluentIcons.star_20_filled
+                      : FluentIcons.star_20_regular,
                   color: OColor.green600,
                   size: 18,
                 ),
                 label: Text(
-                  isFavourite ? 'Favourited' : 'Add to Favourite',
+                  isFavourite ? 'Remove' : 'Add to Favourite',
                   style: OTextStyle.labelSmall.copyWith(color: OColor.green600),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(color: OColor.green600),
                   padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                 ),
               ),
             ),
@@ -208,7 +234,10 @@ class _RoomDetailContentState extends State<_RoomDetailContent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Capacity', style: OTextStyle.bodySmall.copyWith(color: OColor.gray500)),
+        Text(
+          'Capacity',
+          style: OTextStyle.bodySmall.copyWith(color: OColor.gray500),
+        ),
         const SizedBox(height: 4),
         Text(
           '${widget.room.roomCapacity} Members',
@@ -225,11 +254,17 @@ class _RoomDetailContentState extends State<_RoomDetailContent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Instructions', style: OTextStyle.bodySmall.copyWith(color: OColor.gray500)),
+        Text(
+          'Instructions',
+          style: OTextStyle.bodySmall.copyWith(color: OColor.gray500),
+        ),
         const SizedBox(height: 4),
         Text(
           widget.room.instructions ?? '',
-          style: OTextStyle.bodySmall.copyWith(color: OColor.gray800, height: 1.5),
+          style: OTextStyle.bodySmall.copyWith(
+            color: OColor.gray800,
+            height: 1.5,
+          ),
         ),
       ],
     );
@@ -248,36 +283,9 @@ class _RoomDetailContentState extends State<_RoomDetailContent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Current Booking', style: OTextStyle.bodySmall.copyWith(color: OColor.gray500)),
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => RoomScheduleScreen(room: widget.room),
-                  ),
-                );
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(FluentIcons.calendar_ltr_16_regular, size: 14, color: OColor.green600),
-                  const SizedBox(width: 4),
-                  Text(
-                    'View Schedule',
-                    style: OTextStyle.labelXSmall.copyWith(
-                      color: OColor.green600,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+        Text(
+          'Current Booking',
+          style: OTextStyle.bodySmall.copyWith(color: OColor.gray500),
         ),
         const SizedBox(height: 12),
         if (_currentBookings.isEmpty)
@@ -299,82 +307,112 @@ class _RoomDetailContentState extends State<_RoomDetailContent> {
     final outTime = DateTime.parse(booking.outTime);
     final name = booking.userInfo.name ?? 'Unknown';
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      decoration: BoxDecoration(color: OColor.gray100, borderRadius: BorderRadius.circular(12)),
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            Container(
-              width: 4,
-              decoration: BoxDecoration(
-                color: OColor.green600,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  bottomLeft: Radius.circular(12),
+    return GestureDetector(
+      onTap: () => showContactProfileSheet(context, details: booking.userInfo),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 8),
+        decoration: BoxDecoration(
+          color: OColor.gray100,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: IntrinsicHeight(
+          child: Row(
+            children: [
+              Container(
+                width: 4,
+                decoration: BoxDecoration(
+                  color: OColor.green600,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    bottomLeft: Radius.circular(12),
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(name, style: OTextStyle.labelSmall.copyWith(color: OColor.gray800)),
-                        Icon(FluentIcons.chevron_right_20_regular, color: OColor.gray400, size: 20),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Icon(FluentIcons.calendar_ltr_16_regular, size: 14, color: OColor.gray500),
-                        const SizedBox(width: 4),
-                        Text(
-                          DateFormat("d MMMM yyyy").format(inTime),
-                          style: OTextStyle.bodyXSmall.copyWith(color: OColor.gray600),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 2),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(FluentIcons.clock_16_regular, size: 14, color: OColor.gray500),
-                            const SizedBox(width: 4),
-                            Text(
-                              '${DateFormat("hh:mm a").format(inTime)} - ${DateFormat("hh:mm a").format(outTime)}',
-                              style: OTextStyle.bodyXSmall.copyWith(color: OColor.gray600),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            name,
+                            style: OTextStyle.labelSmall.copyWith(
+                              color: OColor.gray800,
                             ),
-                          ],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: OColor.green100,
-                            borderRadius: BorderRadius.circular(4),
                           ),
-                          child: Text(
-                            'APPROVED',
+                          Icon(
+                            FluentIcons.chevron_right_20_regular,
+                            color: OColor.gray400,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Icon(
+                            FluentIcons.calendar_ltr_16_regular,
+                            size: 14,
+                            color: OColor.gray500,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            DateFormat("d MMMM yyyy").format(inTime),
                             style: OTextStyle.bodyXSmall.copyWith(
-                              color: OColor.green600,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500,
+                              color: OColor.gray600,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                      const SizedBox(height: 2),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                FluentIcons.clock_16_regular,
+                                size: 14,
+                                color: OColor.gray500,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                '${DateFormat("hh:mm a").format(inTime)} - ${DateFormat("hh:mm a").format(outTime)}',
+                                style: OTextStyle.bodyXSmall.copyWith(
+                                  color: OColor.gray600,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: OColor.green100,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              'APPROVED',
+                              style: OTextStyle.bodyXSmall.copyWith(
+                                color: OColor.green600,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -387,62 +425,80 @@ class _RoomDetailContentState extends State<_RoomDetailContent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('POCs', style: OTextStyle.bodySmall.copyWith(color: OColor.gray500)),
+        Text(
+          'POCs',
+          style: OTextStyle.bodySmall.copyWith(color: OColor.gray500),
+        ),
         const SizedBox(height: 12),
-        Row(
-          children:
-              ownerInfoList.map((owner) {
-                final hasPhone = owner.phoneNumber != null;
-                return GestureDetector(
-                  onTap: hasPhone
-                      ? () async => await makePhoneCall(owner.phoneNumber!.toString())
-                      : null,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 24),
-                    child: Column(
-                      children: [
-                        Stack(
-                          children: [
-                            CircleAvatar(
-                              radius: 28,
-                              backgroundColor: OColor.gray100,
-                              child: Icon(FluentIcons.person_24_regular, size: 28, color: OColor.gray400),
-                            ),
-                            if (hasPhone)
-                              Positioned(
-                                right: 0,
-                                bottom: 0,
-                                child: Container(
-                                  width: 22,
-                                  height: 22,
-                                  decoration: BoxDecoration(
-                                    color: OColor.green600,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(color: OColor.white, width: 2),
-                                  ),
-                                  child: Icon(FluentIcons.call_16_filled, color: Colors.white, size: 12),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children:
+                ownerInfoList.map((owner) {
+                  final hasPhone = owner.phoneNumber != null;
+                  return GestureDetector(
+                    onTap:
+                        () => showContactProfileSheet(context, details: owner),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 24),
+                      child: Column(
+                        children: [
+                          Stack(
+                            children: [
+                              CircleAvatar(
+                                radius: 28,
+                                backgroundColor: OColor.gray100,
+                                child: Icon(
+                                  FluentIcons.person_24_regular,
+                                  size: 28,
+                                  color: OColor.gray400,
                                 ),
                               ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          owner.name ?? 'Unknown',
-                          style: OTextStyle.labelXSmall.copyWith(color: OColor.gray800),
-                        ),
-                        if (owner.rollNo != null)
+                              if (hasPhone)
+                                Positioned(
+                                  right: 0,
+                                  bottom: 0,
+                                  child: Container(
+                                    width: 22,
+                                    height: 22,
+                                    decoration: BoxDecoration(
+                                      color: OColor.green600,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: OColor.white,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child: Icon(
+                                      FluentIcons.call_16_filled,
+                                      color: Colors.white,
+                                      size: 12,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
                           Text(
-                            owner.rollNo!,
-                            style: OTextStyle.bodyXSmall.copyWith(
-                              color: OColor.gray500,
-                              fontSize: 10,
+                            owner.name ?? 'Unknown',
+                            style: OTextStyle.labelXSmall.copyWith(
+                              color: OColor.gray800,
                             ),
                           ),
-                      ],
+                          if (owner.rollNo != null)
+                            Text(
+                              owner.rollNo!,
+                              style: OTextStyle.bodyXSmall.copyWith(
+                                color: OColor.gray500,
+                                fontSize: 10,
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              }).toList(),
+                  );
+                }).toList(),
+          ),
         ),
       ],
     );
@@ -473,7 +529,11 @@ class _RoomDetailContentState extends State<_RoomDetailContent> {
                 ),
               );
             },
-            icon: Icon(FluentIcons.settings_20_regular, color: OColor.green600, size: 18),
+            icon: Icon(
+              FluentIcons.settings_20_regular,
+              color: OColor.green600,
+              size: 18,
+            ),
             label: Text(
               'Manage Room',
               style: OTextStyle.labelSmall.copyWith(color: OColor.green600),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:onestop_ui/index.dart';
@@ -56,10 +57,11 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => DatePickerModal(
-        roomId: widget.room.id,
-        initialDate: _selectedDate,
-      ),
+      builder:
+          (context) => DatePickerModal(
+            roomId: widget.room.id,
+            initialDate: _selectedDate,
+          ),
     );
     if (result != null) {
       setState(() => _selectedDate = result);
@@ -75,14 +77,13 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
         month: _selectedDate!.month.toString(),
         year: _selectedDate!.year.toString(),
       );
-      _bookingsForDate = bookings
-          .where((b) {
+      _bookingsForDate =
+          bookings.where((b) {
             final bDate = DateTime.parse(b.inTime);
             return bDate.year == _selectedDate!.year &&
                 bDate.month == _selectedDate!.month &&
                 bDate.day == _selectedDate!.day;
-          })
-          .toList();
+          }).toList();
     } catch (_) {
       _bookingsForDate = [];
     }
@@ -101,9 +102,7 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => TimePickerModal(
-        bookingsForDate: _bookingsForDate,
-      ),
+      builder: (context) => TimePickerModal(bookingsForDate: _bookingsForDate),
     );
     if (result != null) {
       setState(() {
@@ -207,78 +206,97 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
       backgroundColor: OColor.gray100,
       appBar: AppBar(
         centerTitle: true,
+
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(FluentIcons.arrow_left_24_regular, color: OColor.gray800),
+          icon: Icon(TablerIcons.arrow_left, color: OColor.gray800),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'IRBS',
+          widget.room.roomName,
           style: OTextStyle.headingSmall.copyWith(color: OColor.gray800),
         ),
-        backgroundColor: OColor.gray100,
+        backgroundColor: OColor.gray200,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 8),
-            Text(
-              'Enter details',
-              style: OTextStyle.headingLarge.copyWith(
-                color: OColor.gray800,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              'Select Date',
-              style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
-            ),
-            const SizedBox(height: 8),
-            _buildSelectorField(
-              value: _dateDisplay,
-              onTap: _openDatePicker,
-              hasValue: _selectedDate != null,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Select Time',
-              style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
-            ),
-            const SizedBox(height: 8),
-            _buildSelectorField(
-              value: _timeDisplay,
-              onTap: _openTimePicker,
-              hasValue: _startTime != null,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Reason for Booking',
-              style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
-            ),
-            const SizedBox(height: 8),
-            Container(
-              decoration: BoxDecoration(
-                color: OColor.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: OColor.gray200),
-              ),
-              child: TextField(
-                controller: _reasonCtl,
-                maxLines: 5,
-                style: OTextStyle.bodySmall.copyWith(color: OColor.gray800),
-                decoration: InputDecoration(
-                  hintText: 'Context',
-                  hintStyle: OTextStyle.bodySmall.copyWith(color: OColor.gray400),
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.all(16),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 8),
+                    Text(
+                      'Enter details',
+                      style: OTextStyle.headingLarge.copyWith(
+                        color: OColor.gray800,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      'Select Date',
+                      style: OTextStyle.labelSmall.copyWith(
+                        color: OColor.gray800,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    _buildSelectorField(
+                      value: _dateDisplay,
+                      onTap: _openDatePicker,
+                      hasValue: _selectedDate != null,
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      'Select Time',
+                      style: OTextStyle.labelSmall.copyWith(
+                        color: OColor.gray800,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    _buildSelectorField(
+                      value: _timeDisplay,
+                      onTap: _openTimePicker,
+                      hasValue: _startTime != null,
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      'Reason for Booking',
+                      style: OTextStyle.labelSmall.copyWith(
+                        color: OColor.gray800,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: OColor.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: OColor.gray200),
+                      ),
+                      child: TextField(
+                        controller: _reasonCtl,
+                        maxLines: 5,
+                        style: OTextStyle.bodySmall.copyWith(
+                          color: OColor.gray800,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'Context',
+                          hintStyle: OTextStyle.bodySmall.copyWith(
+                            color: OColor.gray400,
+                          ),
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.all(16),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                  ],
                 ),
               ),
             ),
-            const Spacer(),
             SizedBox(
               width: double.infinity,
               height: 56,
@@ -291,12 +309,15 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: _isLoading
-                    ? CircularProgressIndicator(color: Colors.white)
-                    : Text(
-                        'Select',
-                        style: OTextStyle.labelMedium.copyWith(color: Colors.white),
-                      ),
+                child:
+                    _isLoading
+                        ? CircularProgressIndicator(color: Colors.white)
+                        : Text(
+                          'Select',
+                          style: OTextStyle.labelMedium.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
               ),
             ),
             SizedBox(height: MediaQuery.of(context).padding.bottom + 8),
@@ -318,22 +339,18 @@ class _EnterDetailsScreenState extends State<EnterDetailsScreen> {
         decoration: BoxDecoration(
           color: OColor.white,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: hasValue ? OColor.green600 : OColor.gray200),
+          border: Border.all(
+            color: hasValue ? OColor.green600 : OColor.gray200,
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               value,
-              style: OTextStyle.bodySmall.copyWith(
-                color: hasValue ? OColor.green600 : OColor.gray400,
-              ),
+              style: OTextStyle.bodySmall.copyWith(color: OColor.green600),
             ),
-            Icon(
-              FluentIcons.chevron_right_20_regular,
-              color: hasValue ? OColor.green600 : OColor.gray400,
-              size: 20,
-            ),
+            Icon(TablerIcons.chevron_right, color: OColor.green600, size: 20),
           ],
         ),
       ),

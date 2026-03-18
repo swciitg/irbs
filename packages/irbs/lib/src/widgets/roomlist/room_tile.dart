@@ -1,6 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:onestop_ui/index.dart';
 import 'package:provider/provider.dart';
 
@@ -21,12 +22,9 @@ class RoomTile extends StatelessWidget {
       },
       child: Container(
         height: 48,
-        margin: const EdgeInsets.only(left: 16, right: 16, bottom: 6),
+        margin: const EdgeInsets.only(left: 16, right: 16),
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          color: OColor.white,
-          borderRadius: BorderRadius.circular(8),
-        ),
+        decoration: BoxDecoration(color: OColor.gray100),
         child: Row(
           children: [
             Expanded(
@@ -61,11 +59,7 @@ class RoomTile extends StatelessWidget {
               },
             ),
             const SizedBox(width: 8),
-            Icon(
-              FluentIcons.chevron_right_20_regular,
-              color: OColor.gray400,
-              size: 20,
-            ),
+            Icon(TablerIcons.chevron_right, color: OColor.gray600, size: 20),
             const SizedBox(width: 12),
           ],
         ),
