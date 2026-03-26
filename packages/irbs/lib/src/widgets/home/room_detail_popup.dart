@@ -299,7 +299,21 @@ class _RoomDetailContentState extends State<_RoomDetailContent> {
                   ),
                 );
               },
-              child: Text("view all", style: TextStyle(color: OColor.green600)),
+              child: Container(
+                padding: EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: OColor.green100,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Text(
+                  "view all",
+                  style: TextStyle(
+                    color: OColor.green600,
+                    fontSize: 12,
+                    decorationColor: OColor.green300,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
