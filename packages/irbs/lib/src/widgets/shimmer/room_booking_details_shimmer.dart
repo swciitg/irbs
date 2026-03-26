@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 import '../../globals/colors.dart';
 
 import '../roomBookingDetails/upcoming_booking_widget.dart';
@@ -34,9 +34,9 @@ class RoomBookingDetailsShimmer extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {},
-                  child: const Padding(
-                    padding: EdgeInsets.only(right: 16.0),
-                    child: Icon(Icons.more_vert, color: Colors.white),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: Icon(Icons.more_vert, color: OColor.gray800),
                   ),
                 ),
               ],
@@ -46,7 +46,10 @@ class RoomBookingDetailsShimmer extends StatelessWidget {
           Divider(height: 0.5, color: Colors.white.withValues(alpha: 0.2)),
           ExpansionTile(
             childrenPadding: const EdgeInsets.only(bottom: 12),
-            title: Text('Upcoming Bookings', style: OnestopFonts.w400.setColor(Themes.kSubHeading)),
+            title: Text(
+              'Upcoming Bookings',
+              style: OTextStyle.bodySmall.copyWith(color: Themes.kSubHeading),
+            ),
             collapsedIconColor: Themes.regentGrey,
             iconColor: Themes.regentGrey,
             children:

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 
 import '../../globals/colors.dart';
 
@@ -9,13 +9,14 @@ class UpcomingBookingsWidget extends StatefulWidget {
   final String endTime;
   final String date;
   final String name;
-  const UpcomingBookingsWidget(
-      {super.key,
-      required this.status,
-      required this.startTime,
-      required this.endTime,
-      required this.date,
-      required this.name});
+  const UpcomingBookingsWidget({
+    super.key,
+    required this.status,
+    required this.startTime,
+    required this.endTime,
+    required this.date,
+    required this.name,
+  });
 
   @override
   State<UpcomingBookingsWidget> createState() => _UpcomingBookingsWidgetState();
@@ -29,46 +30,38 @@ class _UpcomingBookingsWidgetState extends State<UpcomingBookingsWidget> {
       child: Container(
         width: double.maxFinite,
         decoration: BoxDecoration(
-            gradient: LinearGradient(stops: const [
-              0.0125,
-              0.0125
-            ], colors: [
+          gradient: LinearGradient(
+            stops: const [0.0125, 0.0125],
+            colors: [
               (widget.status == 0)
                   ? Themes.rejectedColor
                   : (widget.status == 1)
-                      ? Themes.pendingColor
-                      : Themes.approvedColor,
-              Themes.kCommonBoxBackground
-            ]),
-            borderRadius: BorderRadius.circular(4)),
+                  ? Themes.pendingColor
+                  : Themes.approvedColor,
+              Themes.kCommonBoxBackground,
+            ],
+          ),
+          borderRadius: BorderRadius.circular(4),
+        ),
         child: ListTile(
           tileColor: Themes.kCommonBoxBackground,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
           title: Text(
             widget.name,
             overflow: TextOverflow.ellipsis,
-            style: OnestopFonts.w500.size(14).letterSpace(0.5).setColor(Themes.white),
+            style: OTextStyle.labelSmall.copyWith(color: Themes.white),
           ),
           subtitle: RichText(
             text: TextSpan(
-                style: OnestopFonts.w500.size(10).letterSpace(0.5).setColor(Themes.white),
-                children: [
-                  TextSpan(
-                    text: widget.startTime,
-                  ),
-                  const TextSpan(
-                    text: ' - ',
-                  ),
-                  TextSpan(
-                    text: widget.endTime,
-                  ),
-                  const TextSpan(
-                    text: ' · ',
-                  ),
-                  TextSpan(
-                    text: widget.date,
-                  )
-                ]),
+              style: OTextStyle.bodyXSmall.copyWith(color: Themes.white),
+              children: [
+                TextSpan(text: widget.startTime),
+                const TextSpan(text: ' - '),
+                TextSpan(text: widget.endTime),
+                const TextSpan(text: ' · '),
+                TextSpan(text: widget.date),
+              ],
+            ),
           ),
           trailing: InkWell(
             onTap: () {},
@@ -80,13 +73,14 @@ class _UpcomingBookingsWidgetState extends State<UpcomingBookingsWidget> {
                   (widget.status == 0)
                       ? 'Rejected'
                       : (widget.status == 1)
-                          ? 'Pending'
-                          : 'Approved',
-                  style: (widget.status == 0)
-                      ? OnestopFonts.w500.size(12).letterSpace(0.5).setColor(Themes.white)
-                      : (widget.status == 1)
-                          ? OnestopFonts.w500.size(14).setColor(Themes.pendingColor)
-                          : OnestopFonts.w500.size(14).setColor(Themes.approvedColor),
+                      ? 'Pending'
+                      : 'Approved',
+                  style:
+                      (widget.status == 0)
+                          ? OTextStyle.labelXSmall.copyWith(color: Themes.white)
+                          : (widget.status == 1)
+                          ? OTextStyle.labelSmall.copyWith(color: Themes.pendingColor)
+                          : OTextStyle.labelSmall.copyWith(color: Themes.approvedColor),
                 ),
               ),
             ),

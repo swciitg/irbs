@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 import '../../functions/snackbar.dart';
 import '../../globals/colors.dart';
 
@@ -41,7 +41,7 @@ class _RespondDialogueState extends State<RespondDialogue> {
               alignment: Alignment.center,
               child: Text(
                 approve == 1 ? 'Approved' : 'Rejected',
-                style: OnestopFonts.w600.size(16).setColor(Themes.white),
+                style: OTextStyle.headingSmall.copyWith(color: OColor.gray800),
               ),
             ),
             const SizedBox(height: 4),
@@ -77,15 +77,12 @@ class _RespondDialogueState extends State<RespondDialogue> {
                         Text(
                           'Requested by  ',
                           // style: kHeading3Style,
-                          style: OnestopFonts.w400
-                              .size(10)
-                              .setColor(Themes.white.withValues(alpha: 0.6))
-                              .letterSpace(0.5),
+                          style: OTextStyle.bodyXSmall.copyWith(color: OColor.gray600),
                         ),
                         Text(
                           widget.bookingData.userInfo.name.toString(),
                           // style: kHeading3DescStyle,
-                          style: OnestopFonts.w500.size(10).setColor(Themes.white).letterSpace(0.5),
+                          style: OTextStyle.bodyXSmall.copyWith(color: OColor.gray800),
                         ),
                       ],
                     ),
@@ -93,7 +90,7 @@ class _RespondDialogueState extends State<RespondDialogue> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: const Icon(Icons.clear, size: 20, color: Themes.white),
+                      child: Icon(Icons.clear, size: 20, color: Themes.white),
                     ),
                   ],
                 ),
@@ -104,12 +101,12 @@ class _RespondDialogueState extends State<RespondDialogue> {
                       TextSpan(
                         text: widget.bookingData.roomDetails.roomName,
                         // style: kDialogRoomStyle,
-                        style: OnestopFonts.w600.size(16).setColor(Themes.white).letterSpace(0.5),
+                        style: OTextStyle.headingSmall.copyWith(color: OColor.gray800),
                       ),
                       TextSpan(
                         text: '  ',
                         // style: kDialogRoomStyle,
-                        style: OnestopFonts.w600.size(16).setColor(Themes.white).letterSpace(0.5),
+                        style: OTextStyle.headingSmall.copyWith(color: OColor.gray800),
                       ),
                       TextSpan(
                         text:
@@ -119,10 +116,7 @@ class _RespondDialogueState extends State<RespondDialogue> {
                                 ? 'Board Room'
                                 : 'Common Room',
                         // style: kDialogSubRoomStyle,
-                        style: OnestopFonts.w400
-                            .size(12)
-                            .setColor(Themes.dialogSubRoomColor)
-                            .letterSpace(0.5),
+                        style: OTextStyle.bodyXSmall.copyWith(color: Themes.dialogSubRoomColor),
                       ),
                     ],
                   ),
@@ -139,17 +133,14 @@ class _RespondDialogueState extends State<RespondDialogue> {
                   children: <Widget>[
                     Row(
                       children: [
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.only(right: 7.33),
                           child: Icon(Icons.access_time, color: Themes.iconColor, size: 13.33),
                         ),
                         RichText(
                           text: TextSpan(
                             // style: kDialogTimeStyle,
-                            style: OnestopFonts.w500
-                                .size(11)
-                                .setColor(Themes.roomHeadingColor)
-                                .letterSpace(0.5),
+                            style: OTextStyle.labelXSmall.copyWith(color: Themes.roomHeadingColor),
                             children: [
                               TextSpan(
                                 text: DateFormat(
@@ -169,7 +160,7 @@ class _RespondDialogueState extends State<RespondDialogue> {
                     ),
                     Row(
                       children: [
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.only(right: 7.33),
                           child: Icon(
                             Icons.calendar_today_outlined,
@@ -182,10 +173,7 @@ class _RespondDialogueState extends State<RespondDialogue> {
                             'MMM dd, yyyy',
                           ).format(DateTime.parse(widget.bookingData.inTime)),
                           // style: kDialogTimeStyle,
-                          style: OnestopFonts.w500
-                              .size(11)
-                              .setColor(Themes.roomHeadingColor)
-                              .letterSpace(0.5),
+                          style: OTextStyle.labelXSmall.copyWith(color: Themes.roomHeadingColor),
                         ),
                       ],
                     ),
@@ -197,18 +185,12 @@ class _RespondDialogueState extends State<RespondDialogue> {
                       TextSpan(
                         text: 'Purpose - ',
                         // style: kDialogPurposeStyle,
-                        style: OnestopFonts.w500
-                            .size(11)
-                            .setColor(Themes.iconColor)
-                            .letterSpace(0.5),
+                        style: OTextStyle.labelXSmall.copyWith(color: Themes.iconColor),
                       ),
                       TextSpan(
                         text: widget.bookingData.bookingPurpose,
                         // style: kDialogTimeStyle
-                        style: OnestopFonts.w500
-                            .size(11)
-                            .setColor(Themes.roomHeadingColor)
-                            .letterSpace(0.5),
+                        style: OTextStyle.labelXSmall.copyWith(color: Themes.roomHeadingColor),
                       ),
                     ],
                   ),
@@ -218,7 +200,7 @@ class _RespondDialogueState extends State<RespondDialogue> {
                   child: Text(
                     'Instruction/Reason to reject -',
                     // style: kDialogInstStyle,
-                    style: OnestopFonts.w400.size(11).setColor(Themes.iconColor).letterSpace(0.5),
+                    style: OTextStyle.bodyXSmall.copyWith(color: Themes.iconColor),
                   ),
                 ),
                 Padding(
@@ -238,18 +220,11 @@ class _RespondDialogueState extends State<RespondDialogue> {
                         maxLines: 3,
                         controller: textEditingController,
                         // style: editRoomText,
-                        style: OnestopFonts.w400
-                            .size(16)
-                            .setColor(Themes.white)
-                            .setHeight(1.5)
-                            .letterSpace(0.1),
+                        style: OTextStyle.bodySmall.copyWith(color: OColor.gray800, fontSize: 16),
                         decoration: InputDecoration(
                           hintText: 'Type Here...',
                           // hintStyle: kDialogHintStyle,
-                          hintStyle: OnestopFonts.w400
-                              .size(12)
-                              .setColor(Themes.comet)
-                              .letterSpace(0.5),
+                          hintStyle: OTextStyle.bodyXSmall.copyWith(color: Themes.comet),
                           // contentPadding: EdgeInsets.zero,
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -294,11 +269,7 @@ class _RespondDialogueState extends State<RespondDialogue> {
                               'Reject',
                               // style:
                               //     kRejectedStyle.copyWith(color: Themes.white),
-                              style: OnestopFonts.w500
-                                  .size(12)
-                                  .setColor(Themes.rejectedBooking)
-                                  .letterSpace(0.5)
-                                  .copyWith(color: Themes.white),
+                              style: OTextStyle.labelXSmall.copyWith(color: OColor.white),
                             ),
                           ),
                         ),
@@ -353,10 +324,9 @@ class _RespondDialogueState extends State<RespondDialogue> {
                             child: Text(
                               'Approve',
                               // style: kApproveStyle,
-                              style: OnestopFonts.w600
-                                  .size(14)
-                                  .setColor(Themes.onPrimaryColor)
-                                  .letterSpace(0.5),
+                              style: OTextStyle.headingXSmall.copyWith(
+                                color: Themes.onPrimaryColor,
+                              ),
                             ),
                           ),
                         ),

@@ -1,57 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:onestop_ui/index.dart';
 
 class Themes {
-  static const backgroundColor = Color.fromRGBO(28, 28, 30, 1);
-  static const gradientBackgroundColor = Color.fromRGBO(28, 28, 30, 1);
-  static const primaryColor = Color.fromRGBO(118, 172, 255, 1);
-  static const onPrimaryColor = Color.fromRGBO(0, 27, 62, 1);
-  static const blueGrey = Color.fromRGBO(110, 119, 138, 1);
-  static const white = Colors.white;
-  static const grey = Colors.grey;
-  static const white60 = Colors.white60;
-  static const black = Colors.black;
-  static const red = Colors.red;
-  static const transparent = Colors.transparent;
-  static const inactiveNavDotsColor = Color.fromRGBO(255, 255, 255, 0.2);
-  static const kSubHeading = Color.fromRGBO(135, 145, 165, 1);
-  static const kBackground = Color.fromRGBO(28, 28, 30, 1);
-  static const kCommonBoxBackground = Color.fromRGBO(39, 49, 65, 1);
-  static const regentGrey = Color.fromRGBO(135, 145, 165, 1);
-  static const tileColor = Color.fromRGBO(39, 49, 65, 1);
-  static const darkSlateGrey = Color.fromRGBO(39, 49, 65, 1);
-  static const comet = Color.fromRGBO(85, 95, 113, 1);
-  static const darkGrey = Color.fromRGBO(55, 55, 55, 1);
-  static const rejectedColor = Color.fromRGBO(227, 114, 108, 1);
-  static const approvedGreenColor = Color.fromRGBO(83, 172, 75, 1);
-  static const pendingColor = Color.fromRGBO(147, 144, 148, 1);
-  static const cursorColor = Color.fromRGBO(64, 124, 235, 1);
-  // static const dropDownColor = Color.fromRGBO(32, 40, 54, 1);
-  static const myRoomsFormHeadingColor = Color.fromRGBO(253, 252, 255, 1);
-  static const requestTile = Color.fromRGBO(35, 41, 52, 1);
-  static const disabledButtonBackground = Color.fromRGBO(62, 71, 88, 1);
-  static const rejectedBooking = Color.fromRGBO(179, 38, 30, 1);
-  static const drawerBox = Color.fromRGBO(31, 39, 51, 1);
-  static const transparentColor = Colors.transparent;
-  static const iconColor = Color.fromRGBO(162, 172, 192, 1);
-  static const hintText = Color.fromRGBO(171, 171, 175, 1);
-  static const starColor = Color.fromRGBO(255, 84, 73, 1);
-  static const borderColor = Color.fromRGBO(94, 94, 94, 1);
-  static const dropDownColor = Color.fromRGBO(27, 27, 29, 1);
-  static const permanentTextColor = Color.fromRGBO(169, 173, 179, 1);
-  static const roomHeadingColor = Color.fromRGBO(253, 252, 255, 1);
-  static const subHeadingColor = Color.fromRGBO(135, 145, 165, 1);
-  static const kTextButtonColor = Color.fromRGBO(88, 129, 191, 1);
-  static const reasonColor = Color.fromRGBO(218, 227, 249, 1);
-  static const cancelButtonColor = Color.fromRGBO(255, 111, 102, 1);
-  static const dialogSubRoomColor = Color.fromRGBO(189, 199, 220, 1);
-  static const calenderBgColor = Color.fromRGBO(35, 35, 35, 1);
-  static const datePickerPrimaryColor = Color.fromRGBO(189, 199, 220, 1);
-  static const datePickerSurfaceColor = Color.fromRGBO(43, 62, 92, 1);
-  static const modalToastBgColor = Color.fromRGBO(39, 49, 65, 0.7);
-  static const modalBorderColor = Color.fromRGBO(147, 152, 160, 1);
-  static const approvedColor = Color.fromRGBO(53, 118, 42, 1);
-  static const allRequestShimmerHighlight = Color.fromRGBO(68, 71, 79, 1);
-  static const allRequestShimmerBase = Color.fromRGBO(47, 48, 51, 1);
-  static const backgroundColor0Opacity = Color.fromRGBO(28, 28, 30, 0);
+  // Background & surface
+  static Color get backgroundColor => OColor.gray100;
+  static Color get gradientBackgroundColor => OColor.gray100;
+  static Color get kBackground => OColor.gray100;
+  static Color get tileColor => OColor.white;
+  static Color get darkSlateGrey => OColor.white;
+  static Color get kCommonBoxBackground => OColor.white;
+  static Color get drawerBox => OColor.white;
+  static Color get requestTile => OColor.white;
+  static Color get calenderBgColor => OColor.white;
+  static Color get dropDownColor => OColor.white;
 
+  // Primary / accent
+  static Color get primaryColor => OColor.green600;
+  static Color get onPrimaryColor => OColor.white;
+  static Color get cursorColor => OColor.green600;
+
+  // Text colors
+  static Color get white => OColor.gray800; // primary text
+  static Color get black => OColor.white;
+  static Color get grey => OColor.gray400;
+  static Color get white60 => OColor.gray600;
+  static Color get kSubHeading => OColor.gray600;
+  static Color get regentGrey => OColor.gray600;
+  static Color get subHeadingColor => OColor.gray600;
+  static Color get blueGrey => OColor.gray400;
+  static Color get comet => OColor.gray400;
+  static Color get darkGrey => OColor.gray300;
+  static Color get hintText => OColor.gray400;
+  static Color get permanentTextColor => OColor.gray600;
+  static Color get roomHeadingColor => OColor.gray800;
+  static Color get myRoomsFormHeadingColor => OColor.gray800;
+  static Color get kTextButtonColor => OColor.green600;
+  static Color get iconColor => OColor.gray600;
+  static Color get dialogSubRoomColor => OColor.gray600;
+  static Color get reasonColor => OColor.gray100;
+
+  // Status colors
+  static Color get rejectedColor => OColor.red500;
+  static Color get rejectedBooking => OColor.red600;
+  static Color get approvedGreenColor => OColor.green600;
+  static Color get approvedColor => OColor.green600;
+  static Color get pendingColor => OColor.gray400;
+  static Color get cancelButtonColor => OColor.red500;
+
+  // Border & misc
+  static Color get borderColor => OColor.gray200;
+  static Color get modalBorderColor => OColor.gray300;
+  static const transparent = Colors.transparent;
+  static const transparentColor = Colors.transparent;
+  static const red = Colors.red;
+  static Color get starColor => OColor.red500;
+  static Color get inactiveNavDotsColor => OColor.gray300;
+
+  // Button states
+  static Color get disabledButtonBackground => OColor.gray200;
+
+  // Date pickers
+  static Color get datePickerPrimaryColor => OColor.green600;
+  static Color get datePickerSurfaceColor => OColor.gray100;
+
+  // Toast
+  static Color get modalToastBgColor => OColor.gray800;
+
+  // Shimmer
+  static Color get allRequestShimmerHighlight => OColor.gray100;
+  static Color get allRequestShimmerBase => OColor.gray200;
+
+  // Gradient
+  static const backgroundColor0Opacity = Color.fromRGBO(244, 245, 245, 0);
 }

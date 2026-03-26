@@ -1,5 +1,6 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 import '../../globals/colors.dart';
 
 import '../../models/booking_model.dart';
@@ -23,63 +24,57 @@ class HomeShimmer extends StatelessWidget {
           onTap: () {
             Navigator.of(context, rootNavigator: true).pop();
           },
-          child: const Icon(
-            Icons.arrow_back_sharp,
-            color: Colors.white,
-          ),
+          child: Icon(FluentIcons.arrow_left_24_regular, color: OColor.gray800),
         ),
-        title: Text(
-          "IRBS",
-          style: OnestopFonts.w500.size(20).setColor(Themes.white),
-        ),
+        title: Text("IRBS", style: OTextStyle.headingMedium.copyWith(color: Themes.white)),
         backgroundColor: Themes.kCommonBoxBackground,
       ),
-      body: Stack(fit: StackFit.expand, children: [
-        SingleChildScrollView(
-          child: Shimmer.fromColors(
-            highlightColor: Themes.allRequestShimmerHighlight,
-            baseColor: Themes.allRequestShimmerBase,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 16, bottom: 7, right: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Current Bookings',
-                        style: OnestopFonts.w600
-                            .size(14)
-                            .letterSpace(0.5)
-                            .setColor(Themes.kSubHeading),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          SingleChildScrollView(
+            child: Shimmer.fromColors(
+              highlightColor: Themes.allRequestShimmerHighlight,
+              baseColor: Themes.allRequestShimmerBase,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 16, bottom: 7, right: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Current Bookings',
+                          style: OTextStyle.headingXSmall.copyWith(color: Themes.kSubHeading),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (BuildContext context) => const BookingHistoryScreen()));
-                          // Navigator.pushNamed(
-                          //     context, '/irbs/bookingHistory');
-                        },
-                        child: Text(
-                          'View History',
-                          style: OnestopFonts.w400
-                              .size(12)
-                              .letterSpace(0.5)
-                              .underline()
-                              .setColor(Themes.kTextButtonColor),
+                                builder: (BuildContext context) => const BookingHistoryScreen(),
+                              ),
+                            );
+                            // Navigator.pushNamed(
+                            //     context, '/irbs/bookingHistory');
+                          },
+                          child: Text(
+                            'View History',
+                            style: OTextStyle.bodyXSmall.copyWith(
+                              color: Themes.kTextButtonColor,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListView.builder(
+                  SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListView.builder(
                           padding: const EdgeInsets.all(0),
                           shrinkWrap: true,
                           itemCount: 3,
@@ -96,100 +91,110 @@ class HomeShimmer extends StatelessWidget {
                                 bookingPurpose: ' bookingPurpose',
                                 createdAt: 'createdAt',
                                 roomDetails: RoomDetailsModel(
-                                    owner: [],
-                                    roomName: '',
-                                    allowedUsers: [],
-                                    roomType: '',
-                                    roomCapacity: 1),
+                                  owner: [],
+                                  roomName: '',
+                                  allowedUsers: [],
+                                  roomType: '',
+                                  roomCapacity: 1,
+                                ),
                                 id: ' id',
-                                userInfo:
-                                    OwnerInfo(name: '', email: '', phoneNumber: 1, rollNo: ''),
+                                userInfo: OwnerInfo(
+                                  name: '',
+                                  email: '',
+                                  phoneNumber: 1,
+                                  rollNo: '',
+                                ),
                               ),
                             );
-                          }),
-                      GestureDetector(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                          child: Container(
-                            height: 40,
-                            width: double.maxFinite,
-                            decoration: BoxDecoration(
+                          },
+                        ),
+                        GestureDetector(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            child: Container(
+                              height: 40,
+                              width: double.maxFinite,
+                              decoration: BoxDecoration(
                                 color: Themes.kCommonBoxBackground,
-                                borderRadius: BorderRadius.circular(4)),
-                            child: Center(
-                              child: Text(
-                                'View all upcoming bookings',
-                                style: OnestopFonts.w500
-                                    .letterSpace(0.5)
-                                    .size(14)
-                                    .setColor(Themes.white),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'View all upcoming bookings',
+                                  style: OTextStyle.labelSmall.copyWith(color: Themes.white),
+                                ),
                               ),
                             ),
                           ),
+                          onTap: () {},
                         ),
-                        onTap: () {},
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                ListDisplay(
-                  type: 'Pinned Rooms',
-                  roomList: [
-                    RoomModel(
+                  ListDisplay(
+                    type: 'Pinned Rooms',
+                    roomList: [
+                      RoomModel(
                         owner: [''],
                         roomName: '',
                         allowedUsers: [''],
                         roomType: 'roomType',
                         roomCapacity: 0,
                         id: ' id',
-                        ownerInfo: [
-                          OwnerInfo(name: 'name', email: 'email', rollNo: 'rollNo'),
-                        ],
+                        ownerInfo: [OwnerInfo(name: 'name', email: 'email', rollNo: 'rollNo')],
                         allowedUserInfo: [
                           OwnerInfo(name: 'name', email: 'email', rollNo: 'rollNo'),
-                        ]),
-                  ],
-                ),
-                const CommonRooms(),
-                const SizedBox(
-                  height: 108,
-                )
-              ],
+                        ],
+                      ),
+                    ],
+                  ),
+                  const CommonRooms(),
+                  const SizedBox(height: 108),
+                ],
+              ),
             ),
           ),
-        ),
-        Positioned(
+          Positioned(
             left: 0,
             right: 0,
             bottom: 0,
-            child: Column(children: [
-              Container(
-                height: 24,
-                decoration: const BoxDecoration(
+            child: Column(
+              children: [
+                Container(
+                  height: 24,
+                  decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Themes.backgroundColor0Opacity, Themes.backgroundColor])),
-              ),
-              Container(
-                color: Themes.backgroundColor,
-                child: Container(
-                  height: 52,
-                  margin: const EdgeInsets.fromLTRB(17, 0, 16, 36),
-                  decoration: const BoxDecoration(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Themes.backgroundColor0Opacity, Themes.backgroundColor],
+                    ),
+                  ),
+                ),
+                Container(
+                  color: Themes.backgroundColor,
+                  child: Container(
+                    height: 52,
+                    margin: const EdgeInsets.fromLTRB(17, 0, 16, 36),
+                    decoration: BoxDecoration(
                       color: Themes.primaryColor,
-                      borderRadius: BorderRadius.all(Radius.circular(4))),
-                  child: InkWell(
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                    ),
+                    child: InkWell(
                       onTap: () {},
                       child: Center(
-                          child: Text(
-                        'Book a Room',
-                        style: OnestopFonts.w700.size(16),
-                      ))),
+                        child: Text(
+                          'Book a Room',
+                          style: OTextStyle.labelMedium.copyWith(color: OColor.white),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ]))
-      ]),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 import '../../globals/colors.dart';
 
 class EditRoomTextField extends StatefulWidget {
@@ -19,11 +19,7 @@ class _EditRoomTextFieldState extends State<EditRoomTextField> {
       children: [
         Text(
           "${widget.title}:",
-          style: OnestopFonts.w500
-              .size(16)
-              .setColor(Themes.myRoomsFormHeadingColor)
-              .setHeight(1.5)
-              .letterSpace(0.1),
+          style: OTextStyle.labelMedium.copyWith(color: Themes.myRoomsFormHeadingColor),
         ),
         const SizedBox(
           height: 8,
@@ -43,18 +39,18 @@ class _EditRoomTextFieldState extends State<EditRoomTextField> {
                   ? TextInputType.text
                   : TextInputType.multiline,
           style: widget.title != "Instructions"
-              ? OnestopFonts.w400.size(16).setColor(Themes.white).setHeight(1.5).letterSpace(0.1)
-              : OnestopFonts.w400.size(12).setColor(Themes.white).setHeight(1.333),
+              ? OTextStyle.labelMedium.copyWith(color: Themes.white)
+              : OTextStyle.bodyXSmall.copyWith(color: Themes.white),
           decoration: InputDecoration(
               contentPadding: const EdgeInsets.fromLTRB(16, 12, 0, 12),
               filled: true,
               fillColor: Themes.tileColor,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4.0),
-                  borderSide: const BorderSide(color: Themes.tileColor)),
+                  borderSide: BorderSide(color: Themes.tileColor)),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4.0),
-                  borderSide: const BorderSide(color: Themes.tileColor)),
+                  borderSide: BorderSide(color: Themes.tileColor)),
               errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4.0),
                   borderSide: const BorderSide(color: Themes.red)),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:irbs/src/screens/booking_history.dart';
 import 'package:irbs/src/screens/home.dart';
-import 'package:irbs/src/screens/onboarding.dart';
 import 'package:irbs/src/screens/room_list.dart';
 import 'package:irbs/src/store/common_store.dart';
 import 'package:irbs/src/store/room_detail_store.dart';
@@ -29,13 +28,11 @@ class _IRBSState extends State<IRBS> {
           create: (_) => RoomDetailStore(),
         ),
       ],
-      child:
-      MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: HomeScreen.id,
+        home: const HomeScreen(),
         routes: {
           HomeScreen.id: (context) => const HomeScreen(),
-          '/irbs/onboarding': (context) => const OnboardingScreen(),
           '/irbs/roomList': (context) => const RoomListScreen(),
           '/irbs/bookingHistory': (context) => const BookingHistoryScreen(),
         },

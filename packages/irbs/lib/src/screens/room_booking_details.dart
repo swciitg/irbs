@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:provider/provider.dart';
 
 import '../globals/colors.dart';
@@ -70,13 +71,14 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        leading: GestureDetector(
-          onTap: () {
+        scrolledUnderElevation: 0,
+        leading: IconButton(
+          icon: Icon(FluentIcons.arrow_left_24_regular, color: OColor.gray800),
+          onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Icon(Icons.arrow_back_sharp, color: Themes.white),
         ),
-        title: Text("IRBS", style: OnestopFonts.w500.size(20).setColor(Themes.white)),
+        title: Text("IRBS", style: OTextStyle.headingMedium.copyWith(color: OColor.gray800)),
         actions: [
           GestureDetector(
             onTap: () {
@@ -97,7 +99,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
             ),
           ),
         ],
-        backgroundColor: Themes.kCommonBoxBackground,
+        backgroundColor: OColor.gray100,
       ),
       floatingActionButton:
           DataStore.isGuest()
@@ -107,7 +109,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                   _showModal(context);
                 },
                 backgroundColor: Themes.primaryColor,
-                child: const Icon(Icons.add, size: 32, color: Themes.kBackground),
+                child: Icon(Icons.add, size: 32, color: Themes.kBackground),
               ),
       body: FutureBuilder(
         future: getRoomBookings,
@@ -146,7 +148,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                       Expanded(
                         child: Text(
                           widget.room.roomName,
-                          style: OnestopFonts.w600.size(24).setColor(Themes.roomHeadingColor),
+                          style: OTextStyle.headingLarge.copyWith(color: OColor.gray800),
                         ),
                       ),
                       GestureDetector(
@@ -156,8 +158,8 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                             MaterialPageRoute(builder: (context) => const RoomDetailsScreen()),
                           );
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.only(right: 16.0),
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 16.0),
                           child: Icon(Icons.more_vert, color: Themes.white),
                         ),
                       ),
@@ -170,7 +172,7 @@ class _RoomBookingDetailsState extends State<RoomBookingDetails> {
                   childrenPadding: const EdgeInsets.only(bottom: 12),
                   title: Text(
                     'Upcoming Bookings',
-                    style: OnestopFonts.w400.setColor(Themes.subHeadingColor),
+                    style: OTextStyle.bodySmall.copyWith(color: OColor.gray600),
                   ),
                   collapsedIconColor: Themes.kSubHeading,
                   iconColor: Themes.kSubHeading,

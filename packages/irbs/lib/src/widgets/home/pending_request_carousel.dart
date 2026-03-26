@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 import 'package:provider/provider.dart';
 
 import '../../globals/colors.dart';
@@ -19,17 +19,16 @@ class PendingRequestCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     var cs = context.read<CommonStore>();
     double screenWidth = MediaQuery.of(context).size.width;
-    return Observer(builder: (context) {
-      return cs.pending > 0
-          ? FutureBuilder(
+    return Observer(
+      builder: (context) {
+        return cs.pending > 0
+            ? FutureBuilder(
               future: APIService().getOwnedRoomBookings(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const PendingRequestShimmer();
                 } else if (snapshot.hasError) {
-                  return const Center(
-                    child: Text('Error'),
-                  );
+                  return const Center(child: Text('Error'));
                 } else {
                   if (snapshot.data!.isEmpty) {
                     return const EmptyListPlaceholder(text: 'No new requests');
@@ -42,12 +41,13 @@ class PendingRequestCarousel extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           children: [
                             CarouselSlider(
-                              items: snapshot.data!
-                                  .map((booking) => RequestTile(
-                                        bookingData: booking,
-                                        commonStore: cs,
-                                      ))
-                                  .toList(),
+                              items:
+                                  snapshot.data!
+                                      .map(
+                                        (booking) =>
+                                            RequestTile(bookingData: booking, commonStore: cs),
+                                      )
+                                      .toList(),
                               options: CarouselOptions(
                                 height: (167 * screenWidth) / 360,
                                 padEnds: true,
@@ -62,23 +62,21 @@ class PendingRequestCarousel extends StatelessWidget {
                       ),
                       GestureDetector(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 12),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                           child: Container(
                             height: 40,
                             width: double.maxFinite,
                             decoration: BoxDecoration(
-                                color: snapshot.data!.isEmpty
-                                    ? Themes.disabledButtonBackground
-                                    : Themes.kCommonBoxBackground,
-                                borderRadius: BorderRadius.circular(4)),
+                              color:
+                                  snapshot.data!.isEmpty
+                                      ? Themes.disabledButtonBackground
+                                      : Themes.kCommonBoxBackground,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
                             child: Center(
                               child: Text(
                                 'View all Requests',
-                                style: OnestopFonts.w500
-                                    .size(14)
-                                    .setColor(Themes.white)
-                                    .letterSpace(0.5),
+                                style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
                               ),
                             ),
                           ),
@@ -87,9 +85,9 @@ class PendingRequestCarousel extends StatelessWidget {
                           if (snapshot.data!.isEmpty) return;
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => PendingRequestsScreen(
-                                requestedBookings: snapshot.data ?? [],
-                              ),
+                              builder:
+                                  (context) =>
+                                      PendingRequestsScreen(requestedBookings: snapshot.data ?? []),
                             ),
                           );
                         },
@@ -99,7 +97,8 @@ class PendingRequestCarousel extends StatelessWidget {
                 }
               },
             )
-          : Container();
-    });
+            : Container();
+      },
+    );
   }
 }

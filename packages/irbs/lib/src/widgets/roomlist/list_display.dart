@@ -1,47 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 
 import 'room_tile.dart';
-import '../../globals/colors.dart';
 import '../../models/room_model.dart';
 
-class ListDisplay extends StatefulWidget {
+class ListDisplay extends StatelessWidget {
   final String type;
   final List<RoomModel> roomList;
-  const ListDisplay({
-    super.key,
-    required this.roomList,
-    required this.type,
-  });
+  const ListDisplay({super.key, required this.roomList, required this.type});
 
-  @override
-  State<ListDisplay> createState() => _ListDisplayState();
-}
-
-class _ListDisplayState extends State<ListDisplay> {
   @override
   Widget build(BuildContext context) {
-    return widget.roomList.isEmpty
-        ? const SizedBox()
-        : Column(
+    if (roomList.isEmpty) return const SizedBox();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                    Text(
-                      widget.type,
-                      style: OnestopFonts.w400.size(14).setColor(Themes.regentGrey),
-                    )
-                  ])),
-              ListView.builder(
-                  padding: const EdgeInsets.all(0),
-                  physics: const ClampingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: widget.roomList.length,
-                  itemBuilder: (context, index) {
-                    return RoomTile(room: widget.roomList[index]);
-                  }),
+              const SizedBox(height: 12),
+              Text(
+                type,
+                style: OTextStyle.bodySmall.copyWith(color: OColor.gray500),
+              ),
+              const SizedBox(height: 8),
+              Divider(height: 1, color: OColor.gray200),
             ],
-          );
+          ),
+        ),
+        const SizedBox(height: 8),
+        ListView.separated(
+          padding: const EdgeInsets.all(0),
+          physics: const ClampingScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: roomList.length,
+          itemBuilder: (context, index) {
+            return RoomTile(room: roomList[index]);
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return Divider(
+              color: OColor.gray200,
+              height: 0,
+              thickness: 1,
+              indent: 16,
+              endIndent: 16,
+            );
+          },
+        ),
+      ],
+    );
   }
 }

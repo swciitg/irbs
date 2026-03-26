@@ -15,3 +15,11 @@ Future<void> launchEmail(String email) async {
   );
   await launchUrl(launchUri);
 }
+
+Future<void> sendSMS(String phoneNumber) async {
+  final Uri launchUri = Uri(
+    scheme: 'sms',
+    path: phoneNumber,
+  );
+  await launchUrl(launchUri);
+}

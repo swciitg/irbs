@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 
 class ErrorScreen extends StatelessWidget {
   final VoidCallback reloadCallback;
@@ -8,7 +9,7 @@ class ErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: OneStopColors.backgroundColor,
+      backgroundColor: OColor.gray100,
       body: ErrorReloadScreen(reloadCallback: reloadCallback),
     );
   }

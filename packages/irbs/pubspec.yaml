@@ -26,10 +26,18 @@ dependencies:
   shimmer: ^3.0.0
   flutter_mobx: ^2.0.6+3
   url_launcher: ^6.0.20
+  fluentui_system_icons: ^1.1.177
   onestop_kit:
     git:
       url: https://github.com/swciitg/onestop_kit.git
-      ref: main
+      ref: dev
+
+  onestop_ui:
+    git:
+      url: https://github.com/swciitg/onestop_ui.git
+      ref: dev
+      path: packages/onestop_ui
+  flutter_tabler_icons: ^1.43.0
 
 dev_dependencies:
   flutter_test:

@@ -1,24 +1,24 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:irbs/src/models/room_model.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:irbs/src/screens/error_screen.dart';
-import 'package:irbs/src/widgets/home/home_upcoming_bookings.dart';
 import 'package:irbs/src/widgets/shimmer/room_list_shimmer.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 import 'package:provider/provider.dart';
-import '../screens/room_list.dart';
-import '../globals/colors.dart';
+
 import '../store/common_store.dart';
 import '../store/data_store.dart';
 import '../store/room_detail_store.dart';
-import '../widgets/home/common_rooms.dart';
-import '../widgets/home/drawer.dart';
+import '../models/room_model.dart';
+import '../widgets/home/booking_card.dart';
+import '../widgets/home/favourite_workspaces.dart';
 import '../widgets/home/empty_sate.dart';
 import '../widgets/home/pending_request_carousel.dart';
 import '../widgets/roomlist/list_display.dart';
 import '../widgets/shimmer/home_shimmer.dart';
 import 'booking_history.dart';
-import 'onboarding.dart';
+import 'upcoming_bookings.dart';
 
 class HomeScreen extends StatefulWidget {
   static const id = "/irbs/home";
@@ -30,6 +30,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isAdmin = false;
+  late Future<List<RoomModel>> _initialDataFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _initialDataFuture = DataStore().initialiseData(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var rd = context.read<RoomDetailStore>();
 
     return FutureBuilder(
-      future: DataStore().initialiseData(context),
+      future: _initialDataFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const HomeShimmer();
@@ -53,8 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
           isAdmin = true;
         }
         return Scaffold(
-          backgroundColor: const Color.fromRGBO(28, 28, 30, 1),
-          endDrawer: (!isAdmin) ? null : const SideDrawer(),
+          backgroundColor: OColor.gray100,
           appBar: _buildAppBar(context),
           body: RefreshIndicator(
             onRefresh: () async {
@@ -70,29 +76,27 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (isAdmin)
+                  const SizedBox(height: 16),
+                  if (isAdmin) ...[
                     Padding(
-                      padding: const EdgeInsets.only(top: 18, left: 16, bottom: 10),
+                      padding: const EdgeInsets.only(left: 16, bottom: 10),
                       child: Text(
                         'Requests',
-                        style: OnestopFonts.w600
-                            .setColor(Themes.kSubHeading)
-                            .size(14)
-                            .letterSpace(0.5),
+                        style: OTextStyle.headingSmall.copyWith(
+                          color: OColor.gray600,
+                        ),
                       ),
                     ),
-                  if (isAdmin) const PendingRequestCarousel(),
-                  _buildCurrentBookingTitle(DataStore.isGuest()),
-                  _buildUpcomingBookings(context, rd, snapshot.data!),
-                  _buildPinnedRooms(cs),
-                  const CommonRooms(),
-                  const SizedBox(height: 108)
+                    const PendingRequestCarousel(),
+                  ],
+                  const FavouriteWorkspaces(),
+                  _buildYourBookings(rd),
+                  _buildAllRooms(rd),
+                  const SizedBox(height: 32),
                 ],
               ),
             ),
           ),
-          floatingActionButton: _buildRoomBookButton(context),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         );
       },
     );
@@ -100,145 +104,160 @@ class _HomeScreenState extends State<HomeScreen> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      centerTitle: true,
-      leading: GestureDetector(
-        onTap: () {
+      scrolledUnderElevation: 0,
+      backgroundColor: OColor.white,
+      leading: IconButton(
+        icon: Icon(TablerIcons.arrow_left, color: OColor.green600),
+        onPressed: () {
           DataStore().clearAll();
           Navigator.of(context, rootNavigator: true).pop();
         },
-        child: const Icon(
-          Icons.arrow_back_sharp,
-          color: Themes.white,
+      ),
+      centerTitle: true,
+      title: Text(
+        'SAC Room Booking',
+        style: OTextStyle.labelSmall.copyWith(
+          color: OColor.gray800,
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
         ),
       ),
-      title: Text(
-        "IRBS",
-        style: OnestopFonts.w500.size(20).setColor(Themes.white),
-      ),
-      actions: _buildAppBarActions(context),
-      backgroundColor: Themes.kCommonBoxBackground,
     );
   }
 
-  Observer _buildPinnedRooms(CommonStore cs) {
+  Widget _buildYourBookings(RoomDetailStore rd) {
+    if (DataStore.isGuest()) return const SizedBox();
     return Observer(
       builder: (context) {
-        if (cs.pinnedRooms.isEmpty) return const SizedBox();
-        return FutureBuilder(
-          future: CommonStore().initialisePinnedRooms(context),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const RoomListShimmer();
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text(snapshot.error.toString()),
-              );
-            } else {
-              if (snapshot.data!.isNotEmpty) {
-                isAdmin = true;
-              }
-              return ListDisplay(roomList: cs.pinnedRooms.values.toList(), type: 'Pinned Rooms');
-            }
-          },
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Your Bookings',
+                    style: OTextStyle.headingMedium.copyWith(
+                      color: OColor.gray800,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const BookingHistoryScreen(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'View History',
+                      style: OTextStyle.bodyXSmall.copyWith(
+                        color: OColor.green600,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              if (rd.upcomingBookings.isEmpty)
+                const EmptyListPlaceholder(text: 'No Upcoming Bookings')
+              else
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  itemCount:
+                      rd.upcomingBookings.length > 3
+                          ? 3
+                          : rd.upcomingBookings.length,
+                  itemBuilder: (context, index) {
+                    return BookingCard(model: rd.upcomingBookings[index]);
+                  },
+                ),
+              if (rd.upcomingBookings.length > 3) ...[
+                const SizedBox(height: 4),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const UpcomingBookingsScreen(),
+                      ),
+                    );
+                  },
+                  child: Center(
+                    child: Text(
+                      'View all upcoming bookings',
+                      style: OTextStyle.labelSmall.copyWith(
+                        color: OColor.green600,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+              const SizedBox(height: 24),
+            ],
+          ),
         );
       },
     );
   }
 
-  Widget _buildRoomBookButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: 52,
-        margin: const EdgeInsets.fromLTRB(17, 0, 16, 36),
-        decoration: const BoxDecoration(
-            color: Color.fromRGBO(118, 172, 255, 1),
-            borderRadius: BorderRadius.all(Radius.circular(4))),
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => const RoomListScreen(),
-              ),
+  Widget _buildAllRooms(RoomDetailStore rd) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            'All Rooms',
+            style: OTextStyle.headingMedium.copyWith(color: OColor.gray800),
+          ),
+        ),
+        const SizedBox(height: 8),
+        FutureBuilder(
+          future: rd.getAllRooms(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const RoomListShimmer();
+            } else if (snapshot.hasError) {
+              return const EmptyListPlaceholder(
+                text: 'Some error occurred, try again',
+              );
+            }
+            // Restore pinned rooms from SharedPreferences once rooms are loaded
+            final cs = context.read<CommonStore>();
+            cs.initialisePinnedRooms(context);
+            return Column(
+              children: [
+                if (snapshot.data!['common'] != null &&
+                    snapshot.data!['common']!.isNotEmpty)
+                  ListDisplay(
+                    type: 'Common Rooms',
+                    roomList: snapshot.data!['common']!,
+                  ),
+                if (snapshot.data!['club'] != null &&
+                    snapshot.data!['club']!.isNotEmpty)
+                  ListDisplay(
+                    type: 'Club Rooms',
+                    roomList: snapshot.data!['club']!,
+                  ),
+                if (snapshot.data!['board'] != null &&
+                    snapshot.data!['board']!.isNotEmpty)
+                  ListDisplay(
+                    type: 'Board Rooms',
+                    roomList: snapshot.data!['board']!,
+                  ),
+              ],
             );
           },
-          child: Center(
-            child: Text('Book a Room', style: OnestopFonts.w700.size(16)),
-          ),
         ),
-      ),
+      ],
     );
-  }
-
-  Widget _buildCurrentBookingTitle(bool isGuest) {
-    if (isGuest) return const SizedBox();
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 16, bottom: 7, right: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Current Bookings',
-            style: OnestopFonts.w600.setColor(Themes.kSubHeading).size(14).letterSpace(0.5),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => const BookingHistoryScreen(),
-                ),
-              );
-            },
-            child: Text(
-              'View History',
-              style: OnestopFonts.w400
-                  .size(12)
-                  .letterSpace(0.5)
-                  .underline()
-                  .setColor(Themes.kTextButtonColor),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  List<Widget> _buildAppBarActions(BuildContext context) {
-    if (isAdmin) return [];
-    return [
-      GestureDetector(
-        onTap: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) => const OnboardingScreen(),
-            ),
-          );
-        },
-        child: Padding(
-          padding: const EdgeInsets.only(right: 11.0),
-          child: Image.asset(
-            'assets/question_circle.png',
-            package: 'irbs',
-            height: 24,
-            width: 24,
-          ),
-        ),
-      )
-    ];
-  }
-
-  Widget _buildUpcomingBookings(BuildContext context, RoomDetailStore rd, List<RoomModel> rooms) {
-    return !DataStore.isGuest()
-        ? Observer(
-            builder: (context) {
-              return rd.upcomingBookings.isEmpty
-                  ? const EmptyListPlaceholder(text: 'No Upcoming Bookings')
-                  : HomeUpcomingBookings(rooms: rooms);
-            },
-          )
-        : const SizedBox();
   }
 }

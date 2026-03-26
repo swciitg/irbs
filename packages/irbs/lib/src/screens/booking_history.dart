@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:provider/provider.dart';
 import '../globals/colors.dart';
 import '../models/booking_model.dart';
@@ -26,11 +27,19 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
       backgroundColor: Themes.backgroundColor,
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          'Booking History',
-          style: OnestopFonts.w500.size(20).setColor(Themes.white),
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        leading: IconButton(
+          icon: Icon(FluentIcons.arrow_left_24_regular, color: OColor.gray800),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
-        backgroundColor: Themes.tileColor,
+        title: Text(
+          "Booking History",
+          style: OTextStyle.headingMedium.copyWith(color: OColor.gray800),
+        ),
+        backgroundColor: OColor.gray100,
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 16),
@@ -47,39 +56,40 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
                   ],
                 ),
               ),
-              Observer(builder: (context) {
-                return FutureBuilder(
-                  future: APIService().getBookingHistory(month: store.month, year: store.year),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return const UpcomingBookingShimmer(number: 8);
-                    } else if (snapshot.hasError) {
-                      return const Text('Error');
-                    } else {
-                      List<BookingModel> currentBooking = snapshot.data!;
-                      if (currentBooking.isEmpty) {
-                        return const EmptyListPlaceholder(text: 'No bookings');
-                      }
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ListView.builder(
+              Observer(
+                builder: (context) {
+                  return FutureBuilder(
+                    future: APIService().getBookingHistory(month: store.month, year: store.year),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const UpcomingBookingShimmer(number: 8);
+                      } else if (snapshot.hasError) {
+                        return const Text('Error');
+                      } else {
+                        List<BookingModel> currentBooking = snapshot.data!;
+                        if (currentBooking.isEmpty) {
+                          return const EmptyListPlaceholder(text: 'No bookings');
+                        }
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ListView.builder(
                               padding: const EdgeInsets.all(0),
                               shrinkWrap: true,
                               itemCount: currentBooking.length,
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (BuildContext context, int index) {
                                 BookingModel? ans = currentBooking[index];
-                                return BookingTile(
-                                  model: ans,
-                                );
-                              }),
-                        ],
-                      );
-                    }
-                  },
-                );
-              }),
+                                return BookingTile(model: ans);
+                              },
+                            ),
+                          ],
+                        );
+                      }
+                    },
+                  );
+                },
+              ),
             ],
           ),
         ),

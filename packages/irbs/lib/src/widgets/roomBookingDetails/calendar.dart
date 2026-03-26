@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
 import '../../globals/colors.dart';
 import '../../store/common_store.dart';
 import '../shimmer/calendar_shimmer.dart';
@@ -74,7 +74,7 @@ class _CalendarState extends State<Calendar> {
                           weekNumberBuilder: (date) {
                             return Container();
                           },
-                          hourIndicatorSettings: const HourIndicatorSettings(
+                          hourIndicatorSettings: HourIndicatorSettings(
                             color: Themes.subHeadingColor,
                             height: 0.7,
                           ),
@@ -83,7 +83,9 @@ class _CalendarState extends State<Calendar> {
                               padding: const EdgeInsets.only(left: 3.0),
                               child: Text(
                                 DateFormat('hh a').format(date),
-                                style: OnestopFonts.w500.setColor(Themes.subHeadingColor),
+                                style: OTextStyle.labelSmall.copyWith(
+                                  color: Themes.subHeadingColor,
+                                ),
                               ),
                             );
                           },
@@ -92,11 +94,15 @@ class _CalendarState extends State<Calendar> {
                               children: [
                                 Text(
                                   DateFormat('EEEE').format(date).substring(0, 3),
-                                  style: OnestopFonts.w500.setColor(Themes.subHeadingColor),
+                                  style: OTextStyle.labelSmall.copyWith(
+                                    color: Themes.subHeadingColor,
+                                  ),
                                 ),
                                 Text(
                                   date.day.toString(),
-                                  style: OnestopFonts.w500.setColor(Themes.subHeadingColor),
+                                  style: OTextStyle.labelSmall.copyWith(
+                                    color: Themes.subHeadingColor,
+                                  ),
                                 ),
                               ],
                             );

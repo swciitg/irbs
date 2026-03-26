@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:onestop_kit/onestop_kit.dart';
+import 'package:onestop_ui/index.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -29,99 +30,83 @@ class BookingDetails extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        leading: GestureDetector(
-          onTap: () {
+        scrolledUnderElevation: 0,
+        leading: IconButton(
+          icon: Icon(FluentIcons.arrow_left_24_regular, color: OColor.gray800),
+          onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Icon(
-            Icons.arrow_back_sharp,
-            color: Themes.white,
-          ),
         ),
         title: Text(
           "Booking Details",
-          style: OnestopFonts.w500.size(20).setColor(Themes.white),
+          style: OTextStyle.headingMedium.copyWith(color: OColor.gray800),
         ),
         actions: [
           GestureDetector(
-              onTap: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (BuildContext context) => const OnboardingScreen()));
-                // Navigator.pushReplacementNamed(context, '/irbs/onboarding');
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(right: 11.0),
-                child: Image.asset(
-                  'assets/question_circle.png',
-                  package: 'irbs',
-                  height: 24,
-                  width: 24,
-                ),
-              ))
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (BuildContext context) => const OnboardingScreen()),
+              );
+              // Navigator.pushReplacementNamed(context, '/irbs/onboarding');
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 11.0),
+              child: Image.asset(
+                'assets/question_circle.png',
+                package: 'irbs',
+                height: 24,
+                width: 24,
+              ),
+            ),
+          ),
         ],
-        backgroundColor: Themes.tileColor,
+        backgroundColor: OColor.gray100,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: Text(
-              'Room Name:',
-              style: OnestopFonts.w400.setColor(Themes.kSubHeading),
-            ),
+            child: Text('Room Name:', style: OTextStyle.bodySmall.copyWith(color: OColor.gray600)),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
             child: Text(
               booking.roomDetails.roomName,
-              style: OnestopFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+              style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: Text(
-              'Start Time:',
-              style: OnestopFonts.w400.setColor(Themes.kSubHeading),
-            ),
+            child: Text('Start Time:', style: OTextStyle.bodySmall.copyWith(color: OColor.gray600)),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: RichText(
               text: TextSpan(
-                style: OnestopFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+                style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
                 children: [
-                  TextSpan(
-                    text: DateFormat("hh:mm a").format(DateTime.parse(booking.inTime)),
-                  ),
-                  const TextSpan(
-                    text: ' · ',
-                  ),
-                  TextSpan(text: DateFormat("dd MMMM").format(DateTime.parse(booking.inTime)))
+                  TextSpan(text: DateFormat("hh:mm a").format(DateTime.parse(booking.inTime))),
+                  const TextSpan(text: ' · '),
+                  TextSpan(text: DateFormat("dd MMMM").format(DateTime.parse(booking.inTime))),
                 ],
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: Text(
-              'End Time:',
-              style: OnestopFonts.w400.setColor(Themes.kSubHeading),
-            ),
+            child: Text('End Time:', style: OTextStyle.bodySmall.copyWith(color: OColor.gray600)),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: RichText(
               text: TextSpan(
-                style: OnestopFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+                style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
                 children: [
-                  TextSpan(
-                    text: DateFormat("hh:mm a").format(DateTime.parse(booking.outTime)),
-                  ),
-                  const TextSpan(
-                    text: ' · ',
-                  ),
-                  TextSpan(text: DateFormat("dd MMMM").format(DateTime.parse(booking.outTime)))
+                  TextSpan(text: DateFormat("hh:mm a").format(DateTime.parse(booking.outTime))),
+                  const TextSpan(text: ' · '),
+                  TextSpan(text: DateFormat("dd MMMM").format(DateTime.parse(booking.outTime))),
                 ],
               ),
             ),
@@ -130,35 +115,35 @@ class BookingDetails extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: Text(
               'Booker Name:',
-              style: OnestopFonts.w400.setColor(Themes.kSubHeading),
+              style: OTextStyle.bodySmall.copyWith(color: OColor.gray600),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               booking.userInfo.name!,
-              style: OnestopFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+              style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: Text(
               'Booker Email:',
-              style: OnestopFonts.w400.setColor(Themes.kSubHeading),
+              style: OTextStyle.bodySmall.copyWith(color: OColor.gray600),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               booking.userInfo.email!,
-              style: OnestopFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+              style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: Text(
               'Booker Phone:',
-              style: OnestopFonts.w400.setColor(Themes.kSubHeading),
+              style: OTextStyle.bodySmall.copyWith(color: OColor.gray600),
             ),
           ),
           Padding(
@@ -167,16 +152,12 @@ class BookingDetails extends StatelessWidget {
               children: [
                 Text(
                   "${booking.userInfo.phoneNumber!}",
-                  style: OnestopFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+                  style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16),
                   child: GestureDetector(
-                    child: const Icon(
-                      Icons.call,
-                      color: Themes.regentGrey,
-                      size: 16,
-                    ),
+                    child: Icon(Icons.call, color: Themes.regentGrey, size: 16),
                     onTap: () async {
                       final url = 'tel:${booking.userInfo.phoneNumber!}';
                       await launchUrl(Uri.parse(url));
@@ -190,76 +171,72 @@ class BookingDetails extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: Text(
               'Booking Purpose:',
-              style: OnestopFonts.w400.setColor(Themes.kSubHeading),
+              style: OTextStyle.bodySmall.copyWith(color: OColor.gray600),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               booking.bookingPurpose,
-              style: OnestopFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+              style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: Text(
-              'Status:',
-              style: OnestopFonts.w400.setColor(Themes.kSubHeading),
-            ),
+            child: Text('Status:', style: OTextStyle.bodySmall.copyWith(color: OColor.gray600)),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               booking.status,
-              style: OnestopFonts.w500.size(14).setColor(Themes.white).letterSpace(0.5),
+              style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
             ),
           ),
           isAdmin &&
-                  DateTime.parse(booking.outTime)
-                      .isAfter(DateTime.parse("${DateTime.now().toIso8601String()}Z"))
+                  DateTime.parse(
+                    booking.outTime,
+                  ).isAfter(DateTime.parse("${DateTime.now().toIso8601String()}Z"))
               ? Center(
-                  child: GestureDetector(
-                    onTap: () async {
-                      bool notStarted = DateTime.parse(booking.inTime)
-                          .isAfter(DateTime.parse("${DateTime.now().toIso8601String()}Z"));
-                      try {
-                        if (notStarted) {
-                          await APIService().deleteBooking(booking.id);
-                        } else {
-                          await APIService().endBooking(booking.id);
-                        }
-                        Fluttertoast.showToast(
-                            msg: notStarted ? 'Booking Deleted' : 'Booking Ended',
-                            backgroundColor: Themes.white,
-                            textColor: Themes.black);
-                        cs.pending = cs.pending + 1;
-                        if (!context.mounted) return;
-                        Navigator.of(context).pop();
-                      } catch (e) {
-                        Fluttertoast.showToast(
-                            msg: 'Some Error Occured',
-                            backgroundColor: Themes.white,
-                            textColor: Themes.black);
+                child: GestureDetector(
+                  onTap: () async {
+                    bool notStarted = DateTime.parse(
+                      booking.inTime,
+                    ).isAfter(DateTime.parse("${DateTime.now().toIso8601String()}Z"));
+                    try {
+                      if (notStarted) {
+                        await APIService().deleteBooking(booking.id);
+                      } else {
+                        await APIService().endBooking(booking.id);
                       }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                      child: Text(
-                          DateTime.parse(booking.inTime)
-                                  .isAfter(DateTime.parse("${DateTime.now().toIso8601String()}Z"))
-                              ? 'Delete Booking'
-                              : 'End Booking',
-                          style: const TextStyle(
-                            fontFamily: 'Montserrat',
-                            package: 'irbs',
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.5,
-                            color: Themes.red,
-                          )),
+                      Fluttertoast.showToast(
+                        msg: notStarted ? 'Booking Deleted' : 'Booking Ended',
+                        backgroundColor: Themes.white,
+                        textColor: Themes.black,
+                      );
+                      cs.pending = cs.pending + 1;
+                      if (!context.mounted) return;
+                      Navigator.of(context).pop();
+                    } catch (e) {
+                      Fluttertoast.showToast(
+                        msg: 'Some Error Occured',
+                        backgroundColor: Themes.white,
+                        textColor: Themes.black,
+                      );
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    child: Text(
+                      DateTime.parse(
+                            booking.inTime,
+                          ).isAfter(DateTime.parse("${DateTime.now().toIso8601String()}Z"))
+                          ? 'Delete Booking'
+                          : 'End Booking',
+                      style: OTextStyle.labelSmall.copyWith(color: OColor.red500),
                     ),
                   ),
-                )
+                ),
+              )
               : Container(),
         ],
       ),
