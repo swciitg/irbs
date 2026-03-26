@@ -9,7 +9,8 @@ import 'package:onestop_ui/index.dart';
 import '../models/booking_model.dart';
 import '../models/room_model.dart';
 import '../services/api.dart';
-import 'booking_details.dart';
+import '../functions/launch_phone.dart';
+import '../widgets/home/contact_dialog.dart';
 
 class RoomScheduleScreen extends StatefulWidget {
   final RoomModel room;
@@ -78,14 +79,15 @@ class _RoomScheduleScreenState extends State<RoomScheduleScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          "IRBS",
+          widget.room.roomName,
           style: OTextStyle.headingSmall.copyWith(color: OColor.gray800),
         ),
         backgroundColor: OColor.gray100,
       ),
-      body: _loading
-          ? Center(child: CircularProgressIndicator(color: OColor.green600))
-          : _buildWeekView(),
+      body:
+          _loading
+              ? Center(child: CircularProgressIndicator(color: OColor.green600))
+              : _buildWeekView(),
     );
   }
 
@@ -108,17 +110,19 @@ class _RoomScheduleScreenState extends State<RoomScheduleScreen> {
         );
       },
       weekDayBuilder: (date) {
-        final isToday = date.year == DateTime.now().year &&
+        final isToday =
+            date.year == DateTime.now().year &&
             date.month == DateTime.now().month &&
             date.day == DateTime.now().day;
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
-          decoration: isToday
-              ? BoxDecoration(
-                  color: OColor.green600,
-                  borderRadius: BorderRadius.circular(8),
-                )
-              : null,
+          decoration:
+              isToday
+                  ? BoxDecoration(
+                    color: OColor.green600,
+                    borderRadius: BorderRadius.circular(8),
+                  )
+                  : null,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -156,26 +160,36 @@ class _RoomScheduleScreenState extends State<RoomScheduleScreen> {
       headerStyle: HeaderStyle(
         headerTextStyle: OTextStyle.labelMedium.copyWith(color: OColor.gray800),
         leftIconConfig: IconDataConfig(
-          icon: (_) => Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              border: Border.all(color: OColor.gray200),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(FluentIcons.chevron_left_20_regular, color: OColor.gray600, size: 18),
-          ),
+          icon:
+              (_) => Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  border: Border.all(color: OColor.gray200),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  FluentIcons.chevron_left_20_regular,
+                  color: OColor.gray600,
+                  size: 18,
+                ),
+              ),
         ),
         rightIconConfig: IconDataConfig(
-          icon: (_) => Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              border: Border.all(color: OColor.gray200),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(FluentIcons.chevron_right_20_regular, color: OColor.gray600, size: 18),
-          ),
+          icon:
+              (_) => Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  border: Border.all(color: OColor.gray200),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  FluentIcons.chevron_right_20_regular,
+                  color: OColor.gray600,
+                  size: 18,
+                ),
+              ),
         ),
         decoration: BoxDecoration(color: OColor.gray100),
       ),
@@ -199,7 +213,7 @@ class _RoomScheduleScreenState extends State<RoomScheduleScreen> {
             color: OColor.green600.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(4),
             border: Border(
-              left: BorderSide(color: OColor.green600, width: 3),
+              left: BorderSide(color: OColor.green600, width: 1.5),
             ),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -232,15 +246,215 @@ class _RoomScheduleScreenState extends State<RoomScheduleScreen> {
       },
       onEventTap: (events, date) {
         if (events.isEmpty) return;
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BookingDetails(
-              booking: BookingModel.fromJson(
-                jsonDecode(events.first.description!),
+        final booking = BookingModel.fromJson(
+          jsonDecode(events.first.description!),
+        );
+        showModalBottomSheet(
+          context: context,
+          backgroundColor: Colors.transparent,
+          builder: (_) {
+            return Container(
+              decoration: BoxDecoration(
+                color: OColor.white,
+                border: Border.all(color: OColor.gray200),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(16),
+                ),
               ),
-            ),
-          ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Header
+                  Row(
+                    children: [
+                      Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          color: OColor.green100,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          FluentIcons.calendar_24_regular,
+                          size: 20,
+                          color: OColor.green600,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'Booking Details',
+                          style: OTextStyle.labelLarge.copyWith(
+                            color: OColor.gray800,
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                            color: OColor.gray100,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            FluentIcons.dismiss_24_regular,
+                            size: 18,
+                            color: OColor.gray600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Booked by: name
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 24,
+                        backgroundColor: OColor.gray100,
+                        child: Icon(
+                          FluentIcons.person_24_regular,
+                          color: OColor.green600,
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              booking.userInfo.name ?? 'Unknown',
+                              style: OTextStyle.labelSmall.copyWith(
+                                color: OColor.gray800,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Phone
+                  if (booking.userInfo.phoneNumber != null) ...[
+                    Row(
+                      children: [
+                        Icon(
+                          FluentIcons.call_24_regular,
+                          size: 16,
+                          color: OColor.gray500,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            booking.userInfo.phoneNumber.toString(),
+                            style: OTextStyle.labelSmall.copyWith(
+                              color: OColor.gray600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+
+                  // Email
+                  if (booking.userInfo.email != null &&
+                      booking.userInfo.email!.isNotEmpty) ...[
+                    Row(
+                      children: [
+                        Icon(
+                          FluentIcons.mail_24_regular,
+                          size: 16,
+                          color: OColor.gray500,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            booking.userInfo.email!,
+                            style: OTextStyle.labelSmall.copyWith(
+                              color: OColor.gray600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+
+                  // Booking Reason
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        FluentIcons.text_description_24_regular,
+                        size: 16,
+                        color: OColor.gray500,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          booking.bookingPurpose,
+                          style: OTextStyle.labelSmall.copyWith(
+                            color: OColor.gray600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Action buttons: Call / Text / Mail
+                  Row(
+                    children: [
+                      if (booking.userInfo.phoneNumber != null) ...[
+                        Expanded(
+                          child: ContactActionButton(
+                            icon: FluentIcons.call_24_regular,
+                            label: 'Call',
+                            onTap:
+                                () => makePhoneCall(
+                                  booking.userInfo.phoneNumber.toString(),
+                                ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: ContactActionButton(
+                            icon: FluentIcons.chat_24_regular,
+                            label: 'Text',
+                            onTap:
+                                () => sendSMS(
+                                  booking.userInfo.phoneNumber.toString(),
+                                ),
+                          ),
+                        ),
+                      ],
+                      if (booking.userInfo.email != null &&
+                          booking.userInfo.email!.isNotEmpty) ...[
+                        if (booking.userInfo.phoneNumber != null)
+                          const SizedBox(width: 8),
+                        Expanded(
+                          child: ContactActionButton(
+                            icon: FluentIcons.mail_24_regular,
+                            label: 'Mail',
+                            onTap: () => launchEmail(booking.userInfo.email!),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
         );
       },
       initialDay: DateTime.now(),

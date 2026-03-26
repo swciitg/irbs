@@ -283,9 +283,25 @@ class _RoomDetailContentState extends State<_RoomDetailContent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Current Booking',
-          style: OTextStyle.bodySmall.copyWith(color: OColor.gray500),
+        Row(
+          children: [
+            Text(
+              'Current Booking',
+              style: OTextStyle.bodySmall.copyWith(color: OColor.gray500),
+            ),
+            Spacer(),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => RoomScheduleScreen(room: widget.room),
+                  ),
+                );
+              },
+              child: Text("view all", style: TextStyle(color: OColor.green600)),
+            ),
+          ],
         ),
         const SizedBox(height: 12),
         if (_currentBookings.isEmpty)

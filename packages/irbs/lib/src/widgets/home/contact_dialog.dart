@@ -4,7 +4,10 @@ import 'package:onestop_ui/index.dart';
 import '../../models/room_model.dart';
 import '../../functions/launch_phone.dart';
 
-void showContactProfileSheet(BuildContext context, {required OwnerInfo details}) {
+void showContactProfileSheet(
+  BuildContext context, {
+  required OwnerInfo details,
+}) {
   showModalBottomSheet(
     context: context,
     backgroundColor: Colors.transparent,
@@ -37,8 +40,15 @@ class _ProfileSheetContent extends StatelessWidget {
               Container(
                 width: 32,
                 height: 32,
-                decoration: BoxDecoration(color: OColor.green100, shape: BoxShape.circle),
-                child: Icon(FluentIcons.person_24_regular, size: 20, color: OColor.green600),
+                decoration: BoxDecoration(
+                  color: OColor.green100,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  FluentIcons.person_24_regular,
+                  size: 20,
+                  color: OColor.green600,
+                ),
               ),
               const SizedBox(width: 8),
               Expanded(
@@ -52,8 +62,15 @@ class _ProfileSheetContent extends StatelessWidget {
                 child: Container(
                   width: 32,
                   height: 32,
-                  decoration: BoxDecoration(color: OColor.gray100, shape: BoxShape.circle),
-                  child: Icon(FluentIcons.dismiss_24_regular, size: 18, color: OColor.gray600),
+                  decoration: BoxDecoration(
+                    color: OColor.gray100,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    FluentIcons.dismiss_24_regular,
+                    size: 18,
+                    color: OColor.gray600,
+                  ),
                 ),
               ),
             ],
@@ -66,7 +83,11 @@ class _ProfileSheetContent extends StatelessWidget {
               CircleAvatar(
                 radius: 24,
                 backgroundColor: OColor.gray100,
-                child: Icon(FluentIcons.person_24_regular, color: OColor.green600, size: 24),
+                child: Icon(
+                  FluentIcons.person_24_regular,
+                  color: OColor.green600,
+                  size: 24,
+                ),
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -75,7 +96,9 @@ class _ProfileSheetContent extends StatelessWidget {
                   children: [
                     Text(
                       details.name ?? 'Unknown',
-                      style: OTextStyle.labelSmall.copyWith(color: OColor.gray800),
+                      style: OTextStyle.labelSmall.copyWith(
+                        color: OColor.gray800,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -90,12 +113,18 @@ class _ProfileSheetContent extends StatelessWidget {
           if (details.phoneNumber != null) ...[
             Row(
               children: [
-                Icon(FluentIcons.call_24_regular, size: 16, color: OColor.gray500),
+                Icon(
+                  FluentIcons.call_24_regular,
+                  size: 16,
+                  color: OColor.gray500,
+                ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     details.phoneNumber.toString(),
-                    style: OTextStyle.labelSmall.copyWith(color: OColor.gray600),
+                    style: OTextStyle.labelSmall.copyWith(
+                      color: OColor.gray600,
+                    ),
                   ),
                 ),
               ],
@@ -105,12 +134,18 @@ class _ProfileSheetContent extends StatelessWidget {
           if (details.email != null && details.email!.isNotEmpty) ...[
             Row(
               children: [
-                Icon(FluentIcons.mail_24_regular, size: 16, color: OColor.gray500),
+                Icon(
+                  FluentIcons.mail_24_regular,
+                  size: 16,
+                  color: OColor.gray500,
+                ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     details.email!,
-                    style: OTextStyle.labelSmall.copyWith(color: OColor.gray600),
+                    style: OTextStyle.labelSmall.copyWith(
+                      color: OColor.gray600,
+                    ),
                   ),
                 ),
               ],
